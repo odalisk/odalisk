@@ -6,7 +6,10 @@ Initialize the project
 
 ```bash
 # Clone the project
-git clone git@github.com:odalisk/odalisk.git path/to/your/project/odalisk
+git clone git@github.com:odalisk/odalisk.git path/to/your/project
+
+# Move into the project directory
+cd path/to/your/project
 
 # Install the vendors
 php composer.phar install
@@ -15,7 +18,7 @@ php composer.phar install
 Configure the database
 ----------------------
 ```bash
-cd path/to/your/project/odalisk/app
+cd app
 mv kernel.custom.yml.dist kernel.custom.yml
 # Edit kernel.custom.yml and add your database prefs.
 vi kernel.custom.yml
@@ -26,7 +29,7 @@ cd ..
 ./console doctrine:schema:create
 ```
 
-Now just point your virtualhost to ```bash path/to/your/project/odalisk/web ``` and you're good to go.
+Now just point your virtualhost to ```bash path/to/your/project/web ``` and you're good to go.
 
 Some useful pointers to get started
 -----------------------------------

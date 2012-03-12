@@ -1,0 +1,6 @@
+app/kernel.custom.yml
+cache/*
+logs/*
+vendor/*
+!.gitkeep
+!vendor/assets

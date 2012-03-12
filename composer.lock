@@ -1,0 +1,71 @@
+{
+    "hash": "54b537eccf0618682ba52a971f9101c6",
+    "packages": [
+        {
+            "package": "doctrine/common",
+            "version": "2.1.x-dev",
+            "source-reference": "f78df1166ce28ceb38df4b43cb967137ae538cf4"
+        },
+        {
+            "package": "doctrine/dbal",
+            "version": "2.1.x-dev",
+            "source-reference": "2.1.6"
+        },
+        {
+            "package": "doctrine/orm",
+            "version": "2.1.x-dev",
+            "source-reference": "734629af0831f59bf68d08ba56670a72676c917a"
+        },
+        {
+            "package": "knplabs/rad-bundle",
+            "version": "dev-master",
+            "source-reference": "17e8262b149146a301fe403640e77939a41bbfd6"
+        },
+        {
+            "package": "kriswallsmith/assetic",
+            "version": "1.0.x-dev",
+            "source-reference": "v1.0.3"
+        },
+        {
+            "package": "kriswallsmith/buzz",
+            "version": "v0.5"
+        },
+        {
+            "package": "monolog/monolog",
+            "version": "1.0.2"
+        },
+        {
+            "package": "sensio/buzz-bundle",
+            "version": "dev-master",
+            "source-reference": "45e0d283c08bd2ffdb98ead985aa0bdaeeb3a431"
+        },
+        {
+            "package": "sensio/generator-bundle",
+            "version": "2.0-dev",
+            "source-reference": "b1ccb78c1743f30817b0fce9bb5c6baff6ed7bf8"
+        },
+        {
+            "package": "swiftmailer/swiftmailer",
+            "version": "4.1.5"
+        },
+        {
+            "package": "symfony/assetic-bundle",
+            "version": "2.0-dev",
+            "source-reference": "77c256f53331a60e1c4b4cc4dc476d84da58efaf"
+        },
+        {
+            "package": "symfony/symfony",
+            "version": "v2.0.11"
+        },
+        {
+            "package": "twig/extensions",
+            "version": "dev-master",
+            "source-reference": "1dfff8e793f50f651c4f74f796c2c68a4aee3147"
+        },
+        {
+            "package": "twig/twig",
+            "version": "1.6.1"
+        }
+    ],
+    "aliases": []
+}

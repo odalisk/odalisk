@@ -19,7 +19,7 @@ Configure the database
 ----------------------
 ```bash
 cd app
-mv kernel.custom.yml.dist kernel.custom.yml
+cp kernel.custom.yml.dist kernel.custom.yml
 # Edit kernel.custom.yml and add your database prefs.
 vi kernel.custom.yml
 

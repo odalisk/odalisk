@@ -1,0 +1,10 @@
+all:
+    # Parameters are like variables that can be references later in any
+    # configuration file as: %locale%.
+    # See: http://bit.ly/sf2-parameter
+    parameters:
+        database_host:      <database host>
+        database_port:      ~
+        database_name:      <database name>
+        database_user:      <database user>
+        database_password:  <database password>

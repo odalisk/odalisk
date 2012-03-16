@@ -30,7 +30,6 @@ all:
         database_name:      symfony
         database_user:      root
         database_password:  ~
-
         mailer_transport:  smtp
         mailer_host:       localhost
         mailer_user:       ~
@@ -47,7 +46,6 @@ all:
         # to locate or/and run third-party binaries or
         # libraries
         bin_java:    /usr/bin/java
-        bin_node:    /usr/bin/node
         bin_ruby:    /usr/bin/ruby
         bin_sass:    /usr/bin/sass
         bin_coffee:  /usr/bin/coffee

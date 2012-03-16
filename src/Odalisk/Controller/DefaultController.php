@@ -16,7 +16,9 @@ class DefaultController extends Controller
      */
     public function index()
     {
+        error_log($this->container->getParameter('maintenance'));
         // put action your code here
+        
         if($this->container->getParameter('maintenance') == true)
         {
             return $this->render('App:Default:maintenance.html.twig');

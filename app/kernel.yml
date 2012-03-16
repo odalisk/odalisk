@@ -51,6 +51,10 @@ all:
         bin_coffee:  /usr/bin/coffee
         bin_yui:     /usr/bin/yuicompressor.jar
 
+prod:
+    parameters:
+        maintenance: true
+
 dev:
     bundles:
         - Symfony\Bundle\WebProfilerBundle\WebProfilerBundle

@@ -2,7 +2,6 @@
     "require": {
         "knplabs/rad-bundle": "dev-master",
 		"sensio/buzz-bundle": "dev-master",
-		"doctrine/orm": "2.1.x-dev",
-		"twitter/bootstrap-2.0": "2.0"
+		"doctrine/orm": "2.1.x-dev"
     }
 }

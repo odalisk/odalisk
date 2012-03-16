@@ -3,8 +3,87 @@
  *= require bootstrap/bootstrap
  */
 
+/*
+    @import url(http://fonts.googleapis.com/css?family=Pacifico);
+    @import url(http://fonts.googleapis.com/css?family=Raleway:100);
+*/
+
 body {
-    h1 {
-        color:red;
+    
+}
+
+
+#maintenance_mode {
+    position:fixed;
+    width:100%;
+    height:100%;
+    background: -webkit-gradient(linear, left top, left bottom, from(#2ECBFA), to(#2081AD));
+    #center_block {
+        text-align:center;
+        margin-top:100px;
+        h1 {
+            
+          position: relative;
+          margin:auto;
+          width:100%;
+          text-align:center;
+          font-family: 'Pacifico', cursive;
+          font-size: 200px;
+          line-height: 300px;
+          text-shadow: -3px 0 4px RGBa(0,0,0,0.3), 0px 0px 50px RGBa(255,255,255,0.4);
+          }
+        h1 a:link,
+        h1 a:visited,
+        h1 a:hover,
+        h1 a:active {
+            
+            margin-left:-25px;
+            text-decoration:none;
+          position: absolute;
+          top: 0; z-index: 2;
+          color: #fff;
+
+          -webkit-mask-image: -webkit-gradient(linear, left top, 
+            left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+
+            width:700px;
+            display:inline-block;
+          }
+        h1:after {
+          content: "Odalisk";
+          color: #bbb;
+          text-shadow: 3px 3px 1px #888;
+          }
+        
+        /*h1 {
+                    @title-size:200px;
+                    font-family: 'Pacifico', cursive;
+                    font-size:@title-size;
+                    line-height:0px;
+                    background: -webkit-gradient(linear, left top, left bottom, from(#1c89de), to(#115183));
+                    background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#bbb));
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    
+                    
+                }*/
+        
+        
+        
+        h2 {
+            @title-size:60px;
+            font-family: 'Helvetica Neue', cursive;
+            font-weight:100;
+            font-size:@title-size;
+            line-height:@title-size * 1.05;
+            color:#fff;
+            text-align:center;
+            text-shadow: 0px 0px 20px RGBa(255,255,255,0.5);
+        }
     }
+}
+
+
+#test {
+    
 }

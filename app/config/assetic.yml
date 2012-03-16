@@ -35,7 +35,9 @@ all:
         # Less filter. Will be automatically
         # applied to *.less files
         # See: http://lesscss.org/
-        less: { apply_to: "\.less$" }
+        less:
+            apply_to: "\.less$"
+            node_paths: %node_paths%
 
         # Sass filter. Will be automatically
         # applied to *.scss or *.sass files

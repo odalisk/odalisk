@@ -4,3 +4,5 @@ logs/*
 vendor/*
 !.gitkeep
 !vendor/assets
+web/css
+web/js

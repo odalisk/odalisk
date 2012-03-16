@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width">
     {% block stylesheets %}
         {# This uses the "assetic pipeline" - it loads style.* from the application bundle #}
-        {% stylesheets '|style' filter="cssrewrite" %}
+        {% stylesheets '|style' filter="cssrewrite"  %}
             <link rel="stylesheet" href="{{ asset_url }}">
         {% endstylesheets %}
     {% endblock %}

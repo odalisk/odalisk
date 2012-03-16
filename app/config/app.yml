@@ -3,7 +3,8 @@
 # Every parameter here will be automatically transformed into
 # an "app.%s" parameter inside the service container.
 
-all:  ~
+all:
+    maintenance: true
 dev:  ~
 test: ~
 prod: ~

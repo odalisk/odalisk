@@ -1,7 +1,7 @@
 # put your application
 # DIC parameters here
-parameters: ~
-
+parameters: 
+    maintenance: true
 # put your application
 # service definitions here
 services: ~

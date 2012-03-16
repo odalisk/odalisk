@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width">
     {% block stylesheets %}
         {# This uses the "assetic pipeline" - it loads style.* from the application bundle #}
-        {% stylesheets '|style' filter="cssrewrite" %}
+        {% stylesheets '|style' filter="less,cssrewrite" %}
             <link rel="stylesheet" href="{{ asset_url }}">
         {% endstylesheets %}
     {% endblock %}
@@ -25,7 +25,9 @@
 <body>
       <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
-{% block content %}{% endblock %}
+{% block content %}
+
+{% endblock %}
 
 {% block javascripts %}
     {# This uses the "assetic pipeline" - it loads script.* from the application bundle #}

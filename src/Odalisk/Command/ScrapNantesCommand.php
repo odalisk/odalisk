@@ -12,16 +12,14 @@ use Symfony\Component\CssSelector\CssSelector;
 /**
  * A command that will scrap data from the CKAN portal
  */
-class ScrapCKANCommand extends ScrapCommand {
+class ScrapNantesCommand extends ScrapCommand {
     private $xpaths = array(
-        "Owner" => '.separator',
-        /*
-        "Update Frequency" => '//div[@class="tx_icsoddatastore_pi1_updatefrequency separator"]/span[@class="value"]',
-        "Date of publication" => '//div[@class="tx_icsoddatastore_pi1_releasedate separator"]/span[@class="value"]',
-        "Last update" => '//div[@class="tx_icsoddatastore_pi1_updatedate separator"]/span[@class="value"]',
-        "Description" => '//div[@class="tx_icsoddatastore_pi1_description separator"]/span[@class="value"]',
-        "Technical data" => '//div[@class="tx_icsoddatastore_pi1_technical_data separator"]/span[@class="value"]',
-        */
+        'Licence' => '.tx_icsoddatastore_pi1_licence > span.value',
+        'Update Frequency' => '.tx_icsoddatastore_pi1_updatefrequency > span.value',
+        "Date of publication" => '.tx_icsoddatastore_pi1_releasedate > span.value',
+        "Last update" => '.tx_icsoddatastore_pi1_updatedate > span.value',
+        "Description" => '.tx_icsoddatastore_pi1_description > span.value',
+        "Technical data" => '.tx_icsoddatastore_pi1_technical_data > span.value',
     );
     
     protected function configure(){
@@ -35,7 +33,7 @@ class ScrapCKANCommand extends ScrapCommand {
         $output->writeln('<info>This is a demo command fetching some data</info>');
         
         $response = $this->getBuzz()->get(
-            'http://data.nantes.fr/donnees/detail/?' . urlencode('tx_icsoddatastore_pi1[uid]=14'),
+            $this->normalize('http://data.nantes.fr/donnees/detail/?tx_icsoddatastore_pi1[uid]=14'),
             array(
                 'User-agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1',
             )
@@ -43,15 +41,14 @@ class ScrapCKANCommand extends ScrapCommand {
         
         if(200 == $response->getStatusCode()) {
             $html = $response->getContent();
-            $output->writeln($html);
+            //$output->writeln($html);
             $crawler = new Crawler($html);
             
             //$output->writeln($crawler->text());
             
-            foreach($this->xpaths as $criteria => $path) {
+            foreach($this->xpaths as $criterion => $path) {
                 $data = $crawler->filter($path);
-                $output->writeln($path);
-                $output->writeln(print_r($data, TRUE));
+                $output->writeln("<info>[$criterion]</info> " . $data->text());
             }
         } else {
             $output->writeln('<error>Oups! We couldn\'t fetch the data. Got status code ' . $response->getStatusCode() . '</error>');
@@ -114,4 +111,8 @@ class ScrapCKANCommand extends ScrapCommand {
         return $import_more;
     }
     */
+    
+    private function normalize($url) {
+        return str_replace(']', '%5D', str_replace('[', '%5B', $url));
+    }
 }

@@ -4,5 +4,6 @@ logs/*
 vendor/*
 !.gitkeep
 !vendor/assets
+!vendor/twitter
 web/css/*
 web/js/*

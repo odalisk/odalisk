@@ -4,17 +4,17 @@
         {
             "package": "doctrine/common",
             "version": "2.1.x-dev",
-            "source-reference": "f78df1166ce28ceb38df4b43cb967137ae538cf4"
+            "source-reference": "41794945e795e108060eddb3342c9e13524b9b3e"
         },
         {
             "package": "doctrine/dbal",
             "version": "2.1.x-dev",
-            "source-reference": "2.1.6"
+            "source-reference": "92c0fbf2a979be8a3c59e9e60476d73ff7a65934"
         },
         {
             "package": "doctrine/orm",
             "version": "2.1.x-dev",
-            "source-reference": "734629af0831f59bf68d08ba56670a72676c917a"
+            "source-reference": "cab10eb96d57573fa9b6381fef0b6d6ac8039454"
         },
         {
             "package": "knplabs/rad-bundle",
@@ -24,7 +24,7 @@
         {
             "package": "kriswallsmith/assetic",
             "version": "1.0.x-dev",
-            "source-reference": "v1.0.3"
+            "source-reference": "5f9935d352f7be19f1b78199023e6749a5d5a7ed"
         },
         {
             "package": "kriswallsmith/buzz",
@@ -65,6 +65,10 @@
         {
             "package": "twig/twig",
             "version": "1.6.1"
+        },
+        {
+            "package": "twitter/bootstrap",
+            "version": "2.0"
         }
     ],
     "aliases": []

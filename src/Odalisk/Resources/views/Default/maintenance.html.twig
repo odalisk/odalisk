@@ -12,7 +12,11 @@
 {% block content %}
     <div id="maintenance_mode">
         <div id="center_block">
-            <h1><a href="#">Odalisk</a></h1>
+            {% image '@App/Resources/public/img/odalisk-logo.png' output='/images/logo.png'
+            %}
+            <img id="logo" src="{{ asset_url }}"/>
+            {% endimage %}
+            
             <h2>Coming soon</h2>
         </div>
     </div>

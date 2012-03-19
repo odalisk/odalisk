@@ -12,9 +12,11 @@
     <meta name="viewport" content="width=device-width">
     {% block stylesheets %}
         {# This uses the "assetic pipeline" - it loads style.* from the application bundle #}
+        
+        <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Raleway:50' rel='stylesheet' type='text/css'>
+        
         {% stylesheets '|style' filter="cssrewrite"  %}
-            <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-            <link href='http://fonts.googleapis.com/css?family=Raleway:50' rel='stylesheet' type='text/css'>
             <link rel="stylesheet" href="{{ asset_url }}">
         {% endstylesheets %}
     {% endblock %}

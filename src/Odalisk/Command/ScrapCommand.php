@@ -34,7 +34,6 @@ abstract class ScrapCommand extends ContainerAwareCommand {
         if(NULL == $this->em) {
             $this->em = $this->getContainer()->get('doctrine')->getEntityManager($managerName);
         }
-
         return $this->em;
     }
 

@@ -18,6 +18,9 @@ class DefaultController extends Controller
     {
         // put action your code here
         
-        return array('name' => 'Julien Sanchez');
+        return array(
+            'name' => 'Julien Sanchez',
+            'maintenance_status' => $this->container->getParameter('app.maintenance'),
+        );
     }
 }

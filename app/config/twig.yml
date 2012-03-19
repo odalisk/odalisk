@@ -4,8 +4,6 @@
 # Config: http://bit.ly/twig-ref
 
 all:
-    globals:
-        maintenance_status: %maintenance_status%
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
 

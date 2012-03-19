@@ -1,5 +1,5 @@
 {
-    "hash": "54b537eccf0618682ba52a971f9101c6",
+    "hash": "5e50c55c291f6dde7ac3719b00c9bd85",
     "packages": [
         {
             "package": "doctrine/common",
@@ -17,11 +17,6 @@
             "source-reference": "cab10eb96d57573fa9b6381fef0b6d6ac8039454"
         },
         {
-            "package": "knplabs/rad-bundle",
-            "version": "dev-master",
-            "source-reference": "17e8262b149146a301fe403640e77939a41bbfd6"
-        },
-        {
             "package": "kriswallsmith/assetic",
             "version": "1.0.x-dev",
             "source-reference": "5f9935d352f7be19f1b78199023e6749a5d5a7ed"
@@ -33,6 +28,10 @@
         {
             "package": "monolog/monolog",
             "version": "1.0.2"
+        },
+        {
+            "package": "odalisk/knpradbundle",
+            "version": "1.0"
         },
         {
             "package": "sensio/buzz-bundle",
@@ -55,7 +54,7 @@
         },
         {
             "package": "symfony/symfony",
-            "version": "v2.0.11"
+            "version": "v2.0.12"
         },
         {
             "package": "twig/extensions",
@@ -64,11 +63,7 @@
         },
         {
             "package": "twig/twig",
-            "version": "1.6.1"
-        },
-        {
-            "package": "twitter/bootstrap",
-            "version": "2.0"
+            "version": "1.6.2"
         }
     ],
     "aliases": []

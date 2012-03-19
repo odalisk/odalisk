@@ -5,6 +5,7 @@
 
 all:
     maintenance: true
+prod: ~
 dev:  ~
 test: ~
 prod: ~

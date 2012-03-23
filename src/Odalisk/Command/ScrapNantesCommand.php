@@ -10,7 +10,7 @@ use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\CssSelector\CssSelector;
 
 /**
- * A command that will scrap data from the CKAN portal
+ * A command that will scrap data from the Nantes' portal
  */
 class ScrapNantesCommand extends ScrapCommand {
     private $xpaths = array(

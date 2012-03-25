@@ -22,6 +22,13 @@ abstract class ScrapCommand extends ContainerAwareCommand {
      */
     private $em;
     
+    protected function configure(){
+        $this
+            ->setName('odalisk:scrap:' . strtolower(get_class($this)))
+            ->setDescription('Not yet implemented')
+        ;
+    }
+    
     protected function getBuzz() {
         if(NULL == $this->buzz) {
             $this->buzz = $this->getContainer()->get('buzz');

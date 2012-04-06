@@ -29,14 +29,14 @@ cd ..
 ./console doctrine:schema:create
 ```
 
-To initialize the prod environment you just have to dump the assets :
+To initialize the dev environment you just have to dump the assets :
 
 ```bash
 ./console assets:install
 ./console assetic:dump
 ```
 
-Now just point your virtualhost to ```bash path/to/your/project/web ``` and you're good to go.
+Now just point your virtualhost to ``` path/to/your/project/web ``` and you're good to go.
 
 Some useful pointers to get started
 -----------------------------------

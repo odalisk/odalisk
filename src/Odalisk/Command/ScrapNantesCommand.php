@@ -5,54 +5,64 @@ namespace Odalisk\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\FormatterHelper;
 
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\CssSelector\CssSelector;
 
+use Odalisk\Scraper\Nantes\NantesPortal;
+
 /**
- * A command that will scrap data from the CKAN portal
+ * A command that will scrap data from the Nantes' portal
  */
 class ScrapNantesCommand extends ScrapCommand {
-    private $xpaths = array(
-        'Licence' => '.tx_icsoddatastore_pi1_licence > span.value',
-        'Update Frequency' => '.tx_icsoddatastore_pi1_updatefrequency > span.value',
-        "Date of publication" => '.tx_icsoddatastore_pi1_releasedate > span.value',
-        "Last update" => '.tx_icsoddatastore_pi1_updatedate > span.value',
-        "Description" => '.tx_icsoddatastore_pi1_description > span.value',
-        "Technical data" => '.tx_icsoddatastore_pi1_technical_data > span.value',
-    );
-    
     protected function configure(){
         $this
             ->setName('odalisk:scrap:nantes')
-            ->setDescription('Fetch some data from ckan.org')
+            ->setDescription('Fetch some data from data.nantes.fr')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        $output->writeln('<info>This is a demo command fetching some data</info>');
-        
-        $response = $this->getBuzz()->get(
-            $this->normalize('http://data.nantes.fr/donnees/detail/?tx_icsoddatastore_pi1[uid]=14'),
-            array(
-                'User-agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1',
+        $formatter = new FormatterHelper();
+        $output->writeln($formatter->formatBlock(
+                'Scraping data.nantes.fr',
+                'bg=blue;fg=white',
+                TRUE
             )
         );
         
-        if(200 == $response->getStatusCode()) {
-            $html = $response->getContent();
-            //$output->writeln($html);
-            $crawler = new Crawler($html);
-            
-            //$output->writeln($crawler->text());
-            
-            foreach($this->xpaths as $criterion => $path) {
-                $data = $crawler->filter($path);
-                $output->writeln("<info>[$criterion]</info> " . $data->text());
-            }
-        } else {
-            $output->writeln('<error>Oups! We couldn\'t fetch the data. Got status code ' . $response->getStatusCode() . '</error>');
+        $portal = new NantesPortal($this->getBuzz());
+        $count = 0;
+        $start = time();
+        
+        foreach($portal->getDatasets() as $dataset) {
+             $output->writeln('<info>' . $dataset->url . '</info>');
+             if(!$dataset->fetch()) {
+                 $dataset->fetch(15);
+             }
+             if(!$dataset->isEmpty()) {
+                if($dataset->parse()) {
+                    ++$count;
+                    $criteria = $dataset->getData();
+                    foreach($criteria as $criterion => $value) {
+                        $output->writeln("<info>[$criterion]</info> " . $value);
+                    }
+                } else {
+                    $output->writeln('<error>Got empty page</error>');
+                }
+             } else {
+                 $output->writeln('<error>Fetch error</error>');
+             }
         }
+        $end = time();
+        
+        $output->writeln($formatter->formatBlock(
+                'Scraped ' . $count . ' datasets in ' . ($end - $start) . ' seconds.',
+                'bg=blue;fg=white',
+                TRUE
+            )
+        );
     }
     /*
     protected function persistMatches(&$teams, $newest) {

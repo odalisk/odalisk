@@ -1,6 +1,5 @@
 /*
  *= require libs/boilerplate
- *= require bootstrap/bootstrap
  */
 
 /*
@@ -8,15 +7,50 @@
     @import url(http://fonts.googleapis.com/css?family=Raleway:100);
 */
 
+@import "../../../../../vendor/assets/css/bootstrap/bootstrap.less";
+
 body {
     
+    .navbar {
+        .brand {
+            font-family: Pacifico, cursive;
+            font-size:28px;
+        }
+        
+    }
+    
+    .row-fluid {
+        margin-top:60px;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #maintenance_mode {
     position:fixed;
     width:100%;
     height:100%;
+    background-color:#2ECBFA;
     background-image:url('/bundles/app/img/noise.png'), -webkit-gradient(linear, left top, left bottom, from(#2ECBFA), to(#2081AD));
     #center_block {
         text-align:center;

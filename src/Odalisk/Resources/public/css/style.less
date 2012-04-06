@@ -1,6 +1,5 @@
 /*
  *= require libs/boilerplate
- *= require bootstrap/bootstrap
  */
 
 /*
@@ -8,9 +7,52 @@
     @import url(http://fonts.googleapis.com/css?family=Raleway:100);
 */
 
+@import "../../../../../vendor/assets/css/bootstrap/bootstrap.less";
+
 body {
     
+    .navbar {
+        .brand {
+            font-family: Pacifico, cursive;
+            font-size:28px;
+            line-height:30px;
+            color:#2ECBFA;
+            background: -webkit-gradient(linear, left top, left bottom, from(#2ECBFA), to(#2081AD));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav > li > a {
+            text-shadow:none;
+            font-weight:bold;
+        }
+    }
+    
+    .row-fluid {
+        margin-top:60px;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #maintenance_mode {

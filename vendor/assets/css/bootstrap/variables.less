@@ -12,9 +12,9 @@
 // -------------------------
 @black:                 #000;
 @grayDarker:            #222;
-@grayDark:              #333;
-@gray:                  #555;
-@grayLight:             #999;
+@grayDark:              #555;
+@gray:                  #777;
+@grayLight:             #ccc;
 @grayLighter:           #eee;
 @white:                 #fff;
 
@@ -22,7 +22,9 @@
 // Accent colors
 // -------------------------
 @blue:                  #049cdb;
+@blue:                  #1C89DE;
 @blueDark:              #0064cd;
+@blueDark:              darken(#1C89DE,20%);
 @green:                 #46a546;
 @red:                   #9d261d;
 @yellow:                #ffc40d;
@@ -139,15 +141,15 @@
 
 // Navbar
 // -------------------------
-@navbarHeight:                    40px;
-@navbarBackground:                @grayDarker;
-@navbarBackgroundHighlight:       @grayDark;
+@navbarHeight:                    50px;
+@navbarBackground:                @grayLight;
+@navbarBackgroundHighlight:       @grayLighter;
 
 @navbarText:                      @grayLight;
-@navbarLinkColor:                 @grayLight;
-@navbarLinkColorHover:            @white;
+@navbarLinkColor:                 @grayDark;
+@navbarLinkColorHover:            @grayDarker;
 @navbarLinkColorActive:           @navbarLinkColorHover;
-@navbarLinkBackgroundHover:       transparent;
+@navbarLinkBackgroundHover:       #aaa;
 @navbarLinkBackgroundActive:      @navbarBackground;
 
 @navbarSearchBackground:          lighten(@navbarBackground, 25%);

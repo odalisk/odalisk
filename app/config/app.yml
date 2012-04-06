@@ -4,7 +4,7 @@
 # an "app.%s" parameter inside the service container.
 
 all:
-    maintenance: false
+    maintenance: true
 prod: ~
 dev:  ~
 test: ~

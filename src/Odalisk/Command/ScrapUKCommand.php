@@ -5,11 +5,10 @@ namespace Odalisk\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\FormatterHelper;
 
 use Symfony\Component\DomCrawler\Crawler;
-use Symfony\Component\CssSelector\CssSelector;
 
+use Odalisk\Scraper\Tools\RequestDispatcher;
 use Odalisk\Scraper\UK\UkPortal;
 
 /**
@@ -24,46 +23,50 @@ class ScrapUkCommand extends ScrapCommand {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        $formatter = new FormatterHelper();
-        $this->writeBlock($output, $formatter, 'Scraping data.gov.uk');
-        
-        $portal = new UkPortal($this->getBuzz());
         $count = 0;
-        $start = time();
+        $start = time();        
+        $this->writeBlock($output, 'Scraping data.gov.uk');
         
-        foreach($portal->getDatasets() as $dataset) {
-             $output->writeln('<info>' . $dataset->url . '</info>');
-             if(!$dataset->fetch()) {
-                 $dataset->fetch(15);
-             }
-             if(!$dataset->isEmpty()) {
-                if($dataset->parse()) {
+        // Create the portal object, that knows how to generate the urls for the datasets.
+        $portal = new UkPortal($this->getBuzz());
+        
+        // We got about 8000 datasets, so we process them in batches of 500 to keep the memory footprint within
+        // acceptable limits (256 Mo)
+        $chunks = array_chunk($portal->getDatasetsUrls(), 500);
+        
+        foreach($chunks as $urls) {
+            // Create a new request dispatcher that will parallelize the process (somewhat)
+            $dispatcher = new RequestDispatcher();
+            $dispatcher->batchGet($urls);
+            $dispatcher->flush('Odalisk\Scraper\UK\UkPortal::parseDataset', 20);
+        
+            // We got everything back, time to process it.
+            // Right now, we simply display it on the standard output, but that would be a good place
+            // to persist the data in the database
+            $datasets = $portal->getDatasetsData();
+            foreach($datasets as $dataset => $criteria) {
+                if(NULL != $criteria) {
                     ++$count;
-                    if(0 == $count % 50) {
-                        $this->writeBlock($output, $formatter, 'Scraped ' . $count . ' datasets in ' . (time() - $start) . ' seconds.');
-                    }
-                    $criteria = $dataset->getData();
+                    $output->writeln('<info>' . $dataset . '</info>');
                     foreach($criteria as $criterion => $value) {
                         $output->writeln("<info>[$criterion]</info> " . $value);
                     }
+                    
+                    $this->collectStats($criteria);
+                    
+                    // Remove the processed dataset from the index (to free up some memory)
+                    $portal->removeDataset($dataset);
                 } else {
-                    $output->writeln('<error>Got empty page</error>');
+                    // We don't want to display datasets that haven't been processed yet
+                    break;
                 }
-             } else {
-                 $output->writeln('<error>Fetch error</error>');
-             }
+            }
         }
+        
         $end = time();
         
-        $this->writeBlock($ouptut, $formatter, 'Scraped ' . $count . ' datasets in ' . ($end - $start) . ' seconds.');
-    }
-    
-    public function writeBlock(OutputInterface $output, FormatterHelper $formatter, $message) {
-        $output->writeln($formatter->formatBlock(
-                $message,
-                'bg=blue;fg=white',
-                TRUE
-            )
-        );
+        $this->writeBlock($output, 'Scraped ' . $count . ' datasets in ' . ($end - $start) . ' seconds.');
+        // Display how many of each return code we got
+        $this->printStats($output);
     }
 }

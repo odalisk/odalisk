@@ -33,7 +33,6 @@ class ScrapNantesCommand extends ScrapCommand {
         $dispatcher = new RequestDispatcher();
         $dispatcher->batchGet($portal->getDatasetsUrls());
         $dispatcher->flush('Odalisk\Scraper\Nantes\NantesPortal::parseDataset');
-        
         foreach($portal->getDatasetsData() as $dataset => $criteria) {
             ++$count;
             $output->writeln('<info>' . $dataset . '</info>');

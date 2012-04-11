@@ -18,12 +18,12 @@ class NantesPortal extends BasePortal {
         'Category' => '.tx_icsoddatastore_pi1_categories > span.value',
         'Licence' => '.tx_icsoddatastore_pi1_licence > span.value',
         'Update Frequency' => '.tx_icsoddatastore_pi1_updatefrequency > span.value',
-        "Date of publication" => '.tx_icsoddatastore_pi1_releasedate > span.value',
-        "Last update" => '.tx_icsoddatastore_pi1_updatedate > span.value',
-        "Description" => '.tx_icsoddatastore_pi1_description > span.value',
+        'Date of publication' => '.tx_icsoddatastore_pi1_releasedate > span.value',
+        'Last update' => '.tx_icsoddatastore_pi1_updatedate > span.value',
+        'Description' => '.tx_icsoddatastore_pi1_description > span.value',
         'Manager' => '.tx_icsoddatastore_pi1_manager > span.value',
         'Owner' => '.tx_icsoddatastore_pi1_owner > span.value',
-        "Technical data" => '.tx_icsoddatastore_pi1_technical_data > span.value',
+        'Technical data' => '.tx_icsoddatastore_pi1_technical_data > span.value',
     );
     
     private static $datasets = array();

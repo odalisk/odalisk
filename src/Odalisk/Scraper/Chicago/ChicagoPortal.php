@@ -14,8 +14,9 @@ use Buzz\Message;
 class ChicagoPortal extends BasePortal {
 
     private $datasets_api_url = 'http://data.cityofchicago.org/api/views/7eck-a4hy/rows.json';
-    
+
     private static $criteria = array(
+        'Creation' => '//span[@class="aboutCreateDate"]/span',
         'Description' => '//div[@class="aboutDataset"]/div[2]/div/p',
         'Last update' => '//span[@class="aboutUpdateDate"]/span',
         'Category' => '//div[@class="aboutDataset"]/div[4]/dl/dd[1]',
@@ -25,9 +26,13 @@ class ChicagoPortal extends BasePortal {
         'Data Owner' => '//div[@class="aboutDataset"]/div[8]/dl/dd[1]/span',
         'Time Period' => '//div[@class="aboutDataset"]/div[8]/dl/dd[2]/span',
         'Frequency' => '//div[@class="aboutDataset"]/div[8]/dl/dd[3]/span',
-        'Community Rating' => '//div[@class="aboutDataset"]/div[3]/dl/dd[1]/div',
+        'Community Rating' => '//div[@class="aboutDataset"]/div[3]/dl/dd[1]/div',  
     );
-    
+
+    // All dataset are available in this format 
+    // Moreover, use of javascript on the website, doesn't allow to get them automatically.
+    private static $formats = array("CSV","XLS","XLSX","XML","JSON","RDF","RSS","PDF");
+
     private static $datasets = array();
     
     private static $i = 0;
@@ -68,11 +73,15 @@ class ChicagoPortal extends BasePortal {
             'code' => $response->getStatusCode(),
         );
         
+  
         if(200 == $data['code']) {
-            $crawler = new Crawler($response->getContent());
+            $content = preg_replace("/((\n|\r|\t|\n\r)(\ )+)/","",$response->getContent());
+            $crawler = new Crawler($content);
             if(0 == count($crawler)) {
                 $data['empty'] = TRUE;
             } else {
+
+                #About section
                 foreach(self::$criteria as $name => $path) {
                     $node = $crawler->filterXPath($path);
                     
@@ -81,13 +90,19 @@ class ChicagoPortal extends BasePortal {
                     }        
                 }
             }
+          
+                $data['Format'] = implode(" ", self::$formats); 
+            
         }
-        
         self::$datasets[$data['url']] = $data;
         
         if(0 == self::$i % 100) {
            error_log('>>>> ' . self::$i . ' done, ' . count(self::$datasets) . ' to go.');
         }
+    }
+
+    public static function parseDatasetCriteria($datasetUrl, Message\Request $request, Message\Response $response){
+    
     }
     
     public function removeDataset($dataset) {

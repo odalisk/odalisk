@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Odalisk\Scraper\Socrata\NYPortal;
 
-class NYCommand extends ScrapSocrataTypeCommand {
+class ScrapNYCommand extends ScrapSocrataTypeCommand {
     protected function configure(){
         $this
             ->setName('odalisk:scrap:ny')

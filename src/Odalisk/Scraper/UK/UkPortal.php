@@ -12,18 +12,20 @@ use Buzz\Message;
  * The scraper for data.nantes.fr
  */
 class UkPortal extends BasePortal {
-    protected $datasets_api_url = 'http://catalogue.data.gov.uk/api/rest/dataset';
-    
     private static $criteria = array(
         'name' => 'h1.title',
     );
     
-    private static $datasets = array();
-    
     private static $i = 0;
     
+    protected static $datasets = array();
+
     public function __construct($buzz) {
-        parent::__construct($buzz, 'http://data.gov.uk/dataset/');
+        parent::__construct(
+				$buzz
+				, 'http://data.gov.uk/dataset/'
+				, 'http://catalogue.data.gov.uk/api/rest/dataset'
+			);
     }
     
     public function getDatasetsData() {

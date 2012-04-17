@@ -1,6 +1,6 @@
 <?php
 
-namespace Odalisk\Scraper\Nantes;
+namespace Odalisk\Scraper\Socrata;
 
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -8,56 +8,54 @@ use Odalisk\Scraper\BasePortal;
 
 use Buzz\Message;
 
-/**
- * The scraper for data.nantes.fr
- */
-class NantesPortal extends BasePortal {
-    private static $criteria = array(
-        'Category' => '.tx_icsoddatastore_pi1_categories > span.value',
-        'Licence' => '.tx_icsoddatastore_pi1_licence > span.value',
-        'Update Frequency' => '.tx_icsoddatastore_pi1_updatefrequency > span.value',
-        'Date of publication' => '.tx_icsoddatastore_pi1_releasedate > span.value',
-        'Last update' => '.tx_icsoddatastore_pi1_updatedate > span.value',
-        'Description' => '.tx_icsoddatastore_pi1_description > span.value',
-        'Manager' => '.tx_icsoddatastore_pi1_manager > span.value',
-        'Owner' => '.tx_icsoddatastore_pi1_owner > span.value',
-        'Technical data' => '.tx_icsoddatastore_pi1_technical_data > span.value',
-    );
-    
-    protected static $datasets = array();
+abstract class SocrataTypePortal extends BasePortal {
 
     private static $i = 0;
     
-    public function __construct($buzz) {
-        parent::__construct(
-				$buzz
-				, 'http://data.nantes.fr/donnees/detail/'
-				, 'http://data.nantes.fr/api/datastore_searchdatasets/1.0/39W9VSNCSASEOGV/?output=json'
-			);
-    }
+    private static $criteria = array(
+        'Creation' => '//span[@class="aboutCreateDate"]/span',
+        'Description' => '//div[@class="aboutDataset"]/div[2]/div/p',
+        'Last update' => '//span[@class="aboutUpdateDate"]/span',
+        'Category' => '//div[@class="aboutDataset"]/div[4]/dl/dd[1]',
+        'Tags' => '//div[@class="aboutDataset"]/div[4]/dl/dd[3]',
+        'Permissions' => '//div[@class="aboutDataset"]/div[4]/dl/dd[2]',
+        'Data Provider' => '//div[@class="aboutDataset"]/div[7]/dl/dd[1]',
+        'Data Owner' => '//div[@class="aboutDataset"]/div[8]/dl/dd[1]/span',
+        'Time Period' => '//div[@class="aboutDataset"]/div[8]/dl/dd[2]/span',
+        'Frequency' => '//div[@class="aboutDataset"]/div[8]/dl/dd[3]/span',
+        'Community Rating' => '//div[@class="aboutDataset"]/div[3]/dl/dd[1]/div',  
+    );
+
+    protected static $datasets = array();
+
+	private static $datasets_number = 18776;
     
+    public function __construct($buzz, $base_url, $datasets_api_url = '') {
+        parent::__construct($buzz, $base_url, $datasets_api_url);
+    }
+
     public function getDatasetsData() {
         return self::$datasets;
     }
     
     public function getDatasetsUrls() {
         // Get the paths
-        $this->buzz->getClient()->setTimeout(10);
+        $this->buzz->getClient()->setTimeout(30);
         $response = $this->buzz->get(
             $this->datasets_api_url,
             $this->buzz_options
         );
         if(200 == $response->getStatusCode()) {
             $data = json_decode($response->getContent());
-            foreach($data->opendata->answer->data->dataset as $dataset) {
-                self::$datasets[$this->sanitize($this->base_url . '?tx_icsoddatastore_pi1[uid]=' . $dataset->id)] = NULL;
+            foreach($data as $dataset) {
+                self::$datasets[$this->base_url . $dataset->id] = NULL;
             }
         } else {
             throw new \RuntimeException('Couldn\'t fetch list of datasets');
-        }      
+        }     
         
         return array_keys(self::$datasets);
-    }
+	}
     
     public static function parseDataset(Message\Request $request, Message\Response $response) {
         $data = array(
@@ -72,7 +70,7 @@ class NantesPortal extends BasePortal {
                 $data['empty'] = TRUE;
             } else {
                 foreach(self::$criteria as $name => $path) {
-                    $node = $crawler->filter($path);
+                    $node = $crawler->filterXPath($path);
                     if(0 != count($node)) {
                        $data[$name] = $node->text();
                     }        
@@ -87,7 +85,7 @@ class NantesPortal extends BasePortal {
         }
     }
     
-    public function sanitize($url) {
-        return str_replace(']', '%5D', str_replace('[', '%5B', $url));
+    public function removeDataset($dataset) {
+        unset(self::$datasets[$dataset]);
     }
 }

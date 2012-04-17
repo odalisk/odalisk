@@ -13,8 +13,6 @@ use Buzz\Message;
  */
 class ChicagoPortal extends BasePortal {
 
-    protected $datasets_api_url = 'http://data.cityofchicago.org/api/views/7eck-a4hy/rows.json';
-
     private static $criteria = array(
         'Creation' => '//span[@class="aboutCreateDate"]/span',
         'Description' => '//div[@class="aboutDataset"]/div[2]/div/p',
@@ -29,16 +27,20 @@ class ChicagoPortal extends BasePortal {
         'Community Rating' => '//div[@class="aboutDataset"]/div[3]/dl/dd[1]/div',  
     );
 
+    protected static $datasets = array();
+
     // All dataset are available in this format 
     // Moreover, use of javascript on the website, doesn't allow to get them automatically.
     private static $formats = array("CSV","XLS","XLSX","XML","JSON","RDF","RSS","PDF");
 
-    private static $datasets = array();
-    
     private static $i = 0;
     
     public function __construct($buzz) {
-        parent::__construct($buzz, 'https://data.cityofchicago.org/');
+        parent::__construct(
+				$buzz
+				, 'https://data.cityofchicago.org/'
+				, 'http://data.cityofchicago.org/api/views/7eck-a4hy/rows.json'
+			);
     }
     
     public function getDatasetsData() {

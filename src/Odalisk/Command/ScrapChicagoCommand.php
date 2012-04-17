@@ -11,6 +11,8 @@ use Symfony\Component\DomCrawler\Crawler;
 use Odalisk\Scraper\Tools\RequestDispatcher;
 use Odalisk\Scraper\Chicago\ChicagoPortal;
 
+use Odalisk\Command\Socrata\ScrapSocrataTypeCommand;
+
 /**
  * A command that will scrap data from the platform of the city of Chicago.
  */

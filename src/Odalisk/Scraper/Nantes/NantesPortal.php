@@ -12,7 +12,7 @@ use Buzz\Message;
  * The scraper for data.nantes.fr
  */
 class NantesPortal extends BasePortal {
-    private $datasets_api_url = 'http://data.nantes.fr/api/datastore_searchdatasets/1.0/39W9VSNCSASEOGV/?output=json';
+    protected $datasets_api_url = 'http://data.nantes.fr/api/datastore_searchdatasets/1.0/39W9VSNCSASEOGV/?output=json';
     
     private static $criteria = array(
         'Category' => '.tx_icsoddatastore_pi1_categories > span.value',

@@ -19,29 +19,35 @@ class Portal
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string $url
      *
      * @ORM\Column(name="url", type="string", length=255)
      */
-    private $url;
+    protected $url;
+
+    /**
+     * @var string $base_url
+     *
+     * @ORM\Column(name="base_url", type="string", length=255)
+     */
+    protected $base_url;
 
     /**
      * @var datetime $crawled_at
      *
-     * @ORM\Column(name="crawled_at", type="datetime")
+     * @ORM\Column(name="crawled_at", type="datetime", nullable=TRUE)
      */
-    private $crawled_at;
-
+    protected $crawled_at = NULL;
 
     /**
      * Get id
@@ -111,5 +117,25 @@ class Portal
     public function getCrawledAt()
     {
         return $this->crawled_at;
+    }
+
+    /**
+     * Set base_url
+     *
+     * @param string $baseUrl
+     */
+    public function setBaseUrl($baseUrl)
+    {
+        $this->base_url = $baseUrl;
+    }
+
+    /**
+     * Get base_url
+     *
+     * @return string 
+     */
+    public function getBaseUrl()
+    {
+        return $this->base_url;
     }
 }

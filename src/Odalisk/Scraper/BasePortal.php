@@ -7,6 +7,11 @@ abstract class BasePortal {
     protected $buzz;
     
     protected $buzz_options = array();
+
+	/**
+	 * The portal url
+	 */
+	protected $url;
     
 	/**
 	 * The base of a dataset url.

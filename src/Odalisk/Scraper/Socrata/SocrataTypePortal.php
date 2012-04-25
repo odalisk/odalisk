@@ -10,8 +10,13 @@ use Buzz\Message;
 
 abstract class SocrataTypePortal extends BasePortal {
 
+	/**
+	 * the Portal entity.
+	 */
+	protected static $portalEntity = NULL;
+
     private static $i = 0;
-    
+
     private static $criteria = array(
         'Creation' => '//span[@class="aboutCreateDate"]/span',
         'Description' => '//div[@class="aboutDataset"]/div[2]/div/p',
@@ -30,7 +35,7 @@ abstract class SocrataTypePortal extends BasePortal {
 
 	private static $datasets_number = 18776;
     
-    public function __construct($buzz, $base_url, $datasets_api_url = '') {
+    public function __construct($buzz, $base_url, $datasets_api_url) {
         parent::__construct($buzz, $base_url, $datasets_api_url);
     }
 
@@ -88,4 +93,6 @@ abstract class SocrataTypePortal extends BasePortal {
     public function removeDataset($dataset) {
         unset(self::$datasets[$dataset]);
     }
+
+	abstract public static function portalEntity();
 }

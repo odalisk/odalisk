@@ -29,6 +29,13 @@ class Portal
     protected $name;
 
     /**
+     * @var string $class_name
+     *
+     * @ORM\Column(name="class_name", type="string", length=255)
+     */
+    protected $class_name;
+
+    /**
      * @var string $url
      *
      * @ORM\Column(name="url", type="string", length=255)

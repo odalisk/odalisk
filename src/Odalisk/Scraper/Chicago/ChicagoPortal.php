@@ -4,14 +4,14 @@ namespace Odalisk\Scraper\Chicago;
 
 use Symfony\Component\DomCrawler\Crawler;
 
-use Odalisk\Scraper\BasePortal;
+use Odalisk\Scraper\BasePlatform;
 
 use Buzz\Message;
 
 /**
  * The scraper for data.cityofchicago.org
  */
-class ChicagoPortal extends BasePortal {
+class ChicagoPortal extends BasePlatform {
 
     private static $criteria = array(
         'Creation' => '//span[@class="aboutCreateDate"]/span',

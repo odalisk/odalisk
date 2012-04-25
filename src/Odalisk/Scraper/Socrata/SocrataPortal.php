@@ -4,7 +4,7 @@ namespace Odalisk\Scraper\Socrata;
 
 use Symfony\Component\DomCrawler\Crawler;
 
-use Odalisk\Scraper\BasePortal;
+use Odalisk\Scraper\BasePlatform;
 
 use Buzz\Message;
 

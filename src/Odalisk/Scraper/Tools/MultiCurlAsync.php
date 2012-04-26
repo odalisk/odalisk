@@ -8,6 +8,8 @@ use Buzz\Client\Curl;
 
 /**
  * An "asynchronous" cURL client for Buzz
+ * 
+ * Acknolegdement : This work was inspired by https://github.com/LionsAd/rolling-curl
  */
 class MultiCurlAsync extends Curl {
     
@@ -27,12 +29,6 @@ class MultiCurlAsync extends Curl {
     private $request_map = array();
     
     /**
-     * The window size (ie. how many concurrent requests do we fire?)
-     * RESPECT the servers, if you overdo it it closely resembles a DDoS attack
-     */
-    private $window_size = 5;
-    
-    /**
      * Initializes the cURL multi handle
      */
     public function __construct() {
@@ -48,9 +44,9 @@ class MultiCurlAsync extends Curl {
      * @param Response $response The response.
      * @return void
      */
-    public function send(Message\Request $request, Message\Response $response)
+    public function queue(Message\Request $request, Message\Response $response, $callback)
     {
-        $this->queue[] = array($request, $response);
+        $this->queue[] = array($request, $response, $callback);
     }
     
     /**
@@ -61,24 +57,14 @@ class MultiCurlAsync extends Curl {
      * @param string $window_size How many concurrent requests do we fire?
      * @return void
      */
-    public function flush($callback, $window_size = NULL) {
-        // Check that the callback is valid, otherwise we work for nothing
-        if(!is_callable($callback)) {
-            throw new RuntimeException('The provided callback is not callable.');
-        }
-        
-        // Check if we have a custom window size
-        if ($window_size) {
-            $this->window_size = $window_size;
-        }
-        
+    public function flush($window_size) {
         // Check that the window size doesn't exceed the number of requests in the queue
-        if($this->window_size > $queue_size = count($this->queue)) {
-            $this->window_size = $queue_size;
+        if($window_size > $queue_size = count($this->queue)) {
+            $window_size = $queue_size;
         }
         
         // Send the first batch of requests
-        for ($i = 0; $i < $this->window_size; $i++) {
+        for ($i = 0; $i < $window_size; $i++) {
             $this->fireRequest($i);
         }
         
@@ -96,12 +82,18 @@ class MultiCurlAsync extends Curl {
             while($done = curl_multi_info_read($this->master)) {
                 // send the return values to the callback function.
 	            $key = (string) $done['handle'];
-                list($request, $response) = $this->queue[$this->request_map[$key]];
-                unset($this->request_map[$key]);
+                list($request, $response, $callback) = $this->queue[$this->request_map[$key]];
+                 // Check that the callback is valid, otherwise we work for nothing
+                if(is_callable($callback)) {
+                    //throw new RuntimeException();
+                    unset($this->request_map[$key]);
                 
-                $response->fromString(static::getLastResponse(curl_multi_getcontent($done['handle'])));
+                    $response->fromString(static::getLastResponse(curl_multi_getcontent($done['handle'])));
                                     
-                call_user_func($callback, $request, $response);
+                    call_user_func($callback, $request, $response);
+                } else {
+                    error_log('[RuntimeError] MultiCurlAsync::flush() > The provided callback is not callable (' . $callback . ').');
+                }
 
                 // Start a new request (it's important to do this before removing the old one)
                 if ($i < count($this->queue) && isset($this->queue[$i])) {

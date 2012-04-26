@@ -9,17 +9,17 @@
         {
             "package": "doctrine/dbal",
             "version": "2.1.x-dev",
-            "source-reference": "92c0fbf2a979be8a3c59e9e60476d73ff7a65934"
+            "source-reference": "9d3625eeb1f7c840d3897d8961e977b554276a1d"
         },
         {
             "package": "doctrine/orm",
             "version": "2.1.x-dev",
-            "source-reference": "cab10eb96d57573fa9b6381fef0b6d6ac8039454"
+            "source-reference": "57acceaff2d2ca5c047a9fed1d5bbc950df81d16"
         },
         {
             "package": "kriswallsmith/assetic",
             "version": "1.0.x-dev",
-            "source-reference": "5f9935d352f7be19f1b78199023e6749a5d5a7ed"
+            "source-reference": "272e14b76f9d638b6cf7d94afa64b3ad9261bb6c"
         },
         {
             "package": "kriswallsmith/buzz",
@@ -36,35 +36,39 @@
         {
             "package": "sensio/buzz-bundle",
             "version": "dev-master",
-            "source-reference": "45e0d283c08bd2ffdb98ead985aa0bdaeeb3a431"
+            "source-reference": "e4d895f85ae770c8b29f29d5ac49e9c2d898f935"
         },
         {
             "package": "sensio/generator-bundle",
-            "version": "2.0-dev",
+            "version": "2.0.x-dev",
             "source-reference": "b1ccb78c1743f30817b0fce9bb5c6baff6ed7bf8"
         },
         {
             "package": "swiftmailer/swiftmailer",
-            "version": "4.1.5"
+            "version": "4.1.6"
         },
         {
             "package": "symfony/assetic-bundle",
-            "version": "2.0-dev",
-            "source-reference": "77c256f53331a60e1c4b4cc4dc476d84da58efaf"
+            "version": "2.0.x-dev",
+            "source-reference": "3515e6f0ab1e628bd9208a0d4316d011511a99cb"
         },
         {
             "package": "symfony/symfony",
-            "version": "v2.0.12"
+            "version": "2.0.x-dev",
+            "source-reference": "48af0ba722c261e643ad32df5e75bdbd588f31c8"
         },
         {
             "package": "twig/extensions",
             "version": "dev-master",
-            "source-reference": "1dfff8e793f50f651c4f74f796c2c68a4aee3147"
+            "source-reference": "4c831657215e51568fcb31bb9142e827f9a69bd5"
         },
         {
             "package": "twig/twig",
-            "version": "1.6.2"
+            "version": "dev-master",
+            "source-reference": "5799a889c03e38a2c6d0b475194ab8c0b8904487",
+            "alias": "1.7.9999999.9999999-dev"
         }
     ],
+    "packages-dev": null,
     "aliases": []
 }

@@ -13,6 +13,8 @@ abstract class BasePortal {
 	protected $url      = '';
 	protected $base_url = '';
 
+	protected $datasets_urls = array();
+
 	/**
 	 * The api url that retrieves urls of all the datasets of the platform.
 	 */
@@ -36,6 +38,9 @@ abstract class BasePortal {
 
 	public function getName() {
 		return($this->name);
+	}
+
+	public function getDatasetsUrls() {
 	}
 
 }

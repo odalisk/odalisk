@@ -145,4 +145,24 @@ class Portal
     {
         return $this->base_url;
     }
+
+    /**
+     * Set class_name
+     *
+     * @param string $className
+     */
+    public function setClassName($className)
+    {
+        $this->class_name = $className;
+    }
+
+    /**
+     * Get class_name
+     *
+     * @return string 
+     */
+    public function getClassName()
+    {
+        return $this->class_name;
+    }
 }

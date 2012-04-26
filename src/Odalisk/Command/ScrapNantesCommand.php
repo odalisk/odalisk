@@ -30,7 +30,7 @@ class ScrapNantesCommand extends ScrapCommand {
         $this->writeBlock($output, 'Scraping data.nantes.fr');
         
         $portal = new NantesPortal($this->getBuzz());
-        $dispatcher = new RequestDispatcher();
+        $dispatcher = $this->getContainer()->get('request_dispatcher');
         $dispatcher->batchGet($portal->getDatasetsUrls());
         $dispatcher->flush('Odalisk\Scraper\Nantes\NantesPortal::parseDataset');
         foreach($portal->getDatasetsData() as $dataset => $criteria) {

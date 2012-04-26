@@ -1,6 +1,39 @@
 # put your application
 # DIC parameters here
-parameters: ~
+parameters:
+    buzz_options:
+        - "User-agent: %app.user_agent%"
+    
+    request_dispatcher.class: Odalisk\Scraper\Tools\RequestDispatcher
+    request_dispatcher.timeout: 10
+    
+    base_platform.class: Odalisk\Scraper\BasePlatform
+
 # put your application
 # service definitions here
-services: ~
+services:
+    request_dispatcher:
+        class: %request_dispatcher.class%
+        arguments:
+            - %buzz_options%
+            - %request_dispatcher.timeout%
+    base_platform:
+        class: %base_platform.class%
+        abstract:  true
+        calls:
+            - [ setBuzz, [ @buzz ] ]
+            - [ setBuzzOptions, [ %buzz_options% ] ]
+    uk_platform:
+        class: Odalisk\Scraper\UK\UkPlatform
+        parent: base_platform
+        calls:
+            - [ setName, [ "data.gov.uk" ] ]
+            - [ setBaseUrl, [ "http://data.gov.uk/dataset/" ] ]
+            - [ setApiUrl, [ "http://catalogue.data.gov.uk/api/rest/dataset" ] ]  
+    nantes_platform:
+        class: Odalisk\Scraper\Nantes\NantesPlatform
+        parent: base_platform
+        calls:
+            - [ setName, [ "data.nantes.fr" ] ]         
+            - [ setBaseUrl, [ "http://data.nantes.fr/donnees/detail/" ] ]
+            - [ setApiUrl, [ "http://data.nantes.fr/api/datastore_searchdatasets/1.0/39W9VSNCSASEOGV/?output=json" ] ]        

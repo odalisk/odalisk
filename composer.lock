@@ -14,7 +14,7 @@
         {
             "package": "doctrine/orm",
             "version": "2.1.x-dev",
-            "source-reference": "57acceaff2d2ca5c047a9fed1d5bbc950df81d16"
+            "source-reference": "07ee8c524984c425dade9baf39911a68c3a9b22a"
         },
         {
             "package": "kriswallsmith/assetic",
@@ -23,11 +23,12 @@
         },
         {
             "package": "kriswallsmith/buzz",
-            "version": "v0.5"
+            "version": "dev-master",
+            "source-reference": "56afab3ec9d8feedc3e3d7a8081c8455ae8b716f"
         },
         {
             "package": "monolog/monolog",
-            "version": "1.0.2"
+            "version": "1.1.0"
         },
         {
             "package": "odalisk/knpradbundle",
@@ -36,7 +37,7 @@
         {
             "package": "sensio/buzz-bundle",
             "version": "dev-master",
-            "source-reference": "e4d895f85ae770c8b29f29d5ac49e9c2d898f935"
+            "source-reference": "c8c0ef65768fddfa28e41cb513b0b9b4dec04ee6"
         },
         {
             "package": "sensio/generator-bundle",
@@ -45,7 +46,9 @@
         },
         {
             "package": "swiftmailer/swiftmailer",
-            "version": "4.1.6"
+            "version": "dev-master",
+            "source-reference": "fb3e0b49df4ee888ee1a89b6e0b8b2a466c497cc",
+            "alias": "4.1.9999999.9999999-dev"
         },
         {
             "package": "symfony/assetic-bundle",
@@ -55,18 +58,18 @@
         {
             "package": "symfony/symfony",
             "version": "2.0.x-dev",
-            "source-reference": "48af0ba722c261e643ad32df5e75bdbd588f31c8"
+            "source-reference": "bd112816016fd9dae2f9619d8461eebdae15ff52"
         },
         {
             "package": "twig/extensions",
             "version": "dev-master",
-            "source-reference": "4c831657215e51568fcb31bb9142e827f9a69bd5"
+            "source-reference": "446d870272cd87a720e95242eade38a2acf56eaa"
         },
         {
             "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "5799a889c03e38a2c6d0b475194ab8c0b8904487",
-            "alias": "1.7.9999999.9999999-dev"
+            "source-reference": "f3491b5cbfd03a31538b6e8c82d65cd54996e870",
+            "alias": "1.8.9999999.9999999-dev"
         }
     ],
     "packages-dev": null,

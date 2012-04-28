@@ -1,13 +1,14 @@
 <?php
 
-namespace Odalisk\Scraper\Nantes;
+namespace Odalisk\Scraper\InCiteSolution;
 
 use Odalisk\Scraper\BasePlatform;
 
 /**
- * The scraper for data.nantes.fr
+ * The scraper for in cite Solution Plateform
  */
-class NantesPlatform extends BasePlatform {
+abstract class BaseInCiteSolution extends BasePlatform {
+
     public function __construct() {
         $this->criteria = array(
             'Category' => '.tx_icsoddatastore_pi1_categories > span.value',

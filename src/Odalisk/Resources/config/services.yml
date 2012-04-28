@@ -29,11 +29,22 @@ services:
         calls:
             - [ setName, [ "data.gov.uk" ] ]
             - [ setBaseUrl, [ "http://data.gov.uk/dataset/" ] ]
-            - [ setApiUrl, [ "http://catalogue.data.gov.uk/api/rest/dataset" ] ]  
+            - [ setApiUrl, [ "http://catalogue.data.gov.uk/api/rest/dataset" ] ]
+    base_inCiteSolution:
+        class: Odalisk\Scraper\InCiteSolution\BaseInCiteSolution
+        abstract:  true
+        parent:  base_platform
+
     nantes_platform:
-        class: Odalisk\Scraper\Nantes\NantesPlatform
-        parent: base_platform
+        class: Odalisk\Scraper\InCiteSolution\Nantes\NantesPlatform
+        parent: base_inCiteSolution
         calls:
             - [ setName, [ "data.nantes.fr" ] ]         
             - [ setBaseUrl, [ "http://data.nantes.fr/donnees/detail/" ] ]
-            - [ setApiUrl, [ "http://data.nantes.fr/api/datastore_searchdatasets/1.0/39W9VSNCSASEOGV/?output=json" ] ]        
+            - [ setApiUrl, [ "http://data.nantes.fr/api/datastore_searchdatasets/1.0/39W9VSNCSASEOGV/?output=json" ] ]
+    loire_atlantique_platform:
+        class: Odalisk\Scraper\InCiteSolution\LoireAtlantique\LoireAtlantiquePlatform
+        parent: base_inCiteSolution
+        calls:
+            - [ setName, [ "data.loire-atlantique.fr" ] ]         
+            - [ setBaseUrl, [ "http://data.loire-atlantique.fr/donnees/detail/" ] ]       

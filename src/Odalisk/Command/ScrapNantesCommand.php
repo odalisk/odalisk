@@ -10,7 +10,7 @@ use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\CssSelector\CssSelector;
 
 use Odalisk\Scraper\Tools\RequestDispatcher;
-use Odalisk\Scraper\Nantes\NantesPortal;
+use Odalisk\Scraper\InCiteSolution\Nantes\NantesPlatform;
 
 /**
  * A command that will scrap data from the Nantes' portal
@@ -29,7 +29,7 @@ class ScrapNantesCommand extends ScrapCommand {
         
         $this->writeBlock($output, 'Scraping data.nantes.fr');
         
-        $portal = new NantesPortal($this->getBuzz());
+        $portal = new NantesPlatform($this->getBuzz());
         $dispatcher = $this->getContainer()->get('request_dispatcher');
         $dispatcher->batchGet($portal->getDatasetsUrls());
         $dispatcher->flush('Odalisk\Scraper\Nantes\NantesPortal::parseDataset');

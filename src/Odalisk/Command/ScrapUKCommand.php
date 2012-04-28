@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
 use Odalisk\Scraper\Tools\RequestDispatcher;
-use Odalisk\Scraper\UK\UkPortal;
+use Odalisk\Scraper\UK\UkPlatform;
 
 /**
  * A command that will scrap data from the Nantes' portal
@@ -28,7 +28,7 @@ class ScrapUkCommand extends ScrapCommand {
         $this->writeBlock($output, 'Scraping data.gov.uk');
         
         // Create the portal object, that knows how to generate the urls for the datasets.
-        $portal = new UkPortal($this->getBuzz());
+        $portal = new UkPlatform($this->getBuzz());
         
         // We got about 8000 datasets, so we process them in batches of 500 to keep the memory footprint within
         // acceptable limits (256 Mo)
@@ -37,7 +37,8 @@ class ScrapUkCommand extends ScrapCommand {
         foreach($chunks as $urls) {
             // Create a new request dispatcher that will parallelize the process (somewhat)
             $dispatcher = new RequestDispatcher();
-            $dispatcher->batchGet($urls);
+            $dispatcher->queue($query['url'], array($platforms[$query['platform']], 'parseDataset'));
+            //$dispatcher->batchGet($urls);
             $dispatcher->flush('Odalisk\Scraper\UK\UkPortal::parseDataset', 20);
         
             // We got everything back, time to process it.

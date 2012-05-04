@@ -25,7 +25,6 @@ abstract class BaseInCiteSolution extends BasePlatform {
     
     public function getDatasetsUrls() {
         // Make the API call
-        $this->buzz->getClient()->setTimeout(10);
         $response = $this->buzz->get(
             $this->api_url,
             $this->buzz_options

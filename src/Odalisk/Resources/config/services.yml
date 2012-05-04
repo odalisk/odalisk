@@ -3,6 +3,7 @@
 parameters:
     buzz_options:
         - "User-agent: %app.user_agent%"
+    buzz_timout: 30 # Timeout for the requests
     
     request_dispatcher.class: Odalisk\Scraper\Tools\RequestDispatcher
     request_dispatcher.timeout: 10
@@ -21,7 +22,7 @@ services:
         class: %base_platform.class%
         abstract:  true
         calls:
-            - [ setBuzz, [ @buzz ] ]
+            - [ setBuzz, [ @buzz, %buzz_timout% ] ]
             - [ setBuzzOptions, [ %buzz_options% ] ]
     uk_platform:
         class: Odalisk\Scraper\UK\UkPlatform

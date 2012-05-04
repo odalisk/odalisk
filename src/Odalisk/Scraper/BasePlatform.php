@@ -49,8 +49,9 @@ abstract class BasePlatform {
     
     protected $total_count = 0;
     
-    public function setBuzz(\Buzz\Browser $buzz) {
+    public function setBuzz(\Buzz\Browser $buzz, $timeout = 30) {
         $this->buzz = $buzz;
+        $this->buzz->getClient()->setTimeout($timeout);
     }
     
     public function setBuzzOptions(array $options) {
@@ -59,6 +60,10 @@ abstract class BasePlatform {
     
     public function setName($name) {
         $this->name = $name;
+    }
+    
+    public function getName() {
+        return $this->name;
     }
     
     public function setBaseUrl($base_url) {

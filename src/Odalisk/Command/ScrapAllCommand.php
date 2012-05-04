@@ -4,6 +4,7 @@ namespace Odalisk\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Component\DomCrawler\Crawler;
@@ -16,6 +17,12 @@ class ScrapAllCommand extends ScrapCommand {
         $this
             ->setName('odalisk:scrap:all')
             ->setDescription('Fetch data for all supported platforms')
+            ->addArgument('platform', InputArgument::OPTIONAL, 
+                'Which platform do you want to scrap?'
+            )
+            ->addOption('list', null, InputOption::VALUE_NONE, 
+                'If set, the task will display available platforms names rather than scrap them'
+            )
         ;
     }
 
@@ -25,26 +32,40 @@ class ScrapAllCommand extends ScrapCommand {
         
         $container = $this->getContainer();
         $dispatcher = $container->get('request_dispatcher');
+        $platform_services = $container->getParameter('app.platforms');
         $platforms = array();
         $queries = array();
         
-        foreach($container->getParameter('app.platforms') as $platform) {
-            // Get the platform object
-            $platforms[$platform] = $container->get($platform);
-            // Get the datasets urls and add them to the query pool
-            foreach($platforms[$platform]->getDatasetsUrls() as $url) {
-                $queries[] = array('url' => $url, 'platform' => $platform);
+        
+        if ($input->getOption('list')) {
+            foreach($platform_services as $platform) {
+                $output->writeln('<info>' . $platform . '</info>');
             }
+        } else {
+            if($platform = $input->getArgument('platform')) {
+                 $platform_services = array($platform);
+            }
+            
+            foreach($platform_services as $platform) {
+                // Get the platform object
+                $platforms[$platform] = $container->get($platform);
+            }
+            
+            foreach($platforms as $name => $platform) {
+                foreach($platform->getDatasetsUrls() as $url) {
+                    $queries[] = array('url' => $url, 'platform' => $name);
+                }
+            }
+            
+            // This way we dispatch concurrent queries on several servers (somewhat)
+            shuffle($queries);
+
+            foreach($queries as $query) {
+                $dispatcher->queue($query['url'], array($platforms[$query['platform']], 'parseDataset'));
+            }
+
+            $dispatcher->dispatch(10);
         }
-        
-        // This way we dispatch concurrent queries on several servers (somewhat)
-        shuffle($queries);
-        
-        foreach($queries as $query) {
-            $dispatcher->queue($query['url'], array($platforms[$query['platform']], 'parseDataset'));
-        }
-                
-        $dispatcher->dispatch(10);
         
         /*        
         $this->writeBlock($output, 'Scraping data.gov.uk');

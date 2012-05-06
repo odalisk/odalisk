@@ -4,6 +4,8 @@ namespace Odalisk\Scraper\InCiteSolution\LoireAtlantique;
 
 use Odalisk\Scraper\InCiteSolution\BaseInCiteSolution;
 
+use Buzz\Message;
+
 /**
  * The scraper for data.loire-atlantique.fr
  */
@@ -15,8 +17,16 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
 
     public function getDatasetsUrls() {
 
-        for ($i=18; $i<162; $i++) {
-            $urls[] = $this->sanitize($this->base_url . '?tx_icsoddatastore_pi1[uid]=' . $i);
+        $factory = new Message\Factory();
+
+        for ($i=18; $i < 163; $i++) {
+
+            $formRequest = $factory->createFormRequest();
+            $formRequest->setMethod(Message\Request::METHOD_POST);
+            $formRequest->fromUrl($this->sanitize($this->base_url . '?tx_icsoddatastore_pi1[uid]=' . $i));
+            $formRequest->addHeaders($this->buzz_options);
+            $formRequest->setFields(array('tx_icsoddatastore_pi1[cgu]' => 'on'));
+            $urls[] = $formRequest;
         }
         
         $this->total_count = count($urls);

@@ -9,7 +9,7 @@ all:
     platforms: # Name of the services defined in service.yml
         - uk_platform
         - nantes_platform
-        #- loire_atlantique_platform
+        - loire_atlantique_platform
 prod: ~
 dev:  ~
 test: ~

@@ -1,23 +1,23 @@
 <?php
-
+ 
 namespace Odalisk\Entity;
-
+ 
 use Doctrine\ORM\Mapping as ORM;
-
+ 
 use Gedmo\Mapping\Annotation as Gedmo;
-
+ 
 /**
  * @ORM\Table(name="datasets")
  * @ORM\Entity
  */
 class Dataset
 {   
-    
+     
     public function __construct(array $values) {
         $this->populate($values);
-	}
-	
-	/**
+    }
+     
+    /**
      * Builds the entity from the array
      * 
      * array(
@@ -27,12 +27,12 @@ class Dataset
      *
      * @param array $values 
      */
-	public function populate(array $values) {
-	    foreach($values as $name => $value) {
-    		call_user_func(array($this, $name), $value);
-	    }
-	}
-	
+    public function populate(array $values) {
+        foreach($values as $name => $value) {
+            call_user_func(array($this, $name), $value);
+        }
+    }
+     
     /**
      * @var integer $id
      *
@@ -41,84 +41,77 @@ class Dataset
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
+     
     /**
      * @var string $url
      *
      * @ORM\Column(name="url", type="string", nullable=true, length=255)
      */
     protected $url;
-    
+     
     /**
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", nullable=true, length=255)
      */
     protected $name;
-    
+     
     /**
      * @var string $summary
      *
      * @ORM\Column(name="summary", type="text", nullable=true)
      */
     protected $summary;
-    
+     
     /**
      * @var string $category
      *
      * @ORM\Column(name="category", type="string", nullable=true, length=255)
      */
     protected $category;
-    
-    /**
-     * @var string $description
-     *
-     * @ORM\Column(name="description", type="string", length=255)
-     */
-    protected $description;
-    
+     
     /**
      * @var string $released_on When did we create this record
      *
      * @ORM\Column(name="released_on", type="datetime", nullable=true)
      */
     protected $released_on;
-    
+     
     /**
      * @var string $last_updated_on When did we create this record
      *
      * @ORM\Column(name="last_updated_on", type="datetime", nullable=true)
      */
     protected $last_updated_on;
-    
+     
     /**
      * @var string $provider
      *
-     * @ORM\Column(name="provider", type="string", length=255)
+     * @ORM\Column(name="provider", type="string", nullable=true, length=255)
      */
     protected $provider;
-    
+     
     /**
      * @var string $owner
      *
      * @ORM\Column(name="owner", type="string", nullable=true, length=255)
      */
     protected $owner;
-    
+     
     /**
      * @var string $maintainer
      *
      * @ORM\Column(name="maintainer", type="string", nullable=true, length=255)
      */
     protected $maintainer;
-    
+     
     /**
      * @var string $license
      * 
      * @ORM\Column(name="license", type="string", nullable=true, length=255)
      */
     protected $license;
-    
+     
     /**
      * @var string $created_at When did we create this record
      *
@@ -126,7 +119,7 @@ class Dataset
      * @Gedmo\Timestampable(on="create")
      */
     protected $created_at;
-    
+     
     /**
      * @var string $updated_at When did we update this record
      *
@@ -134,20 +127,20 @@ class Dataset
      * @Gedmo\Timestampable(on="update")
      */
     protected $updated_at;
-    
+     
     /**
      * @var string Was there an error when we crawled this dataset?
      * 
      * @ORM\Column(name="error", type="string", nullable=true)
      */
     protected $error;
-
-	/**
-	 * @ORM\ManyToOne(targetEntity="Portal", inversedBy="data_sets")
-	 * @ORM\JoinColumn(name="portal_id", referencedColumnName="id")
-	 */
-	protected $portal;
-
+ 
+    /**
+     * @ORM\ManyToOne(targetEntity="Portal", inversedBy="data_sets")
+     * @ORM\JoinColumn(name="portal_id", referencedColumnName="id")
+     */
+    protected $portal;
+ 
     /**
      * Get id
      *
@@ -157,7 +150,7 @@ class Dataset
     {
         return $this->id;
     }
-
+ 
     /**
      * Set url
      *
@@ -167,7 +160,7 @@ class Dataset
     {
         $this->url = $url;
     }
-
+ 
     /**
      * Get url
      *
@@ -177,7 +170,7 @@ class Dataset
     {
         return $this->url;
     }
-
+ 
     /**
      * Set name
      *
@@ -187,7 +180,7 @@ class Dataset
     {
         $this->name = $name;
     }
-
+ 
     /**
      * Get name
      *
@@ -197,7 +190,7 @@ class Dataset
     {
         return $this->name;
     }
-
+ 
     /**
      * Set summary
      *
@@ -207,7 +200,7 @@ class Dataset
     {
         $this->summary = $summary;
     }
-
+ 
     /**
      * Get summary
      *
@@ -217,7 +210,7 @@ class Dataset
     {
         return $this->summary;
     }
-
+ 
     /**
      * Set category
      *
@@ -227,7 +220,7 @@ class Dataset
     {
         $this->category = $category;
     }
-
+ 
     /**
      * Get category
      *
@@ -237,7 +230,7 @@ class Dataset
     {
         return $this->category;
     }
-
+ 
     /**
      * Set released_on
      *
@@ -247,7 +240,7 @@ class Dataset
     {
         $this->released_on = $releasedOn;
     }
-
+ 
     /**
      * Get released_on
      *
@@ -257,7 +250,7 @@ class Dataset
     {
         return $this->released_on;
     }
-
+ 
     /**
      * Set last_updated_on
      *
@@ -267,7 +260,7 @@ class Dataset
     {
         $this->last_updated_on = $lastUpdatedOn;
     }
-
+ 
     /**
      * Get last_updated_on
      *
@@ -277,7 +270,7 @@ class Dataset
     {
         return $this->last_updated_on;
     }
-
+ 
     /**
      * Set owner
      *
@@ -287,7 +280,7 @@ class Dataset
     {
         $this->owner = $owner;
     }
-
+ 
     /**
      * Get owner
      *
@@ -297,7 +290,7 @@ class Dataset
     {
         return $this->owner;
     }
-
+ 
     /**
      * Set maintainer
      *
@@ -307,7 +300,7 @@ class Dataset
     {
         $this->maintainer = $maintainer;
     }
-
+ 
     /**
      * Get maintainer
      *
@@ -317,7 +310,7 @@ class Dataset
     {
         return $this->maintainer;
     }
-
+ 
     /**
      * Set license
      *
@@ -327,7 +320,7 @@ class Dataset
     {
         $this->license = $license;
     }
-
+ 
     /**
      * Get license
      *
@@ -337,7 +330,7 @@ class Dataset
     {
         return $this->license;
     }
-
+ 
     /**
      * Set created_at
      *
@@ -347,7 +340,7 @@ class Dataset
     {
         $this->created_at = $createdAt;
     }
-
+ 
     /**
      * Get created_at
      *
@@ -357,7 +350,7 @@ class Dataset
     {
         return $this->created_at;
     }
-
+ 
     /**
      * Set updated_at
      *
@@ -367,7 +360,7 @@ class Dataset
     {
         $this->updated_at = $updatedAt;
     }
-
+ 
     /**
      * Get updated_at
      *
@@ -377,7 +370,7 @@ class Dataset
     {
         return $this->updated_at;
     }
-
+ 
     /**
      * Set error
      *
@@ -387,7 +380,7 @@ class Dataset
     {
         $this->error = $error;
     }
-
+ 
     /**
      * Get error
      *
@@ -397,27 +390,7 @@ class Dataset
     {
         return $this->error;
     }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
+     
     /**
      * Set provider
      *
@@ -427,7 +400,7 @@ class Dataset
     {
         $this->provider = $provider;
     }
-
+ 
     /**
      * Get provider
      *
@@ -437,8 +410,8 @@ class Dataset
     {
         return $this->provider;
     }
-
-	/*
+     
+    /**
      * Set portal
      *
      * @param Odalisk\Entity\Portal $portal
@@ -447,7 +420,7 @@ class Dataset
     {
         $this->portal = $portal;
     }
-
+ 
     /**
      * Get portal
      *

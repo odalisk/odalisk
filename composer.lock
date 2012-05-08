@@ -1,5 +1,5 @@
 {
-    "hash": "5e50c55c291f6dde7ac3719b00c9bd85",
+    "hash": "2727b37dd251a5b4caffb15f9216612e",
     "packages": [
         {
             "package": "doctrine/common",
@@ -17,14 +17,19 @@
             "source-reference": "07ee8c524984c425dade9baf39911a68c3a9b22a"
         },
         {
+            "package": "gedmo/doctrine-extensions",
+            "version": "2.2.x-dev",
+            "source-reference": "v2.2.2"
+        },
+        {
             "package": "kriswallsmith/assetic",
             "version": "1.0.x-dev",
-            "source-reference": "272e14b76f9d638b6cf7d94afa64b3ad9261bb6c"
+            "source-reference": "60167a5021c01d6b1dbe85aace14e2568e2e316a"
         },
         {
             "package": "kriswallsmith/buzz",
             "version": "dev-master",
-            "source-reference": "56afab3ec9d8feedc3e3d7a8081c8455ae8b716f"
+            "source-reference": "8ffbb976ee4865a499567764956c6173f568a3b2"
         },
         {
             "package": "monolog/monolog",
@@ -42,12 +47,16 @@
         {
             "package": "sensio/generator-bundle",
             "version": "2.0.x-dev",
-            "source-reference": "b1ccb78c1743f30817b0fce9bb5c6baff6ed7bf8"
+            "source-reference": "83b768a487a6878f2bc2ad6859bd61a3651a7885"
+        },
+        {
+            "package": "stof/doctrine-extensions-bundle",
+            "version": "1.0.2"
         },
         {
             "package": "swiftmailer/swiftmailer",
             "version": "dev-master",
-            "source-reference": "fb3e0b49df4ee888ee1a89b6e0b8b2a466c497cc",
+            "source-reference": "57789082d1d53529dcf8cd3ca132d9787a59afee",
             "alias": "4.1.9999999.9999999-dev"
         },
         {
@@ -58,7 +67,7 @@
         {
             "package": "symfony/symfony",
             "version": "2.0.x-dev",
-            "source-reference": "bd112816016fd9dae2f9619d8461eebdae15ff52"
+            "source-reference": "906f6f662c3825801a976d990e02142e0867a5f7"
         },
         {
             "package": "twig/extensions",
@@ -68,10 +77,12 @@
         {
             "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "f3491b5cbfd03a31538b6e8c82d65cd54996e870",
-            "alias": "1.8.9999999.9999999-dev"
+            "source-reference": "925254821d377c9f18c29f92b3e66192b687086c",
+            "alias": "1.9.9999999.9999999-dev"
         }
     ],
     "packages-dev": null,
-    "aliases": []
+    "aliases": [
+
+    ]
 }

@@ -6,7 +6,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 use Buzz\Message;
 
-use Odalisk\Entity\DataSet;
+use Odalisk\Entity\Dataset;
 
 abstract class BasePlatform {
     /**
@@ -57,8 +57,7 @@ abstract class BasePlatform {
 	 * @var string
 	 */
 	protected $api_url;
-	
-	
+		
 	protected $criteria;
 	
 	protected $date_format;
@@ -66,6 +65,10 @@ abstract class BasePlatform {
     protected $count = 0;
     
     protected $total_count = 0;
+    
+    protected $portal;
+    
+    protected $datasets;
     
     public function setBuzz(\Buzz\Browser $buzz, $timeout = 30) {
         $this->buzz = $buzz;
@@ -97,8 +100,56 @@ abstract class BasePlatform {
         $this->api_url = $api_url;
     }
     
+    /**
+     * Load the portal object from the database. If none is found, parse it from the website.
+     *
+     * @return void
+     */
+    public function loadPortal() {
+        $this->portal = $this->em->getRepository('Odalisk\Entity\Portal')
+            ->findOneByName($this->getName());
+        
+        if(NULL == $this->portal) {
+            $this->parsePortal();
+        }
+    }
+    
+    /**
+     * Fetch the portal from the web, parse it and create a new entity in $this->portal (and persist/flush it)
+     *
+     * @return void
+     */
+    abstract public function parsePortal();
+    
+    /**
+     * Load the dataset entities from the database, and create a table indexed by name.
+     * This allows us to update datasets rather than recreate them (when parsing)
+     *
+     * @return void
+     */
+    public function loadDatasets() {
+        if(NULL == $this->portal) {
+            $this->loadPortal();
+        }
+        
+        $datasets = $this->portal->getDatasets();
+        
+        foreach($datasets as $id => $dataset) {
+            $this->datasets[$dataset->getName()] = $dataset;
+            unset($datasets[$id]);
+        }
+    }
+    
     abstract public function getDatasetsUrls();
     
+    
+    /**
+     * Parse and persist a dataset
+     *
+     * @param Request $request 
+     * @param Response $response 
+     * @return void
+     */
     public function parseDataset(Message\Request $request, Message\Response $response) {     
         $this->count++;
         $data = array(
@@ -144,6 +195,22 @@ abstract class BasePlatform {
            $data['setError'] = "Empty title";
         }
         
-        $this->em->persist(new DataSet($data));
+        $dataset = NULL;
+        
+        if(NULL != $this->datasets && array_key_exists($data['setUrl'], $this->datasets)) {
+            $dataset = $this->datasets[$data['setUrl']];
+            $dataset->populate($data);
+        } else {
+            $dataset = new Dataset($data);
+            $this->portal->addDataset($dataset);
+        }
+        
+        $this->em->persist($this->portal);
+        $this->em->persist($dataset);
+        
+        if($this->count == $this->total_count || $this->em->getUnitOfWork()->size() > 1000) {
+            error_log('Flushing data!');
+            $this->em->flush();
+        }
     }
 }

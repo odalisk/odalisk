@@ -27,45 +27,62 @@ class ScrapAllCommand extends ScrapCommand {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        //$count = 0;
-        //$start = time();
-        
+        // Store the container so that we have an easy shortcut
         $container = $this->getContainer();
+        // Get the request dispatcher
         $dispatcher = $container->get('request_dispatcher');
+        // Get the configuration value from config/app.yml : which platforms are enabled?
         $platform_services = $container->getParameter('app.platforms');
+        // Initialize some arrrays
         $platforms = array();
         $queries = array();
         
-        
+        // If the --list switch was used, just list the enabled platforms names
         if ($input->getOption('list')) {
             foreach($platform_services as $platform) {
                 $output->writeln('<info>' . $platform . '</info>');
             }
         } else {
+            // If we get an argument, replace the platform_services array with one containing just that plaform
             if($platform = $input->getArgument('platform')) {
                  $platform_services = array($platform);
             }
             
+            // Iterate on the enabled platforms to retrieve the actual object
             foreach($platform_services as $platform) {
                 // Get the platform object
                 $platforms[$platform] = $container->get($platform);
             }
             
+            // Process each platform :
+            //  - get the datasets already stored from the database
+            //  - get the urls for the datasets and add them to the queue
             foreach($platforms as $name => $platform) {
+                $queries[$name] = array();
+                $platform->loadPortal();
+                $platform->loadDatasets();
                 foreach($platform->getDatasetsUrls() as $url) {
-                    $queries[] = array('url' => $url, 'platform' => $name);
+                    $queries[$name][] = array('url' => $url, 'platform' => $name);
                 }
             }
             
-            // This way we dispatch concurrent queries on several servers (somewhat)
-            shuffle($queries);
-
-            foreach($queries as $query) {
-                $dispatcher->queue($query['url'], array($platforms[$query['platform']], 'parseDataset'));
+            // While our url pool isnt empty
+            while(count($queries) > 0) {
+                // Pick an url from each queue and add it
+                foreach($queries as $name => &$queue) {
+                    // Get the last element of this queue
+                    $query = array_pop($queue);
+                    // Add it to the dispatcher it isn't NULL
+                    if(NULL != $query) {
+                        $dispatcher->queue($query['url'], array($platforms[$query['platform']], 'parseDataset'));
+                    } else {
+                        // We reached the end of the queue, remove it from the pool
+                        unset($queries[$name]);
+                    }
+                }
             }
-
+            
             $dispatcher->dispatch(10);
-            $container->get('doctrine')->getEntityManager()->flush();
         }
         
         /*        

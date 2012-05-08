@@ -42,7 +42,7 @@ class RequestDispatcher {
      * @param string $callback 
      * @param array $options 
      */
-    public function queue($url, $callback, array $options = array()) {
+    public function queueUrl($url, $callback, array $options = array()) {
         // Create the request
         $request = new Message\Request(Message\Request::METHOD_GET, '/', NULL);
 
@@ -50,6 +50,22 @@ class RequestDispatcher {
         $request->addHeaders(array_merge($this->buzz_options, $options));
         $request->setContent('');
         
+        // Create the response
+        $response = new Message\Response();
+        
+        // Queue all of it in the cURL pool
+        $this->client->queue($request, $response, $callback);
+    }
+
+    /**
+     * This adds an individual request to the queue, with its callback and headers
+     *
+     * @param Message\Request $request 
+     * @param string $callback 
+     * @param array $options 
+     */
+    public function queueRequest($request, $callback, array $options = array()) {
+
         // Create the response
         $response = new Message\Response();
         
@@ -66,7 +82,7 @@ class RequestDispatcher {
      */
     public function batchQueue(array $urls, $callback, array $options = array()) {
         foreach($urls as $url) {
-            $this->queue($url, $callback, $options);
+            $this->client->queue($url, $callback, $options);
         }
     }
     
@@ -82,4 +98,19 @@ class RequestDispatcher {
     public function dispatch($window_size = 5) {
         $this->client->flush($window_size);
     }
+
+
+    public function __call($nom, $args) {
+
+      switch ($nom) {
+         case 'queue':
+            $nom = (is_string($args[0])) ? 'queueUrl' : 'queueRequest';
+            if(count($args)<3){ $args[] = array();}
+            break;
+         default:
+            die('La fonction RequestDispatcher::'. $nom .'() n\'est pas définie.');
+        
+      }
+      return call_user_func(array(&$this, $nom), $args[0], $args[1], $args[2]);
+   }
 }

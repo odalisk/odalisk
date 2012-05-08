@@ -13,6 +13,7 @@ all:
         - loire_atlantique_platform
         - socrata_platform
         - ny_platform
+        - usa_gov_platform
 prod: ~
 dev:  ~
 test: ~

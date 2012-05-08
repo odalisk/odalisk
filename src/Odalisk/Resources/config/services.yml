@@ -67,8 +67,8 @@ services:
         parent: base_socrata
         calls:
             - [ setName, [ "www.data.gov" ] ]         
-            - [ setBaseUrl, ["https://nycopendata.socrata.com/d/"] ]
-            - [ setApiUrl, [ "https://nycopendata.socrata.com/api/views.json" ] ]
+            - [ setBaseUrl, ["https://explore.data.gov/d/"] ]
+            - [ setApiUrl, [ "https://explore.data.gov/api/views.json" ] ]
 
     base_ckan:
         class: Odalisk\Scraper\CKAN\BaseCKAN

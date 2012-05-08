@@ -25,13 +25,6 @@ services:
             - [ setBuzz, [ @buzz, %buzz_timout% ] ]
             - [ setBuzzOptions, [ %buzz_options% ] ]
             - [ setDoctrine, [ @doctrine ] ]
-    uk_platform:
-        class: Odalisk\Scraper\UK\UkPlatform
-        parent: base_platform
-        calls:
-            - [ setName, [ "data.gov.uk" ] ]
-            - [ setBaseUrl, [ "http://data.gov.uk/dataset/" ] ]
-            - [ setApiUrl, [ "http://catalogue.data.gov.uk/api/rest/dataset" ] ]
     base_inCiteSolution:
         class: Odalisk\Scraper\InCiteSolution\BaseInCiteSolution
         abstract:  true
@@ -69,3 +62,23 @@ services:
             - [ setName, [ "nycopendata.socrata.com" ] ]         
             - [ setBaseUrl, ["https://nycopendata.socrata.com/d/"] ]
             - [ setApiUrl, [ "https://nycopendata.socrata.com/api/views.json" ] ]
+
+    base_ckan:
+        class: Odalisk\Scraper\CKAN\BaseCKAN
+        abstract:  true
+        parent:  base_platform
+    uk_platform:
+        class: Odalisk\Scraper\CKAN\UK\UKPlatform
+        parent: base_ckan
+        calls:
+            - [ setName, [ "data.gov.uk" ] ]
+            - [ setBaseUrl, [ "http://data.gov.uk/dataset/" ] ]
+            - [ setApiUrl, [ "http://catalogue.data.gov.uk/api/rest/dataset" ] ]
+    data_eu_platform:
+        class: Odalisk\Scraper\CKAN\DataEU\DataEUPlatform
+        parent: base_ckan
+        calls:
+            - [ setName, [ "publicdata.eu" ] ]
+            - [ setBaseUrl, [ "http://publicdata.eu/dataset/" ] ]
+            - [ setApiUrl, [ "http://publicdata.eu/api/rest/dataset" ] ]
+

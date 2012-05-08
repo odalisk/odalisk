@@ -128,7 +128,6 @@ abstract class BasePlatform {
                 if(array_key_exists('setReleasedOn', $data)) {
                     $data['setReleasedOn'] = \Datetime::createFromFormat($this->date_format, $data['setReleasedOn']);
                 }
-                
                 if(array_key_exists('setLastUpdatedOn', $data)) {
                     $data['setLastUpdatedOn'] = \Datetime::createFromFormat($this->date_format, $data['setLastUpdatedOn']);
                 }

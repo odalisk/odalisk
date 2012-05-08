@@ -71,13 +71,6 @@ class Dataset
     protected $category;
     
     /**
-     * @var string $description
-     *
-     * @ORM\Column(name="description", type="string", length=255)
-     */
-    protected $description;
-    
-    /**
      * @var string $released_on When did we create this record
      *
      * @ORM\Column(name="released_on", type="datetime", nullable=true)
@@ -94,7 +87,7 @@ class Dataset
     /**
      * @var string $provider
      *
-     * @ORM\Column(name="provider", type="string", length=255)
+     * @ORM\Column(name="provider", type="string", nullable=true, length=255)
      */
     protected $provider;
     
@@ -397,27 +390,7 @@ class Dataset
     {
         return $this->error;
     }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
+    
     /**
      * Set provider
      *
@@ -437,7 +410,7 @@ class Dataset
     {
         return $this->provider;
     }
-}
+    
 	/**
      * Set portal
      *

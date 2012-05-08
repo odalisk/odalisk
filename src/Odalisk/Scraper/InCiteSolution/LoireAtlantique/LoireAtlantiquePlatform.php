@@ -34,6 +34,14 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
         return $urls;
     }
 
+    public function parsePortal() {
+        $this->portal = new \Odalisk\Entity\Portal();
+        $this->portal->setName($this->getName());
+        $this->portal->setUrl('http://data.loire-atlantique.fr/');
+        
+        $this->em->persist($this->portal);
+        $this->em->flush();
+    }
 }
 
 

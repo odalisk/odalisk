@@ -49,3 +49,15 @@ services:
         calls:
             - [ setName, [ "data.loire-atlantique.fr" ] ]         
             - [ setBaseUrl, [ "http://data.loire-atlantique.fr/donnees/detail/" ] ]       
+
+    base_socrata:
+        class: Odalisk\Scraper\Socrata\BaseSocrata
+        abstract:  true
+        parent:  base_platform
+    socrata_platform:
+        class: Odalisk\Scraper\Socrata\Socrata\SocrataPlatform
+        parent: base_socrata
+        calls:
+            - [ setName, [ "opendata.socrata.com" ] ]         
+            - [ setBaseUrl, ["https://opendata.socrata.com/d/"] ]
+            - [ setApiUrl, [ "https://opendata.socrata.com/api/views.json" ] ]

@@ -104,13 +104,21 @@ class RequestDispatcher {
 
       switch ($nom) {
          case 'queue':
-            $nom = (is_string($args[0])) ? 'queueUrl' : 'queueRequest';
-            if(count($args)<3){ $args[] = array();}
+            // If the first arg is a URL, call queueUrl, else queueRequest
+            if(is_string($args[0]) {
+                $nom = 'queueUrl';
+            } else if ($args[0] instanceof Message\Request) {
+                $nom = 'queueRequest';
+            }
+            if(count($args) < 3) {
+                $args[] = array();
+            }
             break;
          default:
             die('La fonction RequestDispatcher::'. $nom .'() n\'est pas définie.');
         
       }
+      
       return call_user_func(array(&$this, $nom), $args[0], $args[1], $args[2]);
    }
 }

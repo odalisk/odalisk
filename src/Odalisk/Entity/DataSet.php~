@@ -335,24 +335,4 @@ class DataSet
     {
         return $this->updated_at;
     }
-
-    /**
-     * Set portal
-     *
-     * @param Odalisk\Entity\Portal $portal
-     */
-    public function setPortal(\Odalisk\Entity\Portal $portal)
-    {
-        $this->portal = $portal;
-    }
-
-    /**
-     * Get portal
-     *
-     * @return Odalisk\Entity\Portal 
-     */
-    public function getPortal()
-    {
-        return $this->portal;
-    }
 }

@@ -175,24 +175,4 @@ class Portal
     {
         return $this->class_name;
     }
-
-    /**
-     * Add data_sets
-     *
-     * @param Odalisk\Entity\DataSet $dataSets
-     */
-    public function addDataSet(\Odalisk\Entity\DataSet $dataSets)
-    {
-        $this->data_sets[] = $dataSets;
-    }
-
-    /**
-     * Get data_sets
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getDataSets()
-    {
-        return $this->data_sets;
-    }
 }

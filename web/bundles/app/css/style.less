@@ -10,7 +10,8 @@
 @import "../../../../../vendor/assets/css/bootstrap/bootstrap.less";
 
 body {
-    
+    min-width:990px;
+    margin:0px 10px 0px 10px;
     .navbar {
         .brand {
             font-family: Pacifico, cursive;
@@ -30,6 +31,84 @@ body {
     
     .row-fluid {
         margin-top:60px;
+    }
+    
+    .well {
+        padding:20px 30px 20px 30px;
+        
+        h1, h2 {
+            float:left;
+        }
+        
+        h2 {
+            margin-top:26px;
+            margin-left:10px;
+        }
+    }
+    
+    .hero-unit-intro {
+        table {
+            margin-top:20px;
+            background:white;
+            .key {
+                text-align:right;
+                margin-right:10px;
+            }
+        }
+        
+        .score {
+            .total-score {
+                font-size:30px;
+                td {
+                    margin:10px;
+                    vertical-align:middle;
+                    height:50px;
+                }
+                
+                
+                
+                
+                .progress {
+                    height:30px;
+                    .bar {
+                        height:30px;
+                    }
+                }
+            }
+            
+            font-size:15px;
+            
+            .note {
+                text-align:right;
+            }
+            .progress-bar {
+                width:70%;
+                .progress {
+                    min-width:120px;
+                    margin-bottom:0px;
+                }
+            }
+            
+        }
+    }
+    
+    table.check {
+        
+        tr:hover, tr {
+            .tick {
+                width:10px;
+            }
+
+            .tick-success {
+                background:#5CBC41;
+            }
+
+            .tick-failure {
+                background:#E04846;
+            }
+        }
+        
+        
     }
 }
 

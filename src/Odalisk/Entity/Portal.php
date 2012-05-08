@@ -56,6 +56,16 @@ class Portal
      */
     protected $crawled_at = NULL;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="DataSet", mappedBy="portal")
+	 */
+	protected $data_sets;
+
+	public function __construct()
+	{
+		$this->data_sets = new ArrayCollection();
+	}
+
     /**
      * Get id
      *
@@ -164,5 +174,25 @@ class Portal
     public function getClassName()
     {
         return $this->class_name;
+    }
+
+    /**
+     * Add data_sets
+     *
+     * @param Odalisk\Entity\DataSet $dataSets
+     */
+    public function addDataSet(\Odalisk\Entity\DataSet $dataSets)
+    {
+        $this->data_sets[] = $dataSets;
+    }
+
+    /**
+     * Get data_sets
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getDataSets()
+    {
+        return $this->data_sets;
     }
 }

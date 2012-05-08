@@ -10,6 +10,8 @@ all:
         - uk_platform
         - nantes_platform
         - loire_atlantique_platform
+        - socrata_platform
+        - ny_platform
 prod: ~
 dev:  ~
 test: ~

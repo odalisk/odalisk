@@ -123,6 +123,12 @@ class DataSet
      */
     protected $error;
 
+	/**
+	 * @ORM\ManyToOne(targetEntity="Portal", inversedBy="data_sets")
+	 * @ORM\JoinColumn(name="portal_id", referencedColumnName="id")
+	 */
+	protected $portal;
+
     /**
      * Get id
      *

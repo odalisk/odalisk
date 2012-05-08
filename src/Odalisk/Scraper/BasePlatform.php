@@ -89,7 +89,7 @@ abstract class BasePlatform {
                 $data['empty'] = TRUE;
             } else {
                 foreach($this->criteria as $name => $path) {
-                    $node = $crawler->filter($path);
+                    $node = $crawler->filterXPath($path);
                     if(0 != count($node)) {
                        $data[$name] = $node->text();
                     }        

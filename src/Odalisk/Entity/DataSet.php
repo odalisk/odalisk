@@ -50,6 +50,13 @@ class DataSet
     protected $category;
     
     /**
+     * @var string $description
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    protected $description;
+    
+    /**
      * @var string $released_on When did we create this record
      *
      * @ORM\Column(name="released_on", type="datetime")
@@ -62,6 +69,13 @@ class DataSet
      * @ORM\Column(name="last_updated_on", type="datetime")
      */
     protected $last_updated_on;
+    
+    /**
+     * @var string $provider
+     *
+     * @ORM\Column(name="provider", type="string", length=255)
+     */
+    protected $provider;
     
     /**
      * @var string $owner
@@ -354,5 +368,45 @@ class DataSet
     public function getPortal()
     {
         return $this->portal;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set provider
+     *
+     * @param string $provider
+     */
+    public function setProvider($provider)
+    {
+        $this->provider = $provider;
+    }
+
+    /**
+     * Get provider
+     *
+     * @return string 
+     */
+    public function getProvider()
+    {
+        return $this->provider;
     }
 }

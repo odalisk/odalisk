@@ -56,6 +56,16 @@ class Portal
      */
     protected $crawled_at = NULL;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="DataSet", mappedBy="portal")
+	 */
+	protected $data_sets;
+
+	public function __construct()
+	{
+		$this->data_sets = new ArrayCollection();
+	}
+
     /**
      * Get id
      *

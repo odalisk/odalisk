@@ -62,6 +62,13 @@ services:
             - [ setName, [ "nycopendata.socrata.com" ] ]         
             - [ setBaseUrl, ["https://nycopendata.socrata.com/d/"] ]
             - [ setApiUrl, [ "https://nycopendata.socrata.com/api/views.json" ] ]
+    usa_gov_platform:
+        class: Odalisk\Scraper\Socrata\USA\USAGovPlatform
+        parent: base_socrata
+        calls:
+            - [ setName, [ "www.data.gov" ] ]         
+            - [ setBaseUrl, ["https://nycopendata.socrata.com/d/"] ]
+            - [ setApiUrl, [ "https://nycopendata.socrata.com/api/views.json" ] ]
 
     base_ckan:
         class: Odalisk\Scraper\CKAN\BaseCKAN

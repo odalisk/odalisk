@@ -3,11 +3,15 @@
 namespace Odalisk\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * Odalisk\Portal
  *
- * @ORM\Table()
+ * @ORM\Table(name="portals")
  * @ORM\Entity
  */
 class Portal
@@ -29,13 +33,6 @@ class Portal
     protected $name;
 
     /**
-     * @var string $class_name
-     *
-     * @ORM\Column(name="class_name", type="string", length=255)
-     */
-    protected $class_name;
-
-    /**
      * @var string $url
      *
      * @ORM\Column(name="url", type="string", length=255)
@@ -43,27 +40,29 @@ class Portal
     protected $url;
 
     /**
-     * @var string $base_url
+     * @var string $created_at When did we create this record
      *
-     * @ORM\Column(name="base_url", type="string", length=255)
+     * @ORM\Column(name="created_at", type="datetime")
+     * @Gedmo\Timestampable(on="create")
      */
-    protected $base_url;
-
+    protected $created_at;
+    
     /**
-     * @var datetime $crawled_at
+     * @var string $updated_at When did we update this record
      *
-     * @ORM\Column(name="crawled_at", type="datetime", nullable=TRUE)
+     * @ORM\Column(name="updated_at", type="datetime")
+     * @Gedmo\Timestampable(on="update")
      */
-    protected $crawled_at = NULL;
+    protected $updated_at;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="DataSet", mappedBy="portal")
+	 * @ORM\OneToMany(targetEntity="Dataset", mappedBy="portal")
 	 */
-	protected $data_sets;
+	protected $datasets;
 
 	public function __construct()
 	{
-		$this->data_sets = new ArrayCollection();
+		$this->datasets = new ArrayCollection();
 	}
 
     /**
@@ -157,42 +156,65 @@ class Portal
     }
 
     /**
-     * Set class_name
+     * Add datasets
      *
-     * @param string $className
+     * @param Odalisk\Entity\Dataset $dataset
      */
-    public function setClassName($className)
+    public function addDataset(\Odalisk\Entity\Dataset $dataset)
     {
-        $this->class_name = $className;
+        if(!$this->datasets->contains($dataset)) {
+            $this->datasets[] = $dataset;
+            $dataset->setPortal($this);
+        }
     }
 
     /**
-     * Get class_name
-     *
-     * @return string 
-     */
-    public function getClassName()
-    {
-        return $this->class_name;
-    }
-
-    /**
-     * Add data_sets
-     *
-     * @param Odalisk\Entity\DataSet $dataSets
-     */
-    public function addDataSet(\Odalisk\Entity\DataSet $dataSets)
-    {
-        $this->data_sets[] = $dataSets;
-    }
-
-    /**
-     * Get data_sets
+     * Get datasets
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getDataSets()
+    public function getDatasets()
     {
-        return $this->data_sets;
+        return $this->datasets;
+    }
+
+    /**
+     * Set created_at
+     *
+     * @param datetime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return datetime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set updated_at
+     *
+     * @param datetime $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
+    }
+
+    /**
+     * Get updated_at
+     *
+     * @return datetime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
     }
 }

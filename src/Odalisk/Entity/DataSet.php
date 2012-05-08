@@ -7,12 +7,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Table()
+ * @ORM\Table(name="datasets")
  * @ORM\Entity
  */
-class DataSet
+class Dataset
 {   
-    /**
+    
+    public function __construct(array $values) {
+        $this->populate($values);
+	}
+	
+	/**
      * Builds the entity from the array
      * 
      * array(
@@ -22,8 +27,8 @@ class DataSet
      *
      * @param array $values 
      */
-    public function __construct(array $values) {
-        foreach($values as $name => $value) {
+	public function populate(array $values) {
+	    foreach($values as $name => $value) {
     		call_user_func(array($this, $name), $value);
 	    }
 	}
@@ -431,5 +436,25 @@ class DataSet
     public function getProvider()
     {
         return $this->provider;
+    }
+}
+	/**
+     * Set portal
+     *
+     * @param Odalisk\Entity\Portal $portal
+     */
+    public function setPortal(\Odalisk\Entity\Portal $portal)
+    {
+        $this->portal = $portal;
+    }
+
+    /**
+     * Get portal
+     *
+     * @return Odalisk\Entity\Portal 
+     */
+    public function getPortal()
+    {
+        return $this->portal;
     }
 }

@@ -15,6 +15,7 @@ all:
         - Symfony\Bundle\DoctrineBundle\DoctrineBundle
         - Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle
         - Sensio\Bundle\BuzzBundle\SensioBuzzBundle
+        - Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle
 
     # Parameters are like variables that can be references later in any
     # configuration file as: %locale%.

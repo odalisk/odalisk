@@ -61,3 +61,10 @@ services:
             - [ setName, [ "opendata.socrata.com" ] ]         
             - [ setBaseUrl, ["https://opendata.socrata.com/d/"] ]
             - [ setApiUrl, [ "https://opendata.socrata.com/api/views.json" ] ]
+    ny_platform:
+        class: Odalisk\Scraper\Socrata\NY\NYPlatform
+        parent: base_socrata
+        calls:
+            - [ setName, [ "nycopendata.socrata.com" ] ]         
+            - [ setBaseUrl, ["https://nycopendata.socrata.com/d/"] ]
+            - [ setApiUrl, [ "https://nycopendata.socrata.com/api/views.json" ] ]

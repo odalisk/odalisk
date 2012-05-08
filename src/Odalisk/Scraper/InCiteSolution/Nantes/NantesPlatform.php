@@ -12,7 +12,6 @@ class NantesPlatform extends BaseInCiteSolution {
     public function __construct() {
         parent::__construct();
     }
-
 }
 
 

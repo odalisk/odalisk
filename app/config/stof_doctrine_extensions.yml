@@ -11,7 +11,7 @@ all:
     orm:
       default:
           # tree: true
-          timestampable: false # not needed: listeners are not enabled by default
+          timestampable: true # not needed: listeners are not enabled by default
     #   other_entity_manager:
     #       sluggable: true
     

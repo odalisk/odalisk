@@ -105,7 +105,7 @@ class RequestDispatcher {
       switch ($nom) {
          case 'queue':
             // If the first arg is a URL, call queueUrl, else queueRequest
-            if(is_string($args[0]) {
+            if(is_string($args[0])) {
                 $nom = 'queueUrl';
             } else if ($args[0] instanceof Message\Request) {
                 $nom = 'queueRequest';

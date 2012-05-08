@@ -13,6 +13,22 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class DataSet
 {   
     /**
+     * Builds the entity from the array
+     * 
+     * array(
+     *  'setUrl' => 'http://some.url',
+     *  'setName' => 'A name'
+     * )
+     *
+     * @param array $values 
+     */
+    public function __construct(array $values) {
+        foreach($values as $name => $value) {
+    		call_user_func(array($this, $name), $value);
+	    }
+	}
+	
+    /**
      * @var integer $id
      *
      * @ORM\Column(name="id", type="integer")
@@ -24,63 +40,63 @@ class DataSet
     /**
      * @var string $url
      *
-     * @ORM\Column(name="url", type="string", length=255)
+     * @ORM\Column(name="url", type="string", nullable=true, length=255)
      */
     protected $url;
     
     /**
      * @var string $name
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", nullable=true, length=255)
      */
     protected $name;
     
     /**
      * @var string $summary
      *
-     * @ORM\Column(name="summary", type="text")
+     * @ORM\Column(name="summary", type="text", nullable=true)
      */
     protected $summary;
     
     /**
      * @var string $category
      *
-     * @ORM\Column(name="category", type="string", length=255)
+     * @ORM\Column(name="category", type="string", nullable=true, length=255)
      */
     protected $category;
     
     /**
      * @var string $released_on When did we create this record
      *
-     * @ORM\Column(name="released_on", type="datetime")
+     * @ORM\Column(name="released_on", type="datetime", nullable=true)
      */
     protected $released_on;
     
     /**
      * @var string $last_updated_on When did we create this record
      *
-     * @ORM\Column(name="last_updated_on", type="datetime")
+     * @ORM\Column(name="last_updated_on", type="datetime", nullable=true)
      */
     protected $last_updated_on;
     
     /**
      * @var string $owner
      *
-     * @ORM\Column(name="owner", type="string", length=255)
+     * @ORM\Column(name="owner", type="string", nullable=true, length=255)
      */
     protected $owner;
     
     /**
      * @var string $maintainer
      *
-     * @ORM\Column(name="maintainer", type="string", length=255)
+     * @ORM\Column(name="maintainer", type="string", nullable=true, length=255)
      */
     protected $maintainer;
     
     /**
      * @var string $license
      * 
-     * @ORM\Column(name="license", type="string", length=255)
+     * @ORM\Column(name="license", type="string", nullable=true, length=255)
      */
     protected $license;
     
@@ -99,6 +115,13 @@ class DataSet
      * @Gedmo\Timestampable(on="update")
      */
     protected $updated_at;
+    
+    /**
+     * @var string Was there an error when we crawled this dataset?
+     * 
+     * @ORM\Column(name="error", type="string", nullable=true)
+     */
+    protected $error;
 
     /**
      * Get id
@@ -328,5 +351,25 @@ class DataSet
     public function getUpdatedAt()
     {
         return $this->updated_at;
+    }
+
+    /**
+     * Set error
+     *
+     * @param string $error
+     */
+    public function setError($error)
+    {
+        $this->error = $error;
+    }
+
+    /**
+     * Get error
+     *
+     * @return string 
+     */
+    public function getError()
+    {
+        return $this->error;
     }
 }

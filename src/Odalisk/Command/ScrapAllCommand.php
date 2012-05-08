@@ -65,6 +65,7 @@ class ScrapAllCommand extends ScrapCommand {
             }
 
             $dispatcher->dispatch(10);
+            $container->get('doctrine')->getEntityManager()->flush();
         }
         
         /*        

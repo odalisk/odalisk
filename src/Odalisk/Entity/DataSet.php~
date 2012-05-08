@@ -13,6 +13,22 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class DataSet
 {   
     /**
+     * Builds the entity from the array
+     * 
+     * array(
+     *  'setUrl' => 'http://some.url',
+     *  'setName' => 'A name'
+     * )
+     *
+     * @param array $values 
+     */
+    public function __construct(array $values) {
+        foreach($values as $name => $value) {
+    		call_user_func(array($this, $name), $value);
+	    }
+	}
+	
+    /**
      * @var integer $id
      *
      * @ORM\Column(name="id", type="integer")
@@ -99,6 +115,13 @@ class DataSet
      * @Gedmo\Timestampable(on="update")
      */
     protected $updated_at;
+    
+    /**
+     * @var string Was there an error when we crawled this dataset?
+     * 
+     * @ORM\Column(name="error", type="string")
+     */
+    protected $error;
 
     /**
      * Get id

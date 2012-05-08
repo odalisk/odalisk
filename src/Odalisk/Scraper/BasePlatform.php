@@ -135,7 +135,7 @@ abstract class BasePlatform {
         $datasets = $this->portal->getDatasets();
         
         foreach($datasets as $id => $dataset) {
-            $this->datasets[$dataset->getName()] = $dataset;
+            $this->datasets[$dataset->getUrl()] = $dataset;
             unset($datasets[$id]);
         }
     }

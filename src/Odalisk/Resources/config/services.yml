@@ -24,6 +24,7 @@ services:
         calls:
             - [ setBuzz, [ @buzz, %buzz_timout% ] ]
             - [ setBuzzOptions, [ %buzz_options% ] ]
+            - [ setDoctrine, [ @doctrine ] ]
     uk_platform:
         class: Odalisk\Scraper\UK\UkPlatform
         parent: base_platform

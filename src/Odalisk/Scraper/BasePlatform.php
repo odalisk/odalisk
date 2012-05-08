@@ -6,6 +6,8 @@ use Symfony\Component\DomCrawler\Crawler;
 
 use Buzz\Message;
 
+use Odalisk\Entity\DataSet;
+
 abstract class BasePlatform {
     /**
      * Buzz instance
@@ -20,6 +22,20 @@ abstract class BasePlatform {
      * @var array
      */
     protected $buzz_options = array();
+    
+    /**
+     * The doctrine handle
+     *
+     * @var string
+     */
+    protected $doctrine;
+    
+    /**
+     * Entity manager
+     *
+     * @var string
+     */
+    protected $em;
     
     /**
      * The name of the current platform
@@ -45,6 +61,8 @@ abstract class BasePlatform {
 	
 	protected $criteria;
 	
+	protected $date_format;
+	
     protected $count = 0;
     
     protected $total_count = 0;
@@ -56,6 +74,11 @@ abstract class BasePlatform {
     
     public function setBuzzOptions(array $options) {
         $this->buzz_options = $options;
+    }
+    
+    public function setDoctrine($doctrine) {
+        $this->doctrine = $doctrine;
+        $this->em = $this->doctrine->getEntityManager();
     }
     
     public function setName($name) {
@@ -76,32 +99,51 @@ abstract class BasePlatform {
     
     abstract public function getDatasetsUrls();
     
-    public function parseDataset(Message\Request $request, Message\Response $response) {
+    public function parseDataset(Message\Request $request, Message\Response $response) {     
+        $this->count++;
         $data = array(
-            '#' => $this->count++,
-            'url' => $request->getUrl(),
-            'code' => $response->getStatusCode(),
+            'setUrl' => $request->getUrl(),
+            // 'code' => $response->getStatusCode(),
         );
-        
-        if(200 == $data['code']) {
+
+        if(200 == $response->getStatusCode()) {
             $crawler = new Crawler($response->getContent());
             if(0 == count($crawler)) {
-                $data['empty'] = TRUE;
+                $data['setError'] = "Empty page";
             } else {
                 foreach($this->criteria as $name => $path) {
-                    $node = $crawler->filterXPath($path);
-                    if(0 != count($node)) {
-                       $data[$name] = $node->text();
-                    }        
+                    $nodes = $crawler->filterXPath($path);
+                    if(0 < count($nodes)) {
+                        $data[$name] = join(
+                            ";",
+                            $nodes->each(
+                                function($node,$i) {
+                                    return $node->nodeValue;
+                                }
+                            )
+                        );
+                    } 
+                }
+                
+                if(array_key_exists('setReleasedOn', $data)) {
+                    $data['setReleasedOn'] = \Datetime::createFromFormat($this->date_format, $data['setReleasedOn']);
+                }
+                
+                if(array_key_exists('setLastUpdatedOn', $data)) {
+                    $data['setLastUpdatedOn'] = \Datetime::createFromFormat($this->date_format, $data['setLastUpdatedOn']);
                 }
             }
         }
-        
-        //$this->datasets[$data['url']] = $data;
-        error_log('[' . $this->name . '] Processed ' . $data['url'] . ' with code ' . $data['code']);
+        error_log('[' . $this->name . '] Processed ' . $data['setUrl'] . ' with code ' . $response->getStatusCode());
         
         if(0 == $this->count % 100) {
            error_log('>>>> ' . $this->count . ' done, ' . $this->total_count . ' to go.');
         }
+        
+        if(!array_key_exists('setName', $data)) {
+           $data['setError'] = "Empty title";
+        }
+        
+        $this->em->persist(new DataSet($data));
     }
 }

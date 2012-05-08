@@ -10,8 +10,6 @@ use Buzz\Message;
 
 abstract class BaseSocrata extends BasePlatform {
 
-    protected $datasets = array();
-
 	public function __construct() {
 		$this->criteria = array(
 			'setName' => '//h2[@id="datasetName" and @class="clipText currentViewName"]'
@@ -42,12 +40,12 @@ abstract class BaseSocrata extends BasePlatform {
         if(200 == $response->getStatusCode()) {
             $data = json_decode($response->getContent());
             foreach($data as $dataset) {
-                $this->datasets[$this->base_url.$dataset->id] = NULL;
+                $datasets[] = $this->base_url.$dataset->id;
             }
         } else {
             throw new \RuntimeException('Couldn\'t fetch list of datasets');
         }     
         
-        return array_keys($this->datasets);
+        return($datasets);
 	}
 }

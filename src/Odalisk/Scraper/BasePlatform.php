@@ -178,11 +178,24 @@ abstract class BasePlatform {
                 
                 if(array_key_exists('setReleasedOn', $data)) {
                     $data['setReleasedOn'] = \Datetime::createFromFormat($this->date_format, $data['setReleasedOn']);
+                    if(FALSE == $data['setReleasedOn']) {
+                        $data['setReleasedOn'] = NULL;
+                    }
+                } else {
+                    $data['setReleasedOn'] = NULL;
                 }
+                
                 if(array_key_exists('setLastUpdatedOn', $data)) {
                     $data['setLastUpdatedOn'] = \Datetime::createFromFormat($this->date_format, $data['setLastUpdatedOn']);
+                    if(FALSE == $data['setLastUpdatedOn']) {
+                        $data['setLastUpdatedOn'] = NULL;
+                    }
+                } else {
+                    $data['setLastUpdatedOn'] = NULL;
                 }
             }
+        } else {
+            $data['setError'] = 'Return code : ' . $response->getStatusCode();
         }
         error_log('[' . $this->name . '] Processed ' . $data['setUrl'] . ' with code ' . $response->getStatusCode());
         
@@ -190,9 +203,11 @@ abstract class BasePlatform {
            error_log('>>>> ' . $this->count . ' done, ' . $this->total_count . ' to go.');
         }
         
+        /*
         if(!array_key_exists('setName', $data)) {
            $data['setError'] = "Empty title";
         }
+        */
         
         $dataset = NULL;
         
@@ -207,7 +222,7 @@ abstract class BasePlatform {
         $this->em->persist($this->portal);
         $this->em->persist($dataset);
         
-        if($this->count == $this->total_count || $this->em->getUnitOfWork()->size() > 1000) {
+        if($this->count == $this->total_count || $this->count % 100 == 0) {
             error_log('Flushing data!');
             $this->em->flush();
         }

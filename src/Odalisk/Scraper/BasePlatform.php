@@ -183,7 +183,8 @@ abstract class BasePlatform {
 						);
 				foreach($dateFields as $field) {
 					if(array_key_exists($field, $data)) {
-						$data[$field] = \Datetime::createFromFormat($this->date_format, $data[$field]);
+						$data[$field] =
+						\Datetime::createFromFormat($this->date_format.' H:i:s', $data[$field].' 00:00:00');
 						if(FALSE == $data[$field]) {
 							$data[$field] = NULL;
 						}
@@ -195,17 +196,12 @@ abstract class BasePlatform {
         } else {
             $data['setError'] = 'Return code : ' . $response->getStatusCode();
         }
+
+		// Logs
         error_log('[' . $this->name . '] Processed ' . $data['setUrl'] . ' with code ' . $response->getStatusCode());
-        
         if(0 == $this->count % 100) {
            error_log('>>>> ' . $this->count . ' done, ' . $this->total_count . ' to go.');
         }
-        
-        /*
-        if(!array_key_exists('setName', $data)) {
-           $data['setError'] = "Empty title";
-        }
-        */
         
         $dataset = NULL;
         

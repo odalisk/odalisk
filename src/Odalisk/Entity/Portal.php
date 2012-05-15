@@ -55,6 +55,13 @@ class Portal
      */
     protected $updated_at;
 
+    /**
+     * @var string $crawled_at When did we crawled this record
+     *
+     * @ORM\Column(name="crawled_at", type="datetime")
+     */
+    protected $crawled_at;
+
 	/**
 	 * @ORM\OneToMany(targetEntity="Dataset", mappedBy="portal")
 	 */

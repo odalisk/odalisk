@@ -183,8 +183,7 @@ abstract class BasePlatform {
 						);
 				foreach($dateFields as $field) {
 					if(array_key_exists($field, $data)) {
-						$data[$field] =
-						\Datetime::createFromFormat($this->date_format.' H:i:s', $data[$field].' 00:00:00');
+						$data[$field] = \Datetime::createFromFormat($this->date_format, $data[$field]);
 						if(FALSE == $data[$field]) {
 							$data[$field] = NULL;
 						}
@@ -213,11 +212,11 @@ abstract class BasePlatform {
             $this->portal->addDataset($dataset);
         }
         
-        $this->em->persist($this->portal);
         $this->em->persist($dataset);
         
         if($this->count == $this->total_count || $this->count % 100 == 0) {
             error_log('Flushing data!');
+            $this->em->persist($this->portal);
             $this->em->flush();
         }
     }

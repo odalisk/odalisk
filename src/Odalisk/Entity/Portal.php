@@ -55,13 +55,6 @@ class Portal
      */
     protected $updated_at;
 
-    /**
-     * @var string $crawled_at When did we crawled this record
-     *
-     * @ORM\Column(name="crawled_at", type="datetime")
-     */
-    protected $crawled_at;
-
 	/**
 	 * @ORM\OneToMany(targetEntity="Dataset", mappedBy="portal")
 	 */
@@ -120,26 +113,6 @@ class Portal
     public function getUrl()
     {
         return $this->url;
-    }
-
-    /**
-     * Set crawled_at
-     *
-     * @param datetime $crawledAt
-     */
-    public function setCrawledAt($crawledAt)
-    {
-        $this->crawled_at = $crawledAt;
-    }
-
-    /**
-     * Get crawled_at
-     *
-     * @return datetime 
-     */
-    public function getCrawledAt()
-    {
-        return $this->crawled_at;
     }
 
     /**

@@ -7,3 +7,4 @@ vendor/*
 !vendor/twitter
 web/css/*
 web/js/*
+composer.lock

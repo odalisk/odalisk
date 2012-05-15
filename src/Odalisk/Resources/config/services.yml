@@ -88,6 +88,7 @@ services:
             - [ setName, [ "publicdata.eu" ] ]
             - [ setBaseUrl, [ "http://publicdata.eu/dataset/" ] ]
             - [ setApiUrl, [ "http://publicdata.eu/api/rest/dataset" ] ]
+<<<<<<< HEAD
 
     data_publica_platform:
         class: Odalisk\Scraper\DataPublica\DataPublicaPlatform
@@ -95,3 +96,5 @@ services:
         calls:
             - [ setName, [ "data-publica.com" ] ]
 
+=======
+>>>>>>> 365ae6735bfb26ff75f8910d72578cd890f4c3c3

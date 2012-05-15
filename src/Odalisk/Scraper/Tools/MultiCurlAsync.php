@@ -80,16 +80,19 @@ class MultiCurlAsync extends Curl {
             
             // A request was just completed -- find out which one
             while($done = curl_multi_info_read($this->master)) {
+                error_log('Collecting 1 > ' . memory_get_usage(true) / 1024);
                 // send the return values to the callback function.
 	            $key = (string) $done['handle'];
+	            error_log('Collecting 2 > ' . memory_get_usage(true) / 1024);
                 list($request, $response, $callback) = $this->queue[$this->request_map[$key]];
                  // Check that the callback is valid, otherwise we work for nothing
+                 error_log('Collecting 3 > ' . memory_get_usage(true) / 1024);
                 if(is_callable($callback)) {
-                    //throw new RuntimeException();
+                    error_log('Collecting 4 > ' . memory_get_usage(true) / 1024);
                     unset($this->request_map[$key]);
-                
+                    error_log('Collecting 5 > ' . memory_get_usage(true) / 1024);
                     $response->fromString(static::getLastResponse(curl_multi_getcontent($done['handle'])));
-                                    
+                    error_log('Collecting 6 > ' . memory_get_usage(true) / 1024);                
                     call_user_func($callback, $request, $response);
                 } else {
                     error_log('[RuntimeError] MultiCurlAsync::flush() > The provided callback is not callable (' . $callback . ').');
@@ -103,7 +106,6 @@ class MultiCurlAsync extends Curl {
 
                 // Remove the cURL handle that just completed
                 curl_multi_remove_handle($this->master, $done['handle']);
-
             }
 
 	    // Block for data in / output; error handling is done by curl_multi_exec
@@ -116,15 +118,19 @@ class MultiCurlAsync extends Curl {
     }
     
     private function fireRequest($i) {
+        error_log('Firing 1 > ' . memory_get_usage(true) / 1024);
         list($request, $response) = $this->queue[$i];
+        error_log('Firing 2 > ' . memory_get_usage(true) / 1024);
         $curl = static::createCurlHandle();
-        
+        error_log('Firing 3 > ' . memory_get_usage(true) / 1024);
         $this->prepare($request, $response, $curl);
+        error_log('Firing 4 > ' . memory_get_usage(true) / 1024);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-
+        error_log('Firing 5 > ' . memory_get_usage(true) / 1024);
         curl_multi_add_handle($this->master, $curl);
-
+        error_log('Firing 6 > ' . memory_get_usage(true) / 1024);
         // Add to our request Maps
         $this->request_map[(string) $curl] = $i;
+        error_log('Firing 7 > ' . memory_get_usage(true) / 1024);
     }
 }

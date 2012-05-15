@@ -1,0 +1,13 @@
+all:
+    # Parameters are like variables that can be references later in any
+    # configuration file as: %locale%.
+    # See: http://bit.ly/sf2-parameter
+    parameters:
+        database_host:      <your database host>
+        database_port:      <your database port>
+        database_name:      <your database name>
+        database_user:      <your database user>
+        database_password:  <your database password>
+         
+        bin_node: <the path to your node executable>
+        node_paths: [ "<the path to the node_modules folder>" ]

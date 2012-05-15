@@ -1,3 +1,14 @@
 homepage:
     pattern:    /
     defaults:   { _controller: App:Default:index }
+
+portals:
+    pattern:    /portals/{page_number}.{_format}
+    defaults:   { _controller: App:Portal:index, page: 1, _format: html }
+    requirements:
+        page_number: \d+
+        _format: html|json
+
+portalDetails:
+    pattern:    /portals/{portal_name}.{_format}
+    defaults:   { _controller: App:Portal:details}

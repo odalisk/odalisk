@@ -88,4 +88,3 @@ services:
             - [ setName, [ "publicdata.eu" ] ]
             - [ setBaseUrl, [ "http://publicdata.eu/dataset/" ] ]
             - [ setApiUrl, [ "http://publicdata.eu/api/rest/dataset" ] ]
-

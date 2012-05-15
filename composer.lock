@@ -24,12 +24,11 @@
         {
             "package": "kriswallsmith/assetic",
             "version": "1.0.x-dev",
-            "source-reference": "60167a5021c01d6b1dbe85aace14e2568e2e316a"
+            "source-reference": "0e2f7d4e1658a3ec818fab289af5b99ac3e98e9c"
         },
         {
             "package": "kriswallsmith/buzz",
-            "version": "dev-master",
-            "source-reference": "8ffbb976ee4865a499567764956c6173f568a3b2"
+            "version": "v0.5"
         },
         {
             "package": "monolog/monolog",
@@ -67,7 +66,7 @@
         {
             "package": "symfony/symfony",
             "version": "2.0.x-dev",
-            "source-reference": "906f6f662c3825801a976d990e02142e0867a5f7"
+            "source-reference": "ec45169f4f2cbaa428999c7f1602810807ee0f60"
         },
         {
             "package": "twig/extensions",
@@ -77,7 +76,7 @@
         {
             "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "925254821d377c9f18c29f92b3e66192b687086c",
+            "source-reference": "d661c2a2f654ba8f2bddeeac0b8a80dcd59649ab",
             "alias": "1.9.9999999.9999999-dev"
         }
     ],

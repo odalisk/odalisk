@@ -3,12 +3,16 @@ homepage:
     defaults:   { _controller: App:Default:index }
 
 portals:
-    pattern:    /portals/{page_number}.{_format}
+    pattern:    /portals/{page_number}/{_format}
     defaults:   { _controller: App:Portal:index, page: 1, _format: html }
     requirements:
         page_number: \d+
         _format: html|json
 
-portalDetails:
-    pattern:    /portals/{portal_name}.{_format}
-    defaults:   { _controller: App:Portal:details}
+portal_details:
+    pattern:    /portals/details/{portal_number}/{_format}
+    defaults:   { _controller: App:Portal:details, _format: html }
+
+dataset_details:
+    pattern:    /datasets/details/{dataset_number}/{_format}
+    defaults:   { _controller: App:Dataset:details, _format: html }

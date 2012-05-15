@@ -176,23 +176,21 @@ abstract class BasePlatform {
                     } 
                 }
                 
-                if(array_key_exists('setReleasedOn', $data)) {
-                    $data['setReleasedOn'] = \Datetime::createFromFormat($this->date_format, $data['setReleasedOn']);
-                    if(FALSE == $data['setReleasedOn']) {
-                        $data['setReleasedOn'] = NULL;
-                    }
-                } else {
-                    $data['setReleasedOn'] = NULL;
-                }
-                
-                if(array_key_exists('setLastUpdatedOn', $data)) {
-                    $data['setLastUpdatedOn'] = \Datetime::createFromFormat($this->date_format, $data['setLastUpdatedOn']);
-                    if(FALSE == $data['setLastUpdatedOn']) {
-                        $data['setLastUpdatedOn'] = NULL;
-                    }
-                } else {
-                    $data['setLastUpdatedOn'] = NULL;
-                }
+				// We transform dates format in datetime.
+				$dateFields = array(
+						'setReleasedOn'
+						, 'setLastUpdatedOn'
+						);
+				foreach($dateFields as $field) {
+					if(array_key_exists($field, $data)) {
+						$data[$field] = \Datetime::createFromFormat($this->date_format, $data[$field]);
+						if(FALSE == $data[$field]) {
+							$data[$field] = NULL;
+						}
+					} else {
+						$data[$field] = NULL;
+					}
+				}
             }
         } else {
             $data['setError'] = 'Return code : ' . $response->getStatusCode();

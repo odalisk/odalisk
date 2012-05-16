@@ -13,14 +13,15 @@ use Odalisk\Scraper\BasePlatform;
  */
 class DataMarketPlatform extends BasePlatform {
 	// The url on which the datasets are listed.
-	private $datasetsListUrl = 'http://datamarket.com/data/list/?q=datatype:dataset';
+	private $datasets_list_url = 'http://datamarket.com/data/list/?q=datatype:dataset';
 	// the number of datasets displayed for a request.
-	private $batchSize = 20;
-	private $datasetsNumber = 0;
+	private $batch_size = 20;
 
     public function __construct() {
         $this->criteria = array(
-                          );
+				'setName' => '//div[@id="dataset-info"]/h1'
+				, 'setLicense' => '//strong[.="Licenses:"]/ul/li/p'
+				);
              
         $this->date_format = 'd/m/Y';
     }
@@ -41,30 +42,37 @@ class DataMarketPlatform extends BasePlatform {
 	 */
     public function getDatasetsUrls() {
 		$browser = new Browser();
-		$datasets = array();
+		$urls    = array(); // the array we will return.
+
+		// The number of datasets of the portal ; information given on
+		// $dataset_list_url page.
+		$datasets_number = 0;
 		
-		// We begin by fetching the number of datasets
-		$response = $browser->get('http://datamarket.com/data/list/?q=datatype:dataset');
+		// We get the page with the datasets list
+		$response = $browser->get($this->datasets_list_url);
 		if($response->getStatusCode() != 200) {
 			echo('Impossible d\'obtenir la page : http://datamarket.com/data/list/?q=datatype:dataset');
 			return;
 		}
 
+		// We begin by fetching the number of datasets
 		$crawler = new Crawler($response->getContent());
 		$node = $crawler->filterXPath('//div[@class="datasets"]/h2');
 		if(preg_match("/([0-9,]+)/", $node->text(), $match)) {
-			$this->datasetsNumber = (int) str_replace(',', '', $match[0]);
-			echo('Number of datasets of the platform : '.$this->datasetsNumber."\n");
+			$datasets_number = (int) str_replace(',', '', $match[0]);
+			echo('Number of datasets of the platform : '.$datasets_number."\n");
 		}
 		// we now have the number of datasets of the portal.
 
 		// Since we already have the first page, let's parse it !
-		$ids      = $crawler->filterXPath('//h4[@class="title"]/a')->extract(array('data-ds'));
-		$datasets = array_merge($datasets, $ids);
+		$ids  = $crawler->filterXPath('//h4[@class="title"]/a')->extract(array('data-ds'));
+		// Add it to the urls array
+		$urls = array_merge($urls, $ids);
 
-		// We loop on all pages left.
-		//for($i = 2 ; $i < ceil($this->datasetsNumber / $this->batchSize) ; $i++) {
-		for($i = 2 ; $i < 5 ; $i++) {
+		// $max = ceil($this->datasets_number / $this->batch_size);
+		$max = 5;
+		for($i = 2 ; $i < $max ; $i++) {
+			// We loop on all pages left.
 			echo("$i\n");
 			$response = $browser->get('http://datamarket.com/data/list/?q=datatype:dataset&page='.$i);
 			if($response->getStatusCode() != 200) {
@@ -72,27 +80,31 @@ class DataMarketPlatform extends BasePlatform {
 				continue;
 			}
 
-			$crawler  = new Crawler($response->getContent());
-			$datasets = array_merge($datasets, $crawler->filterXPath('//h4[@class="title"]/a')->extract(array('data-ds')));
+			$crawler = new Crawler($response->getContent());
+			$urls    = array_merge($urls, $crawler->filterXPath('//h4[@class="title"]/a')->extract(array('data-ds')));
 		}
-		echo('Nombre de datasets récupérés : '.count($datasets)."\n");
+        $this->total_count = count($urls);
+		echo('Nombre de datasets récupérés : '.$this->total_count."\n");
 		
-		// $datasets contains only the ids of the datasets, we need to add the
+		// $urls contains only the ids of the datasets, we need to add the
 		// base url :
 		$base_url = $this->base_url;
-		$datasets = array_map(
+		$urls= array_map(
 			function($id) use ($base_url) { return($base_url.$id); }
-			, $datasets
+			, $urls
 			);
 
-		return($datasets);
+		return($urls);
 		
 	}
     
      public function parsePortal() {
-		// TODO
         $this->portal = new \Odalisk\Entity\Portal();
         $this->portal->setName($this->getName());
+        $this->portal->setUrl('http://datamarket.com/');
+        
+        $this->em->persist($this->portal);
+        $this->em->flush();
     }
 
 }

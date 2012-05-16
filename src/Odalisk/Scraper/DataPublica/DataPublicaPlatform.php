@@ -80,7 +80,7 @@ class DataPublicaPlatform extends BasePlatform {
                             ";",
                             $nodes->each(
                                 function($node,$i) {
-                                    return $node->nodeValue;
+                                    return utf8_decode($node->nodeValue);
                                 }
                             )
                         );

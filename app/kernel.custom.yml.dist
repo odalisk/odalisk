@@ -8,6 +8,6 @@ all:
         database_name:      <your database name>
         database_user:      <your database user>
         database_password:  <your database password>
-        
+         
         bin_node: <the path to your node executable>
         node_paths: [ "<the path to the node_modules folder>" ]

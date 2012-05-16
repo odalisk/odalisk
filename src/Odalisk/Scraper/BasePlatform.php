@@ -62,6 +62,8 @@ abstract class BasePlatform {
 	
 	protected $date_format;
 	
+	protected $date_fields = array('setReleasedOn', 'setLastUpdatedOn');
+	
     protected $count = 0;
     
     protected $total_count = 0;
@@ -150,18 +152,24 @@ abstract class BasePlatform {
      * @param Response $response 
      * @return void
      */
-    public function parseDataset(Message\Request $request, Message\Response $response) {     
+    public function parseDataset(Message\Request $request, Message\Response $response) {
+        error_log('Parsing 1 > ' . memory_get_usage(true) / 1024);
         $this->count++;
+        error_log('Parsing 2 > ' . memory_get_usage(true) / 1024);
         $data = array(
             'setUrl' => $request->getUrl(),
             // 'code' => $response->getStatusCode(),
         );
-
+        
+        error_log('Parsing 3 > ' . memory_get_usage(true) / 1024);
         if(200 == $response->getStatusCode()) {
+            error_log('Parsing 4 > ' . memory_get_usage(true) / 1024);
             $crawler = new Crawler($response->getContent());
+            error_log('Parsing 5 > ' . memory_get_usage(true) / 1024);
             if(0 == count($crawler)) {
                 $data['setError'] = "Empty page";
             } else {
+                error_log('Parsing 6 > ' . memory_get_usage(true) / 1024);
                 foreach($this->criteria as $name => $path) {
                     $nodes = $crawler->filterXPath($path);
                     if(0 < count($nodes)) {
@@ -175,42 +183,35 @@ abstract class BasePlatform {
                         );
                     } 
                 }
+                error_log('Parsing 7 > ' . memory_get_usage(true) / 1024);
                 
-                if(array_key_exists('setReleasedOn', $data)) {
-                    $data['setReleasedOn'] = \Datetime::createFromFormat($this->date_format, $data['setReleasedOn']);
-                    if(FALSE == $data['setReleasedOn']) {
-                        $data['setReleasedOn'] = NULL;
-                    }
-                } else {
-                    $data['setReleasedOn'] = NULL;
-                }
-                
-                if(array_key_exists('setLastUpdatedOn', $data)) {
-                    $data['setLastUpdatedOn'] = \Datetime::createFromFormat($this->date_format, $data['setLastUpdatedOn']);
-                    if(FALSE == $data['setLastUpdatedOn']) {
-                        $data['setLastUpdatedOn'] = NULL;
-                    }
-                } else {
-                    $data['setLastUpdatedOn'] = NULL;
-                }
+				// We transform dates format in datetime.
+				foreach($this->date_fields as $field) {
+					if(array_key_exists($field, $data)) {
+						$data[$field] = \Datetime::createFromFormat($this->date_format, $data[$field]);
+						if(FALSE == $data[$field]) {
+							$data[$field] = NULL;
+						}
+					} else {
+						$data[$field] = NULL;
+					}
+				}
+				error_log('Parsing 8 > ' . memory_get_usage(true) / 1024);
             }
+            $crawler = NULL;
         } else {
             $data['setError'] = 'Return code : ' . $response->getStatusCode();
         }
+
+        error_log('Parsing 9 > ' . memory_get_usage(true) / 1024);
+		// Logs
         error_log('[' . $this->name . '] Processed ' . $data['setUrl'] . ' with code ' . $response->getStatusCode());
-        
         if(0 == $this->count % 100) {
            error_log('>>>> ' . $this->count . ' done, ' . $this->total_count . ' to go.');
         }
         
-        /*
-        if(!array_key_exists('setName', $data)) {
-           $data['setError'] = "Empty title";
-        }
-        */
-        
         $dataset = NULL;
-        
+        error_log('Parsing 10 > ' . memory_get_usage(true) / 1024);
         if(NULL != $this->datasets && array_key_exists($data['setUrl'], $this->datasets)) {
             $dataset = $this->datasets[$data['setUrl']];
             $dataset->populate($data);
@@ -218,13 +219,14 @@ abstract class BasePlatform {
             $dataset = new Dataset($data);
             $this->portal->addDataset($dataset);
         }
-        
-        $this->em->persist($this->portal);
+        error_log('Parsing 11 > ' . memory_get_usage(true) / 1024);
         $this->em->persist($dataset);
-        
+        error_log('Parsing 12 > ' . memory_get_usage(true) / 1024);
         if($this->count == $this->total_count || $this->count % 100 == 0) {
             error_log('Flushing data!');
+            $this->em->persist($this->portal);
             $this->em->flush();
         }
+        error_log('Parsing 13 > ' . memory_get_usage(true) / 1024);
     }
 }

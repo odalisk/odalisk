@@ -116,26 +116,6 @@ class Portal
     }
 
     /**
-     * Set crawled_at
-     *
-     * @param datetime $crawledAt
-     */
-    public function setCrawledAt($crawledAt)
-    {
-        $this->crawled_at = $crawledAt;
-    }
-
-    /**
-     * Get crawled_at
-     *
-     * @return datetime 
-     */
-    public function getCrawledAt()
-    {
-        return $this->crawled_at;
-    }
-
-    /**
      * Set base_url
      *
      * @param string $baseUrl

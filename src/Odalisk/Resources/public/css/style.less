@@ -9,6 +9,10 @@
 
 @import "../../../../../vendor/assets/css/bootstrap/bootstrap.less";
 
+.row-nomargin-top {
+    margin-top:0px !important;
+}
+
 body {
     min-width:990px;
     margin:0px 10px 0px 10px;
@@ -36,17 +40,22 @@ body {
     .well {
         padding:20px 30px 20px 30px;
         
+        
+    }
+    
+    .hero-unit-intro {
         h1, h2 {
             float:left;
+        }
+        
+        h1:first-letter {
+            text-transform:uppercase;
         }
         
         h2 {
             margin-top:26px;
             margin-left:10px;
         }
-    }
-    
-    .hero-unit-intro {
         table {
             margin-top:20px;
             background:white;
@@ -54,8 +63,11 @@ body {
                 text-align:right;
                 margin-right:10px;
             }
+            
         }
-        
+        .row-fluid {
+            margin-top:0px;
+        }
         .score {
             .total-score {
                 font-size:30px;
@@ -109,6 +121,57 @@ body {
         }
         
         
+    }
+    
+    
+    table.table-portal-list {
+        td.portal-item {
+            a {
+                text-decoration:none;
+                color:#555;
+            }
+            h3:first-letter {
+                text-transform:uppercase;
+            }
+            
+            .more-infos {
+                span.label {
+                    margin-top:-3px;
+                    display:inline-block;
+                }
+                
+                a.portal-link {
+                    text-decoration:underline;
+                    color:#555;
+                }
+            }
+        }
+    }
+    
+    table.table-dataset-list {
+        
+        td.dataset-item {
+            a {
+                text-decoration:none;
+                color:#555;
+            }
+            h3:first-letter {
+                text-transform:uppercase;
+            }
+            table.row-fluid {
+                margin-top:0px;
+            }
+            .more-infos {
+                td {
+                    border-top:none;
+                }
+                
+                td.dataset-summary {
+                    //width:500px;
+                    
+                }
+            }
+        }
     }
 }
 

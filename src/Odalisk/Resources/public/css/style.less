@@ -13,8 +13,15 @@
     margin-top:0px !important;
 }
 
+.table-nomargin-bottom {
+    margin-bottom:0px !important;
+}
+
+a:visited {
+    color:@linkColor;
+}
+
 body {
-    min-width:990px;
     margin:0px 10px 0px 10px;
     .navbar {
         .brand {
@@ -124,51 +131,54 @@ body {
     }
     
     
-    table.table-portal-list {
-        td.portal-item {
+    table.table-dataset-list, .table-portal-list {
+        .badge {
+            position:relative;
+            top:-10px;
+            left:3px;
+            
+        }
+        
+        .page_from_to {
+            text-align:right;
+        }
+        
+        .pagination {
+            margin:0px;
+        }
+        
+        td.dataset-item, td.portal-item {
+            width:100%;
             a {
-                text-decoration:none;
-                color:#555;
+                //color:#555;
             }
+            
             h3:first-letter {
                 text-transform:uppercase;
             }
             
-            .more-infos {
-                span.label {
-                    margin-top:-3px;
-                    display:inline-block;
-                }
-                
-                a.portal-link {
-                    text-decoration:underline;
-                    color:#555;
-                }
-            }
-        }
-    }
-    
-    table.table-dataset-list {
-        
-        td.dataset-item {
-            a {
-                text-decoration:none;
-                color:#555;
-            }
-            h3:first-letter {
-                text-transform:uppercase;
-            }
             table.row-fluid {
                 margin-top:0px;
             }
+            
             .more-infos {
                 td {
                     border-top:none;
-                }
-                
-                td.dataset-summary {
-                    //width:500px;
                     
+                    &.sumary {
+                        width:80%;
+                    }
+                    
+                    &.labels {
+                        width:20%;
+                        min-width:150px;
+                    }
+                    
+                    &.button {
+                        width:10%;
+                        min-width:70px;
+                        text-align:right;
+                    }
                 }
             }
         }

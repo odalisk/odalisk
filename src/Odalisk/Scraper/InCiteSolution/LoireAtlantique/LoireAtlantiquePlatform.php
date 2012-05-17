@@ -4,7 +4,10 @@ namespace Odalisk\Scraper\InCiteSolution\LoireAtlantique;
 
 use Odalisk\Scraper\InCiteSolution\BaseInCiteSolution;
 
+use Odalisk\Scraper\Tools\RequestDispatcher;
+
 use Symfony\Component\DomCrawler\Crawler;
+
 use Buzz\Message;
 
 /**
@@ -12,55 +15,75 @@ use Buzz\Message;
  */
 class LoireAtlantiquePlatform extends BaseInCiteSolution {
 
-	private $datasets_list_url;
+
+	protected $nb_datasets_estimated;
+
 
     public function __construct() {
+
         parent::__construct();
 
 		$this->datasets_list_url = 'http://data.loire-atlantique.fr/donnees/?tx_icsoddatastore_pi1[page]=';
+
+		$this->urls_list_index_path = ".//*[@class='tx_icsoddatastore_pi1_list']//td[@class='first']/h3/a";
     }
 
     public function getDatasetsUrls() {
+        
+        $this->urllist = array();
 
-        $factory = new Message\Factory();
-		$datasets_urls = array();
-		$uids = array();
+        $dispatcher = new RequestDispatcher($this->buzz_options);
+        $this->buzz->getClient()->setTimeout(30);
 
-		$i = 0;
-		while(true) {
-			echo($i);
-			$response = $this->buzz->get($this->datasets_list_url.  $i);
-			$crawler  = new Crawler($response->getContent());
+        $response = $this->buzz->get($this->datasets_list_url.'0');
 
-			$nodes = $crawler->filterXPath('//td[@class="first"]/h3/a');
-			if(count($nodes) > 0) {
-				$hrefs = $nodes->extract(array('href'));
-				foreach($hrefs as $href) {
-					if(preg_match("/\[uid\]=([0-9]+)$/", $href, $match)) {
-						$uids[] = $match[1];
-					} else {
-						error_log('Marche pôs : '.$href.' !');
-					}
+        
+        if($response->getStatusCode() == 200) {
+            $crawler = new Crawler($response->getContent());
+            
+            $nodes = $crawler->filterXPath(".//div[@class='pagination']/span[@class='last']/a/@href");
+            if(0 < count($nodes)) {
+
+            	$pages_to_get = 0;
+
+            	$href = $nodes->first()->text();
+            	if(preg_match("/\[page\]=([0-9]+)&/", $href, $match)) {
+					$pages_to_get = intval($match[1]);
 				}
-			} else {
-				break;
-			}
 
-			$i++;
-		}
+				
+                
+                $nodes = $crawler->filterXPath($this->urls_list_index_path);
+                if(0 < count($nodes)) {                           
+                    $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
+                    $this->nb_dataset_estimated = count($this->urls);
+                }
 
-		foreach($uids as $uid) {
-            $formRequest = $factory->createFormRequest();
-            $formRequest->setMethod(Message\Request::METHOD_POST);
-            $formRequest->fromUrl($this->sanitize($this->base_url . $uid));
-            $formRequest->addHeaders($this->buzz_options);
-            $formRequest->setFields(array('tx_icsoddatastore_pi1[cgu]' => 'on'));
-            self::$urls[] = $formRequest;
+                for($i = 1 ; $i <= $pages_to_get ; $i++) {
+                   $this->nb_dataset_estimated += count($this->urls);
+                   $dispatcher->queue($this->datasets_list_url.$i,
+                                        array($this, 'Odalisk\Scraper\InCiteSolution\LoireAtlantique\LoireAtlantiquePlatform::crawlDatasetsList'));
+                }
+
+                error_log('Number estimated of datasets of the portal : '.$this->nb_dataset_estimated);
+
+                $dispatcher->dispatch(10);
+                
+            }else{
+                return $this->urls;
+            }
+
         }
         
-        $this->total_count = count(self::$urls);
+        $base_url = $this->base_url;
+        $this->urls = array_map(
+                function($id) use ($base_url) { return($base_url.$id); }
+                , $this->urls
+                );
+
+        $this->total_count = count($this->urls);
         
-        return(self::$urls);
+        return $this->urls;
     }
 
     public function parsePortal() {
@@ -71,6 +94,23 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
         $this->em->persist($this->portal);
         $this->em->flush();
     }
+
+    public function crawlDatasetsList(Message\Request $request, Message\Response $response) {
+        
+        if($response->getStatusCode() != 200) {
+            error_log('Impossible d\'obtenir la page !');
+            return;
+        }
+
+        $crawler = new Crawler($response->getContent());
+        $nodes = $crawler->filterXPath($this->urls_list_index_path);
+        if(0 < count($nodes)) {                           
+            $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
+        }
+
+        $count = count($this->urls);
+        if(0 == $count % 10) {
+                   error_log('> ' . $count . ' / ' . $this->nb_dataset_estimated . '(estimated) done');
+        }
+    }
 }
-
-

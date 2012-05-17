@@ -16,7 +16,7 @@ class GetUrlsCommand extends BaseCommand {
     protected function configure(){
         $this
             ->setName('odalisk:geturls')
-            ->setDescription('Fetch datsets urls for all supported platforms')
+            ->setDescription('Fetch datasets urls for all supported platforms')
             ->addArgument('platform', InputArgument::OPTIONAL, 
                 'Which platform ?'
             )
@@ -27,6 +27,7 @@ class GetUrlsCommand extends BaseCommand {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
+        $start = time();
         // Store the container so that we have an easy shortcut
         $container = $this->getContainer();
         // Get the file dumper
@@ -55,10 +56,12 @@ class GetUrlsCommand extends BaseCommand {
             
 			$path = $container->getParameter('file_dumper.data_path');
             foreach($platforms as $name => $platform) {
-                error_log('Getting urls for ' . $name);
+                error_log('[Get URLs] Getting urls for platform : ' . $platform->getName());
                 FileDumper::saveUrls($platform->getDatasetsUrls(), $name);
-                error_log($platform->getName() . ' has ' . $platform->getCount() . ' datasets');
+                error_log('[Get URLs] ' . $platform->getName() . ' has ' . $platform->getCount() . ' urls');
             }
         }
+        $end = time();
+        error_log('[Get URLs] Processing ended after ' . ($end - $start) . ' seconds');
     }
 }

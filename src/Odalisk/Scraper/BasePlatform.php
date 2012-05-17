@@ -73,8 +73,11 @@ abstract class BasePlatform {
 	/**
 	 * Le tableau qui contient les urls des datasets.
 	 */
-	protected static $urls = array();
+	protected $urls = array();
     
+    protected $urls_list_index_path;
+
+
     public function setBuzz(\Buzz\Browser $buzz, $timeout = 30) {
         $this->buzz = $buzz;
         $this->buzz->getClient()->setTimeout($timeout);
@@ -181,69 +184,6 @@ abstract class BasePlatform {
         $crawler = NULL;
         $data = NULL;
     }
+
     
-    /**
-     * Parse and persist a dataset
-     *
-     * @param Request $request 
-     * @param Response $response 
-     * @return void
-     */
-    public function parseDataset(Message\Request $request, Message\Response $response) {
-        $this->count++;
-        $data = array(
-            'setUrl' => $request->getUrl(),
-        );
-        
-        if(200 == $response->getStatusCode()) {
-            $crawler = new Crawler($response->getContent());
-            if(0 == count($crawler)) {
-                $data['setError'] = "Empty page";
-            } else {
-                foreach($this->criteria as $name => $path) {
-                    $nodes = $crawler->filterXPath($path);
-                    if(0 < count($nodes)) {
-                        $data[$name] = join(
-                            ";",
-                            $nodes->each(
-                                function($node,$i) {
-                                    return $node->nodeValue;
-                                }
-                            )
-                        );
-                    } 
-                }
-                
-				// We transform dates format in datetime.
-				foreach($this->date_fields as $field) {
-					if(array_key_exists($field, $data)) {
-						$data[$field] = \Datetime::createFromFormat($this->date_format, $data[$field]);
-						if(FALSE == $data[$field]) {
-							$data[$field] = NULL;
-						}
-					} else {
-						$data[$field] = NULL;
-					}
-				}
-            }
-            $crawler = NULL;
-        }
-
-		// Logs
-        // error_log('[' . $this->name . '] Processed ' . $data['setUrl'] . ' with code ' . $response->getStatusCode());
-        if(0 == $this->count % 100) {
-           error_log('> ' . $this->count . ' / ' . $this->total_count . ' done');
-           error_log('> ' . memory_get_usage(true) / (8 * 1024 * 1024));
-        }
-            
-        $dataset = new Dataset($data);
-        $this->portal->addDataset($dataset);
-        $this->em->persist($dataset);
-
-        if($this->count == $this->total_count || $this->count % 1000 == 0) {
-            error_log('Flushing data!');
-            $this->em->persist($this->portal);
-            $this->em->flush();
-        }
-    }
 }

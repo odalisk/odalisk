@@ -12,18 +12,14 @@ use Symfony\Component\Console\Input\InputArgument;
 
 use Symfony\Component\DomCrawler\Crawler;
 
+use Odalisk\Entity\Statistics;
+
 use Buzz\Browser;
 
 /**
- * A command that obtains datasets url of datapublica.com
+ * Generates statistics
  */
-class DataPublicaGetUrlsCommand extends ContainerAwareCommand {
-    /**
-     * Holds the instance of buzz we use to GET the data from the website
-     *
-     * @var $buzz
-     */
-    private $buzz;
+class GenerateStatisticsCommand extends ContainerAwareCommand {
     
     /**
      * Holds our instance of the EntityManager
@@ -31,53 +27,55 @@ class DataPublicaGetUrlsCommand extends ContainerAwareCommand {
      * @var $em
      */
     private $em;
-    
+        
     private $formatter = NULL;
-    
+
     private $stats = array();
     
     protected function configure(){
         $this
-            ->setName('odalisk:getUrls:datapublica')
-            ->setDescription('Get urls from DataPublica')
+            ->setName('odalisk:statistics:generate')
+            ->setDescription('generate statistics from datasets')
         ;
     }
     
     protected function execute(InputInterface $input, OutputInterface $output) {
-        $browser = new Browser();
-        $finished = false;
-        $i = 0;
-        
-        $path = "src/Odalisk/Scraper/DataPublica/data_publica_urls.txt";   
+        $this->writeBlock($output, "Generating stats");
+        $this->em = $this->getContainer()
+                            ->get('doctrine')->getEntityManager();
 
-        if(file_exists($path) ){
-           unlink($path); 
+        $repository = $this->getContainer()
+                            ->get('doctrine')
+                            ->getRepository('Odalisk\Entity\Portal')
+                            ;
+        $portals = $repository->findAll();
+
+        $this->em->getConnection()->prepare('TRUNCATE statistics;')->execute();
+        $this->em->flush();
+
+        $stats_repository = $this->getContainer()
+                            ->get('doctrine')
+                            ->getRepository('Odalisk\Entity\Statistics')
+                            ;
+
+        
+
+        foreach($portals as $portal){
+            echo $portal->getName()."\n";
+            
+            $stats = new Statistics();
+            $stats->setPortal($portal);
+            $stats->setDatasetsCount($stats_repository->getDatasetsCount($portal));
+            $stats->setInChargePersonCount($stats_repository->getInChargePersonCount($portal));
+            $stats->setReleasedOnCount($stats_repository->getReleasedOnExistCount($portal));
+            $stats->setLastUpdatedOnCount($stats_repository->getLastUpdatedOnExistCount($portal));
+            $stats->setCategoryCount($stats_repository->getCategoryExistCount($portal));
+            $stats->setSummaryAndTitleCount($stats_repository->getSummaryAndTitleAtLeastCount($portal));
+            $this->em->persist($stats);
+            $this->em->flush();
         }
         
-        do{            
-            echo $i."\n";
-
-            $response = $browser->get("http://www.data-publica.com/search/?page=".$i);
-            
-            if($response->getStatusCode() == 200){
-                $crawler = new Crawler($response->getContent());
-                $nodes = $crawler->filterXPath(".//*[@id='content']/article[2]/ol/li/a/@href");
-                if(0 < count($nodes)) {
-                            $nodes->each(
-                                function($node,$i) {
-                                      file_put_contents("src/Odalisk/Scraper/DataPublica/data_publica_urls.txt", "http://www.data-publica.com".$node->nodeValue."\n",FILE_APPEND);
-                                 }
-                              );
-                           
-                }
-                else{
-                    $finished = true;
-                }
-            }
-            $i++;
-        }while(!$finished);
-
-
+        $this->writeBlock($output, "End of generating"); 
     }
 
     protected function writeBlock(OutputInterface $output, $message) {

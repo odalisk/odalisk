@@ -92,6 +92,7 @@ class FileDumper {
                 return $name;
             }
         }
+        error_log('No match found for : ' . $dataset_url);
     }
     
     public static function setDoctrine($doctrine) {

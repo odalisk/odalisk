@@ -3,12 +3,11 @@
 namespace Odalisk\Scraper\InCiteSolution;
 
 use Symfony\Component\DomCrawler\Crawler;
-
-use Odalisk\Scraper\Tools\RequestDispatcher;
+use Buzz\Message;
 
 use Odalisk\Scraper\BasePlatform;
+use Odalisk\Scraper\Tools\RequestDispatcher;
 
-use Buzz\Message;
 
 /**
  * The scraper for in cite Solution Plateform

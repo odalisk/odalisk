@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * A base abstract command that provides shortcuts to some useful tools for scrapping
  */
-abstract class ScrapCommand extends ContainerAwareCommand {
+abstract class BaseCommand extends ContainerAwareCommand {
     /**
      * Holds the instance of buzz we use to GET the data from the website
      *
@@ -30,7 +30,7 @@ abstract class ScrapCommand extends ContainerAwareCommand {
     
     protected function configure(){
         $this
-            ->setName('odalisk:scrap:' . strtolower(get_class($this)))
+            ->setName('odalisk:' . strtolower(get_class($this)))
             ->setDescription('Not yet implemented')
         ;
     }

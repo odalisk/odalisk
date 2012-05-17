@@ -12,7 +12,7 @@ use Symfony\Component\DomCrawler\Crawler;
 /**
  * A command that will scrap data from the Nantes' portal
  */
-class ScrapAllCommand extends ScrapCommand {
+class ScrapAllCommand extends BaseCommand {
     protected function configure(){
         $this
             ->setName('odalisk:scrap:all')
@@ -60,10 +60,10 @@ class ScrapAllCommand extends ScrapCommand {
             foreach($platforms as $name => $platform) {
                 $queries[$name] = array();
                 $platform->loadPortal();
-                $platform->loadDatasets();
                 foreach($platform->getDatasetsUrls() as $url) {
                     $queries[$name][] = array('url' => $url, 'platform' => $name);
                 }
+                error_log($platform->getName() . ' has ' . $platform->getCount() . ' datasets');
             }
             
             // While our url pool isnt empty
@@ -82,7 +82,7 @@ class ScrapAllCommand extends ScrapCommand {
                 }
             }
             
-            $dispatcher->dispatch(10);
+            $dispatcher->dispatch(30);
         }
         
         /*        

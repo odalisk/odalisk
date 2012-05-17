@@ -11,11 +11,9 @@ all:
         - data_eu_platform
         - nantes_platform
         - loire_atlantique_platform
-        - socrata_platform
-        - ny_platform
-        - usa_gov_platform
-        - data_publica_platform
-        - data_market_platform
+        #- socrata_platform
+        #- ny_platform
+        #- usa_gov_platform
 prod: ~
 dev:  ~
 test: ~

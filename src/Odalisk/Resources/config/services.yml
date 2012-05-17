@@ -90,12 +90,13 @@ services:
             - [ setName, [ "publicdata.eu" ] ]
             - [ setBaseUrl, [ "http://publicdata.eu/dataset/" ] ]
             - [ setApiUrl, [ "http://publicdata.eu/api/rest/dataset" ] ]
+            
     data_publica_platform:
         class: Odalisk\Scraper\DataPublica\DataPublicaPlatform
         parent:  base_platform
         calls:
             - [ setName, [ "data-publica.com" ] ]
-
+            - [ setBaseUrl, [ "http://www.data-publica.com/opendata/" ] ]
 
     data_market_platform:
         class: Odalisk\Scraper\DataMarket\DataMarketPlatform

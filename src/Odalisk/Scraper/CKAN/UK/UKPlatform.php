@@ -18,6 +18,7 @@ class UKPlatform extends BaseCKAN {
 			, 'setLastUpdatedOn' => '//td[.="Last updated" and @class="package_label"]/../td[2]/div[1]'
 			, 'setProvider' => '//td[.="Published by" and @class="package_label"]/../td[2]/div[1]'
 			, 'setLicense' => '//td[.="Licence" and @class="package_label"]/../td[2]/div[1]'
+            , 'setCategory' => './/*[@class="package_label" and text() = "Categories"]/following-sibling::*'
         );
 
 		$this->date_format = 'Y-m-d';

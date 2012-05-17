@@ -218,8 +218,6 @@ abstract class BasePlatform {
 				}
             }
             $crawler = NULL;
-        } else {
-            $data['setError'] = 'Return code : ' . $response->getStatusCode();
         }
 
 		// Logs

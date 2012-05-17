@@ -71,7 +71,7 @@ class DataMarketPlatform extends BasePlatform {
 
 		// $max = ceil($this->datasets_number / $this->batch_size);
 		$max = 5;
-		for($i = 2 ; $i < $max ; $i++) {
+		for($i = 2 ; $i <= $max ; $i++) {
 			// We loop on all pages left.
 			echo("$i\n");
 			$response = $this->buzz->get('http://datamarket.com/data/list/?q=datatype:dataset&page='.$i);

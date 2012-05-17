@@ -53,6 +53,7 @@ abstract class BaseSocrata extends BasePlatform {
 		if(preg_match("/of ([0-9]+)/", $node->text(), $match)) {
 			$datasets_number = (int) $match[1];
 		}
+		error_log('Number of datasets of the portal : '.$datasets_number);
 		// we now have the number of datasets of the portal.
 
 		// Since we already have the first page, let's parse it !
@@ -61,8 +62,10 @@ abstract class BaseSocrata extends BasePlatform {
 		$urls = array_merge($urls, $ids);
 
 		$max = ceil($datasets_number / $this->batch_size);
+		error_log($max.' requests to do');
 		// $max = 5;
 		for($i = 2 ; $i <= $max ; $i++) {
+			error_log($i.' / '.$max);
 			// We loop on all pages left.
 			$response = $this->buzz->get($this->datasets_list_url.$i);
 			if($response->getStatusCode() != 200) {

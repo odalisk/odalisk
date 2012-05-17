@@ -21,7 +21,6 @@ use Odalisk\Entity\Dataset;
  */
 class DataPublicaPlatform extends BasePlatform {
 
-    protected $urllist = array();
     protected $nb_dataset_estimated = 0;
 
     public function __construct() {
@@ -44,7 +43,7 @@ class DataPublicaPlatform extends BasePlatform {
     public function getDatasetsUrls() {
         
 
-        $this->urllist = array();
+        $this->urls = array();
 
         $dispatcher = new RequestDispatcher($this->buzz_options);
         $this->buzz->getClient()->setTimeout(30);
@@ -52,7 +51,6 @@ class DataPublicaPlatform extends BasePlatform {
         $response = $this->buzz->get($this->datasets_list_url.'1');
 
         
-
         if($response->getStatusCode() == 200) {
             $crawler = new Crawler($response->getContent());
             
@@ -63,8 +61,8 @@ class DataPublicaPlatform extends BasePlatform {
                 
                 $nodes = $crawler->filterXPath(".//*[@id='content']/article[2]/ol/li/a");
                 if(0 < count($nodes)) {                           
-                    $this->urllist = array_merge($this->urllist, $nodes->extract(array('href')));
-                    $this->nb_dataset_estimated = count($this->urllist) * $pages_to_get;
+                    $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
+                    $this->nb_dataset_estimated = count($this->urls) * $pages_to_get;
                 }
 
                 for($i = 2 ; $i <= $pages_to_get ; $i++) {
@@ -72,23 +70,25 @@ class DataPublicaPlatform extends BasePlatform {
                                         array($this, 'Odalisk\Scraper\DataPublica\DataPublicaPlatform::crawlDatasetsList'));
                 }
 
+                error_log('Number estimated of datasets of the portal : '.$this->nb_dataset_estimated);
+
                 $dispatcher->dispatch(10);
                 
             }else{
-                return $this->urllist;
+                return $this->urls;
             }
 
         }
         
         $base_url = $this->base_url;
-        $this->urllist = array_map(
+        $this->urls = array_map(
                 function($id) use ($base_url) { return($base_url.$id); }
-                , $this->urllist
+                , $this->urls
                 );
 
-        $this->total_count = count($this->urllist);
+        $this->total_count = count($this->urls);
         
-        return $this->urllist;
+        return $this->urls;
     }
 
     public function parseFile($html, &$dataset) {
@@ -159,12 +159,12 @@ class DataPublicaPlatform extends BasePlatform {
         $crawler = new Crawler($response->getContent());
         $nodes = $crawler->filterXPath(".//*[@id='content']/article[2]/ol/li/a");
         if(0 < count($nodes)) {                           
-            $this->urllist = array_merge($this->urllist, $nodes->extract(array('href')));
+            $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
         }
 
-        $count = count($this->urllist);
+        $count = count($this->urls);
         if(0 == $count % 100) {
-                   error_log('> ' . $count . ' / ' . $this->nb_dataset_estimated . ' done');
+                   error_log('> ' . $count . ' / ' . $this->nb_dataset_estimated . '(estimated) done');
         }
     }
 }

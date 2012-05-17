@@ -15,44 +15,57 @@ use Buzz\Message;
  */
 class LoireAtlantiquePlatform extends BaseInCiteSolution {
 
-	private $datasets_list_url;
+
+	protected $nb_datasets_estimated;
+
 
     public function __construct() {
+
         parent::__construct();
+
 		$this->datasets_list_url = 'http://data.loire-atlantique.fr/donnees/?tx_icsoddatastore_pi1[page]=';
-		$this->urls_list_index_path = ".//td[@class='first']/h3/a";
+
+		$this->urls_list_index_path = ".//*[@class='tx_icsoddatastore_pi1_list']//td[@class='first']/h3/a";
     }
 
     public function getDatasetsUrls() {
         
-
-        $this->urls = array();
+        $this->urllist = array();
 
         $dispatcher = new RequestDispatcher($this->buzz_options);
         $this->buzz->getClient()->setTimeout(30);
 
-        $response = $this->buzz->get($this->datasets_list_url.'1');
+        $response = $this->buzz->get($this->datasets_list_url.'0');
 
         
-
         if($response->getStatusCode() == 200) {
             $crawler = new Crawler($response->getContent());
             
             $nodes = $crawler->filterXPath(".//div[@class='pagination']/span[@class='last']/a/@href");
             if(0 < count($nodes)) {
 
-                $pages_to_get = intval($nodes->first()->text());
+            	$pages_to_get = 0;
+
+            	$href = $nodes->first()->text();
+            	if(preg_match("/\[page\]=([0-9]+)&/", $href, $match)) {
+					$pages_to_get = intval($match[1]);
+				}
+
+				
                 
-                $nodes = $crawler->filterXPath(".//*[@id='content']/article[2]/ol/li/a");
+                $nodes = $crawler->filterXPath($this->urls_list_index_path);
                 if(0 < count($nodes)) {                           
-                    $this->urls = array_merge($this->urllist, $nodes->extract(array('href')));
-                    $this->nb_dataset_estimated = count($this->urllist) * $pages_to_get;
+                    $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
+                    $this->nb_dataset_estimated = count($this->urls);
                 }
 
-                for($i = 2 ; $i <= $pages_to_get ; $i++) {
+                for($i = 1 ; $i <= $pages_to_get ; $i++) {
+                   $this->nb_dataset_estimated += count($this->urls);
                    $dispatcher->queue($this->datasets_list_url.$i,
-                                        array($this, 'Odalisk\Scraper\LoireAtlantique\LoireAtlantiquePlatform::crawlDatasetsList'));
+                                        array($this, 'Odalisk\Scraper\InCiteSolution\LoireAtlantique\LoireAtlantiquePlatform::crawlDatasetsList'));
                 }
+
+                error_log('Number estimated of datasets of the portal : '.$this->nb_dataset_estimated);
 
                 $dispatcher->dispatch(10);
                 
@@ -68,55 +81,10 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
                 , $this->urls
                 );
 
-        $this->total_count = count($this->urllist);
+        $this->total_count = count($this->urls);
         
         return $this->urls;
     }
-
-    /*
-    public function getDatasetsUrls() {
-
-        $factory = new Message\Factory();
-		$datasets_urls = array();
-		$uids = array();
-
-		$i = 0;
-		while(true) {
-			echo($i);
-			$response = $this->buzz->get($this->datasets_list_url . $i);
-			$crawler  = new Crawler($response->getContent());
-
-			$nodes = $crawler->filterXPath('//td[@class="first"]/h3/a');
-			if(count($nodes) > 0) {
-				$hrefs = $nodes->extract(array('href'));
-				foreach($hrefs as $href) {
-					if(preg_match("/\[uid\]=([0-9]+)$/", $href, $match)) {
-						$uids[] = $match[1];
-					} else {
-						error_log('Marche pôs : '.$href.' !');
-					}
-				}
-			} else {
-				break;
-			}
-
-			$i++;
-		}
-
-		foreach($uids as $uid) {
-            $formRequest = $factory->createFormRequest();
-            $formRequest->setMethod(Message\Request::METHOD_POST);
-            $formRequest->fromUrl($this->sanitize($this->base_url . $uid));
-            $formRequest->addHeaders($this->buzz_options);
-            $formRequest->setFields(array('tx_icsoddatastore_pi1[cgu]' => 'on'));
-            self::$urls[] = $formRequest;
-        }
-        
-        $this->total_count = count(self::$urls);
-        
-        return(self::$urls);
-    }
-    */
 
     public function parsePortal() {
         $this->portal = new \Odalisk\Entity\Portal();
@@ -127,7 +95,22 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
         $this->em->flush();
     }
 
-    
+    public function crawlDatasetsList(Message\Request $request, Message\Response $response) {
+        
+        if($response->getStatusCode() != 200) {
+            error_log('Impossible d\'obtenir la page !');
+            return;
+        }
+
+        $crawler = new Crawler($response->getContent());
+        $nodes = $crawler->filterXPath($this->urls_list_index_path);
+        if(0 < count($nodes)) {                           
+            $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
+        }
+
+        $count = count($this->urls);
+        if(0 == $count % 10) {
+                   error_log('> ' . $count . ' / ' . $this->nb_dataset_estimated . '(estimated) done');
+        }
+    }
 }
-
-

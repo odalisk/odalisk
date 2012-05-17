@@ -25,6 +25,7 @@ class ExtractCommand extends BaseCommand {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
+        $start = time();
         // Store the container so that we have an easy shortcut
         $container = $this->getContainer();
         // Get the configuration value from config/app.yml : which platforms are enabled?
@@ -34,6 +35,7 @@ class ExtractCommand extends BaseCommand {
         // Entity repository for datasets_crawls & entity manager
         $er = $this->getEntityRepository('Odalisk\Entity\DatasetCrawl');
         $em = $this->getEntityManager();
+        $em->getConnection()->getConfiguration()->setSQLLogger(null);
         
         // Initialize some arrrays
         $platforms = array();
@@ -59,26 +61,39 @@ class ExtractCommand extends BaseCommand {
             //  - get successful crawls from the databse
             //  - parse the corresponding files
             foreach($platforms as $name => $platform) {
+                error_log('Analyzing ' . $platform->getName());
                 // Load the portal object from the database
                 $portal = $platform->loadPortal();
                 // Get successful crawls
                 $crawls = $er->getSuccessfullCrawls($portal);
+                $total = count($crawls);
                 // Cache the platform path
                 $platform_path = $data_path . $name . '/';
                 
+                $count = 0;
                 foreach($crawls as $crawl) {
-                    $dataset = new Odalisk\Entity\Dataset();
-                    $dataset->setUrl($crawl['url']);
-                    $dataset->setCrawl($crawl['id']);
+                    $count++;
+                    $dataset = new \Odalisk\Entity\Dataset();
+                    $dataset->setUrl($crawl[0]->getUrl());
+                    $dataset->setCrawl($crawl[0]);
                     $dataset->setPortal($portal);
                     
-                    $html = file_get_contents($platform_path . $crawl['hash']);
+                    $html = file_get_contents($platform_path . $crawl[0]->getHash());
                     
-                    $platform->parseDataset($html, $dataset);
+                    $platform->parseFile($html, $dataset);
                     $em->persist($dataset);
+                    
+                    if(0 == $count % 100) {
+                       error_log('> ' . $count . ' / ' . $total . ' done');
+                       error_log('> ' . memory_get_usage(true) / (1024 * 1024));
+                    }
                 }
+                error_log('Flushing data !');
                 $em->flush();
+                unset($crawls);
             }
         }
+        $end = time();
+        error_log('Processing ended after ' . ($end - $start) . ' seconds');
     }
 }

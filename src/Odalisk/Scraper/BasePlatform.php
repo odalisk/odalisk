@@ -137,6 +137,48 @@ abstract class BasePlatform {
     
     abstract public function getDatasetsUrls();
     
+    public function parseFile($html, &$dataset) {
+        $crawler = new Crawler($html);
+        $data = array();
+        
+        if(0 != count($crawler)) {
+            $data = $this->analysePage($crawler);
+            // We transform dates format in datetime.
+			foreach($this->date_fields as $field) {
+				if(array_key_exists($field, $data)) {
+					$data[$field] = \Datetime::createFromFormat($this->date_format, $data[$field]);
+					if(FALSE == $data[$field]) {
+						$data[$field] = NULL;
+					}
+				} else {
+					$data[$field] = NULL;
+				}
+			}
+        }
+        
+        $dataset->populate($data);
+        $crawler = NULL;
+        $data = NULL;
+    }
+    
+    public function analysePage($crawler) {
+        $data = array();
+        foreach($this->criteria as $name => $path) {
+            $nodes = $crawler->filterXPath($path);
+            if(0 < count($nodes)) {
+                $data[$name] = join(
+                    ";",
+                    $nodes->each(
+                        function($node,$i) {
+                            return $node->nodeValue;
+                        }
+                    )
+                );
+            } 
+        }
+        return $data;
+    }
+    
     
     /**
      * Parse and persist a dataset

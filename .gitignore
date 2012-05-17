@@ -9,3 +9,4 @@ composer.lock
 !.gitkeep
 !vendor/assets
 !vendor/twitter
+plugin/

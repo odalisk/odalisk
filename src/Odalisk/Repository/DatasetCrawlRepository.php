@@ -15,15 +15,15 @@ class DatasetCrawlRepository extends EntityRepository
     public function getSuccessfullCrawls($portal) {
         $query = $this->getEntityManager()
             ->createQuery('
-                SELECT MAX(c.id) AS id, c.hash, c.url
-                FROM Odalisk\Entity\DatasetCrawl c
-                WHERE c.code = 200 and c.portal = :portal
-                GROUP BY c.hash
+                    SELECT MAX(c.id), c
+                    FROM Odalisk\Entity\DatasetCrawl c
+                    WHERE c.code = 200 and c.portal = :portal
+                    GROUP BY c.hash
             ')->setParameter('portal', $portal)
         ;
         
         try {
-            return $query->getArrayResult();
+            return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return NULL;
         }

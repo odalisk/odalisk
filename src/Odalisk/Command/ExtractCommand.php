@@ -76,7 +76,10 @@ class ExtractCommand extends BaseCommand {
 
                         if(NULL != $data && array_key_exists('meta', $data)) {
                             $code = $data['meta']['code'];
-                            $codes[$code] = (array_key_exists($code, $codes)) ? $codes[$code] + 1 : 0;
+                            if(!is_int($code)) {
+                                $code = 'timeout';
+                            }
+                            $codes[$code] = (array_key_exists($code, $codes)) ? $codes[$code] + 1 : 1;
                             
                             if(200 == $code) {
                                 $count++;
@@ -98,9 +101,6 @@ class ExtractCommand extends BaseCommand {
         	        }
         	        closedir($dh);
         	    }
-        	    
-        	    $codes['timeout'] = $codes[''];
-        	    unset($codes['']);
         	    
         	    error_log('[Analysis] ' . $count . ' / ' . $total . ' done');
         	    error_log('[Analysis] ' . ($total - $count) . ' datasets failed to download' . "\n");

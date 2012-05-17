@@ -10,12 +10,16 @@ portals:
         _format: html|json
 
 portal_details:
-    pattern:    /portals/details/{portal_number}/{page_number}/{_format}
-    defaults:   { _controller: App:Portal:details, page_number:1, _format: html }
+    pattern:    /portals/details/{portal_number}/{page_number}
+    defaults:   { _controller: App:Portal:details, page_number:1, _format:html}
+
+api:
+    pattern:    /api/{_format}
+    defaults:   { _controller: App:Api:api, _format:json }
     
 delete_search_portal:
     pattern:    /detelesearchportal/{portal_id}
-    defaults:   { _controller: App:Default:deleteSearchPortal, portal_id:1 }
+    defaults:   { _controller: App:Default:deleteSearchPortal, portal_id:1, _format:html }
 
 dataset_details:
     pattern:    /datasets/details/{dataset_number}/{page_number}/{_format}

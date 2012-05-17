@@ -16,6 +16,18 @@ jQuery(function($) {
         return false;
     });
     $('#navbar').scrollspy();
+    
+    
+    $.post(
+        '/app_dev.php/api/html',
+        {
+            'portal_id': [1],
+            'category':  ['Urbanisme','Mobilité']
+        },
+        function(data) {
+            
+        }
+    );
 });
 
 var konami = document.createElement('input');

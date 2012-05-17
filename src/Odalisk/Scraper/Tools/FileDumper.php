@@ -40,9 +40,9 @@ class FileDumper {
         
         file_put_contents(self::$base_path . $platform . '/' . $file['meta']['hash'], json_encode($file));
         
-        if(0 == self::$count % 100) {
-           error_log('> ' . self::$count . ' / ' . self::$total_count . ' done');
-           error_log('> ' . memory_get_usage(TRUE) / (1024 * 1024));
+        if(0 == self::$count % 100 || self::$count == self::$total_count) {
+           error_log('[Get HTML] ' . self::$count . ' / ' . self::$total_count . ' done');
+           error_log('[Get HTML] currently using ' . memory_get_usage(TRUE) / (1024 * 1024) . 'MB of memory');
         }
     }
 
@@ -87,7 +87,7 @@ class FileDumper {
                 return $name;
             }
         }
-        error_log('No match found for : ' . $dataset_url);
+        error_log('[FileDumper] No match found for : ' . $dataset_url);
     }
     
     public static function setDoctrine($doctrine) {

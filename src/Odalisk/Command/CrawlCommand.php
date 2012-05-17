@@ -27,6 +27,7 @@ class CrawlCommand extends BaseCommand {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
+        $start = time();
         // Store the container so that we have an easy shortcut
         $container = $this->getContainer();
         // Get the request dispatcher
@@ -90,7 +91,11 @@ class CrawlCommand extends BaseCommand {
             }
             
             // Launch the crawl
+            error_log('[Get HTML] Starting to crawl');
             $dispatcher->dispatch(10);
+            
+            $end = time();
+            error_log('[Get HTML] Processing ended after ' . ($end - $start) . ' seconds');
         }
     }
     

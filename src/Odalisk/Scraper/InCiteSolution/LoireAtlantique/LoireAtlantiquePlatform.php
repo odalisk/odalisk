@@ -20,14 +20,11 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
     }
 
     public function getDatasetsUrls() {
-
         $factory = new Message\Factory();
-		$datasets_urls = array();
-		$uids = array();
+		$urls = array();
 
 		$i = 0;
 		while(true) {
-			echo($i);
 			$response = $this->buzz->get($this->datasets_list_url . $i);
 			$crawler  = new Crawler($response->getContent());
 
@@ -36,7 +33,7 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
 				$hrefs = $nodes->extract(array('href'));
 				foreach($hrefs as $href) {
 					if(preg_match("/\[uid\]=([0-9]+)$/", $href, $match)) {
-						$uids[] = $match[1];
+						$urls[] = $this->base_url . $match[1];
 					} else {
 						error_log('Marche pôs : '.$href.' !');
 					}
@@ -47,19 +44,10 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
 
 			$i++;
 		}
-
-		foreach($uids as $uid) {
-            $formRequest = $factory->createFormRequest();
-            $formRequest->setMethod(Message\Request::METHOD_POST);
-            $formRequest->fromUrl($this->sanitize($this->base_url . $uid));
-            $formRequest->addHeaders($this->buzz_options);
-            $formRequest->setFields(array('tx_icsoddatastore_pi1[cgu]' => 'on'));
-            self::$urls[] = $formRequest;
-        }
         
-        $this->total_count = count(self::$urls);
+        $this->total_count = count($urls);
         
-        return(self::$urls);
+        return($urls);
     }
 
     public function parsePortal() {

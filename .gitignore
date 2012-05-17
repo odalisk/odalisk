@@ -5,6 +5,7 @@ vendor/*
 web/css/*
 web/js/*
 data/*
+composer.lock
 !.gitkeep
 !vendor/assets
 !vendor/twitter

@@ -33,7 +33,6 @@ class ExtractCommand extends BaseCommand {
         // Get the data directory
         $data_path = $container->getParameter('file_dumper.data_path');
         // Entity repository for datasets_crawls & entity manager
-        $er = $this->getEntityRepository('Odalisk\Entity\DatasetCrawl');
         $em = $this->getEntityManager();
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
         
@@ -64,33 +63,33 @@ class ExtractCommand extends BaseCommand {
                 error_log('Analyzing ' . $platform->getName());
                 // Load the portal object from the database
                 $portal = $platform->loadPortal();
-                // Get successful crawls
-                $crawls = $er->getSuccessfullCrawls($portal);
-                $total = count($crawls);
                 // Cache the platform path
                 $platform_path = $data_path . $name . '/';
                 
                 $count = 0;
-                foreach($crawls as $crawl) {
+                $dir = @dir($platform_path);
+                while (($file = $dir->read()) !== false) {
                     $count++;
-                    $dataset = new \Odalisk\Entity\Dataset();
-                    $dataset->setUrl($crawl[0]->getUrl());
-                    $dataset->setCrawl($crawl[0]);
-                    $dataset->setPortal($portal);
+                    $data = json_decode(file_get_contents( $platform_path . $file), TRUE);
                     
-                    $html = file_get_contents($platform_path . $crawl[0]->getHash());
-                    
-                    $platform->parseFile($html, $dataset);
-                    $em->persist($dataset);
-                    
-                    if(0 == $count % 100) {
-                       error_log('> ' . $count . ' / ' . $total . ' done');
-                       error_log('> ' . memory_get_usage(true) / (1024 * 1024));
+                    if(NULL != $data && array_key_exists('meta', $data) && 200 == $data['meta']['code']) {
+                        $dataset = new \Odalisk\Entity\Dataset();
+                        $dataset->setUrl($data['meta']['url']);
+                        $dataset->setPortal($portal);
+                        $platform->parseFile($data['content'], $dataset);
+                        
+                        $em->persist($dataset);
                     }
                 }
+                $dir->close();
+                
+                if(0 == $count % 100) {
+                   error_log('> ' . $count . ' / ' . $total . ' done');
+                   error_log('> ' . memory_get_usage(true) / (1024 * 1024));
+                }
+                
                 error_log('Flushing data !');
                 $em->flush();
-                unset($crawls);
             }
         }
         $end = time();

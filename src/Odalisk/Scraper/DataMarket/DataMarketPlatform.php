@@ -41,7 +41,6 @@ class DataMarketPlatform extends BasePlatform {
 	 * This solution is manually verified.
 	 */
     public function getDatasetsUrls() {
-		$browser = new Browser();
 		$urls    = array(); // the array we will return.
 
 		// The number of datasets of the portal ; information given on
@@ -49,7 +48,8 @@ class DataMarketPlatform extends BasePlatform {
 		$datasets_number = 0;
 		
 		// We get the page with the datasets list
-		$response = $browser->get($this->datasets_list_url);
+        $this->buzz->getClient()->setTimeout(30);
+		$response = $this->buzz->get($this->datasets_list_url);
 		if($response->getStatusCode() != 200) {
 			echo('Impossible d\'obtenir la page : http://datamarket.com/data/list/?q=datatype:dataset');
 			return;
@@ -74,7 +74,7 @@ class DataMarketPlatform extends BasePlatform {
 		for($i = 2 ; $i < $max ; $i++) {
 			// We loop on all pages left.
 			echo("$i\n");
-			$response = $browser->get('http://datamarket.com/data/list/?q=datatype:dataset&page='.$i);
+			$response = $this->buzz->get('http://datamarket.com/data/list/?q=datatype:dataset&page='.$i);
 			if($response->getStatusCode() != 200) {
 				echo('Impossible d\'obtenir la page n°'.$i);
 				continue;

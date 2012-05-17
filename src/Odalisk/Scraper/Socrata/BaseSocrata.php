@@ -10,6 +10,11 @@ use Buzz\Message;
 
 abstract class BaseSocrata extends BasePlatform {
 
+	// The base url on which the datasets are listed.
+	private $datasets_list_url = 'https://opendata.socrata.com/browse?&page=';
+	// the number of datasets displayed on one page.
+	private $batch_size = 10;
+
 	public function __construct() {
 		$this->criteria = array(
 			'setName' => '//h2[@id="datasetName" and @class="clipText currentViewName"]'
@@ -31,22 +36,54 @@ abstract class BaseSocrata extends BasePlatform {
 	}
 
     public function getDatasetsUrls() {
-        // Get the paths
-        $response = $this->buzz->get(
-            $this->api_url,
-            $this->buzz_options
-        );
-        if(200 == $response->getStatusCode()) {
-            $data = json_decode($response->getContent());
-            foreach($data as $dataset) {
-                $datasets[] = $this->base_url.$dataset->id;
-            }
-        } else {
-            throw new \RuntimeException('Couldn\'t fetch list of datasets');
-        }     
-        
-        $this->total_count = count($datasets);
-        
-        return $datasets;
+		$urls = array(); // the array we will return.
+        $this->buzz->getClient()->setTimeout(30);
+
+        $response = $this->buzz->get($this->datasets_list_url.'1');
+		if($response->getStatusCode() != 200) {
+			echo('Impossible d\'obtenir la page  !');
+			return;
+		}
+
+		// We begin by fetching the number of datasets
+		$crawler = new Crawler($response->getContent());
+		$node    = $crawler->filterXPath('//div[@class="resultCount"]');
+		if(preg_match("/of ([0-9]+)/", $node->text(), $match)) {
+			$datasets_number = (int) $match[1];
+			echo('Number of datasets of the platform : '.$datasets_number."\n");
+		}
+		// we now have the number of datasets of the portal.
+
+		// Since we already have the first page, let's parse it !
+		$ids  = $crawler->filterXPath('//td[@class="nameDesc"]/a')->extract(array('href'));
+		// Add it to the urls array
+		$urls = array_merge($urls, $ids);
+
+		// $max = ceil($this->datasets_number / $this->batch_size);
+		$max = 5;
+		for($i = 2 ; $i < $max ; $i++) {
+			// We loop on all pages left.
+			echo("$i\n");
+			$response = $this->buzz->get($this->datasets_list_url.$i);
+			if($response->getStatusCode() != 200) {
+				echo('Impossible d\'obtenir la page n°'.$i);
+				continue;
+			}
+
+			$crawler = new Crawler($response->getContent());
+			$urls    = array_merge($urls, $crawler->filterXPath('//td[@class="nameDesc"]/a')->extract(array('href')));
+		}
+        $this->total_count = count($urls);
+		echo('Nombre de datasets récupérés : '.$this->total_count."\n");
+		
+		// $urls contains only the ids of the datasets, we need to add the
+		// base url :
+		$base_url = $this->base_url;
+		$urls = array_map(
+				function($id) use ($base_url) { return($base_url.$id); }
+				, $urls
+				);
+
+		return($urls);
 	}
 }

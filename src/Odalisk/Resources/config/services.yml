@@ -44,7 +44,7 @@ services:
         parent: base_inCiteSolution
         calls:
             - [ setName, [ "data.loire-atlantique.fr" ] ]         
-            - [ setBaseUrl, [ "http://data.loire-atlantique.fr/donnees/detail/" ] ]       
+            - [ setBaseUrl, [ "http://data.loire-atlantique.fr/donnees/detail/?tx_icsoddatastore_pi1[uid]=" ] ]       
 
     base_socrata:
         class: Odalisk\Scraper\Socrata\BaseSocrata

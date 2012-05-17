@@ -73,8 +73,11 @@ abstract class BasePlatform {
 	/**
 	 * Le tableau qui contient les urls des datasets.
 	 */
-	protected static $urls = array();
+	protected $urls = array();
     
+    protected $urls_list_index_path;
+
+
     public function setBuzz(\Buzz\Browser $buzz, $timeout = 30) {
         $this->buzz = $buzz;
         $this->buzz->getClient()->setTimeout($timeout);
@@ -180,5 +183,24 @@ abstract class BasePlatform {
         $dataset->populate($data);
         $crawler = NULL;
         $data = NULL;
+    }
+
+    public function crawlDatasetsList(Message\Request $request, Message\Response $response) {
+        
+        if($response->getStatusCode() != 200) {
+            error_log('Impossible d\'obtenir la page !');
+            return;
+        }
+
+        $crawler = new Crawler($response->getContent());
+        $nodes = $crawler->filterXPath($this->urls_list_index_path);
+        if(0 < count($nodes)) {                           
+            $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
+        }
+
+        $count = count($this->urllist);
+        if(0 == $count % 100) {
+                   error_log('> ' . $count . ' / ' . $this->nb_dataset_estimated . ' done');
+        }
     }
 }

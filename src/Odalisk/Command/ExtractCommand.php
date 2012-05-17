@@ -99,9 +99,11 @@ class ExtractCommand extends BaseCommand {
         	        closedir($dh);
         	    }
         	    
+                /*
         	    $codes['timeout'] = $codes[''];
         	    unset($codes['']);
-        	    
+        	    */
+                
         	    error_log('[Analysis] ' . $count . ' / ' . $total . ' done');
         	    error_log('[Analysis] ' . ($total - $count) . ' datasets failed to download' . "\n");
         	    error_log('[Analysis] Return codes repartition :');

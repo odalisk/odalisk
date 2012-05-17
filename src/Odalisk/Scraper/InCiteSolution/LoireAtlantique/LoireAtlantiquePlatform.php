@@ -4,7 +4,10 @@ namespace Odalisk\Scraper\InCiteSolution\LoireAtlantique;
 
 use Odalisk\Scraper\InCiteSolution\BaseInCiteSolution;
 
+use Odalisk\Scraper\Tools\RequestDispatcher;
+
 use Symfony\Component\DomCrawler\Crawler;
+
 use Buzz\Message;
 
 /**
@@ -17,8 +20,60 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
     public function __construct() {
         parent::__construct();
 		$this->datasets_list_url = 'http://data.loire-atlantique.fr/donnees/?tx_icsoddatastore_pi1[page]=';
+		$this->urls_list_index_path = ".//td[@class='first']/h3/a";
     }
 
+    public function getDatasetsUrls() {
+        
+
+        $this->urls = array();
+
+        $dispatcher = new RequestDispatcher($this->buzz_options);
+        $this->buzz->getClient()->setTimeout(30);
+
+        $response = $this->buzz->get($this->datasets_list_url.'1');
+
+        
+
+        if($response->getStatusCode() == 200) {
+            $crawler = new Crawler($response->getContent());
+            
+            $nodes = $crawler->filterXPath(".//div[@class='pagination']/span[@class='last']/a/@href");
+            if(0 < count($nodes)) {
+
+                $pages_to_get = intval($nodes->first()->text());
+                
+                $nodes = $crawler->filterXPath(".//*[@id='content']/article[2]/ol/li/a");
+                if(0 < count($nodes)) {                           
+                    $this->urls = array_merge($this->urllist, $nodes->extract(array('href')));
+                    $this->nb_dataset_estimated = count($this->urllist) * $pages_to_get;
+                }
+
+                for($i = 2 ; $i <= $pages_to_get ; $i++) {
+                   $dispatcher->queue($this->datasets_list_url.$i,
+                                        array($this, 'Odalisk\Scraper\LoireAtlantique\LoireAtlantiquePlatform::crawlDatasetsList'));
+                }
+
+                $dispatcher->dispatch(10);
+                
+            }else{
+                return $this->urls;
+            }
+
+        }
+        
+        $base_url = $this->base_url;
+        $this->urls = array_map(
+                function($id) use ($base_url) { return($base_url.$id); }
+                , $this->urls
+                );
+
+        $this->total_count = count($this->urllist);
+        
+        return $this->urls;
+    }
+
+    /*
     public function getDatasetsUrls() {
 
         $factory = new Message\Factory();
@@ -61,6 +116,7 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
         
         return(self::$urls);
     }
+    */
 
     public function parsePortal() {
         $this->portal = new \Odalisk\Entity\Portal();
@@ -70,6 +126,8 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
         $this->em->persist($this->portal);
         $this->em->flush();
     }
+
+    
 }
 
 

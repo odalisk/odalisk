@@ -60,39 +60,59 @@ class ExtractCommand extends BaseCommand {
             //  - get successful crawls from the databse
             //  - parse the corresponding files
             foreach($platforms as $name => $platform) {
-                error_log('Analyzing ' . $platform->getName());
+                error_log('[Analysis] Beginning to process ' . $platform->getName());
                 // Load the portal object from the database
                 $portal = $platform->loadPortal();
                 // Cache the platform path
                 $platform_path = $data_path . $name . '/';
                 
                 $count = 0;
-                $dir = @dir($platform_path);
-                while (($file = $dir->read()) !== false) {
-                    $count++;
-                    $data = json_decode(file_get_contents( $platform_path . $file), TRUE);
-                    
-                    if(NULL != $data && array_key_exists('meta', $data) && 200 == $data['meta']['code']) {
-                        $dataset = new \Odalisk\Entity\Dataset();
-                        $dataset->setUrl($data['meta']['url']);
-                        $dataset->setPortal($portal);
-                        $platform->parseFile($data['content'], $dataset);
-                        
-                        $em->persist($dataset);
-                    }
-                }
-                $dir->close();
-                
-                if(0 == $count % 100) {
-                   error_log('> ' . $count . ' / ' . $total . ' done');
-                   error_log('> ' . memory_get_usage(true) / (1024 * 1024));
-                }
-                
-                error_log('Flushing data !');
+                $total = count(glob($platform_path . '*')) - 1;
+                $codes = array();
+                                
+                if ($dh = @opendir($platform_path)) {
+        	        while (($file = readdir($dh)) !== false) {
+        	            $data = json_decode(file_get_contents( $platform_path . $file), TRUE);
+
+                        if(NULL != $data && array_key_exists('meta', $data)) {
+                            $code = $data['meta']['code'];
+                            $codes[$code] = (array_key_exists($code, $codes)) ? $codes[$code] + 1 : 0;
+                            
+                            if(200 == $code) {
+                                $count++;
+                                $dataset = new \Odalisk\Entity\Dataset();
+                                $dataset->setUrl($data['meta']['url']);
+                                $dataset->setPortal($portal);
+                                $platform->parseFile($data['content'], $dataset);
+
+                                $em->persist($dataset);
+                                $dataset = NULL;
+
+                                if(0 == ($count % 100) || $count == $total)  {
+                                   error_log('[Analysis] ' . $count . ' / ' . $total . ' done');
+                                   error_log('[Analysis] currently using ' . memory_get_usage(TRUE) / (1024 * 1024) . 'MB of memory');
+                                }
+                            } 
+                        }
+                        $data = NULL;
+        	        }
+        	        closedir($dh);
+        	    }
+        	    
+        	    $codes['timeout'] = $codes[''];
+        	    unset($codes['']);
+        	    
+        	    error_log('[Analysis] ' . $count . ' / ' . $total . ' done');
+        	    error_log('[Analysis] ' . ($total - $count) . ' datasets failed to download' . "\n");
+        	    error_log('[Analysis] Return codes repartition :');
+        	    foreach($codes as $code => $count) {
+        	       error_log('[Analysis] ' . $code . ' > ' . $count);
+        	    }
+                error_log('[Analysis] Persisting data to the database');
                 $em->flush();
             }
         }
         $end = time();
-        error_log('Processing ended after ' . ($end - $start) . ' seconds');
+        error_log('[Analysis] Processing ended after ' . ($end - $start) . ' seconds');
     }
 }

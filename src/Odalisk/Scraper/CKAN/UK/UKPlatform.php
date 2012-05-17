@@ -119,28 +119,6 @@ class UKPlatform extends BaseCKAN {
         $crawler = NULL;
         $data = NULL;
     }
-    
-    public function getDatasetsUrls() {
-        // Make the API call
-        $response = $this->buzz->get(
-            $this->api_url,
-            $this->buzz_options
-        );
-        // Get the paths
-        if(200 == $response->getStatusCode()) {
-            $data = json_decode($response->getContent());
-            
-            foreach($data as $key => $dataset_name) {
-                $data[$key] = $this->base_url . $dataset_name;
-            }
-        } else {
-            error_log('Couldn\'t fetch list of datasets for ' . $this->name);
-        }     
-        
-        $this->total_count = count($data);
-        
-        return $data;
-    }
 
 	public function parsePortal() {
         $this->portal = new \Odalisk\Entity\Portal();

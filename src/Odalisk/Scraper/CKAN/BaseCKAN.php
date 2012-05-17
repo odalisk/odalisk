@@ -33,21 +33,27 @@ abstract class BaseCKAN extends BasePlatform {
 	}
 
     public function getDatasetsUrls() {
-        // Get the paths
-        $this->buzz->getClient()->setTimeout(30);
+        $urls = array();
+        
+        // Make the API call
         $response = $this->buzz->get(
             $this->api_url,
             $this->buzz_options
         );
+        
+        // Get the paths
         if(200 == $response->getStatusCode()) {
             $data = json_decode($response->getContent());
-            foreach($data as $dataset) {
-                $datasets[] = $this->base_url.$dataset->id;
+            
+            foreach($data as $key => $dataset_name) {
+                $urls[] = $this->base_url . $dataset_name;
             }
         } else {
-            throw new \RuntimeException('Couldn\'t fetch list of datasets');
+            error_log('Couldn\'t fetch list of datasets for ' . $this->getName());
         }     
         
-        return($datasets);
-	}
+        $this->total_count = count($urls);
+        
+        return $urls;
+    }
 }

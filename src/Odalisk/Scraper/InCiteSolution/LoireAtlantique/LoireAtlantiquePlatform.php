@@ -16,7 +16,6 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
 
     public function __construct() {
         parent::__construct();
-
 		$this->datasets_list_url = 'http://data.loire-atlantique.fr/donnees/?tx_icsoddatastore_pi1[page]=';
     }
 
@@ -29,7 +28,7 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
 		$i = 0;
 		while(true) {
 			echo($i);
-			$response = $this->buzz->get($this->datasets_list_url.  $i);
+			$response = $this->buzz->get($this->datasets_list_url . $i);
 			$crawler  = new Crawler($response->getContent());
 
 			$nodes = $crawler->filterXPath('//td[@class="first"]/h3/a');

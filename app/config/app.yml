@@ -14,8 +14,6 @@ all:
         - socrata_platform
         - ny_platform
         - usa_gov_platform
-        - data_publica_platform
-        - data_market_platform
 prod: ~
 dev:  ~
 test: ~

@@ -2,9 +2,11 @@ app/kernel.custom.yml
 cache/*
 logs/*
 vendor/*
+web/css/*
+web/js/*
+data/*
+composer.lock
 !.gitkeep
 !vendor/assets
 !vendor/twitter
-web/css/*
-web/js/*
-composer.lock
+plugin/

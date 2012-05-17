@@ -1,0 +1,36 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.1.24)  17 MAY 2012 13:08
+entering extended mode
+ %&-line parsing enabled.
+**/home/florian/opendata/odalisk/src/Odalisk/Entity/Statistics.php
+(/home/florian/opendata/odalisk/src/Odalisk/Entity/Statistics.php
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, french, basque, loaded.
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 <
+     ?php
+? 
+! Emergency stop.
+ ...                                              
+                                                  
+l.1 <
+     ?php
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+ 
+Here is how much of TeX's memory you used:
+ 8 strings out of 495028
+ 430 string characters out of 1181229
+ 45133 words of memory out of 3000000
+ 3291 multiletter control sequences out of 15000+50000
+ 3640 words of font info for 14 fonts, out of 3000000 for 9000
+ 28 hyphenation exceptions out of 8191
+ 5i,0n,4p,72b,14s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!

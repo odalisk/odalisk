@@ -11,9 +11,9 @@ use Buzz\Message;
 abstract class BaseSocrata extends BasePlatform {
 
 	// The base url on which the datasets are listed.
-	private $datasets_list_url = 'https://opendata.socrata.com/browse?&page=';
+	protected $datasets_list_url;
 	// the number of datasets displayed on one page.
-	private $batch_size = 10;
+	protected $batch_size;
 
 	public function __construct() {
 		$this->criteria = array(
@@ -33,6 +33,8 @@ abstract class BaseSocrata extends BasePlatform {
 		);
 
         $this->date_format = 'M d, Y';
+
+		$this->batch_size = 10;
 	}
 
     public function getDatasetsUrls() {
@@ -59,9 +61,9 @@ abstract class BaseSocrata extends BasePlatform {
 		// Add it to the urls array
 		$urls = array_merge($urls, $ids);
 
-		// $max = ceil($this->datasets_number / $this->batch_size);
-		$max = 5;
-		for($i = 2 ; $i < $max ; $i++) {
+		$max = ceil($datasets_number / $this->batch_size);
+		// $max = 5;
+		for($i = 2 ; $i <= $max ; $i++) {
 			// We loop on all pages left.
 			echo("$i\n");
 			$response = $this->buzz->get($this->datasets_list_url.$i);

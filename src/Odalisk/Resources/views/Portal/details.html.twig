@@ -1,0 +1,203 @@
+{% extends "App::layout.html.twig" %}
+
+{% block title %}Odalisk project{% endblock %}
+
+{% block content %}
+<div class="row-fluid row-nomargin-top">
+    <div class="span12">
+        <ul class="breadcrumb">
+          <li>
+            <a href="{{ path('portals') }}">Portals</a> <span class="divider">/</span>
+          </li>
+          <li class="active">{{ portal.name }}</li>
+        </ul>
+        <div class="well hero-unit hero-unit-intro">
+            <h1>{{ portal.name }} :</h1>
+            <div class="clearfix"></div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span4">
+                        <table class="table table-bordered ">
+                            <tr>
+                                <td class="key">Catégories</td>
+                                <td>Urbanisme</td>
+                            </tr>
+                            <tr>
+                                <td class="key">Fréquence</td>
+                                <td>Trimestrielle</td>
+                            </tr>
+                            <tr>
+                                <td class="key">Mise à disposition</td>
+                                <td>17/11/2011</td>
+                            </tr>
+                            <tr>
+                                <td class="key">Mise à jour</td>
+                                <td>15/02/2012</td>
+                            </tr>
+                            <tr>
+                                <td class="key">Licence</td>
+                                <td><span class="label label-success">ODBL</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="span8">
+                        <table class="table score table-bordered">
+                            <tr class="total-score">
+                                <td class="key">Score</td>
+                                <td class="progress-bar">
+                                    <div class="progress progress-striped
+                                     active progress-success">
+                                      <div class="bar"
+                                           style="width: 85%;"></div>
+                                    </div>
+                                </td>
+                                <td class="note">163/200</td>
+                            </tr>
+                            <tr>
+                                <td class="key">Feedback</td>
+                                <td class="progress-bar">
+                                    <div class="progress progress-striped
+                                     active progress-warning">
+                                      <div class="bar"
+                                           style="width: 40%;"></div>
+                                    </div>
+                                </td>
+                                <td class="note">83/200</td>
+                            </tr>
+                            <tr>
+                                <td class="key">Openess</td>
+                                <td class="progress-bar">
+                                    <div class="progress progress-striped
+                                     active progress-info">
+                                      <div class="bar"
+                                           style="width: 70%;"></div>
+                                    </div>
+                                </td>
+                                <td class="note">155/200</td>
+                            </tr>
+                            <tr>
+                                <td class="key">API</td>
+                                <td class="progress-bar">
+                                    <div class="progress progress-striped
+                                     active progress-danger">
+                                      <div class="bar"
+                                           style="width: 20%;"></div>
+                                    </div>
+                                </td>
+                                <td class="note">42/200</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fluid-container">
+            <div class="row-fluid row-nomargin-top">
+                <div class="span12">
+                    <table class="table table-striped table-dataset-list">
+                        <thead>
+                            <tr>
+                                <th><h2>Liste des jeux de données</h2></th>
+                                <th class="page_from_to">
+                                    <div class="pagination">
+                                      <ul>
+                                        {% if page_from != 0 %}
+                                            <li><a href="{{ path('portal_details', { 'portal_number': portal.id, 'page_number':(page_number - 1)  }) }}">Prev</a></li>
+                                        {% endif %}
+                                        <li class="active">
+                                          <a href="#">{{ page_from }} - {{ page_to }}</a>
+                                        </li>
+                                        {% if not end %}
+                                            <li><a href="{{ path('portal_details', { 'portal_number': portal.id, 'page_number':(page_number + 1)  }) }}">Next</a></li>
+                                        {% endif %}
+                                      </ul>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for dataset in datasets %}
+                            <tr>
+                                <td colspan="2" class="dataset-item">
+                                
+                                    <h3>
+                                        {% if dataset.name|length > 50 %}
+                                            {{ dataset.name|slice(0,50) }}...
+                                        {% else %}
+                                            {{ dataset.name|slice(0,50) }}
+                                        {% endif %}
+                                    </h3>
+                                    <div class="more-infos">
+                                        <table>
+                                            <tr>
+                                                <td class="summary">
+                                                    <div class="dataset-summary">
+                                                        {% if dataset.summary|length > 500 %}
+                                                            {{ dataset.summary|slice(0,500) }}...
+                                                        {% else %}
+                                                            {{ dataset.summary }}
+                                                        {% endif %}
+                                                    </div>
+                                                </td>
+                                                <td class="labels">
+                                                    {% if dataset.category is not empty %}
+                                                        {% if dataset.category|length > 20 %}
+                                                            <span class="label label-info">{{ dataset.category|slice(0,20) }}...</span>
+                                                        {% else %}
+                                                            <span class="label label-info">{{ dataset.category|slice(0,20) }}</span>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                
+                                                    {% if dataset.license is not empty %}
+                                                        {% if dataset.license|length > 20 %}
+                                                            <span class="label label-success">{{ dataset.license|slice(0,20) }}...</span>
+                                                        {% else %}
+                                                            <span class="label label-success">{{ dataset.license|slice(0,20) }}</span>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                
+                                                    {% if dataset.owner is not empty %}
+                                                        {% if dataset.owner|length > 20 %}
+                                                            <span class="label label-warning">{{ dataset.owner|slice(0,20) }}...</span>
+                                                        {% else %}
+                                                            <span class="label label-warning">{{ dataset.owner|slice(0,20) }}</span>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                
+                                        
+                                        
+                                                </td>
+                                                <td class="button">
+                                                    <a class="btn" href="{{ path('dataset_details', { 'dataset_number': dataset.id }) }}">Détails</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        
+                    </table>
+                    <div class="page_from_to">
+                        <div class="pagination">
+                          <ul>
+                            {% if page_from != 0 %}
+                                <li><a href="{{ path('portal_details', { 'portal_number': portal.id, 'page_number':(page_number - 1)  }) }}">Prev</a></li>
+                            {% endif %}
+                            <li class="active">
+                              <a href="#">{{ page_from }} - {{ page_to }}</a>
+                            </li>
+                            {% if not end %}
+                                <li><a href="{{ path('portal_details', { 'portal_number': portal.id, 'page_number':(page_number + 1)  }) }}">Next</a></li>
+                            {% endif %}
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/row-->
+        </div>
+    </div>
+</div>
+{% endblock %}

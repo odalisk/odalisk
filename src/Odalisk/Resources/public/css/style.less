@@ -9,8 +9,19 @@
 
 @import "../../../../../vendor/assets/css/bootstrap/bootstrap.less";
 
+.row-nomargin-top {
+    margin-top:0px !important;
+}
+
+.table-nomargin-bottom {
+    margin-bottom:0px !important;
+}
+
+a:visited {
+    color:@linkColor;
+}
+
 body {
-    min-width:990px;
     margin:0px 10px 0px 10px;
     .navbar {
         .brand {
@@ -36,17 +47,22 @@ body {
     .well {
         padding:20px 30px 20px 30px;
         
+        
+    }
+    
+    .hero-unit-intro {
         h1, h2 {
             float:left;
+        }
+        
+        h1:first-letter {
+            text-transform:uppercase;
         }
         
         h2 {
             margin-top:26px;
             margin-left:10px;
         }
-    }
-    
-    .hero-unit-intro {
         table {
             margin-top:20px;
             background:white;
@@ -112,6 +128,60 @@ body {
         }
         
         
+    }
+    
+    
+    table.table-dataset-list, .table-portal-list {
+        .badge {
+            position:relative;
+            top:-10px;
+            left:3px;
+            
+        }
+        
+        .page_from_to {
+            text-align:right;
+        }
+        
+        .pagination {
+            margin:0px;
+        }
+        
+        td.dataset-item, td.portal-item {
+            width:100%;
+            a {
+                //color:#555;
+            }
+            
+            h3:first-letter {
+                text-transform:uppercase;
+            }
+            
+            table.row-fluid {
+                margin-top:0px;
+            }
+            
+            .more-infos {
+                td {
+                    border-top:none;
+                    
+                    &.sumary {
+                        width:80%;
+                    }
+                    
+                    &.labels {
+                        width:20%;
+                        min-width:150px;
+                    }
+                    
+                    &.button {
+                        width:10%;
+                        min-width:70px;
+                        text-align:right;
+                    }
+                }
+            }
+        }
     }
 }
 

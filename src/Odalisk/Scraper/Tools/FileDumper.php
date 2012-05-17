@@ -2,8 +2,6 @@
 
 namespace Odalisk\Scraper\Tools;
 
-use Odalisk\Entity\DatasetCrawl;
-
 use Buzz\Message;
 
 class FileDumper {
@@ -26,28 +24,25 @@ class FileDumper {
     
     public static function saveToDisk(Message\Request $request, Message\Response $response) {
         self::$count++;
-        //error_log(self::$count . ' > ' . memory_get_usage(true));
         
-        $code = $response->getStatusCode();
-        $url = $request->getUrl();
-        $hash = md5($url);
-        $platform = self::getPlatformName($url);
+        $file = array();
+        $file['meta']['code'] = $response->getStatusCode();
+        $file['meta']['url'] = $request->getUrl();
+        $file['meta']['hash'] = md5($file['meta']['url']);
         
-        $crawl = new DatasetCrawl($url, $hash, $code, self::$mapping[$platform]['portal']);
-        self::$em->persist($crawl);
-        
-        if(200 == $code) {
-            file_put_contents(self::$base_path . $platform . '/' . $hash, $response->getContent());
+        if(200 == $file['meta']['code']) {
+            $file['content'] = $response->getContent();
+        } else {
+            $file['content'] = "";
         }
+        
+        $platform = self::getPlatformName($file['meta']['url']);
+        
+        file_put_contents(self::$base_path . $platform . '/' . $file['meta']['hash'], json_encode($file));
         
         if(0 == self::$count % 100) {
            error_log('> ' . self::$count . ' / ' . self::$total_count . ' done');
-           error_log('> ' . memory_get_usage(true) / (1024 * 1024));
-        }
-        
-        if(self::$count == self::$total_count || self::$count % 1000 == 0) {
-            error_log('Flushing data !');
-            self::$em->flush();
+           error_log('> ' . memory_get_usage(TRUE) / (1024 * 1024));
         }
     }
 

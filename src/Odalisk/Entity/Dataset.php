@@ -117,11 +117,6 @@ class Dataset
      * @ORM\JoinColumn(name="portal_id", referencedColumnName="id")
      */
     protected $portal;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="DatasetCrawl")
-     */
-    protected $crawl;
  
     /**
      * Get id
@@ -351,25 +346,5 @@ class Dataset
     public function getPortal()
     {
         return $this->portal;
-    }
-
-    /**
-     * Set crawl
-     *
-     * @param Odalisk\Entity\DatasetCrawl $crawl
-     */
-    public function setCrawl(\Odalisk\Entity\DatasetCrawl $crawl)
-    {
-        $this->crawl = $crawl;
-    }
-
-    /**
-     * Get crawl
-     *
-     * @return Odalisk\Entity\DatasetCrawl 
-     */
-    public function getCrawl()
-    {
-        return $this->crawl;
     }
 }

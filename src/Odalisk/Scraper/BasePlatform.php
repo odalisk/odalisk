@@ -142,6 +142,10 @@ abstract class BasePlatform {
     
     abstract public function getDatasetsUrls();
     
+    public function prepareRequestsFromUrls($urls) {
+        return $urls;
+    }
+    
     public function parseFile($html, &$dataset) {
         $crawler = new Crawler($html);
         $data = array();

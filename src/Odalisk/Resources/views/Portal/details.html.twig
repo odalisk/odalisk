@@ -97,8 +97,17 @@
                     <table class="table table-striped table-dataset-list">
                         <thead>
                             <tr>
-                                <th><h2>Liste des jeux de données</h2></th>
-                                <th class="page_from_to">
+                                <th>
+                                    {% if search is empty %}
+                                        <h2>Liste des jeux de données</h2>
+                                    {% else %}
+                                        <h2>Résultats de la recherche : "{{ search }}" <a href="{{ path('delete_search_portal', { portal_id:portal.id }) }}") class="close" data-dismiss="modal">&times;</a></h2>
+                                    {% endif %}
+                                </th>
+                                <th class="utils">
+                                    <form class="form-search" method="post" action="{{ path('portal_details', { 'portal_number': portal.id, 'page_number': page_number }) }}">
+                                        <input type="text" name="search" id="search" class="input-medium search-query"/> <button type="submit" class="btn">Search</button>
+                                    </form>
                                     <div class="pagination">
                                       <ul>
                                         {% if page_from != 0 %}
@@ -117,66 +126,12 @@
                         </thead>
                         <tbody>
                         {% for dataset in datasets %}
-                            <tr>
-                                <td colspan="2" class="dataset-item">
-                                
-                                    <h3>
-                                        {% if dataset.name|length > 50 %}
-                                            {{ dataset.name|slice(0,50) }}...
-                                        {% else %}
-                                            {{ dataset.name|slice(0,50) }}
-                                        {% endif %}
-                                    </h3>
-                                    <div class="more-infos">
-                                        <table>
-                                            <tr>
-                                                <td class="summary">
-                                                    <div class="dataset-summary">
-                                                        {% if dataset.summary|length > 500 %}
-                                                            {{ dataset.summary|slice(0,500) }}...
-                                                        {% else %}
-                                                            {{ dataset.summary }}
-                                                        {% endif %}
-                                                    </div>
-                                                </td>
-                                                <td class="labels">
-                                                    {% if dataset.category is not empty %}
-                                                        {% if dataset.category|length > 20 %}
-                                                            <span class="label label-info">{{ dataset.category|slice(0,20) }}...</span>
-                                                        {% else %}
-                                                            <span class="label label-info">{{ dataset.category|slice(0,20) }}</span>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                
-                                                    {% if dataset.license is not empty %}
-                                                        {% if dataset.license|length > 20 %}
-                                                            <span class="label label-success">{{ dataset.license|slice(0,20) }}...</span>
-                                                        {% else %}
-                                                            <span class="label label-success">{{ dataset.license|slice(0,20) }}</span>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                
-                                                    {% if dataset.owner is not empty %}
-                                                        {% if dataset.owner|length > 20 %}
-                                                            <span class="label label-warning">{{ dataset.owner|slice(0,20) }}...</span>
-                                                        {% else %}
-                                                            <span class="label label-warning">{{ dataset.owner|slice(0,20) }}</span>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                
-                                        
-                                        
-                                                </td>
-                                                <td class="button">
-                                                    <a class="btn" href="{{ path('dataset_details', { 'dataset_number': dataset.id }) }}">Détails</a>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                
-                                </td>
-                            </tr>
+                        <tr>
+                            <td colspan="2" class="dataset-item">
+                            {% include 'App:Dataset:table-item.html.twig' with {'dataset': dataset} %}
                         {% endfor %}
+                            </td>
+                        </tr>
                         </tbody>
                         
                     </table>

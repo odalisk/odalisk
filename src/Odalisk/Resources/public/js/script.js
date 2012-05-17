@@ -6,7 +6,16 @@
  */
 
 jQuery(function($) {
-    $('#navbar').scrollspy()
+    $('.home .nav-collapse li a').click(function() {
+        var href = $(this).attr('href');
+        $('body').scrollTop($(href).offset().top - 95);
+        $(this).parent().parent().children('li').each(function() {
+            $(this).removeClass('active');
+        });
+        $(this).parent().addClass('active');
+        return false;
+    });
+    $('#navbar').scrollspy();
 });
 
 var konami = document.createElement('input');

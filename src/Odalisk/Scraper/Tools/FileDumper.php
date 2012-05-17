@@ -50,6 +50,24 @@ class FileDumper {
             self::$em->flush();
         }
     }
+
+	public static function saveUrls($urls, $portal_name) {
+		self::verifyPortalPath($portal_name);
+		$file = self::$base_path.$portal_name.'/urls.json';
+		file_put_contents($file, json_encode($urls));
+	}
+
+	public static function getUrls($portal_name) {
+		$file = self::$base_path.$portal_name.'/urls.json';
+		return(json_decode(file_get_contents($file), true));
+	}
+
+	public static function verifyPortalPath($portal_name) {
+        $path = self::$base_path . $portal_name;
+        if(! is_dir($path)) {
+            mkdir($path, 0755, TRUE);
+        }
+	}
     
     public static function setBasePath($path) {
         self::$base_path = $path;
@@ -65,10 +83,7 @@ class FileDumper {
     
     public static function addMapping($name, $url, $portal) {
         self::$mapping[$name] = array('url' => $url, 'portal' => $portal);
-        $path = self::$base_path . $name;
-        if(! is_dir($path)) {
-            mkdir($path, 0755, TRUE);
-        }
+		self::verifyPortalPath($name);
     }
     
     public static function getPlatformName($dataset_url) {
@@ -77,6 +92,7 @@ class FileDumper {
                 return $name;
             }
         }
+        error_log('No match found for : ' . $dataset_url);
     }
     
     public static function setDoctrine($doctrine) {

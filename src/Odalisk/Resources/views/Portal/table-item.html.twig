@@ -1,0 +1,28 @@
+<tr>
+    <td colspan="2" class="portal-item">
+        
+            <h3>
+                {% if portal.name|length > 50 %}
+                    {{ portal.name|slice(0,50) }}...<span class="badge badge-success">{{ portal.datasets|length}}</span>
+                {% else %}
+                    {{ portal.name|slice(0,50) }}<span class="badge badge-success">{{ portal.datasets|length}}</span>
+                {% endif %}
+            </h3>
+            
+            <div class="more-infos">
+                <table class="table table-nomargin-bottom">
+                    <tr>
+                        <td class="summary">
+                            <a class="portal-link" href="{{ portal.url }}">Visiter le site web</a>
+                        </td>
+                        <td class="labels">
+                            <span class="label label-success">{{ portal.updatedAt|date("m/d/Y") }}</span>
+                        </td>
+                        <td class="button">
+                            <a class="btn" href="{{ path('portal_details', { 'portal_number': portal.id }) }}">Détails</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+    </td>
+</tr>

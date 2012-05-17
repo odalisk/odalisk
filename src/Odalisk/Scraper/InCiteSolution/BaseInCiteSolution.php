@@ -43,17 +43,9 @@ abstract class BaseInCiteSolution extends BasePlatform {
         );
 
         if(200 == $response->getStatusCode()) {
-
             $data = json_decode($response->getContent());
-            $factory = new Message\Factory();
-                
             foreach($data->opendata->answer->data->dataset as $dataset) {
-                $formRequest = $factory->createFormRequest();
-                $formRequest->setMethod(Message\Request::METHOD_POST);
-                $formRequest->fromUrl($this->sanitize($this->base_url . '?tx_icsoddatastore_pi1[uid]=' . $dataset->id));
-                $formRequest->addHeaders($this->buzz_options);
-                $formRequest->setFields(array('tx_icsoddatastore_pi1[cgu]' => 'on'));
-                $urls[] = $formRequest;
+                $urls[] = $this->sanitize($this->base_url . '?tx_icsoddatastore_pi1[uid]=' . $dataset->id);
             }
         }  else {
             error_log('Couldn\'t fetch list of datasets for ' . $this->name);
@@ -62,6 +54,22 @@ abstract class BaseInCiteSolution extends BasePlatform {
         $this->total_count = count($urls);
         
         return $urls;
+    }
+    
+    public function prepareRequestsFromUrls($urls) {
+        $factory = new Message\Factory();
+        $requests = array();
+        
+        foreach($urls as $url) {
+            $formRequest = $factory->createFormRequest();
+            $formRequest->setMethod(Message\Request::METHOD_POST);
+            $formRequest->fromUrl($url);
+            $formRequest->addHeaders($this->buzz_options);
+            $formRequest->setFields(array('tx_icsoddatastore_pi1[cgu]' => 'on'));
+            $requests[] = $formRequest;
+        }
+        
+        return $requests;
     }
     
     public function sanitize($url) {

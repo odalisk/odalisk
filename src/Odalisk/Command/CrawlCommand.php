@@ -67,7 +67,7 @@ class CrawlCommand extends BaseCommand {
                 // Add a base URL => name,portal mapping to the file dumper
                 FileDumper::addMapping($name, $platform->getBaseUrl(), $platform->getPortal());
                 // Get the URLs
-                $queries[$name] = FileDumper::getUrls($name);
+                $queries[$name] = $platform->prepareRequestsFromUrls(FileDumper::getUrls($name));
                 // Log how many URLs we added
                 FileDumper::setTotalCount(FileDumper::getTotalCount() + count($queries[$name]));
                 //error_log($platform->getName() . ' has ' . $platform->getCount() . ' datasets');

@@ -52,7 +52,6 @@ abstract class BaseSocrata extends BasePlatform {
 		$node    = $crawler->filterXPath('//div[@class="resultCount"]');
 		if(preg_match("/of ([0-9]+)/", $node->text(), $match)) {
 			$datasets_number = (int) $match[1];
-			echo('Number of datasets of the platform : '.$datasets_number."\n");
 		}
 		// we now have the number of datasets of the portal.
 

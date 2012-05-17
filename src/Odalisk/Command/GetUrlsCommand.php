@@ -55,6 +55,7 @@ class GetUrlsCommand extends BaseCommand {
             
 			$path = $container->getParameter('file_dumper.data_path');
             foreach($platforms as $name => $platform) {
+                error_log('Getting urls for ' . $name);
                 FileDumper::saveUrls($platform->getDatasetsUrls(), $name);
                 error_log($platform->getName() . ' has ' . $platform->getCount() . ' datasets');
             }

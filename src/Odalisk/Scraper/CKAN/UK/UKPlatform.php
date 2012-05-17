@@ -48,6 +48,10 @@ class UKPlatform extends BaseCKAN {
             if(array_key_exists('setSummary', $data)) {
                 $data['setSummary'] = trim($data['setSummary']);
             }
+            // Trim category
+            if(array_key_exists('setCategory', $data)) {
+                $data['setCategory'] = trim($data['setCategory']);
+            }
 
             // Normalize licence
             if(array_key_exists('setLicense', $data)) {
@@ -60,23 +64,50 @@ class UKPlatform extends BaseCKAN {
                 }
             }
             
+            if(!array_key_exists('setReleasedOn', $data)) {
+                $nodes = $crawler->filterXPath('//*[(@id = "tagline")]');
+                
+                if(0 < count($nodes)) {
+                    $content = trim(join(
+                        ";",
+                        $nodes->each(
+                            function($node,$i) {
+                                return $node->nodeValue;
+                            }
+                        )
+                    ));
+                    
+                    if(preg_match('/^Posted by ([a-zA-Z &,\'-]+) on ([0-9]{2}\/[0-9]{2}\/[0-9]{4})/', $content, $matches)){
+                        $data['setProvider'] = $matches[1];
+                        $data['setReleasedOn'] = $matches[2];
+                    } else {
+                        error_log('>>' . $content);
+                    }
+                }
+            }
+            
             // We transform dates format in datetime.
 			foreach($this->date_fields as $field) {
 				if(array_key_exists($field, $data)) {
-					if(preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$/', $data[$field])) {
-					    $data[$field] = \Datetime::createFromFormat('Y-m-d H:i', $data[$field]);
-					} else if (preg_match('/^[0-9]{2}\/[0-9]{2}\/[0-9]{4} [0-9]{2}:[0-9]{2}$/', $data[$field])) {
-					    $data[$field] = \Datetime::createFromFormat('d/m/Y H:i', $data[$field]);
-					} else if(preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $data[$field])) {
-                        $data[$field] = \Datetime::createFromFormat('Y-m-d', $data[$field]);
-                    } else if(preg_match('/^[0-9]{4}-[0-9]{2}$/', $data[$field])) {
-                        $data[$field] = \Datetime::createFromFormat('Y-m', $data[$field]);
-                    } else if(preg_match('/^[0-9]{4}$/', $data[$field])) {
-                        $data[$field] = \Datetime::createFromFormat('Y', $data[$field]);
-                    } else if($data[$field] == 'n/a'){
+				    $date = $data[$field];
+				    
+					if(preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$/', $date)) {
+					    $data[$field] = \Datetime::createFromFormat('Y-m-d H:i', $date);
+					} else if (preg_match('/^[0-9]{2}\/[0-9]{2}\/[0-9]{4} [0-9]{2}:[0-9]{2}$/', $date)) {
+					    $data[$field] = \Datetime::createFromFormat('d/m/Y H:i', $date);
+					} else if(preg_match('/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/', $date)) {
+					    $data[$field] = \Datetime::createFromFormat('d/m/Y H:i', $date . ' 00:00');
+					} else if(preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date)) {
+                        $data[$field] = \Datetime::createFromFormat('Y-m-d H:i', $date . ' 00:00');
+                    } else if(preg_match('/^[0-9]{4}-[0-9]{2}$/', $date)) {
+                        $data[$field] = \Datetime::createFromFormat('Y-m-d H:i', $date . '-01 00:00');
+                    } else if(preg_match('/^[0-9]{4}$/', $date)) {
+                        $data[$field] = \Datetime::createFromFormat('Y-m-d H:i', $date . '-01-01 00:00');
+                    } else if($date == 'n/a' || $date == 'TBC') {
                         $data[$field] = NULL;
                     } else {
-                        var_dump($data);
+                        // Not something we recognize
+                        $data[$field] = NULL;
                     }
 				} else {
 					$data[$field] = NULL;

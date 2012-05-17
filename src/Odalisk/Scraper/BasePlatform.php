@@ -69,6 +69,11 @@ abstract class BasePlatform {
     protected $total_count = 0;
     
     protected $portal;
+	
+	/**
+	 * Le tableau qui contient les urls des datasets.
+	 */
+	protected static $urls = array();
     
     public function setBuzz(\Buzz\Browser $buzz, $timeout = 30) {
         $this->buzz = $buzz;

@@ -3,10 +3,10 @@
 namespace Odalisk\Scraper\Socrata;
 
 use Symfony\Component\DomCrawler\Crawler;
+use Buzz\Message;
 
 use Odalisk\Scraper\BasePlatform;
-
-use Buzz\Message;
+use Odalisk\Scraper\Tools\RequestDispatcher;
 
 abstract class BaseSocrata extends BasePlatform {
 
@@ -14,6 +14,9 @@ abstract class BaseSocrata extends BasePlatform {
 	protected $datasets_list_url;
 	// the number of datasets displayed on one page.
 	protected $batch_size;
+
+	// The counter of the number of finished requests.
+	protected static $i_requests = 0;
 
 	public function __construct() {
 		$this->criteria = array(
@@ -38,7 +41,7 @@ abstract class BaseSocrata extends BasePlatform {
 	}
 
     public function getDatasetsUrls() {
-		$urls = array(); // the array we will return.
+        $dispatcher = new RequestDispatcher(array());
         $this->buzz->getClient()->setTimeout(30);
 
         $response = $this->buzz->get($this->datasets_list_url.'1');
@@ -59,33 +62,43 @@ abstract class BaseSocrata extends BasePlatform {
 		// Since we already have the first page, let's parse it !
 		$ids  = $crawler->filterXPath('//td[@class="nameDesc"]/a')->extract(array('href'));
 		// Add it to the urls array
-		$urls = array_merge($urls, $ids);
+		self::$urls = array_merge(self::$urls, $ids);
+		// And we update the requests counter.
+		self::$i_requests++;
 
 		$max = ceil($datasets_number / $this->batch_size);
 		error_log($max.' requests to do');
 		// $max = 5;
 		for($i = 2 ; $i <= $max ; $i++) {
-			error_log($i.' / '.$max);
-			// We loop on all pages left.
-			$response = $this->buzz->get($this->datasets_list_url.$i);
-			if($response->getStatusCode() != 200) {
-				echo('Impossible d\'obtenir la page n°'.$i);
-				continue;
-			}
+			// We add all pages left.
+			$dispatcher->queue($this->datasets_list_url.$i, 'Odalisk\Scraper\Socrata\BaseSocrata::crawlDatasetsList');
+			// error_log($i.' / '.$max);
 
-			$crawler = new Crawler($response->getContent());
-			$urls    = array_merge($urls, $crawler->filterXPath('//td[@class="nameDesc"]/a')->extract(array('href')));
 		}
-        $this->total_count = count($urls);
+		$dispatcher->dispatch(10);
+
+        $this->total_count = count(self::$urls);
 		
 		// $urls contains only the ids of the datasets, we need to add the
 		// base url :
 		$base_url = $this->base_url;
-		$urls = array_map(
+		self::$urls = array_map(
 				function($id) use ($base_url) { return($base_url.$id); }
-				, $urls
+				, self::$urls
 				);
 
-		return($urls);
+		return(self::$urls);
+	}
+
+	public static function crawlDatasetsList(Message\Request $request, Message\Response $response) {
+		if($response->getStatusCode() != 200) {
+			error_log('Impossible d\'obtenir la page !');
+			return;
+		}
+
+		self::$i_requests++;
+		error_log(self::$i_requests.' requests done');
+		$crawler = new Crawler($response->getContent());
+		self::$urls = array_merge(self::$urls, $crawler->filterXPath('//td[@class="nameDesc"]/a')->extract(array('href')));
 	}
 }

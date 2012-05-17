@@ -219,7 +219,7 @@
 .navbar .nav > li > a {
   float: none;
   padding: 10px 10px 11px;
-  padding: (@navbarHeight - 20)/2 10px ((@navbarHeight - 20)/2 - 2);
+  padding: (@navbarHeight - 10)/2 10px ((@navbarHeight - 10)/2 - 2);
   line-height: 19px;
   color: @navbarLinkColor;
   text-decoration: none;
@@ -228,7 +228,7 @@
 // Hover
 .navbar .nav > li > a:hover {
   background-color: @navbarLinkBackgroundHover; // "transparent" is default to differentiate :hover from .active
-  #gradient > .vertical(#fff, #ddd);
+  //#gradient > .vertical(#fff, #ddd);
   color: @navbarLinkColorHover;
   text-decoration: none;
 }
@@ -239,7 +239,6 @@
   color: @navbarLinkColorActive;
   text-decoration: none;
   background-color: @navbarLinkBackgroundActive;
-  #gradient > .vertical(#fff, #ddd);
 }
 
 // Dividers (basically a vertical hr)

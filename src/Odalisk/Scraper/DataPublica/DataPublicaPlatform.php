@@ -60,14 +60,15 @@ class DataPublicaPlatform extends BasePlatform {
 
         return $urls;
     }
+
+
     
-    public function parseDataset(Message\Request $request, Message\Response $response) {     
+    public function parseDataset(Message\Request $request, Message\Response $response) {
         $this->count++;
         $data = array(
             'setUrl' => $request->getUrl(),
-            // 'code' => $response->getStatusCode(),
         );
-
+        
         if(200 == $response->getStatusCode()) {
             $crawler = new Crawler($response->getContent());
             if(0 == count($crawler)) {
@@ -80,57 +81,44 @@ class DataPublicaPlatform extends BasePlatform {
                             ";",
                             $nodes->each(
                                 function($node,$i) {
-                                    return utf8_decode($node->nodeValue);
+                                    return $node->nodeValue;
                                 }
                             )
                         );
                     } 
                 }
                 
-                if(array_key_exists('setReleasedOn', $data)) {
-                    
-                    $data['setReleasedOn'] = \Datetime::createFromFormat($this->date_format, $this->translateDate($data['setReleasedOn']));
-                    if(FALSE == $data['setReleasedOn']) {
-                        $data['setReleasedOn'] = NULL;
+
+                // We transform dates format in datetime.
+                foreach($this->date_fields as $field) {
+                    if(array_key_exists($field, $data)) {
+
+                        $data[$field] = \Datetime::createFromFormat($this->date_format, $this->translateDate($data[$field]));
+                        if(FALSE == $data[$field]) {
+                            $data[$field] = NULL;
+                        }
+                    } else {
+                        $data[$field] = NULL;
                     }
-                } else {
-                    $data['setReleasedOn'] = NULL;
-                }
-                
-                if(array_key_exists('setLastUpdatedOn', $data)) {
-                    $data['setLastUpdatedOn'] = \Datetime::createFromFormat($this->date_format, $this->translateDate($data['setLastUpdatedOn']));
-                    if(FALSE == $data['setLastUpdatedOn']) {
-                        $data['setLastUpdatedOn'] = NULL;
-                    }
-                } else {
-                    $data['setLastUpdatedOn'] = NULL;
                 }
             }
-        } else {
-            $data['setError'] = 'Return code : ' . $response->getStatusCode();
+            $crawler = NULL;
         }
-        error_log('[' . $this->name . '] Processed ' . $data['setUrl'] . ' with code ' . $response->getStatusCode());
-        
+
+        // Logs
+        // error_log('[' . $this->name . '] Processed ' . $data['setUrl'] . ' with code ' . $response->getStatusCode());
         if(0 == $this->count % 100) {
-           error_log('>>>> ' . $this->count . ' done, ' . $this->total_count . ' to go.');
+           error_log('> ' . $this->count . ' / ' . $this->total_count . ' done');
+           error_log('> ' . memory_get_usage(true) / (8 * 1024 * 1024));
         }
-       
-        
-        $dataset = NULL;
-        
-        if(NULL != $this->datasets && array_key_exists($data['setUrl'], $this->datasets)) {
-            $dataset = $this->datasets[$data['setUrl']];
-            $dataset->populate($data);
-        } else {
-            $dataset = new Dataset($data);
-            $this->portal->addDataset($dataset);
-        }
-        
-        $this->em->persist($this->portal);
+            
+        $dataset = new Dataset($data);
+        $this->portal->addDataset($dataset);
         $this->em->persist($dataset);
-        
-        if($this->count == $this->total_count || $this->count % 100 == 0) {
+
+        if($this->count == $this->total_count || $this->count % 1000 == 0) {
             error_log('Flushing data!');
+            $this->em->persist($this->portal);
             $this->em->flush();
         }
     }

@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Dataset
 {   
      
-    public function __construct(array $values) {
+    public function __construct(array $values = array()) {
         $this->populate($values);
     }
      
@@ -27,7 +27,7 @@ class Dataset
      *
      * @param array $values 
      */
-    public function populate(array $values) {
+    public function populate(array $values = array()) {
         foreach($values as $name => $value) {
             call_user_func(array($this, $name), $value);
         }
@@ -351,5 +351,25 @@ class Dataset
     public function getPortal()
     {
         return $this->portal;
+    }
+
+    /**
+     * Set crawl
+     *
+     * @param Odalisk\Entity\DatasetCrawl $crawl
+     */
+    public function setCrawl(\Odalisk\Entity\DatasetCrawl $crawl)
+    {
+        $this->crawl = $crawl;
+    }
+
+    /**
+     * Get crawl
+     *
+     * @return Odalisk\Entity\DatasetCrawl 
+     */
+    public function getCrawl()
+    {
+        return $this->crawl;
     }
 }

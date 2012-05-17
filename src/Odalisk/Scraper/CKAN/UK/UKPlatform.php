@@ -10,9 +10,8 @@ use Odalisk\Scraper\CKAN\BaseCKAN;
 class UKPlatform extends BaseCKAN {
     public function __construct() {
         $this->criteria = array(
-            'setName' => '//td[.="Name" and @class="package_label"]/../td[2]/div[1]'
-			//, 'posted_information' = '//div[@id="tagline"]'
-			, 'setSummary' => '//div[@class="package_title"]'
+            'setName' => '//h1[@class="title"]',
+            'setSummary' => '//div[@class="package_title"]'
 			, 'setReleasedOn' => '//td[.="Released" and @class="package_label"]/../td[2]/div[1]'
 			, 'setLastUpdatedOn' => '//td[.="Last updated" and @class="package_label"]/../td[2]/div[1]'
 			, 'setProvider' => '//td[.="Published by" and @class="package_label"]/../td[2]/div[1]'
@@ -20,6 +19,28 @@ class UKPlatform extends BaseCKAN {
         );
 
 		$this->date_format = 'Y-m-d';
+    }
+    
+    public function analysePage($crawler) {
+        $data = array();
+        foreach($this->criteria as $name => $path) {
+            $nodes = $crawler->filterXPath($path);
+            if(0 < count($nodes)) {
+                $data[$name] = join(
+                    ";",
+                    $nodes->each(
+                        function($node,$i) {
+                            return $node->nodeValue;
+                        }
+                    )
+                );
+            } 
+        }
+        // Post treatment
+        $data['setSummary'] = trim($data['setSummary']);
+        
+        var_dump($data);
+        return $data;
     }
     
     public function getDatasetsUrls() {

@@ -2,158 +2,79 @@
 
 {% block title %}Odalisk project{% endblock %}
 
+{% block menu %}
+    <li class="active"><a href="#why">Why Odalisk</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contribute">Contribute</a></li>
+{% endblock %}
+
+{% block page_name %}
+<body data-spy="scroll" class="home">
+{% endblock %}
+
 {% block content %}
-    <div class="well hero-unit hero-unit-intro">
-        <h1>Data.nantes.fr : </h1><h2>Adresses postales</h2>
-        <div class="clearfix"></div>
-        <div class="container-fluid">
-            <div class="row-fluid">
-                <div class="span4">
-                    <table class="table table-bordered ">
-                        <tr>
-                            <td class="key">Catégories</td>
-                            <td>Urbanisme</td>
-                        </tr>
-                        <tr>
-                            <td class="key">Fréquence</td>
-                            <td>Trimestrielle</td>
-                        </tr>
-                        <tr>
-                            <td class="key">Mise à disposition</td>
-                            <td>17/11/2011</td>
-                        </tr>
-                        <tr>
-                            <td class="key">Mise à jour</td>
-                            <td>15/02/2012</td>
-                        </tr>
-                        <tr>
-                            <td class="key">Licence</td>
-                            <td><span class="label label-success">ODBL</span></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="span8">
-                    <table class="table score table-bordered">
-                        <tr class="total-score">
-                            <td class="key">Score</td>
-                            <td class="progress-bar">
-                                <div class="progress progress-striped
-                                 active progress-success">
-                                  <div class="bar"
-                                       style="width: 85%;"></div>
+
+                <header class="hero-unit">
+                      <div class="inner">
+                        <h1>OpenData live score checking</h1>
+                        <p>Check openness of major dataportal and live test your own</p>
+                        <p>
+                          <a class="btn btn-info btn-large">Download our Chrome extension</a>
+                          <a class="btn btn-large" href="{{ path('portals') }}">Browse portal scores</a>
+                        </p>
+                        <p style="font-size:20px;"><strong>Odalisk is in beta but you can allready start to browse our database and check Dataportal openness scores</strong></p>
+                      </div>
+                </header>
+                <div class="container">
+                    <section id="why">
+                        <div class="page-header">
+                            <h1>Why <span class="blue-font">Odalisk</span> ?</h1>
+                        </div>
+                        <div class="page-body">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <div class="row">
+                                <div class="span4">
+                                    <h3>Openness</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    
                                 </div>
-                            </td>
-                            <td class="note">163/200</td>
-                        </tr>
-                        <tr>
-                            <td class="key">Feedback</td>
-                            <td class="progress-bar">
-                                <div class="progress progress-striped
-                                 active progress-warning">
-                                  <div class="bar"
-                                       style="width: 40%;"></div>
+                                <div class="span4">
+                                    <h3>Education</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    </p>
+                                    
                                 </div>
-                            </td>
-                            <td class="note">83/200</td>
-                        </tr>
-                        <tr>
-                            <td class="key">Openess</td>
-                            <td class="progress-bar">
-                                <div class="progress progress-striped
-                                 active progress-info">
-                                  <div class="bar"
-                                       style="width: 70%;"></div>
+                                <div class="span4">
+                                    <h3>Accessibility</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    </p>
                                 </div>
-                            </td>
-                            <td class="note">155/200</td>
-                        </tr>
-                        <tr>
-                            <td class="key">API</td>
-                            <td class="progress-bar">
-                                <div class="progress progress-striped
-                                 active progress-danger">
-                                  <div class="bar"
-                                       style="width: 20%;"></div>
-                                </div>
-                            </td>
-                            <td class="note">42/200</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row-fluid">
-        <table class="table check table-bordered">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Criteria</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>A specific API call can yield the license details</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>A list of third-party apps developed using the datasets is available</td>
-                    <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>A description of the content</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>A specific API call can yield the license details</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>A list of third-party apps developed using the datasets is available</td>
-                    <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>A description of the content</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>A specific API call can yield the license details</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>A list of third-party apps developed using the datasets is available</td>
-                    <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>A description of the content</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>A specific API call can yield the license details</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>11</td>
-                    <td>A list of third-party apps developed using the datasets is available</td>
-                    <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>12</td>
-                    <td>A description of the content</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-            </tbody>
-        </table>
-    </div><!--/row-->
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="about">
+                        <div class="page-header">
+                          <h1>About</h1>
+                        </div>
+                        <div class="page-body">
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </div>
+                    </section>
+
+                      <section id="contribute">
+                        <div class="page-header">
+                          <h1>How to contribute</h1>
+                        </div>
+                        <div class="page-body">
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </div>
+                        <h3>Install the project :</h3>
+                        <pre class="prettyprint linenums">git clone https://github.com/odalisk/odalisk/</pre>
+                      </section>
+
+
+
+                </div><!-- container -->
+
 {% endblock %}

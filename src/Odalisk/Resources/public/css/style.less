@@ -21,33 +21,54 @@ a:visited {
     color:@linkColor;
 }
 
+.blue-font {
+    font-family: Pacifico, cursive;
+    color:#2ECBFA;
+    background: -webkit-gradient(linear, left top, left bottom, from(#2ECBFA), to(#2081AD));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-unit {
+    background:fade(desaturate(#2ECBFA, 30%),100%);
+    color:white;
+    
+    .table {
+        color:#555;
+        background:white;
+    }
+}
+
+
 body {
     margin:0px 10px 0px 10px;
+    
     .navbar {
         .brand {
-            font-family: Pacifico, cursive;
             font-size:28px;
-            line-height:30px;
-            color:#2ECBFA;
-            background: -webkit-gradient(linear, left top, left bottom, from(#2ECBFA), to(#2081AD));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            line-height:@navbarHeight - 10px;
+            
         }
         
         .nav > li > a {
             text-shadow:none;
-            font-weight:bold;
+            font-size:15px;
+            font-weight:lighter;
         }
     }
     
     .row-fluid {
-        margin-top:60px;
+        margin-top:50px;
     }
     
     .well {
         padding:20px 30px 20px 30px;
         
         
+    }
+    
+    & > .container-fluid {
+        margin-top:50px;
     }
     
     .hero-unit-intro {
@@ -188,7 +209,23 @@ body {
 
 
 
-
+.home {
+    margin:0px;
+    
+    & > .container-fluid {
+        margin-top:0px;
+        padding:0px;
+    
+        header.hero-unit {
+            margin:0px;
+            padding-bottom:40px;
+            background:url('/bundles/app/img/homeback.jpg');
+            color:white;
+            text-align:center;
+            .border-radius(0px);
+        }
+    }
+}
 
 
 

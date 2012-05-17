@@ -14,9 +14,6 @@ use Buzz\Message;
  * The scraper for in cite Solution Plateform
  */
 abstract class BaseInCiteSolution extends BasePlatform {
-
-    public $i = 0;
-
     public function __construct() {
         $this->criteria = array(
             'setName' => ".//*[@class='tx_icsoddatastore_pi1_single']/h1",

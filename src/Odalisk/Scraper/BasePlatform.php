@@ -70,8 +70,6 @@ abstract class BasePlatform {
     
     protected $portal;
     
-    protected $datasets;
-    
     public function setBuzz(\Buzz\Browser $buzz, $timeout = 30) {
         $this->buzz = $buzz;
         $this->buzz->getClient()->setTimeout($timeout);
@@ -98,14 +96,22 @@ abstract class BasePlatform {
         $this->base_url = $base_url;
     }
     
+    public function getBaseUrl() {
+        return $this->base_url;
+    }
+    
     public function setApiUrl($api_url) {
         $this->api_url = $api_url;
+    }
+    
+    public function getCount() {
+        return $this->total_count;
     }
     
     /**
      * Load the portal object from the database. If none is found, parse it from the website.
      *
-     * @return void
+     * @return Portal
      */
     public function loadPortal() {
         $this->portal = $this->em->getRepository('Odalisk\Entity\Portal')
@@ -114,6 +120,12 @@ abstract class BasePlatform {
         if(NULL == $this->portal) {
             $this->parsePortal();
         }
+        
+        return $this->portal;
+    }
+    
+    public function getPortal() {
+        return $this->portal;
     }
     
     /**
@@ -122,25 +134,6 @@ abstract class BasePlatform {
      * @return void
      */
     abstract public function parsePortal();
-    
-    /**
-     * Load the dataset entities from the database, and create a table indexed by name.
-     * This allows us to update datasets rather than recreate them (when parsing)
-     *
-     * @return void
-     */
-    public function loadDatasets() {
-        if(NULL == $this->portal) {
-            $this->loadPortal();
-        }
-        
-        $datasets = $this->portal->getDatasets();
-        
-        foreach($datasets as $id => $dataset) {
-            $this->datasets[$dataset->getUrl()] = $dataset;
-            unset($datasets[$id]);
-        }
-    }
     
     abstract public function getDatasetsUrls();
     
@@ -153,23 +146,16 @@ abstract class BasePlatform {
      * @return void
      */
     public function parseDataset(Message\Request $request, Message\Response $response) {
-        error_log('Parsing 1 > ' . memory_get_usage(true) / 1024);
         $this->count++;
-        error_log('Parsing 2 > ' . memory_get_usage(true) / 1024);
         $data = array(
             'setUrl' => $request->getUrl(),
-            // 'code' => $response->getStatusCode(),
         );
         
-        error_log('Parsing 3 > ' . memory_get_usage(true) / 1024);
         if(200 == $response->getStatusCode()) {
-            error_log('Parsing 4 > ' . memory_get_usage(true) / 1024);
             $crawler = new Crawler($response->getContent());
-            error_log('Parsing 5 > ' . memory_get_usage(true) / 1024);
             if(0 == count($crawler)) {
                 $data['setError'] = "Empty page";
             } else {
-                error_log('Parsing 6 > ' . memory_get_usage(true) / 1024);
                 foreach($this->criteria as $name => $path) {
                     $nodes = $crawler->filterXPath($path);
                     if(0 < count($nodes)) {
@@ -183,7 +169,6 @@ abstract class BasePlatform {
                         );
                     } 
                 }
-                error_log('Parsing 7 > ' . memory_get_usage(true) / 1024);
                 
 				// We transform dates format in datetime.
 				foreach($this->date_fields as $field) {
@@ -196,37 +181,27 @@ abstract class BasePlatform {
 						$data[$field] = NULL;
 					}
 				}
-				error_log('Parsing 8 > ' . memory_get_usage(true) / 1024);
             }
             $crawler = NULL;
         } else {
             $data['setError'] = 'Return code : ' . $response->getStatusCode();
         }
 
-        error_log('Parsing 9 > ' . memory_get_usage(true) / 1024);
 		// Logs
-        error_log('[' . $this->name . '] Processed ' . $data['setUrl'] . ' with code ' . $response->getStatusCode());
+        // error_log('[' . $this->name . '] Processed ' . $data['setUrl'] . ' with code ' . $response->getStatusCode());
         if(0 == $this->count % 100) {
-           error_log('>>>> ' . $this->count . ' done, ' . $this->total_count . ' to go.');
+           error_log('> ' . $this->count . ' / ' . $this->total_count . ' done');
+           error_log('> ' . memory_get_usage(true) / (8 * 1024 * 1024));
         }
-        
-        $dataset = NULL;
-        error_log('Parsing 10 > ' . memory_get_usage(true) / 1024);
-        if(NULL != $this->datasets && array_key_exists($data['setUrl'], $this->datasets)) {
-            $dataset = $this->datasets[$data['setUrl']];
-            $dataset->populate($data);
-        } else {
-            $dataset = new Dataset($data);
-            $this->portal->addDataset($dataset);
-        }
-        error_log('Parsing 11 > ' . memory_get_usage(true) / 1024);
+            
+        $dataset = new Dataset($data);
+        $this->portal->addDataset($dataset);
         $this->em->persist($dataset);
-        error_log('Parsing 12 > ' . memory_get_usage(true) / 1024);
-        if($this->count == $this->total_count || $this->count % 100 == 0) {
+
+        if($this->count == $this->total_count || $this->count % 1000 == 0) {
             error_log('Flushing data!');
             $this->em->persist($this->portal);
             $this->em->flush();
         }
-        error_log('Parsing 13 > ' . memory_get_usage(true) / 1024);
     }
 }

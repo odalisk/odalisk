@@ -9,6 +9,8 @@ parameters:
     request_dispatcher.timeout: 10
     
     base_platform.class: Odalisk\Scraper\BasePlatform
+    
+    file_dumper.data_path: "%kernel.project_root%/data/" 
 
 # put your application
 # service definitions here

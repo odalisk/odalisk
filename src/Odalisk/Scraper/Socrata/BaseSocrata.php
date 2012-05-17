@@ -15,7 +15,7 @@ abstract class BaseSocrata extends BasePlatform {
 			'setName' => '//h2[@id="datasetName" and @class="clipText currentViewName"]'
 			, 'setSummary' => '/p[@class=""]'
 			, 'setReleasedOn' => '//span[@class="aboutCreateDate"]/span'
-			, 'setDescription' => '//div[@class="aboutDataset"]/div[2]/div/p'
+			, 'setSummary' => '//div[@class="aboutDataset"]/div[2]/div/p'
 			, 'setLastUpdatedOn' => '//span[@class="aboutUpdateDate"]/span'
 			, 'setCategory' => '//div[@class="aboutDataset"]/div[4]/dl/dd[1]'
 			//, 'Tags' => '//div[@class="aboutDataset"]/div[4]/dl/dd[3]'
@@ -32,7 +32,6 @@ abstract class BaseSocrata extends BasePlatform {
 
     public function getDatasetsUrls() {
         // Get the paths
-        $this->buzz->getClient()->setTimeout(30);
         $response = $this->buzz->get(
             $this->api_url,
             $this->buzz_options
@@ -46,6 +45,8 @@ abstract class BaseSocrata extends BasePlatform {
             throw new \RuntimeException('Couldn\'t fetch list of datasets');
         }     
         
-        return($datasets);
+        $this->total_count = count($datasets);
+        
+        return $datasets;
 	}
 }

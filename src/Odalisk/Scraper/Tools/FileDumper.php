@@ -54,7 +54,14 @@ class FileDumper {
 
 	public static function getUrls($portal_name) {
 		$file = self::$base_path.$portal_name.'/urls.json';
-		return(json_decode(file_get_contents($file), true));
+		$data = file_get_contents($file);
+		
+		if(FALSE === $data) {
+		    error_log('[Get HTML] URL file is missing. Run ./console odalisk:geturls ' . $portal_name);
+		    return array();
+		} else {
+		   return json_decode($data, TRUE);
+		}
 	}
 
 	public static function verifyPortalPath($portal_name) {

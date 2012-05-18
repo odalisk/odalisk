@@ -100,6 +100,9 @@ class ExtractCommand extends BaseCommand {
                         $data = NULL;
         	        }
         	        closedir($dh);
+        	    } else {
+        	        error_log('[Analysis] nothing to be done. Perhaps ./console odalisk:crawl ' . $name);
+        	        continue;
         	    }
         	    
         	    error_log('[Analysis] ' . $count . ' / ' . $total . ' done');

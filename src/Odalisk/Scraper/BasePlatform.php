@@ -145,6 +145,25 @@ abstract class BasePlatform {
     
     abstract public function getDatasetsUrls();
     
+    public function crawlDatasetsList(Message\Request $request, Message\Response $response) {
+        
+        if($response->getStatusCode() != 200) {
+            error_log('[Get URLs] Failed to download ' . $request->getUrl() . '. Skipping.');
+            return;
+        }
+
+        $crawler = new Crawler($response->getContent());
+        $nodes = $crawler->filterXPath($this->urls_list_index_path);
+        if(0 < count($nodes)) {                           
+            $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
+        }
+
+        $count = count($this->urls);
+        if(0 == $count % 100) {
+            error_log('[Get URLs] ' . $count . ' / ' . $this->nb_dataset_estimated . ' done (estimated)');
+        }
+    }
+    
     public function prepareRequestsFromUrls($urls) {
         return $urls;
     }

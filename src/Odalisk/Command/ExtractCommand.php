@@ -104,12 +104,6 @@ class ExtractCommand extends BaseCommand {
         	        error_log('[Analysis] nothing to be done. Perhaps ./console odalisk:crawl ' . $name);
         	        continue;
         	    }
-        	    
-                /*
-        	    $codes['timeout'] = $codes[''];
-        	    unset($codes['']);
-        	    */
-                
 
         	    error_log('[Analysis] ' . $count . ' / ' . $total . ' done');
         	    error_log('[Analysis] ' . ($total - $count) . ' datasets failed to download' . "\n");

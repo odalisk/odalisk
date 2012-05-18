@@ -45,72 +45,43 @@ abstract class BaseSocrata extends BasePlatform {
 
 	
     public function getDatasetsUrls() {
-        $dispatcher = new RequestDispatcher(array());
-        $this->buzz->getClient()->setTimeout(30);
+        $dispatcher = new RequestDispatcher($this->buzz_options, 30);
 
         $response = $this->buzz->get($this->datasets_list_url.'1');
-		if($response->getStatusCode() != 200) {
-			echo('Impossible d\'obtenir la page  !');
-			return;
-		}
+        if(200 == $response->getStatusCode()) {
+            // We begin by fetching the number of datasets
+    		$crawler = new Crawler($response->getContent());
+    		$node = $crawler->filterXPath('//div[@class="resultCount"]');
+    		if(preg_match("/of ([0-9]+)/", $node->text(), $match)) {
+    			$this->nb_dataset_estimated = intval($match[1]);
+    		}
+    		error_log('[Get URLs] Estimated number of datasets of the portal : ' . $this->nb_dataset_estimated);
+    		
+    		// Since we already have the first page, let's parse it !
+    		$this->urls = array_merge(
+    		    $this->urls,
+    		    $crawler->filterXPath($this->urls_list_index_path)->extract(array('href'))
+    		);
+    		
+    		$request_count = ceil($this->nb_dataset_estimated / $this->batch_size);
+    		error_log('[Get URLs] Aproximately ' . $request_count . ' requests to do');
+    		
+    		for($i = 2 ; $i <= $request_count ; $i++) {
+    			$dispatcher->queue(
+    			    $this->datasets_list_url.$i,
+    			    array($this,'Odalisk\Scraper\Socrata\BaseSocrata::crawlDatasetsList')
+    			);
+    		}
+        }
 
-		// We begin by fetching the number of datasets
-		$crawler = new Crawler($response->getContent());
-		$node    = $crawler->filterXPath('//div[@class="resultCount"]');
-		if(preg_match("/of ([0-9]+)/", $node->text(), $match)) {
-			$this->nb_dataset_estimated = (int) $match[1];
-		}
-
-		error_log('Number of datasets of the portal : '.$this->nb_dataset_estimated);
-		// we now have the number of datasets of the portal.
-
-		// Since we already have the first page, let's parse it !
-		$ids  = $crawler->filterXPath($this->urls_list_index_path)->extract(array('href'));
-		// Add it to the urls array
-		$this->urls = array_merge($this->urls, $ids);
-		
-
-		$max = ceil($this->nb_dataset_estimated / $this->batch_size);
-		error_log($max.' requests to do');
-		// $max = 5;
-		for($i = 2 ; $i <= $max ; $i++) {
-			// We add all pages left.
-			$dispatcher->queue($this->datasets_list_url.$i, array($this,'Odalisk\Scraper\Socrata\BaseSocrata::crawlDatasetsList'));
-			// error_log($i.' / '.$max);
-
-		}
 		$dispatcher->dispatch(10);
+		
+		foreach($this->urls as $key => $id) {
+            $this->urls[$key] = $this->base_url . $id;
+        }
 
         $this->total_count = count($this->urls);
 		
-		// $urls contains only the ids of the datasets, we need to add the
-		// base url :
-		$base_url = $this->base_url;
-		$this->urls = array_map(
-				function($id) use ($base_url) { return($base_url.$id); }
-				, $this->urls
-				);
-
-		return($this->urls);
+		return $this->urls;
 	}
-	
-
-    public function crawlDatasetsList(Message\Request $request, Message\Response $response) {
-        
-        if($response->getStatusCode() != 200) {
-            error_log('Impossible d\'obtenir la page !');
-            return;
-        }
-
-        $crawler = new Crawler($response->getContent());
-        $nodes = $crawler->filterXPath($this->urls_list_index_path);
-        if(0 < count($nodes)) {                           
-            $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
-        }
-
-        $count = count($this->urls);
-        if(0 == $count % 100) {
-                   error_log('> ' . $count. ' / ' . $this->nb_dataset_estimated . ' done');
-        }
-    }
 }

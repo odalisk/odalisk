@@ -29,57 +29,50 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
     }
 
     public function getDatasetsUrls() {
-        
-        $this->urllist = array();
+        // Create a new Buzz handle, with asynchronous requests
+        $dispatcher = new RequestDispatcher($this->buzz_options, 30);
 
-        $dispatcher = new RequestDispatcher($this->buzz_options);
-        $this->buzz->getClient()->setTimeout(30);
-
+        // Get the first page
         $response = $this->buzz->get($this->datasets_list_url.'0');
 
-        
         if($response->getStatusCode() == 200) {
             $crawler = new Crawler($response->getContent());
             
+            // Try to crawl the paginated website
             $nodes = $crawler->filterXPath(".//div[@class='pagination']/span[@class='last']/a/@href");
             if(0 < count($nodes)) {
-
             	$pages_to_get = 0;
 
+                // Find the number of pages
             	$href = $nodes->first()->text();
             	if(preg_match("/\[page\]=([0-9]+)&/", $href, $match)) {
 					$pages_to_get = intval($match[1]);
 				}
-
-				
                 
+                // Extract URLs from this page
                 $nodes = $crawler->filterXPath($this->urls_list_index_path);
                 if(0 < count($nodes)) {                           
                     $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
                     $this->nb_dataset_estimated = count($this->urls);
                 }
 
+                // Add requests to the queue
                 for($i = 1 ; $i <= $pages_to_get ; $i++) {
                    $this->nb_dataset_estimated += count($this->urls);
                    $dispatcher->queue($this->datasets_list_url.$i,
-                                        array($this, 'Odalisk\Scraper\InCiteSolution\LoireAtlantique\LoireAtlantiquePlatform::crawlDatasetsList'));
+                        array($this, 'Odalisk\Scraper\InCiteSolution\LoireAtlantique\LoireAtlantiquePlatform::crawlDatasetsList'));
                 }
 
-                error_log('Number estimated of datasets of the portal : '.$this->nb_dataset_estimated);
+                error_log('[Get URLs] Estimated number of datasets of the portal : ' . $this->nb_dataset_estimated);
 
                 $dispatcher->dispatch(10);
                 
-            }else{
-                return $this->urls;
             }
-
         }
         
-        $base_url = $this->base_url;
-        $this->urls = array_map(
-                function($id) use ($base_url) { return($base_url.$id); }
-                , $this->urls
-                );
+        foreach($this->urls as $key => $id) {
+            $this->urls[$key] = $this->sanitize($this->base_url . $id);
+        }
 
         $this->total_count = count($this->urls);
         
@@ -93,24 +86,5 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
         
         $this->em->persist($this->portal);
         $this->em->flush();
-    }
-
-    public function crawlDatasetsList(Message\Request $request, Message\Response $response) {
-        
-        if($response->getStatusCode() != 200) {
-            error_log('Impossible d\'obtenir la page !');
-            return;
-        }
-
-        $crawler = new Crawler($response->getContent());
-        $nodes = $crawler->filterXPath($this->urls_list_index_path);
-        if(0 < count($nodes)) {                           
-            $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
-        }
-
-        $count = count($this->urls);
-        if(0 == $count % 10) {
-                   error_log('> ' . $count . ' / ' . $this->nb_dataset_estimated . '(estimated) done');
-        }
     }
 }

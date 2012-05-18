@@ -22,6 +22,10 @@ use Odalisk\Entity\Dataset;
 class DataPublicaPlatform extends BasePlatform {
 
     protected $nb_dataset_estimated = 0;
+    
+    protected $month_in = array("/janv./", "/févr./", "/mars/", "/avr./", "/mai/", "/juin/", "/juil./", "/août/", "/sept./", "/oct./", "/nov./","/déc./");
+    
+    protected $month_out = array("01","02","03","04","05","06","07","08","09","10","11","12");
 
     public function __construct() {
 
@@ -34,62 +38,54 @@ class DataPublicaPlatform extends BasePlatform {
             'setSummary' => ".//*[@id='description']",
             //'setMaintainer' => ".//*[@id='publication_tab_container']/ul/li[1]/div[2]/a",
             'setOwner' => "//div/h5[text()='Editeur']/../following-sibling::*",
-             );
+        );
         
         $this->datasets_list_url = 'http://www.data-publica.com/search/?page=';
+        $this->urls_list_index_path = ".//*[@id='content']/article[2]/ol/li/a";
         $this->date_format = 'd m Y';
     }
-
+    
     public function getDatasetsUrls() {
-        
-
-        $this->urls = array();
-
-        $dispatcher = new RequestDispatcher($this->buzz_options);
-        $this->buzz->getClient()->setTimeout(30);
+        $dispatcher = new RequestDispatcher($this->buzz_options, 30);
 
         $response = $this->buzz->get($this->datasets_list_url.'1');
+        if(200 == $response->getStatusCode()) {
+            // We begin by fetching the number of datasets
+    		$crawler = new Crawler($response->getContent());
+    		$nodes = $crawler->filterXPath('.//ul[@class="pagenav"]/li[last()]/a');
+    		
+    		if(0 < count($nodes)) {
+    		    $pages_to_get = intval($nodes->first()->text());
 
-        
-        if($response->getStatusCode() == 200) {
-            $crawler = new Crawler($response->getContent());
-            
-            $nodes = $crawler->filterXPath('.//ul[@class="pagenav"]/li[last()]/a');
-            if(0 < count($nodes)) {
-
-                $pages_to_get = intval($nodes->first()->text());
-                
-                $nodes = $crawler->filterXPath(".//*[@id='content']/article[2]/ol/li/a");
-                if(0 < count($nodes)) {                           
-                    $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
-                    $this->nb_dataset_estimated = count($this->urls) * $pages_to_get;
-                }
-
-                for($i = 2 ; $i <= $pages_to_get ; $i++) {
-                   $dispatcher->queue($this->datasets_list_url.$i,
-                                        array($this, 'Odalisk\Scraper\DataPublica\DataPublicaPlatform::crawlDatasetsList'));
-                }
-
-                error_log('Number estimated of datasets of the portal : '.$this->nb_dataset_estimated);
-
-                $dispatcher->dispatch(10);
-                
-            }else{
-                return $this->urls;
-            }
-
+        		// Since we already have the first page, let's parse it !
+        		$this->urls = array_merge(
+        		    $this->urls,
+        		    $crawler->filterXPath($this->urls_list_index_path)->extract(array('href'))
+        		);
+        		
+        		$this->nb_dataset_estimated = count($this->urls) * $pages_to_get;
+        		error_log('[Get URLs] Estimated number of datasets of the portal : ' . $this->nb_dataset_estimated);
+        		error_log('[Get URLs] Aproximately ' . $pages_to_get . ' requests to do');
+        		
+        		for($i = 2 ; $i <= $request_count ; $i++) {
+        			$dispatcher->queue(
+        			    $this->datasets_list_url.$i,
+        			    array($this,'Odalisk\Scraper\DataPublica\DataPublicaPlatform::crawlDatasetsList')
+        			);
+        		}
+        		
+        		$dispatcher->dispatch(10);
+    		}
         }
-        
-        $base_url = $this->base_url;
-        $this->urls = array_map(
-                function($id) use ($base_url) { return($base_url.$id); }
-                , $this->urls
-                );
+		
+		foreach($this->urls as $key => $id) {
+            $this->urls[$key] = $this->base_url . $id;
+        }
 
         $this->total_count = count($this->urls);
-        
-        return $this->urls;
-    }
+		
+		return $this->urls;
+	}
 
     public function parseFile($html, &$dataset) {
         $crawler = new Crawler($html);
@@ -115,8 +111,7 @@ class DataPublicaPlatform extends BasePlatform {
             if(array_key_exists('setSummary', $data)) {
                 $data['setSummary'] = trim($data['setSummary']);
             }
-
-                     
+                
             // We transform dates format in datetime.
             foreach($this->date_fields as $field) {
 
@@ -133,12 +128,8 @@ class DataPublicaPlatform extends BasePlatform {
         $data = NULL;
     }
     
-    public function translateDate($date_in){
-
-        $in = array("/janv./", "/févr./", "/mars/", "/avr./", "/mai/", "/juin/", "/juil./", "/août/", "/sept./", "/oct./", "/nov./","/déc./");
-        $out = array("01","02","03","04","05","06","07","08","09","10","11","12");
-
-        return preg_replace($in,$out,$date_in);   
+    public function translateDate($date){
+        return preg_replace($this->month_in , $this->month_out , $date);   
     }
     
     public function parsePortal() {
@@ -147,25 +138,6 @@ class DataPublicaPlatform extends BasePlatform {
         $this->portal->setUrl('http://www.data-publica.com/');
         $this->em->persist($this->portal);
         $this->em->flush();
-    }
-
-    public function crawlDatasetsList(Message\Request $request, Message\Response $response) {
-        
-        if($response->getStatusCode() != 200) {
-            error_log('Impossible d\'obtenir la page !');
-            return;
-        }
-
-        $crawler = new Crawler($response->getContent());
-        $nodes = $crawler->filterXPath(".//*[@id='content']/article[2]/ol/li/a");
-        if(0 < count($nodes)) {                           
-            $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
-        }
-
-        $count = count($this->urls);
-        if(0 == $count % 100) {
-                   error_log('> ' . $count . ' / ' . $this->nb_dataset_estimated . '(estimated) done');
-        }
     }
 }
 ?>

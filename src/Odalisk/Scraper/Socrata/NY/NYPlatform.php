@@ -7,7 +7,6 @@ use Odalisk\Scraper\Socrata\BaseSocrata;
 class NYPlatform extends BaseSocrata {
     public function __construct() {
 		parent::__construct();
-
 		$this->datasets_list_url = 'https://nycopendata.socrata.com/browse?&page=';
     }
 

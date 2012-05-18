@@ -73,8 +73,11 @@ abstract class BasePlatform {
 	/**
 	 * Le tableau qui contient les urls des datasets.
 	 */
-	protected static $urls = array();
+	protected $urls = array();
     
+    protected $urls_list_index_path;
+
+
     public function setBuzz(\Buzz\Browser $buzz, $timeout = 30) {
         $this->buzz = $buzz;
         $this->buzz->getClient()->setTimeout($timeout);
@@ -181,4 +184,6 @@ abstract class BasePlatform {
         $crawler = NULL;
         $data = NULL;
     }
+
+    
 }

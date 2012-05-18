@@ -46,7 +46,7 @@ class Portal
      * @Gedmo\Timestampable(on="create")
      */
     protected $created_at;
-    
+
     /**
      * @var string $updated_at When did we update this record
      *
@@ -55,20 +55,20 @@ class Portal
      */
     protected $updated_at;
 
-	/**
-	 * @ORM\OneToMany(targetEntity="Dataset", mappedBy="portal")
-	 */
-	protected $datasets;
+    /**
+     * @ORM\OneToMany(targetEntity="Dataset", mappedBy="portal")
+     */
+    protected $datasets;
 
-	public function __construct()
-	{
-		$this->datasets = new ArrayCollection();
-	}
+    public function __construct()
+    {
+        $this->datasets = new ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -88,7 +88,7 @@ class Portal
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -108,7 +108,7 @@ class Portal
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -128,7 +128,7 @@ class Portal
     /**
      * Get base_url
      *
-     * @return string 
+     * @return string
      */
     public function getBaseUrl()
     {
@@ -142,7 +142,7 @@ class Portal
      */
     public function addDataset(\Odalisk\Entity\Dataset $dataset)
     {
-        if(!$this->datasets->contains($dataset)) {
+        if (!$this->datasets->contains($dataset)) {
             $this->datasets[] = $dataset;
             $dataset->setPortal($this);
         }
@@ -151,7 +151,7 @@ class Portal
     /**
      * Get datasets
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getDatasets()
     {
@@ -171,7 +171,7 @@ class Portal
     /**
      * Get created_at
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -191,7 +191,7 @@ class Portal
     /**
      * Get updated_at
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdatedAt()
     {

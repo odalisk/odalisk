@@ -21,24 +21,25 @@ class DatasetCrawlRepository extends EntityRepository
                     GROUP BY c.hash
             ')->setParameter('portal', $portal)
         ;
-        
+
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
-            return NULL;
+            return null;
         }
     }
-    
+
     public function getErrorRate() {
         $stmt = $this->getEntityManager()
                      ->getConnection()
                      ->prepare('
                         SELECT count(*) / (SELECT count(*) FROM datasets_crawl) as errors
                         FROM datasets_crawl
-                        WHERE code <> 200 OR code IS NULL'
+                        WHERE code <> 200 OR code IS null'
         );
-        
+
         $stmt->execute();
+
         return $stmt->fetchAll();
     }
 }

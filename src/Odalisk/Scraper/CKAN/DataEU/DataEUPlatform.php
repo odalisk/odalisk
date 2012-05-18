@@ -15,15 +15,15 @@ class DataEUPlatform extends BaseCKAN {
             'setLicense' => '/li[@id="dataset-license" and @class="sidebar-section"]'
         );
 
-		$this->date_format = 'Y-m-d';
+        $this->date_format = 'Y-m-d';
     }
 
-	public function parsePortal() {
+    public function parsePortal() {
         $this->portal = new \Odalisk\Entity\Portal();
         $this->portal->setName($this->getName());
         $this->portal->setUrl('http://publicdata.eu/');
-        
+
         $this->em->persist($this->portal);
         $this->em->flush();
-	}
+    }
 }

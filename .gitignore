@@ -10,3 +10,4 @@ composer.lock
 !vendor/assets
 !vendor/twitter
 plugin/
+.DS_Store

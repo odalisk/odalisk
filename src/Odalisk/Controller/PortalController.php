@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 class PortalController extends Controller
 {
     static private $page_size = 20;
-    
+
     /**
      * index.
      *
@@ -23,13 +23,14 @@ class PortalController extends Controller
         $page_from = self::$page_size * ($page_number - 1);
         $page_to = self::$page_size * $page_number;
         $end = false;
-        
+
         $repository = $this->getDoctrine()
             ->getRepository('Odalisk\Entity\Portal');
         $portals = $repository->findAll();
-        
+
         $end = (count($portals) < self::$page_size) ? true : false;
-        
+
+
         return $this->render('App:Portal:index.html.twig', array(
             'maintenance_status' => $this->container->getParameter('app.maintenance'),
             'page_number' => $page_number,
@@ -39,7 +40,7 @@ class PortalController extends Controller
             'page_to' => $page_to,
             'end' => $end));
     }
-    
+
     /**
      * details.
      *
@@ -49,26 +50,26 @@ class PortalController extends Controller
     {
         $request = Request::createFromGlobals();
         $result = '';
-        
-        
-        
+
+
+
         // put action your code here
         $em = $this->getDoctrine()->getEntityManager();
         $repository = $em->getRepository('Odalisk\Entity\Portal');
         $portal = $repository->findOneById($portal_number);
-        
+
         $page_from = self::$page_size * ($page_number - 1);
-        
+
         $session = $this->getRequest()->getSession();
-        
+
         $searchsession = $session->get('search');
         $searchpost = $request->request->get('search');
-        
+
         $search = ($request->getMethod() == 'POST') ? $searchpost : false;
-        
+
         $search = (!$search  && $searchsession != '') ? $searchsession : $search;
-        
-        if($search)
+
+        if ($search)
         {
             $session->set('search', $search);
             $datasets = $repository->findByPortalSearch($portal->getId(), $page_from, self::$page_size, $search);
@@ -80,12 +81,13 @@ class PortalController extends Controller
         {
             $datasets = $portal->getDatasets()->slice($page_from,self::$page_size);
         }
-        
-        
+
+
         $page_to = self::$page_size * ($page_number - 1) + count($datasets);
-        
+
         $end = (count($datasets) < self::$page_size) ? true : false;
-        
+
+
         return $this->render('App:Portal:details.html.twig', array(
             'maintenance_status' => $this->container->getParameter('app.maintenance'),
             'portal' => $portal,

@@ -12,7 +12,7 @@ portals:
 portal_details:
     pattern:    /portals/details/{portal_number}/{page_number}/{_format}
     defaults:   { _controller: App:Portal:details, page_number:1, _format: html }
-    
+
 delete_search_portal:
     pattern:    /detelesearchportal/{portal_id}
     defaults:   { _controller: App:Default:deleteSearchPortal, portal_id:1 }

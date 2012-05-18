@@ -35,7 +35,7 @@ class CrawlCommand extends BaseCommand
         // Get the request dispatcher
         $dispatcher = $container->get('request_dispatcher');
         // Get the file dumper
-        $this->initDumper($container->getParameter('file_dumper.dataPath'), $container->get('doctrine'));
+        $this->initDumper($container->getParameter('file_dumper.data_path'), $container->get('doctrine'));
         // Get the configuration value from config/app.yml : which platforms are enabled?
         $platformServices = $container->getParameter('app.platforms');
         // Initialize some arrrays

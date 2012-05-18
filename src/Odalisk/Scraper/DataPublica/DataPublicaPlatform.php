@@ -95,6 +95,13 @@ class DataPublicaPlatform extends BasePlatform
         }
     }
 
+    protected function additionalNormalization(&$data)
+    {
+        if (array_key_exists('setCategory', $data)) {
+            $data['setCategory'] = str_replace(';de;', ' de ', $data['setCategory']);
+        }
+    }
+
     public function translateDate($date){
         return preg_replace($this->monthText , $this->monthNumber , $date);
     }

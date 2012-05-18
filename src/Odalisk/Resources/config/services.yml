@@ -55,21 +55,21 @@ services:
         parent: base_socrata
         calls:
             - [ setName, [ "opendata.socrata.com" ] ]
-            - [ setBaseUrl, ["https://opendata.socrata.com/d/"] ]
+            - [ setBaseUrl, ["https://opendata.socrata.com"] ]
             - [ setApiUrl, [ "https://opendata.socrata.com/api/views.json" ] ]
     ny:
         class: Odalisk\Scraper\Socrata\NY\NYPlatform
         parent: base_socrata
         calls:
             - [ setName, [ "nycopendata.socrata.com" ] ]
-            - [ setBaseUrl, ["https://nycopendata.socrata.com/d/"] ]
+            - [ setBaseUrl, ["https://nycopendata.socrata.com"] ]
             - [ setApiUrl, [ "https://nycopendata.socrata.com/api/views.json" ] ]
     usa_gov:
         class: Odalisk\Scraper\Socrata\USA\USAGovPlatform
         parent: base_socrata
         calls:
             - [ setName, [ "www.data.gov" ] ]
-            - [ setBaseUrl, ["https://explore.data.gov/d/"] ]
+            - [ setBaseUrl, ["https://explore.data.gov"] ]
             - [ setApiUrl, [ "https://explore.data.gov/api/views.json" ] ]
     base_ckan:
         class: Odalisk\Scraper\CKAN\BaseCKAN

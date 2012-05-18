@@ -76,7 +76,7 @@ abstract class BaseSocrata extends BasePlatform {
         $dispatcher->dispatch(10);
 
         foreach ($this->urls as $key => $id) {
-            $this->urls[$key] = $this->base_url . $id;
+            $this->urls[$key] = $this->base_url . $id . '/about';
         }
 
         $this->totalCount = count($this->urls);

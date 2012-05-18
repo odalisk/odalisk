@@ -81,7 +81,7 @@ class MultiCurlAsync extends Curl {
                 break;
 
             // A request was just completed -- find out which one
-            while($done = curl_multi_info_read($this->master)) {
+            while ($done = curl_multi_info_read($this->master)) {
                 // send the return values to the callback function.
                 $key = (string) $done['handle'];
 

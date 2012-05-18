@@ -27,7 +27,7 @@ abstract class BaseCKAN extends BasePlatform {
             // , 'Community Rating' => '//div[@class="aboutDataset"]/div[3]/dl/dd[1]/div'
         );
 
-        $this->date_format = 'M d, Y';
+        $this->dateFormat = 'M d, Y';
     }
 
     public function getDatasetsUrls() {

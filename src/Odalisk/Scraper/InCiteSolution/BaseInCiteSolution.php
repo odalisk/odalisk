@@ -26,7 +26,7 @@ abstract class BaseInCiteSolution extends BasePlatform {
             //'Formats' => ".//*[@class='tx_icsoddatastore_pi1_file']/a/img/@alt",
              );
 
-        $this->date_format = 'd/m/Y';
+        $this->dateFormat = 'd/m/Y';
     }
 
     public function getDatasetsUrls() {

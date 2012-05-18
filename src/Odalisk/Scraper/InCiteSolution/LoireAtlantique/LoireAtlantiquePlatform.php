@@ -22,9 +22,9 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
 
         parent::__construct();
 
-        $this->datasets_list_url = 'http://data.loire-atlantique.fr/donnees/?tx_icsoddatastore_pi1[page]=';
+        $this->datasetsListUrl = 'http://data.loire-atlantique.fr/donnees/?tx_icsoddatastore_pi1[page]=';
 
-        $this->urls_list_index_path = ".//*[@class='tx_icsoddatastore_pi1_list']//td[@class='first']/h3/a";
+        $this->urlsListIndexPath = ".//*[@class='tx_icsoddatastore_pi1_list']//td[@class='first']/h3/a";
     }
 
     public function getDatasetsUrls() {
@@ -32,7 +32,7 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
         $dispatcher = new RequestDispatcher($this->buzzOptions, 30);
 
         // Get the first page
-        $response = $this->buzz->get($this->datasets_list_url.'0');
+        $response = $this->buzz->get($this->datasetsListUrl.'0');
 
         if ($response->getStatusCode() == 200) {
             $crawler = new Crawler($response->getContent());
@@ -49,20 +49,20 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
                 }
 
                 // Extract URLs from this page
-                $nodes = $crawler->filterXPath($this->urls_list_index_path);
+                $nodes = $crawler->filterXPath($this->urlsListIndexPath);
                 if (0 < count($nodes)) {
                     $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
-                    $this->nb_dataset_estimated = count($this->urls);
+                    $this->estimatedDatasetCount = count($this->urls);
                 }
 
                 // Add requests to the queue
                 for($i = 1 ; $i <= $pages_to_get ; $i++) {
-                   $this->nb_dataset_estimated += count($this->urls);
-                   $dispatcher->queue($this->datasets_list_url.$i,
+                   $this->estimatedDatasetCount += count($this->urls);
+                   $dispatcher->queue($this->datasetsListUrl.$i,
                         array($this, 'Odalisk\Scraper\InCiteSolution\LoireAtlantique\LoireAtlantiquePlatform::crawlDatasetsList'));
                 }
 
-                error_log('[Get URLs] Estimated number of datasets of the portal : ' . $this->nb_dataset_estimated);
+                error_log('[Get URLs] Estimated number of datasets of the portal : ' . $this->estimatedDatasetCount);
 
                 $dispatcher->dispatch(10);
 

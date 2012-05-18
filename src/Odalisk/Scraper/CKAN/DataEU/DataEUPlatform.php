@@ -15,7 +15,7 @@ class DataEUPlatform extends BaseCKAN {
             'setLicense' => '/li[@id="dataset-license" and @class="sidebar-section"]'
         );
 
-        $this->date_format = 'Y-m-d';
+        $this->dateFormat = 'Y-m-d';
     }
 
     public function parsePortal() {

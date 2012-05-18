@@ -10,7 +10,7 @@ use Odalisk\Scraper\Tools\RequestDispatcher;
 abstract class BaseSocrata extends BasePlatform {
 
     // The base url on which the datasets are listed.
-    protected $datasets_list_url;
+    protected $datasetsListUrl;
 
     // the number of datasets displayed on one page.
     protected $batch_size;
@@ -36,8 +36,8 @@ abstract class BaseSocrata extends BasePlatform {
             // , 'Community Rating' => '//div[@class="aboutDataset"]/div[3]/dl/dd[1]/div'
         );
 
-        $this->date_format = 'M d, Y';
-        $this->urls_list_index_path = '//td[@class="nameDesc"]/a';
+        $this->dateFormat = 'M d, Y';
+        $this->urlsListIndexPath = '//td[@class="nameDesc"]/a';
         $this->batch_size = 10;
     }
 
@@ -46,28 +46,28 @@ abstract class BaseSocrata extends BasePlatform {
     public function getDatasetsUrls() {
         $dispatcher = new RequestDispatcher($this->buzzOptions, 30);
 
-        $response = $this->buzz->get($this->datasets_list_url.'1');
+        $response = $this->buzz->get($this->datasetsListUrl.'1');
         if (200 == $response->getStatusCode()) {
             // We begin by fetching the number of datasets
             $crawler = new Crawler($response->getContent());
             $node = $crawler->filterXPath('//div[@class="resultCount"]');
             if (preg_match("/of ([0-9]+)/", $node->text(), $match)) {
-                $this->nb_dataset_estimated = intval($match[1]);
+                $this->estimatedDatasetCount = intval($match[1]);
             }
-            error_log('[Get URLs] Estimated number of datasets of the portal : ' . $this->nb_dataset_estimated);
+            error_log('[Get URLs] Estimated number of datasets of the portal : ' . $this->estimatedDatasetCount);
 
             // Since we already have the first page, let's parse it !
             $this->urls = array_merge(
                 $this->urls,
-                $crawler->filterXPath($this->urls_list_index_path)->extract(array('href'))
+                $crawler->filterXPath($this->urlsListIndexPath)->extract(array('href'))
             );
 
-            $request_count = ceil($this->nb_dataset_estimated / $this->batch_size);
+            $request_count = ceil($this->estimatedDatasetCount / $this->batch_size);
             error_log('[Get URLs] Aproximately ' . $request_count . ' requests to do');
 
             for($i = 2 ; $i <= $request_count ; $i++) {
                 $dispatcher->queue(
-                    $this->datasets_list_url.$i,
+                    $this->datasetsListUrl.$i,
                     array($this,'Odalisk\Scraper\Socrata\BaseSocrata::crawlDatasetsList')
                 );
             }

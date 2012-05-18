@@ -11,7 +11,7 @@ use Odalisk\Scraper\BasePlatform;
  */
 class DataMarketPlatform extends BasePlatform {
     // The url on which the datasets are listed.
-    private $datasets_list_url = 'http://datamarket.com/data/list/?q=datatype:dataset';
+    private $datasetsListUrl = 'http://datamarket.com/data/list/?q=datatype:dataset';
     // the number of datasets displayed for a request.
     private $batch_size = 20;
 
@@ -21,7 +21,7 @@ class DataMarketPlatform extends BasePlatform {
                 , 'setLicense' => '//strong[.="Licenses:"]/ul/li/p'
                 );
 
-        $this->date_format = 'd/m/Y';
+        $this->dateFormat = 'd/m/Y';
     }
 
     /*
@@ -47,7 +47,7 @@ class DataMarketPlatform extends BasePlatform {
 
         // We get the page with the datasets list
         $this->buzz->getClient()->setTimeout(30);
-        $response = $this->buzz->get($this->datasets_list_url);
+        $response = $this->buzz->get($this->datasetsListUrl);
         if ($response->getStatusCode() != 200) {
             echo('Impossible d\'obtenir la page : http://datamarket.com/data/list/?q=datatype:dataset');
 

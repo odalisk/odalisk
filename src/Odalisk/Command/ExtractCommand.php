@@ -88,7 +88,7 @@ class ExtractCommand extends BaseCommand
                                 $dataset = new \Odalisk\Entity\Dataset();
                                 $dataset->setUrl($data['meta']['url']);
                                 $dataset->setPortal($portal);
-                                $platform->parseFile($data['content'], $dataset);
+                                $platform->analyseHtmlContent($data['content'], $dataset);
 
                                 $em->persist($dataset);
                                 $dataset = null;

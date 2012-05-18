@@ -8,24 +8,20 @@ use Odalisk\Scraper\Tools\RequestDispatcher;
 
 use Odalisk\Scraper\BasePlatform;
 
-
-
-
-
-
 /**
  * The scraper for in DataPublica
  */
-class DataPublicaPlatform extends BasePlatform {
+class DataPublicaPlatform extends BasePlatform
+{
 
-    protected $nb_dataset_estimated = 0;
+    protected $estimatedDatasetCount = 0;
 
-    protected $month_in = array("/janv./", "/févr./", "/mars/", "/avr./", "/mai/", "/juin/", "/juil./", "/août/", "/sept./", "/oct./", "/nov./","/déc./");
+    protected $monthText = array("/janv./", "/févr./", "/mars/", "/avr./", "/mai/", "/juin/", "/juil./", "/août/", "/sept./", "/oct./", "/nov./","/déc./");
 
-    protected $month_out = array("01","02","03","04","05","06","07","08","09","10","11","12");
+    protected $monthNumber = array("01","02","03","04","05","06","07","08","09","10","11","12");
 
-    public function __construct() {
-
+    public function __construct() 
+    {
         $this->criteria = array(
             'setName' => ".//*[@id='content']/article[1]/h2",
             'setCategory' => "//div/h5[text()='Catégories']/../following-sibling::*/ul/li/a",
@@ -37,15 +33,16 @@ class DataPublicaPlatform extends BasePlatform {
             'setOwner' => "//div/h5[text()='Editeur']/../following-sibling::*",
         );
 
-        $this->datasets_list_url = 'http://www.data-publica.com/search/?page=';
-        $this->urls_list_index_path = ".//*[@id='content']/article[2]/ol/li/a";
-        $this->date_format = 'd m Y';
+        $this->datasetsListUrl = 'http://www.data-publica.com/search/?page=';
+        $this->urlsListIndexPath = ".//*[@id='content']/article[2]/ol/li/a";
+        $this->dateFormat = 'd m Y';
     }
 
-    public function getDatasetsUrls() {
+    public function getDatasetsUrls()
+    {
         $dispatcher = new RequestDispatcher($this->buzzOptions, 30);
 
-        $response = $this->buzz->get($this->datasets_list_url.'1');
+        $response = $this->buzz->get($this->datasetsListUrl.'1');
         if (200 == $response->getStatusCode()) {
             // We begin by fetching the number of datasets
             $crawler = new Crawler($response->getContent());
@@ -57,16 +54,16 @@ class DataPublicaPlatform extends BasePlatform {
                 // Since we already have the first page, let's parse it !
                 $this->urls = array_merge(
                     $this->urls,
-                    $crawler->filterXPath($this->urls_list_index_path)->extract(array('href'))
+                    $crawler->filterXPath($this->urlsListIndexPath)->extract(array('href'))
                 );
 
-                $this->nb_dataset_estimated = count($this->urls) * $pages_to_get;
-                error_log('[Get URLs] Estimated number of datasets of the portal : ' . $this->nb_dataset_estimated);
+                $this->estimatedDatasetCount = count($this->urls) * $pages_to_get;
+                error_log('[Get URLs] Estimated number of datasets of the portal : ' . $this->estimatedDatasetCount);
                 error_log('[Get URLs] Aproximately ' . $pages_to_get . ' requests to do');
 
                 for($i = 2 ; $i <= $pages_to_get ; $i++) {
                     $dispatcher->queue(
-                        $this->datasets_list_url.$i,
+                        $this->datasetsListUrl.$i,
                         array($this,'Odalisk\Scraper\DataPublica\DataPublicaPlatform::crawlDatasetsList')
                     );
                 }
@@ -84,51 +81,22 @@ class DataPublicaPlatform extends BasePlatform {
 
         return $this->urls;
     }
-
-    public function parseFile($html, &$dataset) {
-        $crawler = new Crawler($html);
-        $data = array();
-
-        if (0 != count($crawler)) {
-            foreach ($this->criteria as $name => $path) {
-                $nodes = $crawler->filterXPath($path);
-                if (0 < count($nodes)) {
-                    $data[$name] = join(
-                        ";",
-                        $nodes->each(
-                            function($node,$i) {
-
-                                return utf8_decode($node->nodeValue);
-                            }
-                        )
-                    );
-                }
-            }
-
-            // Post treatment
-            // Trim summary
-            if (array_key_exists('setSummary', $data)) {
-                $data['setSummary'] = trim($data['setSummary']);
-            }
-
-            // We transform dates format in datetime.
-            foreach ($this->date_fields as $field) {
-
-                if (array_key_exists($field, $data)) {
-                   $data[$field] = \Datetime::createFromFormat($this->date_format, $this->translateDate($data[$field]));
-                } else {
-                    $data[$field] = null;
-                }
-            }
+    
+    protected function additionalExtraction($crawler, &$data) 
+    {
+        // Deal with UTF8
+        foreach($data as $key => $value) {
+            $data[$key] = utf8_decode($value);
         }
-
-        $dataset->populate($data);
-        $crawler = null;
-        $data = null;
+        
+        // Convert dates to known format
+        foreach($this->dateFields as $field) {
+            $data[$field] = $this->translateDate($data[$field]);
+        }
     }
 
     public function translateDate($date){
-        return preg_replace($this->month_in , $this->month_out , $date);
+        return preg_replace($this->monthText , $this->monthNumber , $date);
     }
 
     public function parsePortal() {
@@ -139,4 +107,3 @@ class DataPublicaPlatform extends BasePlatform {
         $this->em->flush();
     }
 }
-?>

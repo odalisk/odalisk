@@ -59,24 +59,243 @@ abstract class BasePlatform {
 
     protected $criteria;
 
-    protected $date_format;
-
-    protected $date_fields = array('setReleasedOn', 'setLastUpdatedOn');
-
     protected $count = 0;
 
     protected $totalCount = 0;
 
     protected $portal;
+    
+    /**
+     * The date type fields we need to process so we can transform them into DateTime objects
+     *
+     * @var array $dateFields
+     */
+    protected $dateFields = array('setReleasedOn', 'setLastUpdatedOn');
+    
+    /**
+     * Values for date fields that are considered equivalent to empty
+     *
+     * @var array $emptyDates
+     */
+    protected $emptyDates = array('n/a', 'TBC', '');
 
     /**
-     * Le tableau qui contient les urls des datasets.
+     * The platform's datasets URLs list
+     * 
+     * @var array $urls
      */
     protected $urls = array();
 
-    protected $urls_list_index_path;
+    protected $urlsListIndexPath;
 
+    abstract public function getDatasetsUrls();
 
+    public function crawlDatasetsList(Message\Request $request, Message\Response $response) {
+
+        if ($response->getStatusCode() != 200) {
+            error_log('[Get URLs] Failed to download ' . $request->getUrl() . '. Skipping.');
+
+            return;
+        }
+
+        $crawler = new Crawler($response->getContent());
+        $nodes = $crawler->filterXPath($this->urlsListIndexPath);
+        if (0 < count($nodes)) {
+            $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
+        }
+
+        $count = count($this->urls);
+        if (0 == $count % 100) {
+            error_log('[Get URLs] ' . $count . ' / ' . $this->estimatedDatasetCount . ' done (estimated)');
+        }
+    }
+
+    public function prepareRequestsFromUrls($urls) {
+        return $urls;
+    }
+    
+    /**
+     * Load the portal object from the database. If none is found, parse it from the website.
+     *
+     * @return Portal
+     */
+    public function loadPortal() {
+        $this->portal = $this->em->getRepository('Odalisk\Entity\Portal')
+            ->findOneByName($this->getName());
+
+        if (null == $this->portal) {
+            $this->parsePortal();
+        }
+
+        return $this->portal;
+    }
+
+    public function getPortal() {
+        return $this->portal;
+    }
+
+    /**
+     * Fetch the portal from the web, parse it and create a new entity in $this->portal (and persist/flush it)
+     *
+     * @return void
+     */
+    abstract public function parsePortal();
+
+    public function analyseHtmlContent($html, &$dataset) 
+    {
+        $crawler = new Crawler($html);
+        $data = array();
+
+        if (0 != count($crawler)) {
+            // Default data extraction process
+            $this->defaultExtraction($crawler, $data);
+            
+            // If the default implementation is not smart enough, you can add your own logic here
+            $this->additionalExtraction($crawler, $data);
+            
+            // This is the default, it should be good enough for most cases
+            $this->defaultNormalization($data);
+            
+            // If the default implementation is not smart enough, you can add your own logic here
+            $this->additionalNormalization($data);
+        }
+
+        $dataset->populate($data);
+        $crawler = null;
+        $data = null;
+    }
+    
+    /**
+     * This function goes through the criteria array, and extracts the information. If
+     * an XPath expression yields several nodes, their value is joined using the ';'
+     * character.
+     *
+     * @param Crawler $crawler the crawler
+     * @param array   $data    the data we are gathering
+     */
+    protected function defaultExtraction($crawler, &$data) 
+    {
+        foreach ($this->criteria as $name => $path) {
+            $nodes = $crawler->filterXPath($path);
+            if (0 < count($nodes)) {
+                $data[$name] = join(
+                    ";",
+                    $nodes->each(
+                        function($node,$i) {
+                            return $node->nodeValue;
+                        }
+                    )
+                );
+            }
+        }
+    }
+    
+    /**
+     * Override this function in subclasses if you find that the default one is not
+     * good enough. This implementation does nothing.
+     *
+     * @param Crawler $crawler the crawler
+     * @param array   $data    the data we are gathering
+     */
+    protected function additionalExtraction($crawler, &$data) 
+    {
+    }
+    
+    protected function defaultNormalization(&$data)
+    {
+        $this->normalizeSummary($data);
+        $this->normalizeCategory($data);
+        $this->normalizeLicense($data);
+        $this->parseDates($data);
+    }
+    
+    /**
+     * Trim the summary if it exists
+     *
+     * @param array   $data    the data we are gathering
+     */
+    protected function normalizeSummary(&$data)
+    {
+        if (array_key_exists('setSummary', $data)) {
+            $data['setSummary'] = trim($data['setSummary']);
+        }
+    }
+    
+    /**
+     * Trim categories and transform it into a lower-case, semi-colon separated list
+     *
+     * @param array   $data    the data we are gathering
+     **/
+    protected function normalizeCategory(&$data)
+    {
+        if (array_key_exists('setCategory', $data)) {
+            $data['setCategory'] = trim(implode(';', array_filter(preg_split('/(\s+|&|,|;)/', $data['setCategory']))));
+            
+            if(0 === preg_match('/[a-z;]+/', $data['setCategory'])) {
+                error_log($data['setCategory']);
+            }
+        }
+    }
+    
+    /**
+     * Attemps to transform wild licenses into a set of normalized ones
+     *
+     * @param array   $data    the data we are gathering
+     */
+    protected function normalizeLicense(&$data)
+    {
+        if (array_key_exists('setLicense', $data)) {
+            if ($data['setLicense'] == '[]') {
+                unset($data['setLicense']);
+            } elseif (preg_match('/(OKD Compliant::)?UK Open Government Licence \(OGL\)/', $data['setLicense'])) {
+                    $data['setLicense'] = 'OGL';
+            }
+        }
+    }
+    
+    protected function parseDates(&$data) {
+        // We transform dates format in datetime.
+        foreach ($this->dateFields as $field) {
+            if (array_key_exists($field, $data)) {
+                $date = $data[$field];
+
+                if (preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$/', $date)) {
+                    $data[$field] = \Datetime::createFromFormat('Y-m-d H:i', $date);
+                } elseif (preg_match('/^[0-9]{2}\/[0-9]{2}\/[0-9]{4} [0-9]{2}:[0-9]{2}$/', $date)) {
+                    $data[$field] = \Datetime::createFromFormat('d/m/Y H:i', $date);
+                } else if (preg_match('/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/', $date)) {
+                    $data[$field] = \Datetime::createFromFormat('d/m/Y H:i', $date . ' 00:00');
+                } elseif (preg_match('/^[0-9]{1,2} [0-9]{2} [0-9]{4}$/', $date)) {
+                    $data[$field] = \Datetime::createFromFormat('j m Y H:i', $date . ' 00:00');
+                } else if (preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date)) {
+                    $data[$field] = \Datetime::createFromFormat('Y-m-d H:i', $date . ' 00:00');
+                } else if (preg_match('/^[0-9]{4}-[0-9]{2}$/', $date)) {
+                    $data[$field] = \Datetime::createFromFormat('Y-m-d H:i', $date . '-01 00:00');
+                } else if (preg_match('/^[0-9]{4}$/', $date)) {
+                    $data[$field] = \Datetime::createFromFormat('Y-m-d H:i', $date . '-01-01 00:00');
+                } else if ($date == 'n/a' || $date == 'TBC') {
+                    $data[$field] = null;
+                } else {
+                    // Not something we recognize
+                    error_log('[Unknown date format ] ' . $date);
+                    $data[$field] = null;
+                }
+            } else {
+                $data[$field] = null;
+            }
+        }
+    }
+    
+    /**
+     * Override this function in subclasses if you find that the default one is not
+     * good enough. This implementation does nothing.
+     *
+     * @param array   $data    the data we are gathering
+     */
+    protected function additionalNormalization(&$data)
+    {
+    }
+    
     public function setBuzz(\Buzz\Browser $buzz, $timeout = 30) {
         $this->buzz = $buzz;
         $this->buzz->getClient()->setTimeout($timeout);
@@ -114,96 +333,4 @@ abstract class BasePlatform {
     public function getCount() {
         return $this->totalCount;
     }
-
-    /**
-     * Load the portal object from the database. If none is found, parse it from the website.
-     *
-     * @return Portal
-     */
-    public function loadPortal() {
-        $this->portal = $this->em->getRepository('Odalisk\Entity\Portal')
-            ->findOneByName($this->getName());
-
-        if (null == $this->portal) {
-            $this->parsePortal();
-        }
-
-
-        return $this->portal;
-    }
-
-    public function getPortal() {
-        return $this->portal;
-    }
-
-    /**
-     * Fetch the portal from the web, parse it and create a new entity in $this->portal (and persist/flush it)
-     *
-     * @return void
-     */
-    abstract public function parsePortal();
-
-    abstract public function getDatasetsUrls();
-
-    public function crawlDatasetsList(Message\Request $request, Message\Response $response) {
-
-        if ($response->getStatusCode() != 200) {
-            error_log('[Get URLs] Failed to download ' . $request->getUrl() . '. Skipping.');
-
-            return;
-        }
-
-        $crawler = new Crawler($response->getContent());
-        $nodes = $crawler->filterXPath($this->urls_list_index_path);
-        if (0 < count($nodes)) {
-            $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
-        }
-
-        $count = count($this->urls);
-        if (0 == $count % 100) {
-            error_log('[Get URLs] ' . $count . ' / ' . $this->nb_dataset_estimated . ' done (estimated)');
-        }
-    }
-
-    public function prepareRequestsFromUrls($urls) {
-        return $urls;
-    }
-
-    public function parseFile($html, &$dataset) {
-        $crawler = new Crawler($html);
-        $data = array();
-
-        if (0 != count($crawler)) {
-            foreach ($this->criteria as $name => $path) {
-                $nodes = $crawler->filterXPath($path);
-                if (0 < count($nodes)) {
-                    $data[$name] = join(
-                        ";",
-                        $nodes->each(
-                            function($node,$i) {
-                                return $node->nodeValue;
-                            }
-                        )
-                    );
-                }
-            }
-            // We transform dates format in datetime.
-            foreach ($this->date_fields as $field) {
-                if (array_key_exists($field, $data)) {
-                    $data[$field] = \Datetime::createFromFormat($this->date_format, $data[$field]);
-                    if (false == $data[$field]) {
-                        $data[$field] = null;
-                    }
-                } else {
-                    $data[$field] = null;
-                }
-            }
-        }
-
-        $dataset->populate($data);
-        $crawler = null;
-        $data = null;
-    }
-
-
 }

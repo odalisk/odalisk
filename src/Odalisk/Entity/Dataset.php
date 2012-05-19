@@ -196,26 +196,6 @@ class Dataset
     }
 
     /**
-     * Set category
-     *
-     * @param string $category
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-    }
-
-    /**
-     * Get category
-     *
-     * @return string
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
      * Set format
      *
      * @param string $category
@@ -383,6 +363,18 @@ class Dataset
     public function addCategory(\Odalisk\Entity\Category $categories)
     {
         $this->categories[] = $categories;
+    }
+    
+    /**
+     * Set categories
+     *
+     * @param array $categories
+     */
+    public function setCategories(array $categories)
+    {
+        foreach($categories as $category) {
+            $this->categories[] = $category;
+        }
     }
 
     /**

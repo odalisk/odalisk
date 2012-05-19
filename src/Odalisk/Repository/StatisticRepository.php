@@ -5,7 +5,7 @@ use Doctrine\ORM\EntityRepository;
 
 class StatisticRepository extends EntityRepository
 {
-      
+
   public function getDatasetsCount($portal)
   {
     return $this->getEntityManager()
@@ -60,16 +60,16 @@ class StatisticRepository extends EntityRepository
             ->getSingleScalarResult();
 
   }
-  
+
   public function findByPortalSearch($portal_id, $page_from, $page_size,$search)
   {
       return $this->getEntityManager()
-          ->createQuery('SELECT d 
+          ->createQuery('SELECT d
                          FROM Odalisk\Entity\Portal as p, Odalisk\Entity\Dataset as d
-                         WHERE 
-                              p.id = :portal_id 
+                         WHERE
+                              p.id = :portal_id
                               AND d.portal = p.id
-                              AND d.name LIKE :search 
+                              AND d.name LIKE :search
                          ORDER BY d.name ASC')
           ->setFirstResult($page_from)
           ->setMaxResults($page_size)

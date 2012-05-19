@@ -3,7 +3,6 @@
 namespace Odalisk\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -15,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="Odalisk\Repository\StatisticRepository")
  */
 class Statistics
-{   
+{
 
     /**
      * @var integer $datasets_count
@@ -67,7 +66,7 @@ class Statistics
      * @Gedmo\Timestampable(on="create")
      */
     protected $created_at;
-     
+
     /**
      * @var string $updated_at When did we update this record
      *
@@ -75,8 +74,8 @@ class Statistics
      * @Gedmo\Timestampable(on="update")
      */
     protected $updated_at;
-     
- 
+
+
     /**
      * @ORM\OneToOne(targetEntity="Portal")
      * @ORM\Id
@@ -131,7 +130,7 @@ class Statistics
     public function setCategoryCount($count){
         $this->categoryExistCount = $count;
     }
- 
+
     public function getSummaryAndTitleCount($count){
         return $this->summaryAndTitleCount;
     }

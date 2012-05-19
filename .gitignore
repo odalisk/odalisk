@@ -10,3 +10,5 @@ composer.lock
 !vendor/assets
 !vendor/twitter
 plugin/
+.DS_Store
+data.tar.bz2

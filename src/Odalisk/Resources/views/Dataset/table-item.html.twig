@@ -21,30 +21,30 @@
             <td class="labels">
                 {% if dataset.category is not empty %}
                     {% if dataset.category|length > 20 %}
-                        <span class="label label-info">{{ dataset.category|slice(0,20) }}...</span> 
+                        <span class="label label-info">{{ dataset.category|slice(0,20) }}...</span>
                     {% else %}
-                        <span class="label label-info">{{ dataset.category|slice(0,20) }}</span> 
+                        <span class="label label-info">{{ dataset.category|slice(0,20) }}</span>
                     {% endif %}
                 {% endif %}
-            
+
                 {% if dataset.license is not empty %}
                     {% if dataset.license|length > 20 %}
-                        <span class="label label-success">{{ dataset.license|slice(0,20) }}...</span> 
+                        <span class="label label-success">{{ dataset.license|slice(0,20) }}...</span>
                     {% else %}
-                        <span class="label label-success">{{ dataset.license|slice(0,20) }}</span> 
+                        <span class="label label-success">{{ dataset.license|slice(0,20) }}</span>
                     {% endif %}
                 {% endif %}
-            
+
                 {% if dataset.owner is not empty %}
                     {% if dataset.owner|length > 20 %}
-                        <span class="label label-warning">{{ dataset.owner|slice(0,20) }}...</span> 
+                        <span class="label label-warning">{{ dataset.owner|slice(0,20) }}...</span>
                     {% else %}
-                        <span class="label label-warning">{{ dataset.owner|slice(0,20) }}</span> 
+                        <span class="label label-warning">{{ dataset.owner|slice(0,20) }}</span>
                     {% endif %}
                 {% endif %}
-            
-    
-    
+
+
+
             </td>
             <td class="button">
                 <a class="btn" href="{{ path('dataset_details', { 'dataset_number': dataset.id }) }}">Détails</a>

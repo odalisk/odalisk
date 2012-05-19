@@ -7,121 +7,122 @@ use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 
-use Symfony\Component\DomCrawler\Crawler;
 
 use Odalisk\Entity\Statistics;
 
-use Buzz\Browser;
 
 /**
  * Generates statistics
  */
-class GenerateStatisticsCommand extends ContainerAwareCommand {
-    
+class GenerateStatisticsCommand extends ContainerAwareCommand
+{
     /**
      * Holds our instance of the EntityManager
      *
      * @var $em
      */
     private $em;
-        
-    private $formatter = NULL;
+
+    private $formatter = null;
 
     private $stats = array();
-    
-    protected function configure(){
+
+    protected function configure()
+    {
         $this
             ->setName('odalisk:statistics:generate')
-            ->setDescription('generate statistics from datasets')
-        ;
+            ->setDescription('generate statistics from datasets');
     }
-    
-    protected function execute(InputInterface $input, OutputInterface $output) {
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $this->writeBlock($output, "Generating stats");
         $this->em = $this->getContainer()
-                            ->get('doctrine')->getEntityManager();
+            ->get('doctrine')->getEntityManager();
 
         $repository = $this->getContainer()
-                            ->get('doctrine')
-                            ->getRepository('Odalisk\Entity\Portal')
-                            ;
+            ->get('doctrine')
+            ->getRepository('Odalisk\Entity\Portal');
         $portals = $repository->findAll();
 
         $this->em->getConnection()->prepare('TRUNCATE statistics;')->execute();
         $this->em->flush();
 
-        $stats_repository = $this->getContainer()
-                            ->get('doctrine')
-                            ->getRepository('Odalisk\Entity\Statistics')
-                            ;
+        $statsRepository = $this->getContainer()
+            ->get('doctrine')
+            ->getRepository('Odalisk\Entity\Statistics');
 
-        
 
-        foreach($portals as $portal){
+
+        foreach ($portals as $portal) {
             echo $portal->getName()."\n";
-            
+
             $stats = new Statistics();
             $stats->setPortal($portal);
-            $stats->setDatasetsCount($stats_repository->getDatasetsCount($portal));
-            $stats->setInChargePersonCount($stats_repository->getInChargePersonCount($portal));
-            $stats->setReleasedOnCount($stats_repository->getReleasedOnExistCount($portal));
-            $stats->setLastUpdatedOnCount($stats_repository->getLastUpdatedOnExistCount($portal));
-            $stats->setCategoryCount($stats_repository->getCategoryExistCount($portal));
-            $stats->setSummaryAndTitleCount($stats_repository->getSummaryAndTitleAtLeastCount($portal));
+            $stats->setDatasetsCount($statsRepository->getDatasetsCount($portal));
+            $stats->setInChargePersonCount($statsRepository->getInChargePersonCount($portal));
+            $stats->setReleasedOnCount($statsRepository->getReleasedOnExistCount($portal));
+            $stats->setLastUpdatedOnCount($statsRepository->getLastUpdatedOnExistCount($portal));
+            $stats->setCategoryCount($statsRepository->getCategoryExistCount($portal));
+            $stats->setSummaryAndTitleCount($statsRepository->getSummaryAndTitleAtLeastCount($portal));
             $this->em->persist($stats);
             $this->em->flush();
         }
-        
-        $this->writeBlock($output, "End of generating"); 
+
+        $this->writeBlock($output, "End of generating");
     }
 
-    protected function writeBlock(OutputInterface $output, $message) {
-        if(NULL == $this->formatter) {
+    protected function writeBlock(OutputInterface $output, $message)
+    {
+        if (null == $this->formatter) {
             $this->formatter = new FormatterHelper();
         }
-        
+
         $output->writeln($this->formatter->formatBlock(
-                $message,
-                'bg=blue;fg=white',
-                TRUE
-            )
-        );
+            $message,
+            'bg=blue;fg=white',
+            true
+        ));
     }
-    
-    protected function collectStats($data) {
-        if(isset($this->stats[$data['code']])) {
+
+    protected function collectStats($data)
+    {
+        if (isset($this->stats[$data['code']])) {
             $this->stats[$data['code']] += 1;
         } else {
             $this->stats[$data['code']] = 1;
         }
     }
-    
-    protected function printStats(OutputInterface $output) {
+
+    protected function printStats(OutputInterface $output)
+    {
         $output->writeln('<info>HTTP return code distribution : </info>');
-        foreach($this->stats as $code => $count) {
+        foreach ($this->stats as $code => $count) {
             $output->writeln("<comment>[$code]</comment> => " . $count);
         }
     }
-    
-    protected function getBuzz() {
-        if(NULL == $this->buzz) {
+
+    protected function getBuzz()
+    {
+        if (null == $this->buzz) {
             $this->buzz = $this->getContainer()->get('buzz');
         }
 
         return $this->buzz;
     }
-    
-    protected function getEntityManager($managerName = NULL) {
-        if(NULL == $this->em) {
+
+    protected function getEntityManager($managerName = null)
+    {
+        if (null == $this->em) {
             $this->em = $this->getContainer()->get('doctrine')->getEntityManager($managerName);
         }
+
         return $this->em;
     }
 
-    protected function getEntityRepository($repositoryName, $managerName = NULL) {
+    protected function getEntityRepository($repositoryName, $managerName = null)
+    {
         return $this->getEntityManager($managerName)->getRepository($repositoryName);
     }
 }

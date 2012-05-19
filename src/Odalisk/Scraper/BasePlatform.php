@@ -231,7 +231,7 @@ abstract class BasePlatform {
                     array_filter(
                         $nodes->each(
                         function($node,$i) {
-                            return utf8_decode(trim($node->nodeValue));
+                            return trim($node->nodeValue);
                         }
                     )
                         , 'strlen')
@@ -256,6 +256,7 @@ abstract class BasePlatform {
         $this->normalizeSummary($data);
         $this->normalizeCategory($data);
         $this->normalizeLicense($data);
+        $this->normalizeFormat($data);
         $this->parseDates($data);
     }
     
@@ -266,7 +267,9 @@ abstract class BasePlatform {
      */
     protected function normalizeSummary(&$data)
     {
-
+        if (array_key_exists('setSummary', $data)) {
+            $data['setSummary'] = trim($data['setSummary']);
+        }
     }
     
     /**
@@ -283,7 +286,11 @@ abstract class BasePlatform {
                 $data['setCategory'] = implode(';', json_decode($data['setCategory']));
             }
 
-            $data['setCategory'] = trim(implode(';', array_filter(preg_split('/(\s+|&|,|;| et | and |\/|\"\]|\[\")/', $data['setCategory']))));
+            $data['setCategory'] = trim(implode(';', array_filter(preg_split('/(\s+&\s+|,|;|\s+et\s+|\s+and\s+|\s+\/\s+)/', $data['setCategory']))));
+
+            if(strstr($data['setCategory'], ";and;")){
+                echo $data['setCategory']."\n";
+            }
 
             if(0 === preg_match('/[a-zA-Z;]+/', $data['setCategory']) or empty($data['setCategory'])) {
                 error_log('[Weird category] ' . $data['setCategory']);
@@ -308,6 +315,40 @@ abstract class BasePlatform {
         }
     }
     
+    /**
+     * Attemps to transform wild licenses into a set of normalized ones
+     *
+     * @param array   $data    the data we are gathering
+     */
+    protected function normalizeFormat(&$data)
+    {
+
+        $wild_formats = array("/.*kmz.*/i","/.*csv.*/i","/.*xml.*/i","/.*pdf.*/i","/((.*(xls|vnd.ms-excel).*)|excel)/i","/.*(html|htm).*/i","/text.*/i","/rdf/i","/ppt/i","/.*shp.*/i","/.*(vnd.ms-word|doc).*/i","/.*zip.*/i","/.*json.*/i","/rss/i","/api/i","/wms/i","/.*(Otros|Unverified).*/i","/asp/i","/(image\/jpg|jpg)/i","/atom/i","/.*(openDOCument.spreadsheet|ods).*/i","/gtfs/i");
+        $normalized_formats = array("KMZ","CSV","XML","PDF","XLS","HTML","TXT","RDF","PPT","SHP","DOC","ZIP","JSON","RSS","API","WMS","Unknown","ASP","JPG","ATOM","ODS","GTFS");
+
+        if (array_key_exists('setFormat', $data)) {
+                
+
+                $formats = preg_split('/;/',$data['setFormat']);
+                $formats = array_unique($formats);
+                $output = array();
+                foreach ($formats as $format) {
+
+                    $format = preg_replace('/\s+/','', $format);
+                    $format = preg_replace($wild_formats, $normalized_formats, $format,1);
+
+                    if(!in_array($format,$normalized_formats)){
+                       
+                       error_log('[Weird Format] ' . $format." : ".$data['setName']);
+                    }
+
+                    $output[] = $format;
+                 }
+                
+                $data['setFormat'] = implode(';', array_unique($output));
+        }
+    }
+
     /**
      * Do some magic on the dates to transform them into datetime objects
      *

@@ -71,6 +71,13 @@ class Dataset
     protected $category;
 
     /**
+     * @var string $format
+     *
+     * @ORM\Column(name="format", type="string", nullable=true, length=255)
+     */
+    protected $format;
+
+    /**
      * @var string $released_on When did we create this record
      *
      * @ORM\Column(name="released_on", type="string", nullable=true, length=255)
@@ -206,6 +213,26 @@ class Dataset
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set format
+     *
+     * @param string $category
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
+    }
+
+    /**
+     * Get format
+     *
+     * @return string
+     */
+    public function getFormat()
+    {
+        return $this->format;
     }
 
     /**

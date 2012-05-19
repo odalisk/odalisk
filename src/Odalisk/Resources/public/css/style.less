@@ -219,7 +219,6 @@ body {
             text-align:right;
             form {
                 margin:0px;
-                margin-right:10px;
                 position:relative;
                 top:-15px;
             }
@@ -238,8 +237,7 @@ body {
         
         
         
-        td.dataset-item, td.portal-item {
-            width:100%;
+        tr.dataset-item, tr.portal-item {
             a {
                 //color:#555;
             }
@@ -252,24 +250,22 @@ body {
                 margin-top:0px;
             }
             
-            .more-infos {
-                td {
-                    border-top:none;
-                    
-                    &.sumary {
-                        width:80%;
-                    }
-                    
-                    &.labels {
-                        width:20%;
-                        min-width:150px;
-                    }
-                    
-                    &.button {
-                        width:10%;
-                        min-width:70px;
-                        text-align:right;
-                    }
+            td {
+                border-top:none;
+                
+                &.sumary {
+                    width:80%;
+                }
+                
+                &.labels {
+                    width:20%;
+                    min-width:150px;
+                }
+                
+                &.button {
+                    width:10%;
+                    min-width:70px;
+                    text-align:right;
                 }
             }
         }

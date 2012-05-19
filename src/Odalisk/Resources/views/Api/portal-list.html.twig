@@ -1,0 +1,7 @@
+{% for portal in portals %}
+    {% if portal.id == current_portal %}
+        <li><span data-value="{{ portal.id }}" data-active="true" data-type="portal" class="label label-success">{{ portal.name }} <span>&times;</span></span></li>
+    {% else %}
+        <li><span data-value="{{ portal.id }}" data-type="portal" class="label">{{ portal.name }} <span>+</span></span></li>
+    {% endif %}
+{% endfor %}

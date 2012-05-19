@@ -39,13 +39,15 @@ jQuery(function($) {
         });
     });
     window.api = new jsApi();
+    
+    
 });
 
 
 
 jsApi = function() {
-    this.request = new Object();
-    
+    this.request = {};
+    this.page = 0;
     
     this.updateResult = function() {
         this.updateRequest();
@@ -67,17 +69,21 @@ jsApi = function() {
                 {
                     this.request[label.attr('data-type')] = new Array();
                 }
-            
                 this.request[label.attr('data-type')].push(label.attr('data-value'));
             }
         }
+        
+        console.log(this.request);
     }
     
     this.getData = function() {
-        console.log(window.api.request);
+        this.page = 0;
         $.post(
             '/app_dev.php/api/html',
-            window.api.request,
+            {
+                'request':this.request,
+                'page_number':this.page
+            },
             function(data) {
                 window.api.data = data;
                 window.api.updateTable();
@@ -86,9 +92,59 @@ jsApi = function() {
     }
     
     this.updateTable = function() {
-        console.log($('.request-result').html());
         $('.request-result').html(window.api.data);
     }
+    
+    this.addToTable = function() {
+        $('.request-result').append($(window.api.data));
+    }
+    
+    this.nextPage = function() {
+        this.page += 1;
+        $.post(
+            '/app_dev.php/api/html',
+            {
+                'request':window.api.request,
+                'page_number':this.page
+            },
+            function(data) {
+                window.api.data = data;
+                window.api.addToTable();
+            }
+        );
+    }
+    
+    
+    $('#moreResults').click(function() {
+        window.api.nextPage();
+    });
+    
+    $(".marginBox.alwaysOnTop, .marginBox.alwaysOnTopFixed").each(function() {
+        $(this).attr("data-top",$(this).offset().top);
+    });
+    
+    var a = function() {
+      
+    };
+    $(window).scroll(a);a()
+    
+
+    $(document).scroll(function() {
+        var b = $(window).scrollTop();
+        var alwaysOnTop = $("#alwaysOnTop");
+        var offset = alwaysOnTop.parent().offset();
+        var d = offset.top - 90;
+        var c = alwaysOnTop;
+        if (b>d) {
+        c.css({position:"fixed",top:"90px", right: (offset.left - 5) +'px'})
+        } else {
+        if (b<=d) {
+          c.css({position:"relative",top:"", right: ''})
+        }
+        }
+    });
+    
+    this.updateResult();
 }
 
 var konami = document.createElement('input');

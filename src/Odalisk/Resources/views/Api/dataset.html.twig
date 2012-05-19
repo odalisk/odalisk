@@ -1,9 +1,14 @@
+{% if datasets|length > 0 %}
 {% for dataset in datasets %}
-    {% if dataset[0] is not null %}
     <tr>
-        <td colspan="2" class="dataset-item">
         {% include 'App:Dataset:table-item.html.twig' with {'dataset': dataset[0]} %}
+    </tr>
+{% endfor %}
+{% elseif pagenumber != 0 %}
+{% else %}
+    <tr>
+        <td colspan="3" class="dataset-item">
+            <h2>Aucun résultat</h2>
         </td>
     </tr>
-    {% endif %}
-{% endfor %}
+{% endif %}

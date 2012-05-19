@@ -1,0 +1,1577 @@
+[
+	{
+		"identifier": "NULL",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "OGL",
+		"license": "OGL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\PSMA Member Licence, http://www.ordnancesurvey.co.uk/oswebsite/docs/licences/psma-member-licence.pdf & http://nationalarchives.gov.uk/doc/open-government-licence/\\\"\"]\"\"",
+		"license": "PSMA Member Licensing",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\Public Sector INSPIRE WMS End User Licence\\\"",
+		"license": "\\\"\"http://www.bit.ly/wmseul\\\"\"]\"\"\"",
+		"authorship": "Public Sector Inspire WMS End User License",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0",
+		"undefined": "0"
+	},
+	{
+		"identifier": "OKD Compliant::UK Crown Copyright with data.gov.uk rights",
+		"license": "OGL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "Met Office UK Climate Projections Licence Agreement",
+		"license": "UK Climate Projections License Agreement",
+		"authorship": "1",
+		"reuse": "0",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Copyright  (Copyright Forestry Commission Scotland)\\\"\"]\"\"",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Use limitation dependent upon licence\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Use of the One Scotland Gazetteer data used by this this service is available to any organisation that is a member of the One Scotland Mapping Agreement. It is not currently commercially availabl",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\The dataset is digitised at a scale of 1:50 000\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Copyright\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Scale of digitising means dataset is not appropriate for use at large scaleDataset is complete for Scotland however inconsistencies in parish names could prove problems if using with other datase",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\The data is merely indicative.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Use limitation\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\None\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\The dataset has complete coverage for Scotland, and is clipped to the High Water Mark coastline (OS BoundaryLine).\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "Other::License Not Specified",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\No conditions apply\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\\\\\u00a9 CCGC/CCW 2009. All rights Reserved.\\\\nContains Ordnance Survey Data. Ordnance Survey Licence number 100019741. Crown Copyright and Database Right\\\\n2009.\\\\nThere are no use restrictions o",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Index polygons indicate the location of registered land an index polygon may not show the extent of land comprised in the registered title. Not all land in England and Wales is registered. INSPIR",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\You are authorised to use the Northern Ireland Agency digital data provided, for personal and internal use within an organisation. This is subject to the material being reproduced accurately and",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\You are authorised to use the Northern Ireland Agency digital data provided, for personal and internal use within an organisation.  This is subject to the material being reproduced accurately and",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Crown Copyright\\\"\"]\"\"",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\CCGC/CCW 2010 and Crown copyright. All rights reserved. Third parties seeking to re-use this dataset require a CCW licence. It allows reproduction, dissemination and re-use in any format or mediu",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "OKD Compliant::Open Data Commons Public Domain Dedication and Licence (PDDL)",
+		"license": "PDDL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\Please note that any provision of the Flood Map for the Manchester Ship Canal, should be accompanied by the following Information Warning. All internal queries should be directed to the local Flo",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\The original source of this dataset is unclear and therefore the data should be used for illustrative purposes only.  For specific information the relevant policy area with the Scottish Governmen",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Data is captured at various scales (1:10,00, 25000, 1250)Some of the data has not been corrected for PAI\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\You may use this data subject to the following terms and conditions. Title, copyright and all other proprietary rights in the digital data remain vested in Northern Ireland Environment Agency and",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Licence\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Open Government Licence, http://www.nationalarchives.gov.uk/doc/open-government-licence/\\\"\"]\"\"",
+		"license": "OGL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\Use limitation\\\"",
+		"license": "\\\"\"Copyright\\\"\"",
+		"authorship": "\\\"\"Licence\\\"\"",
+		"reuse": "\\\"\"Intellectual Property Rights\\\"\"",
+		"redistribution": "\\\"\"Users should refer to the appropriate LPA for definitive boundary information.\\\"\"]\"\"\"",
+		"commercial": "Intellectual Property Right",
+		"undefined": "0"
+	},
+	{
+		"identifier": "[\\The sources of this dataset are unknown.The data should be used for illustrative purposes only however it is the best available dataset at the present time.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\freely available for personal and educational use, charges will apply for other usage e.g. commercial\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\Copyright\\\"",
+		"license": "\\\"\"Intellectual Property Rights\\\"\"",
+		"authorship": "\\\"\"Licence\\\"\"",
+		"reuse": "\\\"\"Restricted\\\"\"]\"\"\"",
+		"redistribution": "Intellectual Property Right",
+		"commercial": "1",
+		"undefined": "0"
+	},
+	{
+		"identifier": "[\\Use limitation dependent upon licence.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Open Government Licence, http://www.nationalarchives.gov.uk/doc/open-government-licence\\\"\"]\"\"",
+		"license": "OGL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\Copyright\\\"",
+		"license": "\\\"\"Intellectual Property Rights\\\"\"",
+		"authorship": "\\\"\"Licence\\\"\"",
+		"reuse": "\\\"\"Restricted\\\"\"",
+		"redistribution": "\\\"\"Should not be used for navigation purposes\\\"\"]\"\"\"",
+		"commercial": "Intellectual Property Right",
+		"undefined": "0"
+	},
+	{
+		"identifier": "[\\License Copyright\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Use limitation dependent upon license\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\The dataset is accurate to Ordnance Survey BoundaryLine data\\\"\"]\"\"",
+		"license": "Ordnance Survey Boundary Line Data",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "0"
+	},
+	{
+		"identifier": "OKD Compliant::Other (Open)",
+		"license": "ODBL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\This data is 'simple derived data' which is jointly owned by CCW and the Ordnance Survey. CCW may release, publish or disseminate this data freely, providing recipients are made aware of use rest",
+		"license": "CCW / Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\\\\\u00a9 CCGC/CCW 2010.  All rights Reserved.\\\\n\\\\nContains Ordnance Survey Data. Ordnance Survey Licence number 100019741. Crown Copyright and Database Right 2010.\\\\n\\\\nThere are no use restricti",
+		"license": "Ordnance Survey Boundary Line Data",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\The datset is complete for Scotland and follows Ordnance Survey Landline.  Users should be aware that since Health Boards are based on groups of the Local Government Regions and Districts that ex",
+		"license": "Ordnance Survey Boundary Line Data",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\PSMA Member Licence, http://www.ordnancesurvey.co.uk/oswebsite/docs/licences/psma-member-licence.pdf\\\"\"]\"\"",
+		"license": "PSMA Member Licensing",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\see individual dataset metadata record conditions\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\\\\\u00a9 CCGC/CCW 2010. All rights Reserved.\\\\nContains Ordnance Survey Data. Ordnance Survey Licence number 100019741. Crown Copyright and Database Right\\\\n2010.\\\\nThere are no use restrictions o",
+		"license": "Ordnance Survey Boundary Line Data",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\CCGC/CCW 2008 and Crown copyright. All rights reserved. Third parties seeking to re-use this dataset require a CCW licence. It allows reproduction, dissemination and re-use in any format or mediu",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\All interested bodies must have the necessary OS licensing in place to access and download the OS MasterMap derived data.\\\"",
+		"license": "\\\"\"All interested bodies must have the necessary OS licensing in place \"",
+		"authorship": "None",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1",
+		"undefined": "-1"
+	},
+	{
+		"identifier": "[\\You may use this data subject to the following terms and conditions. Title, copyright and all other proprietary rights in the digital data remain vested in Northern Ireland Environment Agency and",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\\\\\u00a9 CCGC/CCW 2010. All rights Reserved.\\\\nContains Ordnance Survey Data. Ordnance Survey Licence number 100019741. Crown Copyright and Database Right 2010.\\\\nThere are no use restrictions on",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Other restrictions\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Reference and PSMA Only\\\"",
+		"license": "\\\"\"http://www.barrowbc.gov.uk/giscopyright\\\"\"]\"\"\"",
+		"authorship": "PSMA Member Licensing",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1",
+		"undefined": "1"
+	},
+	{
+		"identifier": "[\\\\\\u00a9 CCGC/CCW 2010.  All rights Reserved.\\\\nContains Ordnance Survey Data. Ordnance Survey Licence number 100019741. Crown Copyright and Database Right 2010.\\\\nThere are no use restrictions on",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\The data is merely indicative of the presence of a scheduled monument, however a link towards the proper legal document is contained within the attribute data.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "OKD Compliant::Other (Public Domain)",
+		"license": "ODBL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\Copyright (Copyright Forestry Commission Scotland)\\\"\"]\"\"",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\http://www.naturalengland.org.uk/copyright\\\"\"]\"\"",
+		"license": "Natural England Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\Copyright\\\"",
+		"license": "\\\"\"License\\\"\"",
+		"authorship": "\\\"\"Intellectual Property Rights\\\"\"]\"\"\"",
+		"reuse": "Intellectual Property Right",
+		"redistribution": "-1",
+		"commercial": "-1",
+		"undefined": "-1"
+	},
+	{
+		"identifier": "[\\CCGC/CCW 2010 and  Crown copyright. All rights reserved. Third parties seeking to re-use this dataset require a CCW licence. It allows reproduction, dissemination and re-use in any format or medi",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "Non-OKD Compliant::UK Crown Copyright",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\The dataset is based on parish boundaries which were digitised from a 1/4 inch to mile OS backdrop\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\This dataset was digitised at 1:50K scale and follows the textual description in the Countryside Commission for Scotland publication 'Scotland's Scenic Heritage, published in 1978. The textual de",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\The history of this dataset is unknown therefore the data should be used for illustrative purposes only.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Use of the data is subject to agreement with the relevant terms and conditions. An annual license fees is applicable for data use.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "Non-OKD Compliant::Met Office UK Climate Projections Licence Agreement",
+		"license": "UK Climate Projections License Agreement",
+		"authorship": "",
+		"reuse": "",
+		"redistribution": "",
+		"commercial": ""
+	},
+	{
+		"identifier": "[\\Dataset is accurate to OS 10K raster data\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\\\\\u00a9 CCGC/CCW 2011. All rights Reserved.\\\\nContains Ordnance Survey Data. Ordnance Survey Licence number 100019741. Crown Copyright and Database Right 2011.\\\\nThere are no use restrictions on",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\The scale of digitising is not known therefore this dataset should be used for illustratice purposes only. This dataset is the best available at present.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\OS Derived data\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\The dataset is complete and accurate to OS 10K raster data.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\\\\\u00a9 CCGC/CCW 2011. All rights Reserved.\\\\nContains Ordnance Survey Data. Ordnance Survey Licence number 100019741. Crown Copyright and Database Right\\\\n2011.\\\\nThere are no use restrictions o",
+		"license": "Ordnance Survey Boundary Line Data",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Restricted Access to Information and data may only be released subject to agreement with Translink\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\RPublic Sector INSPIRE WMS End User Licence\\\"",
+		"license": "\\\"\"http://www.bit.ly/wmseul\\\"\"]\"\"\"",
+		"authorship": "Public Sector Inspire WMS End User License",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0",
+		"undefined": "0"
+	},
+	{
+		"identifier": "[\\The Flood Map does give a good indication of the areas at risk of flooding in England and Wales, however it cannot provide detail at individual property level. Flood mapping is a complex, detaile",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\The data supplied through this service is subject to PSMA licence terms : www.bit.ly/wmseul\\\"\"]\"\"",
+		"license": "PSMA Member Licensing",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\Use limitation dependent on licence\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Licence copyright\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Dataset is complete for Scotland.  Care should be taken when using this dataset with lookups to other postcode based geographies.  Some postcode unit boundaries have changed since the Intermediat",
+		"license": "CCW / Cro"None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\CCGC/CCW 2004. You may reproduce this dataset free of charge for non-commercial and internal business purposes in any format or medium, provided that you do so accurately, acknowledging both the",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "OKD Compliant::Local Authority Copyright with data.gov.uk rights",
+		"license": "ODBL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\\\\\u00a9 CCGC/CCW 2011. All rights Reserved.\\\\nContains Ordnance Survey Data. Ordnance Survey Licence number\\\\n100019741. Crown Copyright and Database Right 2011.\\\\nThere are no use restrictions o",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\You are authorised to use the data provided for personal and internal use within an organisation.  This is subject to the material being reproduced accurately and not used in a misleading context",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "Non-OKD Compliant::Other (Not Open)",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "0",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Dataset is complete for Scotland.Care should be taken when using this dataset with lookups to other postcode based geographies. Some postcode unit boundaries have changed since datazones were cre",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Use limitation please see OS OpenData\\\\u2122 licence\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "Open Database License (ODbL)",
+		"license": "ODBL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence Information Publique"
+	},
+	{
+		"identifier": "",
+		"license": "Licence Information Publique",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Conditions gÃ©nÃ©rales de rÃ©utilisation des informations publiques (APIE)"
+	},
+	{
+		"identifier": "",
+		"license": "APIE",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence EuroStat"
+	},
+	{
+		"identifier": "",
+		"license": "EuroStat",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence inconnue"
+	},
+	{
+		"identifier": "",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence Ouverte / Open Licence"
+	},
+	{
+		"identifier": "",
+		"license": "Licence Ouverte / Open Licence",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence ODBL"
+	},
+	{
+		"identifier": "",
+		"license": "ODBL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence Data Publica"
+	},
+	{
+		"identifier": "",
+		"license": ""
+	},
+	{
+		"identifier": "Licence Data Publica"
+	},
+	{
+		"identifier": "",
+		"license": "1",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence ODBL Ville de Paris"
+	},
+	{
+		"identifier": "",
+		"license": "ODBL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence du BODACC"
+	},
+	{
+		"identifier": "",
+		"lstribution": "0",
+		"commercial": "0",
+		"undefined": "0"
+	},
+	{
+		"identifier": "OKD Compliant::UK Crown Copyright with data.gov.uk rights",
+		"license": "OGL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "Met Office UK Climate Projections Licence Agreement",
+		"license": "UK Climate Projections License Agreement",
+		"authorship": "1",
+		"reuse": "0",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Copyright  (Copyright Forestry Commission Scotland)\\\"\"]\"\"",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Use limitation dependent upon licence\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Use of the One Scotland Gazetteer data used by this this service is available to any organisation that is a member of the One Scotland Mapping Agreement. It is not currently commercially availabl",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\The dataset is digitised at a scale of 1:50 000\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Copyright\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Scale of digitising means dataset is not appropriate for use at large scaleDataset is complete for Scotland however inconsistencies in parish names could prove problems if using with other datase",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\The data is merely indicative.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Use limitation\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\None\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\The dataset has complete coverage for Scotland, and is clipped to the High Water Mark coastline (OS BoundaryLine).\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "Other::License Not Specified",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\No conditions apply\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\\\\\u00a9 CCGC/CCW 2009. All rights Reserved.\\\\nContains Ordnance Survey Data. Ordnance Survey Licence number 100019741. Crown Copyright and Database Right\\\\n2009.\\\\nThere are no use restrictions o",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Index polygons indicate the location of registered land an index polygon may not show the extent of land comprised in the registered title. Not all land in England and Wales is registered. INSPIR",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\You are authorised to use the Northern Ireland Agency digital data provided, for personal and internal use within an organisation. This is subject to the material being reproduced accurately and",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\You are authorised to use the Northern Ireland Agency digital data provided, for personal and internal u
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "OKD Compliant::Open Data Commons Public Domain Dedication and Licence (PDDL)",
+		"license": "PDDL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\Please note that any provision of the Flood Map for the Manchester Ship Canal, should be accompanied by the following Information Warning. All internal queries should be directed to the local Flo",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\The original source of this dataset is unclear and therefore the data should be used for illustrative purposes only.  For specific information the relevant policy area with the Scottish Governmen",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Data is captured at various scales (1:10,00, 25000, 1250)Some of the data has not been corrected for PAI\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\You may use this data subject to the following terms and conditions. Title, copyright and all other proprietary rights in the digital data remain vested in Northern Ireland Environment Agency and",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Licence\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Open Government Licence, http://www.nationalarchives.gov.uk/doc/open-government-licence/\\\"\"]\"\"",
+		"license": "OGL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\Use limitation\\\"",
+		"license": "\\\"\"Copyright\\\"\"",
+		"authorship": "\\\"\"Licence\\\"\"",
+		"reuse": "\\\"\"Intellectual Property Rights\\\"\"",
+		"redistribution": "\\\"\"Users should refer to the appropriate LPA for definitive boundary information.\\\"\"]\"\"\"",
+		"commercial": "Intellectual Property Right",
+		"undefined": "0"
+	},
+	{
+		"identifier": "[\\The sources of this dataset are unknown.The data should be used for illustrative purposes only however it is the best available dataset at the present time.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\freely available for personal and educational use, charges will apply for other usage e.g. commercial\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\Copyright\\\"",
+		"license": "\\\"\"Intellectual Property Rights\\\"\"",
+		"authorship": "\\\"\"Licence\\\"\"",
+		"reuse": "\\\"\"Restricted\\\"\"]\"\"\"",
+		"redistribution": "Intellectual Property Right",
+		"commercial": "1",
+		"undefined": "0"
+	},
+	{
+		"identifier": "[\\Use limitation dependent upon licence.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Open Government Licence, http://www.nationalarchives.gov.uk/doc/open-government-licence\\\"\"]\"\"",
+		"license": "OGL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\Copyright\\\"",
+		"license": "\\\"\"Intellectual Property Rights\\\"\"",
+		"authorship": "\\\"\"Licence\\\"\"",
+		"reuse": "\\\"\"Restricted\\\"\"",
+		"redistribution": "\\\"\"Should not be used for navigation purposes\\\"\"]\"\"\"",
+		"commercial": "Intellectual Property Right",
+		"undefined": "0"
+	},
+	{
+		"identifier": "[\\License Copyright\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Use limitation dependent upon license\\\"\"]\"\"",
+		"license": "None",
+		"authordnance Survey Licence number 100019741. Crown Copyright and Database Right 2010.\\\\n\\\\nThere are no use restricti",
+		"license": "Ordnance Survey Boundary Line Data",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\The datset is complete for Scotland and follows Ordnance Survey Landline.  Users should be aware that since Health Boards are based on groups of the Local Government Regions and Districts that ex",
+		"license": "Ordnance Survey Boundary Line Data",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\PSMA Member Licence, http://www.ordnancesurvey.co.uk/oswebsite/docs/licences/psma-member-licence.pdf\\\"\"]\"\"",
+		"license": "PSMA Member Licensing",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\see individual dataset metadata record conditions\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\\\\\u00a9 CCGC/CCW 2010. All rights Reserved.\\\\nContains Ordnance Survey Data. Ordnance Survey Licence number 100019741. Crown Copyright and Database Right\\\\n2010.\\\\nThere are no use restrictions o",
+		"license": "Ordnance Survey Boundary Line Data",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\CCGC/CCW 2008 and Crown copyright. All rights reserved. Third parties seeking to re-use this dataset require a CCW licence. It allows reproduction, dissemination and re-use in any format or mediu",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\All interested bodies must have the necessary OS licensing in place to access and download the OS MasterMap derived data.\\\"",
+		"license": "\\\"\"All interested bodies must have the necessary OS licensing in place \"",
+		"authorship": "None",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1",
+		"undefined": "-1"
+	},
+	{
+		"identifier": "[\\You may use this data subject to the following terms and conditions. Title, copyright and all other proprietary rights in the digital data remain vested in Northern Ireland Environment Agency and",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\\\\\u00a9 CCGC/CCW 2010. All rights Reserved.\\\\nContains Ordnance Survey Data. Ordnance Survey Licence number 100019741. Crown Copyright and Database Right 2010.\\\\nThere are no use restrictions on",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Other restrictions\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Reference and PSMA Only\\\"",
+		"license": "\\\"\"http://www.barrowbc.gov.uk/giscopyright\\\"\"]\"\"\"",
+		"authorship": "PSMA Member Licensing",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1",
+		"undefined": "1"
+	},
+	{
+		"identifier": "[\\\\\\u00a9 CCGC/CCW 2010.  All rights Reserved.\\\\nContains Ordnance Survey Data. Ordnance Survey Licence number 100019741. Crown Copyright and Database Right 2010.\\\\nThere are no use restrictions on",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\The data is merely indicative of the presence of a scheduled monument, however a link towards the proper legal document is contained within the attribute data.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "OKD Compliant::Other (Public Domain)",
+		"license": "ODBL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\The history of this dataset is unknown therefore the data should be used for illustrative purposes only.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Use of the data is subject to agreement with the relevant terms and conditions. An annual license fees is applicable for data use.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "Non-OKD Compliant::Met Office UK Climate Projections Licence Agreement",
+		"license": "UK Climate Projections License Agreement",
+		"authorship": "",
+		"reuse": "",
+		"redistribution": "",
+		"commercial": ""
+	},
+	{
+		"identifier": "[\\Dataset is accurate to OS 10K raster data\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\\\\\u00a9 CCGC/CCW 2011. All rights Reserved.\\\\nContains Ordnance Survey Data. Ordnance Survey Licence number 100019741. Crown Copyright and Database Right 2011.\\\\nThere are no use restrictions on",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\The scale of digitising is not known therefore this dataset should be used for illustratice purposes only. This dataset is the best available at present.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\OS Derived data\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\The dataset is complete and accurate to OS 10K raster data.\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\\\\\u00a9 CCGC/CCW 2011. All rights Reserved.\\\\nContains Ordnance Survey Data. Ordnance Survey Licence number 100019741. Crown Copyright and Database Right\\\\n2011.\\\\nThere are no use restrictions o",
+		"license": "Ordnance Survey Boundary Line Data",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Restricted Access to Information and data may only be released subject to agreement with Translink\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\RPublic Sector INSPIRE WMS End User Licence\\\"",
+		"license": "\\\"\"http://www.bit.ly/wmseul\\\"\"]\"\"\"",
+		"authorship": "Public Sector Inspire WMS End User License",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0",
+		"undefined": "0"
+	},
+	{
+		"identifier": "[\\The Flood Map does give a good indication of the areas at risk of flooding in England and Wales, however it cannot provide detail at individual property level. Flood mapping is a complex, detaile",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\The data supplied through this service is subject to PSMA licence terms : www.bit.ly/wmseul\\\"\"]\"\"",
+		"license": "PSMA Member Licensing",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": "[\\Use limitation dependent on licence\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "[\\Licence copyright\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Dataset is complete for Scotland.  Care should be taken when using this dataset with lookups to other postcode based geographies.  Some postcode unit boundaries have changeNone",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "Non-OKD Compliant::Other (Not Open)",
+		"license": "None",
+		"authorship": "1",
+		"reuse": "0",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Dataset is complete for Scotland.Care should be taken when using this dataset with lookups to other postcode based geographies. Some postcode unit boundaries have changed since datazones were cre",
+		"license": "CCW / Crown Copyright",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": "[\\Use limitation please see OS OpenData\\\\u2122 licence\\\"\"]\"\"",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": "Open Database License (ODbL)",
+		"license": "ODBL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence Information Publique"
+	},
+	{
+		"identifier": "",
+		"license": "Licence Information Publique",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Conditions gÃ©nÃ©rales de rÃ©utilisation des informations publiques (APIE)"
+	},
+	{
+		"identifier": "",
+		"license": "APIE",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence EuroStat"
+	},
+	{
+		"identifier": "",
+		"license": "EuroStat",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence inconnue"
+	},
+	{
+		"identifier": "",
+		"license": "None",
+		"authorship": "-1",
+		"reuse": "-1",
+		"redistribution": "-1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence Ouverte / Open Licence"
+	},
+	{
+		"identifier": "",
+		"license": "Licence Ouverte / Open Licence",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence ODBL"
+	},
+	{
+		"identifier": "",
+		"license": "ODBL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence Data Publica"
+	},
+	{
+		"identifier": "",
+		"license": ""
+	},
+	{
+		"identifier": "Licence Data Publica"
+	},
+	{
+		"identifier": "",
+		"license": "1",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence ODBL Ville de Paris"
+	},
+	{
+		"identifier": "",
+		"license": "ODBL",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence du BODACC"
+	},
+	{
+		"identifier": "",
+		"license": "BODACC",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "-1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence La FranÃ§aise des Jeux"
+	},
+	{
+		"identifier": "",
+		"license": "Francaise des Jeux",
+		"authorship": "1",
+		"reuse": "0",
+		"redistribution": "0",
+		"commercial": "0"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence Agence du Patrimoine ImmatÃ©riel de l'Ãtat (Livraison successives de donnÃ©es)"
+	},
+	{
+		"identifier": "",
+		"license": "APIE",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": ""
+	},
+	{
+		"identifier": "Licence Prix-Carburant"
+	},
+	{
+		"identifier": "",
+		"license": "Prix-Carburant",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	},
+	{
+		"identifier": " GNU General Public License v2"
+	},
+	{
+		"identifier": "",
+		"license": "GNU",
+		"authorship": "1",
+		"reuse": "1",
+		"redistribution": "1",
+		"commercial": "1"
+	}
+]

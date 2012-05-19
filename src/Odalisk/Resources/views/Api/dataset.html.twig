@@ -1,7 +1,9 @@
 {% for dataset in datasets %}
-<tr>
-    <td colspan="2" class="dataset-item">
-    {% include 'App:Dataset:table-item.html.twig' with {'dataset': dataset[0]} %}
-    </td>
-</tr>
+    {% if dataset[0] is not null %}
+    <tr>
+        <td colspan="2" class="dataset-item">
+        {% include 'App:Dataset:table-item.html.twig' with {'dataset': dataset[0]} %}
+        </td>
+    </tr>
+    {% endif %}
 {% endfor %}

@@ -9,7 +9,7 @@
     <title>{% block title %}{% endblock %}</title>
     <meta name="description" content="">
 
-    <meta name="viewport" content="width=device-width">
+    
     {% block stylesheets %}
         {# This uses the "assetic pipeline" - it loads style.* from the application bundle #}
         
@@ -79,14 +79,16 @@
                     {% block content %}
 
                     {% endblock %}
-                </div>
-                
-            </div>
-            <hr>
+                    <div class="container">
+                        <hr>
 
-            <footer>
-                <p>&copy; DriceTeam 2012</p>
-            </footer>
+                        <footer>
+                            <p>&copy; DriceTeam 2012</p>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+            
 
         </div><!--/.fluid-container-->
         

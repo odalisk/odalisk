@@ -18,17 +18,78 @@ jQuery(function($) {
     $('#navbar').scrollspy();
     
     
-    $.post(
-        '/app_dev.php/api/html',
-        {
-            'portal_id': [1],
-            'category':  ['Urbanisme','Mobilité']
-        },
-        function(data) {
-            
-        }
-    );
+    
+    
+    
+    $('.tag-list .label').each(function() {
+        $(this).click(function() {
+            if($(this).attr('data-active') == 'true')
+            {
+                $(this).attr('data-active','false');
+                $(this).removeClass('label-success');
+                $(this).children('span').html('+');
+            }
+            else
+            {
+                $(this).attr('data-active','true');
+                $(this).addClass('label-success');
+                $(this).children('span').html('&times;');
+            }
+            window.api.updateResult();
+        });
+    });
+    window.api = new jsApi();
 });
+
+
+
+jsApi = function() {
+    this.request = new Object();
+    
+    
+    this.updateResult = function() {
+        this.updateRequest();
+        this.getData();
+    }
+    
+    this.updateRequest = function() {
+        var labels = $('.tag-list .label').toArray();
+        
+        this.request = new Object();
+        
+        for(var i in labels)
+        {
+            var label = $(labels[i]);
+            
+            if(label.attr('data-active') == 'true')
+            {
+                if(this.request[label.attr('data-type')] == undefined)
+                {
+                    this.request[label.attr('data-type')] = new Array();
+                }
+            
+                this.request[label.attr('data-type')].push(label.attr('data-value'));
+            }
+        }
+    }
+    
+    this.getData = function() {
+        console.log(window.api.request);
+        $.post(
+            '/app_dev.php/api/html',
+            window.api.request,
+            function(data) {
+                window.api.data = data;
+                window.api.updateTable();
+            }
+        );
+    }
+    
+    this.updateTable = function() {
+        console.log($('.request-result').html());
+        $('.request-result').html(window.api.data);
+    }
+}
 
 var konami = document.createElement('input');
 			konami.setAttribute('type','text');		konami.setAttribute('style','position:fixed;left:-100px;top:-100px');

@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Odalisk\Portal
  *
  * @ORM\Table(name="statistics")
- * @ORM\Entity(repositoryClass="Odalisk\Repository\StatisticRepository")
+ * @ORM\Entity(repositoryClass="Odalisk\Repository\PortalRepository")
  */
 class Statistics
 {
@@ -60,6 +60,14 @@ class Statistics
     protected $summaryAndTitleCount;
 
     /**
+     * @var integer $licenseCount
+     *
+     * @ORM\Column(name="license_count", type="integer")
+     */
+    protected $licenseCount;
+
+
+    /**
      * @var string $created_at When did we create this record
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -83,59 +91,204 @@ class Statistics
      */
     protected $portal;
 
-    public function getPortal(){
-        return $this->portal;
+
+    /**
+     * Set datasets_count
+     *
+     * @param integer $datasetsCount
+     */
+    public function setDatasetsCount($datasetsCount)
+    {
+        $this->datasets_count = $datasetsCount;
     }
 
-    public function setPortal($portal){
-        $this->portal = $portal;
-    }
-
-    public function getDatasetCount(){
+    /**
+     * Get datasets_count
+     *
+     * @return integer 
+     */
+    public function getDatasetsCount()
+    {
         return $this->datasets_count;
     }
 
-    public function setDatasetsCount($count){
-        $this->datasets_count = $count;
+    /**
+     * Set inChargePersonCount
+     *
+     * @param integer $inChargePersonCount
+     */
+    public function setInChargePersonCount($inChargePersonCount)
+    {
+        $this->inChargePersonCount = $inChargePersonCount;
     }
 
-    public function getInChargePersonCount(){
+    /**
+     * Get inChargePersonCount
+     *
+     * @return integer 
+     */
+    public function getInChargePersonCount()
+    {
         return $this->inChargePersonCount;
     }
 
-    public function setInChargePersonCount($count){
-        $this->inChargePersonCount = $count;
+    /**
+     * Set releasedOnExistCount
+     *
+     * @param integer $releasedOnExistCount
+     */
+    public function setReleasedOnExistCount($releasedOnExistCount)
+    {
+        $this->releasedOnExistCount = $releasedOnExistCount;
     }
 
-    public function getLastUpdateOnCount(){
-        return $this->lastUpdateOnExistCount;
-    }
-
-    public function setLastUpdatedOnCount($count){
-        $this->lastUpdatedOnExistCount = $count;
-    }
-
-    public function getReleasedOnCount(){
+    /**
+     * Get releasedOnExistCount
+     *
+     * @return integer 
+     */
+    public function getReleasedOnExistCount()
+    {
         return $this->releasedOnExistCount;
     }
 
-    public function setReleasedOnCount($count){
-        $this->releasedOnExistCount = $count;
+    /**
+     * Set lastUpdatedOnExistCount
+     *
+     * @param integer $lastUpdatedOnExistCount
+     */
+    public function setLastUpdatedOnExistCount($lastUpdatedOnExistCount)
+    {
+        $this->lastUpdatedOnExistCount = $lastUpdatedOnExistCount;
     }
 
-    public function getCategoryCount(){
+    /**
+     * Get lastUpdatedOnExistCount
+     *
+     * @return integer 
+     */
+    public function getLastUpdatedOnExistCount()
+    {
+        return $this->lastUpdatedOnExistCount;
+    }
+
+    /**
+     * Set categoryExistCount
+     *
+     * @param integer $categoryExistCount
+     */
+    public function setCategoryExistCount($categoryExistCount)
+    {
+        $this->categoryExistCount = $categoryExistCount;
+    }
+
+    /**
+     * Get categoryExistCount
+     *
+     * @return integer 
+     */
+    public function getCategoryExistCount()
+    {
         return $this->categoryExistCount;
     }
 
-    public function setCategoryCount($count){
-        $this->categoryExistCount = $count;
+    /**
+     * Set summaryAndTitleCount
+     *
+     * @param integer $summaryAndTitleCount
+     */
+    public function setSummaryAndTitleCount($summaryAndTitleCount)
+    {
+        $this->summaryAndTitleCount = $summaryAndTitleCount;
     }
 
-    public function getSummaryAndTitleCount($count){
+    /**
+     * Get summaryAndTitleCount
+     *
+     * @return integer 
+     */
+    public function getSummaryAndTitleCount()
+    {
         return $this->summaryAndTitleCount;
     }
 
-    public function setSummaryAndTitleCount($count){
-        $this->summaryAndTitleCount = $count;
+    /**
+     * Set licenseCount
+     *
+     * @param integer $licenseCount
+     */
+    public function setLicenseCount($licenseCount)
+    {
+        $this->licenseCount = $licenseCount;
+    }
+
+    /**
+     * Get licenseCount
+     *
+     * @return integer 
+     */
+    public function getLicenseCount()
+    {
+        return $this->licenseCount;
+    }
+
+    /**
+     * Set created_at
+     *
+     * @param datetime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return datetime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set updated_at
+     *
+     * @param datetime $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
+    }
+
+    /**
+     * Get updated_at
+     *
+     * @return datetime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * Set portal
+     *
+     * @param Odalisk\Entity\Portal $portal
+     */
+    public function setPortal(\Odalisk\Entity\Portal $portal)
+    {
+        $this->portal = $portal;
+    }
+
+    /**
+     * Get portal
+     *
+     * @return Odalisk\Entity\Portal 
+     */
+    public function getPortal()
+    {
+        return $this->portal;
     }
 }

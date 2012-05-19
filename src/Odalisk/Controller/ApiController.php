@@ -41,13 +41,13 @@ class ApiController extends Controller
         return $response;
     }
     
-    public function portalList($current_portal)
+    public function tagsList($current_portal)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $repository = $em->getRepository('Odalisk\Entity\Portal');
         $portals = $repository->findAll();
-        return $this->render('App:Api:portal-list.html.twig', array('portals' => $portals,
-                                                            'current_portal' => $current_portal));
+        return $this->render('App:Api:tags-list.html.twig', array('portals' => $portals,
+                                                                  'current_portal' => $current_portal));
     }
     
     private function constructQuery($request)
@@ -128,6 +128,17 @@ class ApiController extends Controller
                 $where .= 'd.portal = :portal_'.$key;
                 $params['portal_'.$key] = $value;
             }
+        }
+        
+        $where .= (!$first) ? ' AND ' : ' ';
+        $first = true;
+        
+        if(isset($request['search']))
+        {
+            error_log($request['search']);
+            $where .= 'd.name like :name';
+            $params['name'] = '%'.$request['search'].'%';
+            $first = false;
         }
         
         $where .= (!$first) ? ' AND ' : ' ';

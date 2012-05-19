@@ -21,23 +21,7 @@ jQuery(function($) {
     
     
     
-    $('.tag-list .label').each(function() {
-        $(this).click(function() {
-            if($(this).attr('data-active') == 'true')
-            {
-                $(this).attr('data-active','false');
-                $(this).removeClass('label-success');
-                $(this).children('span').html('+');
-            }
-            else
-            {
-                $(this).attr('data-active','true');
-                $(this).addClass('label-success');
-                $(this).children('span').html('&times;');
-            }
-            window.api.updateResult();
-        });
-    });
+    
     window.api = new jsApi();
     
     
@@ -48,8 +32,10 @@ jQuery(function($) {
 jsApi = function() {
     this.request = {};
     this.page = 0;
+    this.search = '';
     
     this.updateResult = function() {
+        this.resetDisplay();
         this.updateRequest();
         this.getData();
     }
@@ -73,7 +59,7 @@ jsApi = function() {
             }
         }
         
-        console.log(this.request);
+        this.request['search'] = this.search;
     }
     
     this.getData = function() {
@@ -99,7 +85,8 @@ jsApi = function() {
         $('.request-result').append($(window.api.data));
     }
     
-    this.nextPage = function() {
+    this.nextPage = function(elem) {
+        $(elem).parent().parent().remove();
         this.page += 1;
         $.post(
             '/app_dev.php/api/html',
@@ -108,27 +95,56 @@ jsApi = function() {
                 'page_number':this.page
             },
             function(data) {
-                window.api.data = data;
-                window.api.addToTable();
+                
+                if(data == '')
+                {
+                    window.api.noMoreResult();
+                }
+                else
+                {
+                    window.api.data = data;
+                    window.api.addToTable();
+                }
             }
         );
     }
     
+    this.noMoreResult = function() {
+        $('#moreResults').remove();
+    }
     
-    $('#moreResults').click(function() {
-        window.api.nextPage();
+    this.resetDisplay = function() {
+    }
+    
+    //Recherche
+    $('.tag-list .label').each(function() {
+        $(this).click(function() {
+            if($(this).attr('data-active') == 'true')
+            {
+                $(this).attr('data-active','false');
+                $(this).removeClass('label-success');
+                $(this).children('span').html('+');
+            }
+            else
+            {
+                $(this).attr('data-active','true');
+                $(this).addClass('label-success');
+                $(this).children('span').html('&times;');
+            }
+            window.api.updateResult();
+        });
     });
     
-    $(".marginBox.alwaysOnTop, .marginBox.alwaysOnTopFixed").each(function() {
-        $(this).attr("data-top",$(this).offset().top);
+    $('#search').keyup(function() {
+        window.api.search = $(this).val();
+        window.api.updateResult();
     });
     
-    var a = function() {
-      
-    };
-    $(window).scroll(a);a()
     
-
+    
+    //Always on top
+    var a = function() {};
+    $(window).scroll(a);a();
     $(document).scroll(function() {
         var b = $(window).scrollTop();
         var alwaysOnTop = $("#alwaysOnTop");
@@ -136,7 +152,7 @@ jsApi = function() {
         var d = offset.top - 90;
         var c = alwaysOnTop;
         if (b>d) {
-        c.css({position:"fixed",top:"90px", right: (offset.left - 5) +'px'})
+        c.css({position:"fixed",top:"90px", right: (offset.left - 5)})
         } else {
         if (b<=d) {
           c.css({position:"relative",top:"", right: ''})

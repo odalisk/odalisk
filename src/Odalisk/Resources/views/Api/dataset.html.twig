@@ -1,9 +1,16 @@
 {% if datasets|length > 0 %}
-{% for dataset in datasets %}
-    <tr>
-        {% include 'App:Dataset:table-item.html.twig' with {'dataset': dataset[0]} %}
-    </tr>
-{% endfor %}
+    {% for dataset in datasets %}
+        <tr>
+            {% include 'App:Dataset:table-item.html.twig' with {'dataset': dataset[0]} %}
+        </tr>
+    {% endfor %}
+    {% if datasets|length == 20 %}
+        <tr>
+            <td colspan="2" class="dataset-item">
+            <div class="btn btn-large" onclick="window.api.nextPage(this);" id="moreResults">Plus de résultats</div>
+            </td>
+        </tr>
+    {% endif %}
 {% elseif pagenumber != 0 %}
 {% else %}
     <tr>

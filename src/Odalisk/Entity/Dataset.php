@@ -73,14 +73,14 @@ class Dataset
     /**
      * @var string $released_on When did we create this record
      *
-     * @ORM\Column(name="released_on", type="datetime", nullable=true)
+     * @ORM\Column(name="released_on", type="string", nullable=true, length=255)
      */
     protected $released_on;
 
     /**
      * @var string $last_updated_on When did we create this record
      *
-     * @ORM\Column(name="last_updated_on", type="datetime", nullable=true)
+     * @ORM\Column(name="last_updated_on", type="string", nullable=true, length=255)
      */
     protected $last_updated_on;
 

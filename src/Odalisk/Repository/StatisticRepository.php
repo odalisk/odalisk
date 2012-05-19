@@ -19,7 +19,7 @@ class StatisticRepository extends EntityRepository
   public function getInChargePersonCount($portal)
   {
     return $this->getEntityManager()
-            ->createQuery('SELECT count(d) FROM Odalisk\Entity\Dataset d WHERE d.portal = :portal and (d.owner is not null or d.maintainer is not null)')
+            ->createQuery('SELECT count(d) FROM Odalisk\Entity\Dataset d WHERE d.portal = :portal and (d.owner is not null or d.maintainer is not null or d.provider is not null)')
             ->setParameter('portal', $portal)
             ->getSingleScalarResult();
 

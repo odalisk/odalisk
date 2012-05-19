@@ -228,11 +228,13 @@ abstract class BasePlatform {
             if (0 < count($nodes)) {
                 $data[$name] = join(
                     ";",
-                    $nodes->each(
+                    array_filter(
+                        $nodes->each(
                         function($node,$i) {
-                            return $node->nodeValue;
+                            return utf8_decode(trim($node->nodeValue));
                         }
                     )
+                        , 'strlen')
                 );
             }
         }
@@ -264,9 +266,7 @@ abstract class BasePlatform {
      */
     protected function normalizeSummary(&$data)
     {
-        if (array_key_exists('setSummary', $data)) {
-            $data['setSummary'] = trim($data['setSummary']);
-        }
+
     }
     
     /**
@@ -277,10 +277,17 @@ abstract class BasePlatform {
     protected function normalizeCategory(&$data)
     {
         if (array_key_exists('setCategory', $data)) {
-            $data['setCategory'] = trim(implode(';', array_filter(preg_split('/(\s+|&|,|;|et|and)/', $data['setCategory']))));
-                        
-            if(0 === preg_match('/[a-zA-Z;]+/', $data['setCategory'])) {
+
+
+            if(is_array(json_decode($data['setCategory']))){
+                $data['setCategory'] = implode(';', json_decode($data['setCategory']));
+            }
+
+            $data['setCategory'] = trim(implode(';', array_filter(preg_split('/(\s+|&|,|;| et | and |\/|\"\]|\[\")/', $data['setCategory']))));
+
+            if(0 === preg_match('/[a-zA-Z;]+/', $data['setCategory']) or empty($data['setCategory'])) {
                 error_log('[Weird category] ' . $data['setCategory']);
+                unset($data['setCategory']);
             }
         }
     }
@@ -317,7 +324,7 @@ abstract class BasePlatform {
                     // Check if we have a match
                     if(preg_match($regex, $date, $m)) {
                         // Depending on how many matches we have, we know which format to pick
-                        $data[$field] = \Datetime::createFromFormat($formats[count($m)-1], $date);
+                        $data[$field] = \Datetime::createFromFormat($formats[count($m)-1], $date)->format("d m Y");
                         if(false === $data[$field]) {
                             error_log('[>>> False positive ] ' . $date . ' with ' . $regex . ' (count = ' . (count($m)-1) .')');
                             $data[$field] = null;
@@ -333,7 +340,7 @@ abstract class BasePlatform {
                 } else {
                     // Not something we recognize
                     error_log('[Unknown date format ] ' . $date);
-                    $data[$field] = null;
+                    $data[$field] = $date;
                 }
                 $date = null;
             }

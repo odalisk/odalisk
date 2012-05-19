@@ -1,0 +1,16 @@
+{% if current_portal is null %}
+    <li class="nav-header">Portails</li>
+    {% for portal in portals %}
+            <li><span data-value="{{ portal.id }}" data-type="portal" class="label">{{ portal.name }} <span>+</span></span></li>
+    {% endfor %}
+{% else %}
+    <li style="height:0px;padding:0px;margin:0px;overflow:hidden;"><span data-value="{{ current_portal }}" data-active="true" data-type="portal" class="label"></span></li>
+{% endif %}
+<li class="nav-header">Catégories</li>
+<li><span data-value="Urbanisme" data-type="category" class="label">Urbanisme <span>+</span></span></li>
+<li><span data-value="mobilité" data-type="category" class="label">Citoyenneté <span>+</span></span></li>
+<li><span data-value="administration" data-type="category" class="label">Administration <span>+</span></span></li>
+<li><span data-value="environement" data-type="category" class="label">Environnement <span>+</span></span></li>
+<li class="nav-header">Licences</li>
+<li><span data-value="odbl" data-type="licence" class="label">ODbL <span>+</span></span></li>
+<li><span data-value="odcl" data-type="licence" class="label">ODcL <span>+</span></span></li>

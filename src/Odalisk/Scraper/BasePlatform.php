@@ -230,7 +230,7 @@ abstract class BasePlatform {
                     ";",
                     $nodes->each(
                         function($node,$i) {
-                            return $node->nodeValue;
+                            return trim($node->nodeValue);
                         }
                     )
                 );
@@ -277,10 +277,11 @@ abstract class BasePlatform {
     protected function normalizeCategory(&$data)
     {
         if (array_key_exists('setCategory', $data)) {
-            $data['setCategory'] = trim(implode(';', array_filter(preg_split('/(\s+|&|,|;|et|and)/', $data['setCategory']))));
-                        
-            if(0 === preg_match('/[a-zA-Z;]+/', $data['setCategory'])) {
+            $data['setCategory'] = trim(implode(';', array_filter(preg_split('/(\s+|&|,|;|et|and|\"\]|\[\")/', $data['setCategory']))));
+
+            if(0 === preg_match('/[a-zA-Z;]+/', $data['setCategory']) or empty($data['setCategory'])) {
                 error_log('[Weird category] ' . $data['setCategory']);
+                unset($data['setCategory']);
             }
         }
     }

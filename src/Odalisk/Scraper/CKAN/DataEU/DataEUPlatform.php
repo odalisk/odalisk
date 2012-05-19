@@ -8,11 +8,12 @@ class DataEUPlatform extends BaseCKAN {
     public function __construct() {
         $this->criteria = array(
             'setName' => '//h1[@class="page_heading"]',
-            'setSummary' => '//div[@class="notes"]/p',
+            'setSummary' => './/*[@id="notes-extract"]/p',
             'setReleasedOn' => '//td[.="date_released" and @class="dataset-label"]/../td[2]',
             'setLastUpdatedOn' => '//td[.="date_updated" and @class="dataset-label"]/../td[2]',
             'setProvider' => '//td[.="published_by" and @class="dataset-label"]/../td[2]',
-            'setLicense' => '/li[@id="dataset-license" and @class="sidebar-section"]'
+            'setLicense' => '/li[@id="dataset-license" and @class="sidebar-section"]',
+            'setCategory' => '//td[text()="categories"]/following-sibling::*'
         );
 
         $this->dateFormat = 'Y-m-d';

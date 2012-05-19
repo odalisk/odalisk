@@ -1,10 +1,10 @@
-{% if datasets|length > 0 %}
-    {% for dataset in datasets %}
-        {% include 'App:Dataset:table-item.html.twig' with {'dataset': dataset[0]} %}
+{% if portals|length > 0 %}
+    {% for portal in portals %}
+        {% include 'App:Portal:table-item.html.twig' with {'portal': portal} %}
     {% endfor %}
-    {% if datasets|length == 20 %}
+    {% if portals|length == 20 %}
         <tr>
-            <td colspan="3" class="dataset-item">
+            <td colspan="2" class="portal-item">
             <div class="btn btn-large" onclick="window.api.nextPage(this);" id="moreResults">Plus de résultats</div>
             </td>
         </tr>
@@ -12,7 +12,7 @@
 {% elseif pagenumber != 0 %}
 {% else %}
     <tr class="no-result">
-        <td colspan="3" class="dataset-item">
+        <td colspan="3" class="portal-item">
             <h2>Aucun résultat</h2>
         </td>
     </tr>

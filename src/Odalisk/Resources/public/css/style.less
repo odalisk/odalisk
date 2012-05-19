@@ -213,8 +213,44 @@ body {
         }
     }
     
+    #moreResults {
+        display:block;
+        margin:auto;
+        position:relative;
+    }
+    
+    
     
     table.table-dataset-list, .table-portal-list {
+        
+        &.table-striped {
+          tbody {
+            tr:nth-child(odd) td,
+            tr:nth-child(odd) td {
+              background-color: white;
+            }
+          }
+        }
+
+        &.table-striped {
+          tbody {
+            tr:nth-child(4n+1) td,
+            tr:nth-child(4n+2) td {
+              background-color: @tableBackgroundAccent - #050505;
+            }
+          }
+        }
+        
+
+        &.table {
+            
+          tbody tr:hover td,
+          tbody tr:hover th {
+            background-color: auto;
+          }
+          
+        }
+        
         .badge {
             position:relative;
             top:-10px;
@@ -268,7 +304,11 @@ body {
                 }
             }
         }
+        
+        
     }
+    
+    
 }
 
 
@@ -299,6 +339,12 @@ body {
         header.hero-unit {
             p {
                 font-size:18px;
+                font-weight:200;
+            }
+            
+            a.btn {
+                margin-left:5px;
+                margin-right:5px;
             }
             
             div {

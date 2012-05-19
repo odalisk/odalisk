@@ -316,8 +316,6 @@ abstract class BasePlatform {
         $normalized_formats = array("KMZ","CSV","XML","PDF","XLS","HTML","TXT","RDF","PPT","SHP","DOC","ZIP","JSON","RSS","API","WMS","Unknown","ASP","JPG","ATOM","ODS","GTFS");
 
         if (array_key_exists('setFormat', $data)) {
-                
-
                 $formats = preg_split('/;/',$data['setFormat']);
                 $formats = array_unique($formats);
                 $output = array();

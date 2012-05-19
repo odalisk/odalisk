@@ -374,4 +374,24 @@ class Dataset
     {
         return $this->portal;
     }
+
+    /**
+     * Add categories
+     *
+     * @param Odalisk\Entity\Category $categories
+     */
+    public function addCategory(\Odalisk\Entity\Category $categories)
+    {
+        $this->categories[] = $categories;
+    }
+
+    /**
+     * Get categories
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
 }

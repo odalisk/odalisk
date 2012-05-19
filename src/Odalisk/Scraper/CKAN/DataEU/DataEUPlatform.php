@@ -32,13 +32,6 @@ class DataEUPlatform extends BaseCKAN {
 
     protected function additionalNormalization(&$data)
     {
-        if (array_key_exists('setName', $data)) {
-            $data['setName'] = utf8_decode($data['setName']);
-        }
-        if (array_key_exists('setSummary', $data)) {
-            $data['setSummary'] = utf8_decode($data['setSummary']);
-        }
-
         $inChargeFields = array('setOwner','setMaintainer');
         foreach ($inChargeFields as $field) {
             if (array_key_exists($field, $data)) {

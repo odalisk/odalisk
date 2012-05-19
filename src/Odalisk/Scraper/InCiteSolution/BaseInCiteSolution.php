@@ -23,7 +23,7 @@ abstract class BaseInCiteSolution extends BasePlatform {
             'setMaintainer' => ".//*[@class='tx_icsoddatastore_pi1_manager separator']/span[@class='value']",
             'setOwner' => ".//*[@class='tx_icsoddatastore_pi1_owner separator']/span[@class='value']",
             //'Technical data' => ".//*[@class='tx_icsoddatastore_pi1_technical_data separator']/span[@class='value']",
-            //'Formats' => ".//*[@class='tx_icsoddatastore_pi1_file']/a/img/@alt",
+            'setFormat' => ".//*[@class='tx_icsoddatastore_pi1_file']/a/img/@alt",
              );
 
         $this->dateFormat = 'd/m/Y';

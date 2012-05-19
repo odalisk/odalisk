@@ -8,12 +8,15 @@ class DataEUPlatform extends BaseCKAN {
     public function __construct() {
         $this->criteria = array(
             'setName' => '//h1[@class="page_heading"]',
-            'setSummary' => '//div[@class="notes"]/p',
+            'setSummary' => './/*[@id="notes-extract"]/p',
             'setReleasedOn' => '//td[.="date_released" and @class="dataset-label"]/../td[2]',
+            'setOwner' => './/*[@property="dc:creator"]',
+            'setMaintainer' => './/*[@property="dc:contributor"]',
             'setLastUpdatedOn' => '//td[.="date_updated" and @class="dataset-label"]/../td[2]',
             'setProvider' => '//td[.="published_by" and @class="dataset-label"]/../td[2]',
             'setLicense' => '/li[@id="dataset-license" and @class="sidebar-section"]',
-            'setCategories' => '//td[text()=\'categories\']/following-sibling::*',
+            'setCategory' => '//td[text()="categories"]/following-sibling::*',
+            'setFormat' => './/*[@property="dc:format"]'
         );
 
         $this->dateFormat = 'Y-m-d';
@@ -24,6 +27,25 @@ class DataEUPlatform extends BaseCKAN {
         // Deal with UTF8
         foreach($data as $key => $value) {
             $data[$key] = utf8_decode($value);
+        }
+    }
+
+    protected function additionalNormalization(&$data)
+    {
+        if (array_key_exists('setName', $data)) {
+            $data['setName'] = utf8_decode($data['setName']);
+        }
+        if (array_key_exists('setSummary', $data)) {
+            $data['setSummary'] = utf8_decode($data['setSummary']);
+        }
+
+        $inChargeFields = array('setOwner','setMaintainer');
+        foreach ($inChargeFields as $field) {
+            if (array_key_exists($field, $data)) {
+                if(preg_match("/not given/i",$data[$field])){
+                    unset($data[$field]);
+                }
+            }
         }
     }
 

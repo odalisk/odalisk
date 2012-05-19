@@ -31,6 +31,7 @@ class DataPublicaPlatform extends BasePlatform
             'setSummary' => ".//*[@id='description']",
             //'setMaintainer' => ".//*[@id='publication_tab_container']/ul/li[1]/div[2]/a",
             'setOwner' => "//div/h5[text()='Editeur']/../following-sibling::*",
+            'setFormat' => './/*[@class="format"]/li',
         );
 
         $this->datasetsListUrl = 'http://www.data-publica.com/search/?page=';

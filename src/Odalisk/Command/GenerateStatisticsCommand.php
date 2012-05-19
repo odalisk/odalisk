@@ -62,10 +62,11 @@ class GenerateStatisticsCommand extends ContainerAwareCommand
             $stats->setPortal($portal);
             $stats->setDatasetsCount($statsRepository->getDatasetsCount($portal));
             $stats->setInChargePersonCount($statsRepository->getInChargePersonCount($portal));
-            $stats->setReleasedOnCount($statsRepository->getReleasedOnExistCount($portal));
-            $stats->setLastUpdatedOnCount($statsRepository->getLastUpdatedOnExistCount($portal));
-            $stats->setCategoryCount($statsRepository->getCategoryExistCount($portal));
+            $stats->setReleasedOnExistCount($statsRepository->getReleasedOnExistCount($portal));
+            $stats->setLastUpdatedOnExistCount($statsRepository->getLastUpdatedOnExistCount($portal));
+            $stats->setCategoryExistCount($statsRepository->getCategoryExistCount($portal));
             $stats->setSummaryAndTitleCount($statsRepository->getSummaryAndTitleAtLeastCount($portal));
+            $stats->setLicenseCount($statsRepository->getlicenseCount($portal));
             $this->em->persist($stats);
             $this->em->flush();
         }

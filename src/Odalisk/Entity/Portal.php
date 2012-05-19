@@ -12,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Odalisk\Portal
  *
  * @ORM\Table(name="portals")
- * @ORM\Entity(repositoryClass="Odalisk\Repository\StatisticRepository")
+ * @ORM\Entity(repositoryClass="Odalisk\Repository\PortalRepository")
  */
 class Portal
 {

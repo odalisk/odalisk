@@ -98,4 +98,9 @@ class PortalController extends Controller
             'end' => $end,
             'search' => $search));
     }
+    
+    public function getPortalList()
+    {
+        
+    }
 }

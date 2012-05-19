@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Odalisk\Portal
  *
  * @ORM\Table(name="statistics")
- * @ORM\Entity(repositoryClass="Odalisk\Repository\StatisticRepository")
+ * @ORM\Entity(repositoryClass="Odalisk\Repository\PortalRepository")
  */
 class Statistics
 {
@@ -60,6 +60,14 @@ class Statistics
     protected $summaryAndTitleCount;
 
     /**
+     * @var integer $licenseCount
+     *
+     * @ORM\Column(name="license_count", type="integer")
+     */
+    protected $licenseCount;
+
+
+    /**
      * @var string $created_at When did we create this record
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -83,60 +91,15 @@ class Statistics
      */
     protected $portal;
 
-    public function getPortal(){
-        return $this->portal;
-    }
 
-    public function setPortal($portal){
-        $this->portal = $portal;
-    }
-
-    public function getDatasetCount(){
-        return $this->datasets_count;
-    }
-
-    public function setDatasetsCount($count){
-        $this->datasets_count = $count;
-    }
-
-    public function getInChargePersonCount(){
-        return $this->inChargePersonCount;
-    }
-
-    public function setInChargePersonCount($count){
-        $this->inChargePersonCount = $count;
-    }
-
-    public function getLastUpdateOnCount(){
-        return $this->lastUpdateOnExistCount;
-    }
-
-    public function setLastUpdatedOnCount($count){
-        $this->lastUpdatedOnExistCount = $count;
-    }
-
-    public function getReleasedOnCount(){
-        return $this->releasedOnExistCount;
-    }
-
-    public function setReleasedOnCount($count){
-        $this->releasedOnExistCount = $count;
-    }
-
-    public function getCategoryCount(){
-        return $this->categoryExistCount;
-    }
-
-    public function setCategoryCount($count){
-        $this->categoryExistCount = $count;
-    }
-
-    public function getSummaryAndTitleCount($count){
-        return $this->summaryAndTitleCount;
-    }
-
-    public function setSummaryAndTitleCount($count){
-        $this->summaryAndTitleCount = $count;
+    /**
+     * Set datasets_count
+     *
+     * @param integer $datasetsCount
+     */
+    public function setDatasetsCount($datasetsCount)
+    {
+        $this->datasets_count = $datasetsCount;
     }
 
     /**
@@ -147,6 +110,26 @@ class Statistics
     public function getDatasetsCount()
     {
         return $this->datasets_count;
+    }
+
+    /**
+     * Set inChargePersonCount
+     *
+     * @param integer $inChargePersonCount
+     */
+    public function setInChargePersonCount($inChargePersonCount)
+    {
+        $this->inChargePersonCount = $inChargePersonCount;
+    }
+
+    /**
+     * Get inChargePersonCount
+     *
+     * @return integer 
+     */
+    public function getInChargePersonCount()
+    {
+        return $this->inChargePersonCount;
     }
 
     /**
@@ -210,6 +193,46 @@ class Statistics
     }
 
     /**
+     * Set summaryAndTitleCount
+     *
+     * @param integer $summaryAndTitleCount
+     */
+    public function setSummaryAndTitleCount($summaryAndTitleCount)
+    {
+        $this->summaryAndTitleCount = $summaryAndTitleCount;
+    }
+
+    /**
+     * Get summaryAndTitleCount
+     *
+     * @return integer 
+     */
+    public function getSummaryAndTitleCount()
+    {
+        return $this->summaryAndTitleCount;
+    }
+
+    /**
+     * Set licenseCount
+     *
+     * @param integer $licenseCount
+     */
+    public function setLicenseCount($licenseCount)
+    {
+        $this->licenseCount = $licenseCount;
+    }
+
+    /**
+     * Get licenseCount
+     *
+     * @return integer 
+     */
+    public function getLicenseCount()
+    {
+        return $this->licenseCount;
+    }
+
+    /**
      * Set created_at
      *
      * @param datetime $createdAt
@@ -247,5 +270,25 @@ class Statistics
     public function getUpdatedAt()
     {
         return $this->updated_at;
+    }
+
+    /**
+     * Set portal
+     *
+     * @param Odalisk\Entity\Portal $portal
+     */
+    public function setPortal(\Odalisk\Entity\Portal $portal)
+    {
+        $this->portal = $portal;
+    }
+
+    /**
+     * Get portal
+     *
+     * @return Odalisk\Entity\Portal 
+     */
+    public function getPortal()
+    {
+        return $this->portal;
     }
 }

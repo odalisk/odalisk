@@ -15,20 +15,7 @@
             <thead>
                 <tr>
                     <th><h2>Liste des plateformes</h2></th>
-                    <th class="page_from_to">
-                        <div class="pagination">
-                          <ul>
-                            {% if page_from != 0 %}
-                                <li><a href="{{ path('portals', { 'page_number':(page_number - 1)  }) }}">Prev</a></li>
-                            {% endif %}
-                            <li class="active">
-                              <a href="#">{{ page_from }} - {{ page_to }}</a>
-                            </li>
-                            {% if not end %}
-                                <li><a href="{{ path('portals', { 'page_number':(page_number + 1)  }) }}">Next</a></li>
-                            {% endif %}
-                          </ul>
-                        </div>
+                    <th colspan="2" class="page_from_to">
                     </th>
                 </tr>
             </thead>

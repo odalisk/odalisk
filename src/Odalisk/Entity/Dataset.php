@@ -71,16 +71,23 @@ class Dataset
     protected $categories;
 
     /**
+     * @var string $format
+     *
+     * @ORM\Column(name="format", type="string", nullable=true, length=255)
+     */
+    protected $format;
+
+    /**
      * @var string $released_on When did we create this record
      *
-     * @ORM\Column(name="released_on", type="datetime", nullable=true)
+     * @ORM\Column(name="released_on", type="string", nullable=true, length=255)
      */
     protected $released_on;
 
     /**
      * @var string $last_updated_on When did we create this record
      *
-     * @ORM\Column(name="last_updated_on", type="datetime", nullable=true)
+     * @ORM\Column(name="last_updated_on", type="string", nullable=true, length=255)
      */
     protected $last_updated_on;
 
@@ -186,6 +193,46 @@ class Dataset
     public function getSummary()
     {
         return $this->summary;
+    }
+
+    /**
+     * Set category
+     *
+     * @param string $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set format
+     *
+     * @param string $category
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
+    }
+
+    /**
+     * Get format
+     *
+     * @return string
+     */
+    public function getFormat()
+    {
+        return $this->format;
     }
 
     /**
@@ -326,32 +373,5 @@ class Dataset
     public function getPortal()
     {
         return $this->portal;
-    }
-
-    /**
-     * Add categories
-     *
-     * @param Odalisk\Entity\Category $categories
-     */
-    public function addCategory(\Odalisk\Entity\Category $categories)
-    {
-        $this->categories[] = $categories;
-    }
-    
-    public function setCategories(array $categories)
-    {
-        foreach($categories as $category) {
-            $this->addCategory($category);
-        }
-    }
-
-    /**
-     * Get categories
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getCategories()
-    {
-        return $this->categories;
     }
 }

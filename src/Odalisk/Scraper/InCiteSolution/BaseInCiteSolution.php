@@ -14,7 +14,7 @@ abstract class BaseInCiteSolution extends BasePlatform {
     public function __construct() {
         $this->criteria = array(
             'setName' => ".//*[@class='tx_icsoddatastore_pi1_single']/h1",
-            'setCategory' => ".//*[@class='tx_icsoddatastore_pi1_categories separator']/span[@class='value']",
+            'setCategories' => ".//*[@class='tx_icsoddatastore_pi1_categories separator']/span[@class='value']",
             'setLicense' => ".//*[@class='tx_icsoddatastore_pi1_licence separator']/span[@class='value']",
             // 'Update Frequency' => ".//*[@class='tx_icsoddatastore_pi1_updatefrequency separator']/span[@class='value']",
             'setReleasedOn' => ".//*[@class='tx_icsoddatastore_pi1_releasedate separator']/span[@class='value']",

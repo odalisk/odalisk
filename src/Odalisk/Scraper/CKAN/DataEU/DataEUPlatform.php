@@ -12,10 +12,19 @@ class DataEUPlatform extends BaseCKAN {
             'setReleasedOn' => '//td[.="date_released" and @class="dataset-label"]/../td[2]',
             'setLastUpdatedOn' => '//td[.="date_updated" and @class="dataset-label"]/../td[2]',
             'setProvider' => '//td[.="published_by" and @class="dataset-label"]/../td[2]',
-            'setLicense' => '/li[@id="dataset-license" and @class="sidebar-section"]'
+            'setLicense' => '/li[@id="dataset-license" and @class="sidebar-section"]',
+            'setCategories' => '//td[text()=\'categories\']/following-sibling::*',
         );
 
         $this->dateFormat = 'Y-m-d';
+    }
+    
+    protected function additionalExtraction($crawler, &$data) 
+    {
+        // Deal with UTF8
+        foreach($data as $key => $value) {
+            $data[$key] = utf8_decode($value);
+        }
     }
 
     public function parsePortal() {

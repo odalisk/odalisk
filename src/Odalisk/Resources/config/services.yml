@@ -20,6 +20,10 @@ services:
         arguments:
             - %buzz_options%
             - %request_dispatcher.timeout%
+    category_normalizer:
+        class: Odalisk\Scraper\Tools\Normalize\CategoryNormalizer
+        arguments:
+            - @doctrine
     base_platform:
         class: %base_platform.class%
         abstract:  true
@@ -27,11 +31,11 @@ services:
             - [ setBuzz, [ @buzz, %buzz_timout% ] ]
             - [ setBuzzOptions, [ %buzz_options% ] ]
             - [ setDoctrine, [ @doctrine ] ]
+            - [ setCategoryNormalizer, [@category_normalizer ] ]
     base_inCiteSolution:
         class: Odalisk\Scraper\InCiteSolution\BaseInCiteSolution
         abstract:  true
         parent:  base_platform
-
     nantes:
         class: Odalisk\Scraper\InCiteSolution\Nantes\NantesPlatform
         parent: base_inCiteSolution

@@ -26,7 +26,7 @@ abstract class BaseSocrata extends BasePlatform {
             , 'setReleasedOn' => '//span[@class="aboutCreateDate"]/span'
             , 'setSummary' => '//div[@class="aboutDataset"]/div[2]/div/p'
             , 'setLastUpdatedOn' => '//span[@class="aboutUpdateDate"]/span'
-            , 'setCategory' => '//div[@class="aboutDataset"]/div[4]/dl/dd[1]'
+            , 'setCategories' => '//div[@class="aboutDataset"]/div[4]/dl/dd[1]'
             //, 'Tags' => '//div[@class="aboutDataset"]/div[4]/dl/dd[3]'
             //, 'Permissions' => '//div[@class="aboutDataset"]/div[4]/dl/dd[2]'
             , 'setProvider' => '//div[@class="aboutDataset"]/div[7]/dl/dd[1]'

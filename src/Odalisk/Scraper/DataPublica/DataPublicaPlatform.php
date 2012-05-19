@@ -24,7 +24,7 @@ class DataPublicaPlatform extends BasePlatform
     {
         $this->criteria = array(
             'setName' => ".//*[@id='content']/article[1]/h2",
-            'setCategory' => "//div/h5[text()='Catégories']/../following-sibling::*/ul/li/a",
+            'setCategories' => "//div/h5[text()='Catégories']/../following-sibling::*/ul/li/a",
             'setLicense' => "//div/h5[text()='Licence']/../following-sibling::*",
             'setReleasedOn' => "//div/h5[text()='Date de création']/../following-sibling::*",
             'setLastUpdatedOn' => "//div/h5[text()='Date de mise à jour']/../following-sibling::*",
@@ -92,13 +92,6 @@ class DataPublicaPlatform extends BasePlatform
         // Convert dates to known format
         foreach($this->dateFields as $field) {
             $data[$field] = $this->translateDate($data[$field]);
-        }
-    }
-
-    protected function additionalNormalization(&$data)
-    {
-        if (array_key_exists('setCategory', $data)) {
-            $data['setCategory'] = str_replace(';de;', ' de ', $data['setCategory']);
         }
     }
 

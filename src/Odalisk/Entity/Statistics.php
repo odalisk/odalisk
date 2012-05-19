@@ -138,4 +138,114 @@ class Statistics
     public function setSummaryAndTitleCount($count){
         $this->summaryAndTitleCount = $count;
     }
+
+    /**
+     * Get datasets_count
+     *
+     * @return integer 
+     */
+    public function getDatasetsCount()
+    {
+        return $this->datasets_count;
+    }
+
+    /**
+     * Set releasedOnExistCount
+     *
+     * @param integer $releasedOnExistCount
+     */
+    public function setReleasedOnExistCount($releasedOnExistCount)
+    {
+        $this->releasedOnExistCount = $releasedOnExistCount;
+    }
+
+    /**
+     * Get releasedOnExistCount
+     *
+     * @return integer 
+     */
+    public function getReleasedOnExistCount()
+    {
+        return $this->releasedOnExistCount;
+    }
+
+    /**
+     * Set lastUpdatedOnExistCount
+     *
+     * @param integer $lastUpdatedOnExistCount
+     */
+    public function setLastUpdatedOnExistCount($lastUpdatedOnExistCount)
+    {
+        $this->lastUpdatedOnExistCount = $lastUpdatedOnExistCount;
+    }
+
+    /**
+     * Get lastUpdatedOnExistCount
+     *
+     * @return integer 
+     */
+    public function getLastUpdatedOnExistCount()
+    {
+        return $this->lastUpdatedOnExistCount;
+    }
+
+    /**
+     * Set categoryExistCount
+     *
+     * @param integer $categoryExistCount
+     */
+    public function setCategoryExistCount($categoryExistCount)
+    {
+        $this->categoryExistCount = $categoryExistCount;
+    }
+
+    /**
+     * Get categoryExistCount
+     *
+     * @return integer 
+     */
+    public function getCategoryExistCount()
+    {
+        return $this->categoryExistCount;
+    }
+
+    /**
+     * Set created_at
+     *
+     * @param datetime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return datetime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set updated_at
+     *
+     * @param datetime $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
+    }
+
+    /**
+     * Get updated_at
+     *
+     * @return datetime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
 }

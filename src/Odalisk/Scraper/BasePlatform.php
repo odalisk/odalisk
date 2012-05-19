@@ -6,6 +6,8 @@ use Symfony\Component\DomCrawler\Crawler;
 
 use Buzz\Message;
 
+use Odalisk\Scraper\Tools\Normalize\CategoryNormalizer;
+
 
 abstract class BasePlatform {
     /**
@@ -126,6 +128,8 @@ abstract class BasePlatform {
      * @var array $emptyDates
      */
     protected $emptyDates = array('N/A', 'n/a', 'TBC', 'not known', '');
+    
+    protected $categoryNormalizer;
 
     /**
      * The platform's datasets URLs list
@@ -276,12 +280,8 @@ abstract class BasePlatform {
      **/
     protected function normalizeCategory(&$data)
     {
-        if (array_key_exists('setCategory', $data)) {
-            $data['setCategory'] = trim(implode(';', array_filter(preg_split('/(\s+|&|,|;|et|and)/', $data['setCategory']))));
-                        
-            if(0 === preg_match('/[a-zA-Z;]+/', $data['setCategory'])) {
-                error_log('[Weird category] ' . $data['setCategory']);
-            }
+        if (array_key_exists('setCategories', $data)) {
+            $data['setCategories'] = $this->categoryNormalizer->getCategories($data['setCategories']);
         }
     }
     
@@ -296,7 +296,7 @@ abstract class BasePlatform {
             if ($data['setLicense'] == '[]') {
                 unset($data['setLicense']);
             } elseif (preg_match('/(OKD Compliant::)?UK Open Government Licence \(OGL\)/', $data['setLicense'])) {
-                    $data['setLicense'] = 'OGL';
+                $data['setLicense'] = 'OGL';
             }
         }
     }
@@ -362,6 +362,11 @@ abstract class BasePlatform {
     public function setDoctrine($doctrine) {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getEntityManager();
+    }
+    
+    public function setCategoryNormalizer($categoryNormalizer)
+    {
+        $this->categoryNormalizer = $categoryNormalizer;
     }
 
     public function setName($name) {

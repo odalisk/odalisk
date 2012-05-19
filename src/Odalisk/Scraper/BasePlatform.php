@@ -323,7 +323,7 @@ abstract class BasePlatform {
     protected function normalizeFormat(&$data)
     {
 
-        $wild_formats = array("/.*kmz.*/i","/.*csv.*/i","/.*xml.*/i","/.*pdf.*/i","/.*(xls|excel).*/i","/.*(html|htm)/i","/text.*/i","/rdf/i","/ppt/i","/.*shp.*/i","/doc/i","/zip/i","/json/i","/rss/i","/api/i","/wms/i","/Unverified/","/asp/i","/(image\/jpg|jpg)/i","/atom/i","/ods/i","/gtfs/i");
+        $wild_formats = array("/.*kmz.*/i","/.*csv.*/i","/.*xml.*/i","/.*pdf.*/i","/((.*(xls|vnd.ms-excel).*)|excel)/i","/.*(html|htm).*/i","/text.*/i","/rdf/i","/ppt/i","/.*shp.*/i","/.*(vnd.ms-word|doc).*/i","/.*zip.*/i","/.*json.*/i","/rss/i","/api/i","/wms/i","/.*(Otros|Unverified).*/i","/asp/i","/(image\/jpg|jpg)/i","/atom/i","/.*(openDOCument.spreadsheet|ods).*/i","/gtfs/i");
         $normalized_formats = array("KMZ","CSV","XML","PDF","XLS","HTML","TXT","RDF","PPT","SHP","DOC","ZIP","JSON","RSS","API","WMS","Unknown","ASP","JPG","ATOM","ODS","GTFS");
 
         if (array_key_exists('setFormat', $data)) {

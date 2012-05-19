@@ -84,4 +84,9 @@ abstract class BaseSocrata extends BasePlatform {
 
         return $this->urls;
     }
+
+    protected function additionalExtraction($crawler, &$data) 
+    {
+        $data['setFormat'] = "CSV;JSON;PDF;RDF;RSS;XLS;XLSX;XML";
+    }
 }

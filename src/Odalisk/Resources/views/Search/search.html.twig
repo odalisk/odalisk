@@ -1,0 +1,32 @@
+{% extends "App::browser.html.twig" %}
+
+{% block title %}Odalisk project{% endblock %}
+
+{% block content %}
+<div class="row-fluid row-nomargin-top">
+    <div class="span12">
+        <ul class="breadcrumb">
+          <li>
+            <a href="{{ path('portals') }}">Portals</a> <span class="divider">/</span>
+            <li class="active">Search</li>
+          </li>
+          <li class="active"></li>
+        </ul>
+        <div class="well hero-unit hero-unit-intro">
+            
+        </div>
+        <div class="fluid-container">
+            <div class="row-fluid row-nomargin-top">
+                <div class="span12">
+                    {% include "App:Search:dataset-list.html.twig" with {'current_portal': null} %}
+                </div>
+            </div><!--/row-->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block jsvariables %}
+    window.searchType = "dataset";  
+    {{ parent() }}
+{% endblock %}

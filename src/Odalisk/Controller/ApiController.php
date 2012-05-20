@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ApiController extends Controller
 {
+    private $type;
+    
     /**
      * api.
      */
@@ -17,8 +19,12 @@ class ApiController extends Controller
         
         $request = $this->getRequest();
         $params = $request->request->all();
+        $this->type = $params['type'];
+        
         $params['page_number'] = intval($params['page_number']);
         $result = $this->constructQuery($params);
+        
+        
         
         if($_format == 'json')
         {
@@ -26,14 +32,14 @@ class ApiController extends Controller
         }
         else
         {
-            if(count($result) != 0)
+            if($this->type == 'dataset')
             {
                 $response = $this->render('App:Api:dataset.html.twig', array('datasets' => $result,
                                                                              'pagenumber' => $params['page_number']));
             }
-            else
+            else if($this->type == 'portal')
             {
-                $response = $this->render('App:Api:dataset.html.twig', array('datasets' => array(),
+                $response = $this->render('App:Api:portal.html.twig', array('portals' => $result,
                                                                              'pagenumber' => $params['page_number']));
             }
         }
@@ -54,21 +60,34 @@ class ApiController extends Controller
     {
         $repository = $this->getDoctrine()
             ->getRepository('Odalisk\Entity\Dataset');
-
-        $qb = $repository->createQueryBuilder('d');
+        
         
         $forWhere = (isset($request['request'])) ? $request['request'] : array() ;
-        
         $result = $this->getWhere($forWhere);
         
-        $qb->addSelect('d')
-           ->addSelect('p.id as portal_id, p.name as portal_name')
-           ->add('from', 'Odalisk\Entity\Portal p, Odalisk\Entity\Dataset d')
-           ->add('where', $result['where'])
-           ->add('orderBy', 'd.name ASC')
-           ->setFirstResult(20 * $request['page_number'])
-           ->setMaxResults(20)
-           ->setParameters($result['params']);
+        $qb = null;
+        error_log($this->type);
+        if($this->type == 'dataset')
+        {
+            $qb = $repository->createQueryBuilder('d');
+            $qb->addSelect('d')
+               ->addSelect('p.id as portal_id, p.name as portal_name')
+               ->add('from', 'Odalisk\Entity\Portal p, Odalisk\Entity\Dataset d')
+               ->add('orderBy', 'd.name ASC');
+        }
+        else if($this->type == 'portal')
+        {
+            $qb = $repository->createQueryBuilder('p');
+            $qb->addSelect('p')
+               ->add('from', 'Odalisk\Entity\Portal p')
+               ->add('orderBy', 'p.name ASC');
+        }
+        
+        $qb->add('where', $result['where'])
+            ->setFirstResult(20 * $request['page_number'])
+            ->setMaxResults(20)
+            ->setParameters($result['params']);
+        
         
         $query = $qb->getQuery();
         
@@ -133,18 +152,32 @@ class ApiController extends Controller
         $where .= (!$first) ? ' AND ' : ' ';
         $first = true;
         
-        if(isset($request['search']))
+        
+        
+        if($this->type == 'dataset')
         {
-            error_log($request['search']);
-            $where .= 'd.name like :name';
-            $params['name'] = '%'.$request['search'].'%';
-            $first = false;
+            if(isset($request['search']))
+            {
+                $where .= 'd.name like :name';
+                $params['name'] = '%'.$request['search'].'%';
+                $first = false;
+            }
+            
+            $where .= (!$first) ? ' AND ' : ' ';
+            $first = true;
+        
+            $where .= 'p.id = d.portal AND (d.name IS NOT NULL OR d.name != \'\')';
+        }
+        else if($this->type == 'portal')
+        {
+            if(isset($request['search']))
+            {
+                $where .= 'p.name like :name';
+                $params['name'] = '%'.$request['search'].'%';
+                $first = false;
+            }
         }
         
-        $where .= (!$first) ? ' AND ' : ' ';
-        $first = true;
-        
-        $where .= 'p.id = d.portal AND (d.name IS NOT NULL OR d.name != \'\')';
         error_log($where);
         error_log(json_encode($params));
         return array('where' => $where,

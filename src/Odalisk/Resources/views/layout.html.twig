@@ -101,14 +101,19 @@
     </a>
 {% endif %}
 
-
-
+<script type="text/javascript">
+    {% block jsvariables %}
+        
+    {% endblock %}
+</script>
 
 {% block javascripts %}
     {# This uses the "assetic pipeline" - it loads script.* from the application bundle #}
     {% javascripts '|script' %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    
+    
 {% endblock %}
 
 </body>

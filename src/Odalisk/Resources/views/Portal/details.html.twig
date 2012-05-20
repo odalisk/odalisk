@@ -7,6 +7,7 @@
     <div class="span12">
         <ul class="breadcrumb">
           <li>
+            <a href="{{ path('browser') }}">Browser</a> <span class="divider">/</span>
             <a href="{{ path('portals') }}">Portals</a> <span class="divider">/</span>
           </li>
           <li class="active">{{ portal.name }}</li>
@@ -94,40 +95,15 @@
         <div class="fluid-container">
             <div class="row-fluid row-nomargin-top">
                 <div class="span12">
-                    <div class="row-fluid row-nomargin-top">
-                        <div class="span9">
-                            <table class="table table-dataset-list">
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">
-                                            {% if search is empty %}
-                                                <h1>Liste des jeux de données</h1>
-                                            {% else %}
-                                                <h1>Résultats de la recherche : "{{ search }}" <a href="{{ path('delete_search_portal', { portal_id:portal.id }) }}") class="close" data-dismiss="modal">&times;</a></h1>
-                                            {% endif %}
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="request-result">
-                                
-                                
-                                </tbody>
-                            </table>
-                        </div>
-                        <div id="alwaysOnTop" class="span3">
-                            <div id="search-row">
-                                <input placeholder="Search" type="text" id="search" class="search-query"/>
-                            </div>
-                            <div class="well tag-list">
-                                <ul class="nav nav-list">
-                                    {% render "App:Api:tagsList" with {'current_portal': portal.id} %}
-                                </ul>
-                            </div> <!-- /well -->
-                        </div>
-                    </div>
-                
+                    {% include "App:Search:dataset-list.html.twig" with {'current_portal': portal.id} %}
+                </div>
             </div><!--/row-->
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block jsvariables %}
+    window.searchType = "dataset";  
+    {{ parent() }}
 {% endblock %}

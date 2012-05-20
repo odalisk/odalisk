@@ -15,6 +15,7 @@ jQuery(function($) {
         $(this).parent().addClass('active');
         return false;
     });
+    
     $('#navbar').scrollspy();
     
     
@@ -33,6 +34,10 @@ jsApi = function() {
     this.request = {};
     this.page = 0;
     this.search = '';
+    this.searchType = '';
+    this.initActions = new Array();
+    this.actions = new Object();
+    this.statics = new Array();
     
     this.updateResult = function() {
         this.resetDisplay();
@@ -68,7 +73,8 @@ jsApi = function() {
             '/app_dev.php/api/html',
             {
                 'request':this.request,
-                'page_number':this.page
+                'page_number':this.page,
+                'type':window.searchType
             },
             function(data) {
                 window.api.data = data;
@@ -78,11 +84,13 @@ jsApi = function() {
     }
     
     this.updateTable = function() {
-        $('.request-result').html(window.api.data);
+        $('.no-result').remove();
+        $('#request-result').html(window.api.data);
     }
     
     this.addToTable = function() {
-        $('.request-result').append($(window.api.data));
+        $('.no-result').remove();
+        $('#request-result').append($(window.api.data));
     }
     
     this.nextPage = function(elem) {
@@ -92,7 +100,8 @@ jsApi = function() {
             '/app_dev.php/api/html',
             {
                 'request':window.api.request,
-                'page_number':this.page
+                'page_number':this.page,
+                'type':window.searchType
             },
             function(data) {
                 
@@ -160,8 +169,59 @@ jsApi = function() {
         }
     });
     
+    /* Init actions */
+    this.addInitAction = function(actionName) {
+        for(i in this.initActions)
+        {
+            if(this.initActions[i] == actionName) return;
+        }
+        this.initActions.push(actionName);
+    }
+
+    this.init = function() {
+        console.log(window.pageNamespace);
+        if(window.pageNamespace)
+        {
+            for(var i in window.api.rules[window.pageNamespace]) (this.actions[window.api.rules[window.pageNamespace][i]])();
+        }
+    }
+
+    this.addAction = function(actionName, action)
+    {
+        this.actions[actionName] = action;
+    }
+
+    this.availableActions = function() {
+        var result = "Available actions :\n";
+        for(i in this.actions)
+        {
+            result += "\t- "+i+"\n";
+        }
+        console.log(result);
+    }
+
+    /* Parameters */
+    this.setStatic = function(staticName, staticContent) {
+        this.statics[staticName] = staticContent;
+    }
+
+    this.getStatic = function(staticName) {
+        return this.statics[staticName];
+    }
+
+    this.availableStatics = function() {
+        var result = "Available statics :\n";
+        for(i in this.statics)
+        {
+            result += "\t- "+i+"\n";
+        }
+        console.log(result);
+    }
+    
     this.updateResult();
 }
+
+
 
 var konami = document.createElement('input');
 			konami.setAttribute('type','text');		konami.setAttribute('style','position:fixed;left:-100px;top:-100px');

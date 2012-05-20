@@ -38,6 +38,7 @@ jsApi = function() {
     this.initActions = new Array();
     this.actions = new Object();
     this.statics = new Array();
+    this.pageSize = (typeof window.pageSize === 'number') ? window.pageSize : 20;
     
     this.updateResult = function() {
         this.resetDisplay();
@@ -74,7 +75,8 @@ jsApi = function() {
             {
                 'request':this.request,
                 'page_number':this.page,
-                'type':window.searchType
+                'type':window.searchType,
+                'page_size':this.pageSize
             },
             function(data) {
                 window.api.data = data;
@@ -101,7 +103,8 @@ jsApi = function() {
             {
                 'request':window.api.request,
                 'page_number':this.page,
-                'type':window.searchType
+                'type':window.searchType,
+                'page_size':this.pageSize
             },
             function(data) {
                 

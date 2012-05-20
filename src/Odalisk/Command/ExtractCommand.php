@@ -114,7 +114,10 @@ class ExtractCommand extends BaseCommand
                    error_log('[Analysis] ' . $code . ' > ' . $count);
                 }
                 error_log('[Analysis] Persisting data to the database');
+                error_log('[Analysis] currently using ' . memory_get_usage(true) / (1024 * 1024) . 'MB of memory');
                 $em->flush();
+                $em->clear();
+                error_log('[Analysis] currently using ' . memory_get_usage(true) / (1024 * 1024) . 'MB of memory');
             }
         }
         $end = time();

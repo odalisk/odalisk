@@ -129,6 +129,56 @@ abstract class BasePlatform {
      */
     protected $emptyDates = array('N/A', 'n/a', 'TBC', 'not known', '');
     
+    protected $wildFormats = array(
+        "/.*kmz.*/i",
+        "/.*csv.*/i",
+        "/.*xml.*/i",
+        "/.*pdf.*/i",
+        "/((.*(xls|vnd.ms-excel).*)|excel)/i",
+        "/.*(html|htm).*/i",
+        "/text.*/i",
+        "/rdf/i",
+        "/ppt/i",
+        "/.*shp.*/i",
+        "/.*(vnd.ms-word|doc).*/i",
+        "/.*zip.*/i",
+        "/.*json.*/i",
+        "/rss/i",
+        "/api/i",
+        "/wms/i",
+        "/.*(Otros|Unverified).*/i",
+        "/asp/i",
+        "/(image\/jpg|jpg)/i",
+        "/atom/i",
+        "/.*(openDOCument.spreadsheet|ods).*/i",
+        "/gtfs/i"
+    );
+    
+    protected $normalizedFormats = array(
+        "KMZ",
+        "CSV",
+        "XML",
+        "PDF",
+        "XLS",
+        "HTML",
+        "TXT",
+        "RDF",
+        "PPT",
+        "SHP",
+        "DOC",
+        "ZIP",
+        "JSON",
+        "RSS",
+        "API",
+        "WMS",
+        "Unknown",
+        "ASP",
+        "JPG",
+        "ATOM",
+        "ODS",
+        "GTFS"
+    );
+    
     protected $categoryNormalizer;
 
     /**
@@ -234,11 +284,12 @@ abstract class BasePlatform {
                     ";",
                     array_filter(
                         $nodes->each(
-                        function($node,$i) {
-                            return trim($node->nodeValue);
-                        }
+                            function($node,$i) {
+                                return trim($node->nodeValue);
+                            }
+                        ), 
+                        'strlen'
                     )
-                        , 'strlen')
                 );
             }
         }
@@ -311,10 +362,6 @@ abstract class BasePlatform {
      */
     protected function normalizeFormat(&$data)
     {
-
-        $wild_formats = array("/.*kmz.*/i","/.*csv.*/i","/.*xml.*/i","/.*pdf.*/i","/((.*(xls|vnd.ms-excel).*)|excel)/i","/.*(html|htm).*/i","/text.*/i","/rdf/i","/ppt/i","/.*shp.*/i","/.*(vnd.ms-word|doc).*/i","/.*zip.*/i","/.*json.*/i","/rss/i","/api/i","/wms/i","/.*(Otros|Unverified).*/i","/asp/i","/(image\/jpg|jpg)/i","/atom/i","/.*(openDOCument.spreadsheet|ods).*/i","/gtfs/i");
-        $normalized_formats = array("KMZ","CSV","XML","PDF","XLS","HTML","TXT","RDF","PPT","SHP","DOC","ZIP","JSON","RSS","API","WMS","Unknown","ASP","JPG","ATOM","ODS","GTFS");
-
         if (array_key_exists('setFormat', $data)) {
                 $formats = preg_split('/;/',$data['setFormat']);
                 $formats = array_unique($formats);
@@ -322,9 +369,9 @@ abstract class BasePlatform {
                 foreach ($formats as $format) {
 
                     $format = preg_replace('/\s+/','', $format);
-                    $format = preg_replace($wild_formats, $normalized_formats, $format,1);
+                    $format = preg_replace($this->wildFormats, $this->normalizedFormats, $format, 1);
 
-                    if(!in_array($format,$normalized_formats)){
+                    if(!in_array($format, $this->normalizedFormats)){
                        
                        error_log('[Weird Format] ' . $format." : ".$data['setName']);
                     }
@@ -333,6 +380,8 @@ abstract class BasePlatform {
                  }
                 
                 $data['setFormat'] = implode(';', array_unique($output));
+                $formats = null;
+                $output = null;
         }
     }
 
@@ -352,7 +401,7 @@ abstract class BasePlatform {
                     // Check if we have a match
                     if(preg_match($regex, $date, $m)) {
                         // Depending on how many matches we have, we know which format to pick
-                        $data[$field] = \Datetime::createFromFormat($formats[count($m)-1], $date)->format("d m Y");
+                        $data[$field] = \Datetime::createFromFormat($formats[count($m)-1], $date)->format("d-m-Y H:i");
                         if(false === $data[$field]) {
                             error_log('[>>> False positive ] ' . $date . ' with ' . $regex . ' (count = ' . (count($m)-1) .')');
                             $data[$field] = null;

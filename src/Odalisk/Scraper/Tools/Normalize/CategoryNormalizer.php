@@ -6,7 +6,7 @@ class CategoryNormalizer
 {
     private $replace = array(
         '/\b(and|et)\b/' => '&',
-        '/^(Not Applicable|Not Av|none|\s+|)$/' => 'N/A',
+        '/^(Not (A|a)pplicable|Not Av|none|N|A|[0-9\.]+||\s+|)$/' => 'N/A',
     );
     
     private $categoryList = array();
@@ -20,7 +20,7 @@ class CategoryNormalizer
     public function getCategories($raw_categories)
     {
         // Extract clean categories
-        $categories = preg_split('/(,|-|;|\/|\|_)/', $raw_categories);
+        $categories = preg_split('/(,|;|\/|\|_)/', $raw_categories);
         foreach ($categories as $k => $category) {
             $categories[$k] = $this->_trim($categories[$k]);
             foreach ($this->replace as $bad => $good) {
@@ -29,7 +29,7 @@ class CategoryNormalizer
             $categories[$k] = $this->_trim($categories[$k]);
         }
         
-        $categories = array_filter($categories);
+        $categories = array_unique(array_filter($categories));
         
         $result = array();
         foreach($categories as $category) {

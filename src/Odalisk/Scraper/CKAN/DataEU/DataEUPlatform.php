@@ -15,11 +15,12 @@ class DataEUPlatform extends BaseCKAN {
             'setLastUpdatedOn' => '//td[.="date_updated" and @class="dataset-label"]/../td[2]',
             'setProvider' => '//td[.="published_by" and @class="dataset-label"]/../td[2]',
             'setLicense' => '/li[@id="dataset-license" and @class="sidebar-section"]',
-            'setCategory' => '//td[text()="categories"]/following-sibling::*',
+            'setCategories' => '//td[text()="categories"]/following-sibling::*',
             'setFormat' => './/*[@property="dc:format"]'
         );
 
         $this->dateFormat = 'Y-m-d';
+        $this->inChargeFields = array('setOwner','setMaintainer');
     }
     
     protected function additionalExtraction($crawler, &$data) 
@@ -32,8 +33,7 @@ class DataEUPlatform extends BaseCKAN {
 
     protected function additionalNormalization(&$data)
     {
-        $inChargeFields = array('setOwner','setMaintainer');
-        foreach ($inChargeFields as $field) {
+        foreach ($this->inChargeFields as $field) {
             if (array_key_exists($field, $data)) {
                 if(preg_match("/not given/i",$data[$field])){
                     unset($data[$field]);

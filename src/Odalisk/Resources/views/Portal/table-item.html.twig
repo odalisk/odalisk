@@ -1,0 +1,22 @@
+<tr class="dataset-item">
+    <td colspan="3" >
+        <h3>
+                {% if portal.name|length > 50 %}
+                    {{ portal.name|slice(0,50) }}...
+                {% else %}
+                    {{ portal.name|slice(0,50) }}
+                {% endif %}
+        </h3>
+    </td>
+</tr>
+<tr class="dataset-item">
+    <td class="summary">
+        <a class="portal-link" href="{{ portal.url }}">Visiter le site web</a>
+    </td>
+    <td class="labels">
+        <span class="label label-success">{{ portal.updated_at|date("m/d/Y") }}</span>
+    </td>
+    <td class="button">
+        <a class="btn" href="{{ path('portal_details', { 'portal_number': portal.id }) }}">Détails</a>
+    </td>
+</tr>

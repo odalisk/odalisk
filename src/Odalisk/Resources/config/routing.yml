@@ -4,14 +4,24 @@ homepage:
 
 
 portals:
-    pattern:    /portals/{page_number}/{_format}
+    pattern:    /browser/portals/{_format}
     defaults:   { _controller: App:Portal:index, page_number: 1, _format: html }
-    requirements:
-        _format: html|json
+
+browser:
+    pattern:    /browser
+    defaults:   { _controller: App:Browser:index, _format: html }
 
 portal_details:
-    pattern:    /portals/details/{portal_number}/{page_number}/{_format}
-    defaults:   { _controller: App:Portal:details, page_number:1, _format: html }
+    pattern:    /browser/portals/details/{portal_number}/{page_number}
+    defaults:   { _controller: App:Portal:details, page_number:1, _format:html}
+
+api:
+    pattern:    /api/{_format}
+    defaults:   { _controller: App:Api:api, _format:json }
+
+search:
+    pattern:    /search
+    defaults:   { _controller: App:Search:search, _format:html }
 
 dataset_details:
     pattern:    /datasets/details/{dataset_number}/{page_number}/{_format}

@@ -1,38 +1,40 @@
 <?php
- 
+
 namespace Odalisk\Entity;
- 
+
 use Doctrine\ORM\Mapping as ORM;
- 
+use Doctrine\Common\Collections\ArrayCollection;
+
 use Gedmo\Mapping\Annotation as Gedmo;
- 
+
 /**
  * @ORM\Table(name="datasets")
  * @ORM\Entity
  */
 class Dataset
-{   
-     
+{
+
     public function __construct(array $values = array()) {
+        $this->categories = new ArrayCollection();
         $this->populate($values);
     }
-     
+
     /**
      * Builds the entity from the array
-     * 
+     *
      * array(
      *  'setUrl' => 'http://some.url',
      *  'setName' => 'A name'
      * )
      *
-     * @param array $values 
+     * @param array $values
      */
     public function populate(array $values = array()) {
-        foreach($values as $name => $value) {
+        foreach ($values as $name => $value) {
             call_user_func(array($this, $name), $value);
         }
     }
-     
+
     /**
      * @var integer $id
      *
@@ -41,98 +43,98 @@ class Dataset
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-     
+
     /**
      * @var string $url
      *
      * @ORM\Column(name="url", type="string", nullable=true, length=255)
      */
     protected $url;
-     
+
     /**
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", nullable=true, length=255)
      */
     protected $name;
-     
+
     /**
      * @var string $summary
      *
      * @ORM\Column(name="summary", type="text", nullable=true)
      */
     protected $summary;
-     
+
     /**
-     * @var string $category
-     *
-     * @ORM\Column(name="category", type="string", nullable=true, length=255)
+     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Category", cascade={"persist", "remove"})
      */
-    protected $category;
-     
+    protected $categories;
+
+    /**
+     * @var string $format
+     *
+     * @ORM\Column(name="format", type="string", nullable=true, length=255)
+     */
+    protected $format;
+
     /**
      * @var string $released_on When did we create this record
      *
-     * @ORM\Column(name="released_on", type="datetime", nullable=true)
+     * @ORM\Column(name="released_on", type="string", nullable=true, length=255)
      */
     protected $released_on;
-     
+
     /**
      * @var string $last_updated_on When did we create this record
      *
-     * @ORM\Column(name="last_updated_on", type="datetime", nullable=true)
+     * @ORM\Column(name="last_updated_on", type="string", nullable=true, length=255)
      */
     protected $last_updated_on;
-     
+
     /**
      * @var string $provider
      *
      * @ORM\Column(name="provider", type="string", nullable=true, length=255)
      */
     protected $provider;
-     
+
     /**
      * @var string $owner
      *
      * @ORM\Column(name="owner", type="string", nullable=true, length=255)
      */
     protected $owner;
-     
+
     /**
      * @var string $maintainer
      *
      * @ORM\Column(name="maintainer", type="string", nullable=true, length=255)
      */
     protected $maintainer;
-     
+
     /**
      * @var string $license
-     * 
+     *
      * @ORM\Column(name="license", type="string", nullable=true, length=255)
      */
     protected $license;
- 
+
     /**
      * @ORM\ManyToOne(targetEntity="Portal", inversedBy="data_sets")
      * @ORM\JoinColumn(name="portal_id", referencedColumnName="id")
      */
     protected $portal;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="DatasetCrawl")
-     */
-    protected $crawl;
- 
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
- 
+
     /**
      * Set url
      *
@@ -142,17 +144,17 @@ class Dataset
     {
         $this->url = $url;
     }
- 
+
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
         return $this->url;
     }
- 
+
     /**
      * Set name
      *
@@ -162,17 +164,17 @@ class Dataset
     {
         $this->name = $name;
     }
- 
+
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
     }
- 
+
     /**
      * Set summary
      *
@@ -182,37 +184,37 @@ class Dataset
     {
         $this->summary = $summary;
     }
- 
+
     /**
      * Get summary
      *
-     * @return text 
+     * @return text
      */
     public function getSummary()
     {
         return $this->summary;
     }
- 
+
     /**
-     * Set category
+     * Set format
      *
      * @param string $category
      */
-    public function setCategory($category)
+    public function setFormat($format)
     {
-        $this->category = $category;
+        $this->format = $format;
     }
- 
+
     /**
-     * Get category
+     * Get format
      *
-     * @return string 
+     * @return string
      */
-    public function getCategory()
+    public function getFormat()
     {
-        return $this->category;
+        return $this->format;
     }
- 
+
     /**
      * Set released_on
      *
@@ -222,17 +224,17 @@ class Dataset
     {
         $this->released_on = $releasedOn;
     }
- 
+
     /**
      * Get released_on
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getReleasedOn()
     {
         return $this->released_on;
     }
- 
+
     /**
      * Set last_updated_on
      *
@@ -242,17 +244,17 @@ class Dataset
     {
         $this->last_updated_on = $lastUpdatedOn;
     }
- 
+
     /**
      * Get last_updated_on
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getLastUpdatedOn()
     {
         return $this->last_updated_on;
     }
- 
+
     /**
      * Set owner
      *
@@ -262,17 +264,17 @@ class Dataset
     {
         $this->owner = $owner;
     }
- 
+
     /**
      * Get owner
      *
-     * @return string 
+     * @return string
      */
     public function getOwner()
     {
         return $this->owner;
     }
- 
+
     /**
      * Set maintainer
      *
@@ -282,17 +284,17 @@ class Dataset
     {
         $this->maintainer = $maintainer;
     }
- 
+
     /**
      * Get maintainer
      *
-     * @return string 
+     * @return string
      */
     public function getMaintainer()
     {
         return $this->maintainer;
     }
- 
+
     /**
      * Set license
      *
@@ -302,11 +304,11 @@ class Dataset
     {
         $this->license = $license;
     }
- 
+
     /**
      * Get license
      *
-     * @return string 
+     * @return string
      */
     public function getLicense()
     {
@@ -322,17 +324,17 @@ class Dataset
     {
         $this->provider = $provider;
     }
- 
+
     /**
      * Get provider
      *
-     * @return string 
+     * @return string
      */
     public function getProvider()
     {
         return $this->provider;
     }
-     
+
     /**
      * Set portal
      *
@@ -342,11 +344,11 @@ class Dataset
     {
         $this->portal = $portal;
     }
- 
+
     /**
      * Get portal
      *
-     * @return Odalisk\Entity\Portal 
+     * @return Odalisk\Entity\Portal
      */
     public function getPortal()
     {
@@ -354,22 +356,34 @@ class Dataset
     }
 
     /**
-     * Set crawl
+     * Add categories
      *
-     * @param Odalisk\Entity\DatasetCrawl $crawl
+     * @param Odalisk\Entity\Category $categories
      */
-    public function setCrawl(\Odalisk\Entity\DatasetCrawl $crawl)
+    public function addCategory(\Odalisk\Entity\Category $categories)
     {
-        $this->crawl = $crawl;
+        $this->categories[] = $categories;
+    }
+    
+    /**
+     * Set categories
+     *
+     * @param array $categories
+     */
+    public function setCategories(array $categories)
+    {
+        foreach($categories as $category) {
+            $this->categories[] = $category;
+        }
     }
 
     /**
-     * Get crawl
+     * Get categories
      *
-     * @return Odalisk\Entity\DatasetCrawl 
+     * @return Doctrine\Common\Collections\Collection 
      */
-    public function getCrawl()
+    public function getCategories()
     {
-        return $this->crawl;
+        return $this->categories;
     }
 }

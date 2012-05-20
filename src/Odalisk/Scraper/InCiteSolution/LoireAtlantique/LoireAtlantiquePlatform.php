@@ -4,73 +4,79 @@ namespace Odalisk\Scraper\InCiteSolution\LoireAtlantique;
 
 use Odalisk\Scraper\InCiteSolution\BaseInCiteSolution;
 
+use Odalisk\Scraper\Tools\RequestDispatcher;
+
 use Symfony\Component\DomCrawler\Crawler;
-use Buzz\Message;
+
 
 /**
  * The scraper for data.loire-atlantique.fr
  */
 class LoireAtlantiquePlatform extends BaseInCiteSolution {
 
-	private $datasets_list_url;
+
+    protected $nb_datasets_estimated;
+
 
     public function __construct() {
+
         parent::__construct();
 
-		$this->datasets_list_url = 'http://data.loire-atlantique.fr/donnees/?tx_icsoddatastore_pi1[page]=';
+        $this->datasetsListUrl = 'http://data.loire-atlantique.fr/donnees/?tx_icsoddatastore_pi1[page]=';
+
+        $this->urlsListIndexPath = ".//*[@class='tx_icsoddatastore_pi1_list']//td[@class='first']/h3/a";
     }
 
     public function getDatasetsUrls() {
+        // Create a new Buzz handle, with asynchronous requests
+        $dispatcher = new RequestDispatcher($this->buzzOptions, 30);
 
-        $factory = new Message\Factory();
-		$datasets_urls = array();
-		$uids = array();
+        // Get the first page
+        $response = $this->buzz->get($this->datasetsListUrl.'0');
 
-		$i = 0;
-		while(true) {
-			echo($i);
-			$response = $this->buzz->get($this->datasets_list_url.  $i);
-			$crawler  = new Crawler($response->getContent());
+        if ($response->getStatusCode() == 200) {
+            $crawler = new Crawler($response->getContent());
 
-			$nodes = $crawler->filterXPath('//td[@class="first"]/h3/a');
-			if(count($nodes) > 0) {
-				$hrefs = $nodes->extract(array('href'));
-				foreach($hrefs as $href) {
-					if(preg_match("/\[uid\]=([0-9]+)$/", $href, $match)) {
-						$uids[] = $match[1];
-					} else {
-						error_log('Marche pôs : '.$href.' !');
-					}
-				}
-			} else {
-				break;
-			}
+            // Try to crawl the paginated website
+            $nodes = $crawler->filterXPath(".//div[@class='pagination']/span[@class='last']/a/@href");
+            if (0 < count($nodes)) {
+                $pages_to_get = 0;
 
-			$i++;
-		}
+                // Find the number of pages
+                $href = $nodes->first()->text();
+                if (preg_match("/\[page\]=([0-9]+)&/", $href, $match)) {
+                    $pages_to_get = intval($match[1]);
+                }
 
-		foreach($uids as $uid) {
-            $formRequest = $factory->createFormRequest();
-            $formRequest->setMethod(Message\Request::METHOD_POST);
-            $formRequest->fromUrl($this->sanitize($this->base_url . $uid));
-            $formRequest->addHeaders($this->buzz_options);
-            $formRequest->setFields(array('tx_icsoddatastore_pi1[cgu]' => 'on'));
-            self::$urls[] = $formRequest;
+                // Extract URLs from this page
+                $nodes = $crawler->filterXPath($this->urlsListIndexPath);
+                if (0 < count($nodes)) {
+                    $this->urls = array_merge($this->urls, $nodes->extract(array('href')));
+                    $this->estimatedDatasetCount = count($this->urls);
+                }
+
+                // Add requests to the queue
+                for($i = 1 ; $i <= $pages_to_get ; $i++) {
+                   $this->estimatedDatasetCount += count($this->urls);
+                   $dispatcher->queue($this->datasetsListUrl.$i,
+                        array($this, 'Odalisk\Scraper\InCiteSolution\LoireAtlantique\LoireAtlantiquePlatform::crawlDatasetsList'));
+                }
+
+                error_log('[Get URLs] Estimated number of datasets of the portal : ' . $this->estimatedDatasetCount);
+
+                $dispatcher->dispatch(10);
+
+            }
         }
-        
-        $this->total_count = count(self::$urls);
-        
-        return(self::$urls);
+
+        foreach ($this->urls as $key => $id) {
+            $this->urls[$key] = $this->base_url . $id;
+        }
+
+        $this->totalCount = count($this->urls);
+
+
+        return $this->urls;
     }
 
-    public function parsePortal() {
-        $this->portal = new \Odalisk\Entity\Portal();
-        $this->portal->setName($this->getName());
-        $this->portal->setUrl('http://data.loire-atlantique.fr/');
-        
-        $this->em->persist($this->portal);
-        $this->em->flush();
-    }
 }
-
-

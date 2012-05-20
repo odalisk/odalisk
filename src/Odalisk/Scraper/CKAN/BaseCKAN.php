@@ -2,52 +2,59 @@
 
 namespace Odalisk\Scraper\CKAN;
 
-use Symfony\Component\DomCrawler\Crawler;
 
 use Odalisk\Scraper\BasePlatform;
 
-use Buzz\Message;
 
 abstract class BaseCKAN extends BasePlatform {
 
     protected $datasets = array();
 
-	public function __construct() {
-		$this->criteria = array(
-			'setName' => '//h2[@id="datasetName" and @class="clipText currentViewName"]', 
-			'setSummary' => '//p[@class=""]',
+    public function __construct() {
+        $this->criteria = array(
+            'setName' => '//h2[@id="datasetName" and @class="clipText currentViewName"]',
+            'setSummary' => '//p[@class=""]',
             'setReleasedOn' => '//span[@class="aboutCreateDate"]/span',
             'setSummary' => '//div[@class="aboutDataset"]/div[2]/div/p',
             'setLastUpdatedOn' => '//span[@class="aboutUpdateDate"]/span',
-            'setCategory' => '//div[@class="aboutDataset"]/div[4]/dl/dd[1]',
-			//, 'Tags' => '//div[@class="aboutDataset"]/div[4]/dl/dd[3]'
-			//, 'Permissions' => '//div[@class="aboutDataset"]/div[4]/dl/dd[2]',
+            'setCategories' => '//div[@class="aboutDataset"]/div[4]/dl/dd[1]',
+            //, 'Tags' => '//div[@class="aboutDataset"]/div[4]/dl/dd[3]'
+            //, 'Permissions' => '//div[@class="aboutDataset"]/div[4]/dl/dd[2]',
             'setProvider' => '//div[@class="aboutDataset"]/div[7]/dl/dd[1]',
             'setOwner' => '//div[@class="aboutDataset"]/div[8]/dl/dd[1]/span',
-			// , 'Time Period' => '//div[@class="aboutDataset"]/div[8]/dl/dd[2]/span'
-			// , 'Frequency' => '//div[@class="aboutDataset"]/div[8]/dl/dd[3]/span'
-			// , 'Community Rating' => '//div[@class="aboutDataset"]/div[3]/dl/dd[1]/div'
-		);
+            // , 'Time Period' => '//div[@class="aboutDataset"]/div[8]/dl/dd[2]/span'
+            // , 'Frequency' => '//div[@class="aboutDataset"]/div[8]/dl/dd[3]/span'
+            // , 'Community Rating' => '//div[@class="aboutDataset"]/div[3]/dl/dd[1]/div'
+        );
 
-        $this->date_format = 'M d, Y';
-	}
+        $this->dateFormat = 'M d, Y';
+    }
 
     public function getDatasetsUrls() {
-        // Get the paths
-        $this->buzz->getClient()->setTimeout(30);
+        $urls = array();
+
+        // Make the API call
         $response = $this->buzz->get(
             $this->api_url,
-            $this->buzz_options
+            $this->buzzOptions
         );
-        if(200 == $response->getStatusCode()) {
+
+        // Get the paths
+        if (200 == $response->getStatusCode()) {
             $data = json_decode($response->getContent());
-            foreach($data as $dataset) {
-                $datasets[] = $this->base_url.$dataset->id;
+
+            foreach ($data as $key => $dataset_name) {
+                $urls[] = $this->base_url . $dataset_name;
             }
         } else {
-            throw new \RuntimeException('Couldn\'t fetch list of datasets');
-        }     
-        
-        return($datasets);
-	}
+            error_log('Couldn\'t fetch list of datasets for ' . $this->getName());
+        }
+
+        $this->totalCount = count($urls);
+
+
+        return $urls;
+    }
+
+
 }

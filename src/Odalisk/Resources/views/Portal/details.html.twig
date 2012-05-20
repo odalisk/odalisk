@@ -7,6 +7,7 @@
     <div class="span12">
         <ul class="breadcrumb">
           <li>
+            <a href="{{ path('browser') }}">Browser</a> <span class="divider">/</span>
             <a href="{{ path('portals') }}">Portals</a> <span class="divider">/</span>
           </li>
           <li class="active">{{ portal.name }}</li>
@@ -94,110 +95,15 @@
         <div class="fluid-container">
             <div class="row-fluid row-nomargin-top">
                 <div class="span12">
-                    <table class="table table-striped table-dataset-list">
-                        <thead>
-                            <tr>
-                                <th><h2>Liste des jeux de données</h2></th>
-                                <th class="page_from_to">
-                                    <div class="pagination">
-                                      <ul>
-                                        {% if page_from != 0 %}
-                                            <li><a href="{{ path('portal_details', { 'portal_number': portal.id, 'page_number':(page_number - 1)  }) }}">Prev</a></li>
-                                        {% endif %}
-                                        <li class="active">
-                                          <a href="#">{{ page_from }} - {{ page_to }}</a>
-                                        </li>
-                                        {% if not end %}
-                                            <li><a href="{{ path('portal_details', { 'portal_number': portal.id, 'page_number':(page_number + 1)  }) }}">Next</a></li>
-                                        {% endif %}
-                                      </ul>
-                                    </div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for dataset in datasets %}
-                            <tr>
-                                <td colspan="2" class="dataset-item">
-                                
-                                    <h3>
-                                        {% if dataset.name|length > 50 %}
-                                            {{ dataset.name|slice(0,50) }}...
-                                        {% else %}
-                                            {{ dataset.name|slice(0,50) }}
-                                        {% endif %}
-                                    </h3>
-                                    <div class="more-infos">
-                                        <table>
-                                            <tr>
-                                                <td class="summary">
-                                                    <div class="dataset-summary">
-                                                        {% if dataset.summary|length > 500 %}
-                                                            {{ dataset.summary|slice(0,500) }}...
-                                                        {% else %}
-                                                            {{ dataset.summary }}
-                                                        {% endif %}
-                                                    </div>
-                                                </td>
-                                                <td class="labels">
-                                                    {% if dataset.category is not empty %}
-                                                        {% if dataset.category|length > 20 %}
-                                                            <span class="label label-info">{{ dataset.category|slice(0,20) }}...</span>
-                                                        {% else %}
-                                                            <span class="label label-info">{{ dataset.category|slice(0,20) }}</span>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                
-                                                    {% if dataset.license is not empty %}
-                                                        {% if dataset.license|length > 20 %}
-                                                            <span class="label label-success">{{ dataset.license|slice(0,20) }}...</span>
-                                                        {% else %}
-                                                            <span class="label label-success">{{ dataset.license|slice(0,20) }}</span>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                
-                                                    {% if dataset.owner is not empty %}
-                                                        {% if dataset.owner|length > 20 %}
-                                                            <span class="label label-warning">{{ dataset.owner|slice(0,20) }}...</span>
-                                                        {% else %}
-                                                            <span class="label label-warning">{{ dataset.owner|slice(0,20) }}</span>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                
-                                        
-                                        
-                                                </td>
-                                                <td class="button">
-                                                    <a class="btn" href="{{ path('dataset_details', { 'dataset_number': dataset.id }) }}">Détails</a>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                        
-                    </table>
-                    <div class="page_from_to">
-                        <div class="pagination">
-                          <ul>
-                            {% if page_from != 0 %}
-                                <li><a href="{{ path('portal_details', { 'portal_number': portal.id, 'page_number':(page_number - 1)  }) }}">Prev</a></li>
-                            {% endif %}
-                            <li class="active">
-                              <a href="#">{{ page_from }} - {{ page_to }}</a>
-                            </li>
-                            {% if not end %}
-                                <li><a href="{{ path('portal_details', { 'portal_number': portal.id, 'page_number':(page_number + 1)  }) }}">Next</a></li>
-                            {% endif %}
-                          </ul>
-                        </div>
-                    </div>
+                    {% include "App:Search:dataset-list.html.twig" with {'current_portal': portal.id} %}
                 </div>
             </div><!--/row-->
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block jsvariables %}
+    window.searchType = "dataset";  
+    {{ parent() }}
 {% endblock %}

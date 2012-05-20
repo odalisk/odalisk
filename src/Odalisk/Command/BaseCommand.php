@@ -9,76 +9,83 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * A base abstract command that provides shortcuts to some useful tools for scrapping
  */
-abstract class BaseCommand extends ContainerAwareCommand {
+abstract class BaseCommand extends ContainerAwareCommand
+{
     /**
      * Holds the instance of buzz we use to GET the data from the website
      *
      * @var $buzz
      */
     private $buzz;
-    
+
     /**
      * Holds our instance of the EntityManager
      *
      * @var $em
      */
     private $em;
-    
-    private $formatter = NULL;
-    
+
+    private $formatter = null;
+
     private $stats = array();
-    
-    protected function configure(){
+
+    protected function configure()
+    {
         $this
             ->setName('odalisk:' . strtolower(get_class($this)))
-            ->setDescription('Not yet implemented')
-        ;
+            ->setDescription('Not yet implemented');
     }
-    
-    protected function writeBlock(OutputInterface $output, $message) {
-        if(NULL == $this->formatter) {
+
+    protected function writeBlock(OutputInterface $output, $message)
+    {
+        if (null == $this->formatter) {
             $this->formatter = new FormatterHelper();
         }
-        
+
         $output->writeln($this->formatter->formatBlock(
-                $message,
-                'bg=blue;fg=white',
-                TRUE
-            )
-        );
+            $message,
+            'bg=blue;fg=white',
+            true
+        ));
     }
-    
-    protected function collectStats($data) {
-        if(isset($this->stats[$data['code']])) {
+
+    protected function collectStats($data)
+    {
+        if (isset($this->stats[$data['code']])) {
             $this->stats[$data['code']] += 1;
         } else {
             $this->stats[$data['code']] = 1;
         }
     }
-    
-    protected function printStats(OutputInterface $output) {
+
+    protected function printStats(OutputInterface $output)
+    {
         $output->writeln('<info>HTTP return code distribution : </info>');
-        foreach($this->stats as $code => $count) {
+        foreach ($this->stats as $code => $count) {
             $output->writeln("<comment>[$code]</comment> => " . $count);
         }
     }
-    
-    protected function getBuzz() {
-        if(NULL == $this->buzz) {
+
+    protected function getBuzz()
+    {
+        if (null == $this->buzz) {
             $this->buzz = $this->getContainer()->get('buzz');
         }
 
         return $this->buzz;
     }
-    
-    protected function getEntityManager($managerName = NULL) {
-        if(NULL == $this->em) {
+
+    protected function getEntityManager($managerName = null)
+    {
+        if (null == $this->em) {
             $this->em = $this->getContainer()->get('doctrine')->getEntityManager($managerName);
         }
+
         return $this->em;
     }
 
-    protected function getEntityRepository($repositoryName, $managerName = NULL) {
+    protected function getEntityRepository($repositoryName, $managerName = null)
+    {
         return $this->getEntityManager($managerName)->getRepository($repositoryName);
     }
 }

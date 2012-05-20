@@ -2,21 +2,20 @@
 
 namespace Odalisk\Scraper\InCiteSolution;
 
-use Symfony\Component\DomCrawler\Crawler;
 use Buzz\Message;
 
 use Odalisk\Scraper\BasePlatform;
-use Odalisk\Scraper\Tools\RequestDispatcher;
 
 
 /**
  * The scraper for in cite Solution Plateform
  */
 abstract class BaseInCiteSolution extends BasePlatform {
+
     public function __construct() {
         $this->criteria = array(
             'setName' => ".//*[@class='tx_icsoddatastore_pi1_single']/h1",
-            'setCategory' => ".//*[@class='tx_icsoddatastore_pi1_categories separator']/span[@class='value']",
+            'setCategories' => ".//*[@class='tx_icsoddatastore_pi1_categories separator']/span[@class='value']",
             'setLicense' => ".//*[@class='tx_icsoddatastore_pi1_licence separator']/span[@class='value']",
             // 'Update Frequency' => ".//*[@class='tx_icsoddatastore_pi1_updatefrequency separator']/span[@class='value']",
             'setReleasedOn' => ".//*[@class='tx_icsoddatastore_pi1_releasedate separator']/span[@class='value']",
@@ -25,45 +24,66 @@ abstract class BaseInCiteSolution extends BasePlatform {
             'setMaintainer' => ".//*[@class='tx_icsoddatastore_pi1_manager separator']/span[@class='value']",
             'setOwner' => ".//*[@class='tx_icsoddatastore_pi1_owner separator']/span[@class='value']",
             //'Technical data' => ".//*[@class='tx_icsoddatastore_pi1_technical_data separator']/span[@class='value']",
-            //'Formats' => ".//*[@class='tx_icsoddatastore_pi1_file']/a/img/@alt",
+            'setFormat' => ".//*[@class='tx_icsoddatastore_pi1_file']/a/img/@alt",
              );
-             
-        $this->date_format = 'd/m/Y';
+
+        $this->dateFormat = 'd/m/Y';
     }
-    
+
     public function getDatasetsUrls() {
-        
+
         // API Call
         $urls = array();
-        
+
         $response = $this->buzz->get(
             $this->api_url,
-            $this->buzz_options
+            $this->buzzOptions
         );
 
-        if(200 == $response->getStatusCode()) {
-
+        if (200 == $response->getStatusCode()) {
             $data = json_decode($response->getContent());
-            $factory = new Message\Factory();
-                
-            foreach($data->opendata->answer->data->dataset as $dataset) {
-                $formRequest = $factory->createFormRequest();
-                $formRequest->setMethod(Message\Request::METHOD_POST);
-                $formRequest->fromUrl($this->sanitize($this->base_url . '?tx_icsoddatastore_pi1[uid]=' . $dataset->id));
-                $formRequest->addHeaders($this->buzz_options);
-                $formRequest->setFields(array('tx_icsoddatastore_pi1[cgu]' => 'on'));
-                $urls[] = $formRequest;
+            foreach ($data->opendata->answer->data->dataset as $dataset) {
+                $urls[] = $this->base_url . 'donnees/detail/?tx_icsoddatastore_pi1[uid]=' . $dataset->id;
             }
         }  else {
             error_log('Couldn\'t fetch list of datasets for ' . $this->name);
-        }     
-        
-        $this->total_count = count($urls);
-        
+        }
+
+        $this->totalCount = count($urls);
+
+
         return $urls;
     }
-    
+
+    public function prepareRequestsFromUrls($urls) {
+        $factory = new Message\Factory();
+        $requests = array();
+
+        foreach ($urls as $url) {
+            $formRequest = $factory->createFormRequest();
+            $formRequest->setMethod(Message\Request::METHOD_POST);
+            $formRequest->fromUrl($this->sanitize($url));
+            $formRequest->addHeaders($this->buzzOptions);
+            $formRequest->setFields(array('tx_icsoddatastore_pi1[cgu]' => 'on'));
+            $requests[] = $formRequest;
+        }
+
+
+        return $requests;
+    }
+
     public function sanitize($url) {
         return str_replace(']', '%5D', str_replace('[', '%5B', $url));
+    }
+
+    public function parsePortal() {
+        $this->portal = new \Odalisk\Entity\Portal();
+        $this->portal->setName($this->getName());
+        $this->portal->setUrl($this->getBaseUrl());
+        $this->portal->setCountry($this->country);
+        $this->portal->setStatus($this->status);
+        $this->portal->setEntity($this->entity);
+        $this->em->persist($this->portal);
+        $this->em->flush();
     }
 }

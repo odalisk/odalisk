@@ -8,146 +8,106 @@ use Odalisk\Scraper\Tools\RequestDispatcher;
 
 use Odalisk\Scraper\BasePlatform;
 
-use Buzz\Browser;
-
-use Buzz\Message;
-
-
-use Odalisk\Entity\Dataset;
-
-
 /**
  * The scraper for in DataPublica
  */
-class DataPublicaPlatform extends BasePlatform {
+class DataPublicaPlatform extends BasePlatform
+{
 
-    public function __construct() {
+    protected $estimatedDatasetCount = 0;
 
+    protected $monthText = array("/janv./", "/févr./", "/mars/", "/avr./", "/mai/", "/juin/", "/juil./", "/août/", "/sept./", "/oct./", "/nov./","/déc./");
+
+    protected $monthNumber = array("01","02","03","04","05","06","07","08","09","10","11","12");
+
+    public function __construct() 
+    {
         $this->criteria = array(
             'setName' => ".//*[@id='content']/article[1]/h2",
-            'setCategory' => "//div/h5[text()='Catégories']/../following-sibling::*/ul/li/a",
+            'setCategories' => "//div/h5[text()='Catégories']/../following-sibling::*/ul/li/a",
             'setLicense' => "//div/h5[text()='Licence']/../following-sibling::*",
             'setReleasedOn' => "//div/h5[text()='Date de création']/../following-sibling::*",
             'setLastUpdatedOn' => "//div/h5[text()='Date de mise à jour']/../following-sibling::*",
             'setSummary' => ".//*[@id='description']",
             //'setMaintainer' => ".//*[@id='publication_tab_container']/ul/li[1]/div[2]/a",
             'setOwner' => "//div/h5[text()='Editeur']/../following-sibling::*",
-             );
-             
-        $this->date_format = 'd m Y';
-    }
-
-    public function getDatasetsUrls() {
-        $urls = array();
-
-        $path = "src/Odalisk/Scraper/DataPublica/data_publica_urls.txt"; 
-
-        $handle = fopen($path, 'r');
-    
-        if ($handle)
-        {
-            for ($ligne = fgetcsv($handle, 1024); !feof($handle); $ligne = fgetcsv($handle, 1024)) {
-            $j = sizeof($ligne);
-              for ($i = 0; $i < $j; $i++) {
-                $urls[] = $ligne[$i];
-              }
-            }
-
-            fclose($handle);
-        }
-        
-        $this->total_count = count($urls);
-
-        return $urls;
-    }
-    
-    public function parseDataset(Message\Request $request, Message\Response $response) {     
-        $this->count++;
-        $data = array(
-            'setUrl' => $request->getUrl(),
-            // 'code' => $response->getStatusCode(),
+            'setFormat' => './/*[@class="format"]/li',
         );
 
-        if(200 == $response->getStatusCode()) {
+        $this->datasetsListUrl = 'http://www.data-publica.com/search/?page=';
+        $this->urlsListIndexPath = ".//*[@id='content']/article[2]/ol/li/a";
+        $this->dateFormat = 'd m Y';
+    }
+
+    public function getDatasetsUrls()
+    {
+        $dispatcher = new RequestDispatcher($this->buzzOptions, 30);
+
+        $response = $this->buzz->get($this->datasetsListUrl.'1');
+        if (200 == $response->getStatusCode()) {
+            // We begin by fetching the number of datasets
             $crawler = new Crawler($response->getContent());
-            if(0 == count($crawler)) {
-                $data['setError'] = "Empty page";
-            } else {
-                foreach($this->criteria as $name => $path) {
-                    $nodes = $crawler->filterXPath($path);
-                    if(0 < count($nodes)) {
-                        $data[$name] = join(
-                            ";",
-                            $nodes->each(
-                                function($node,$i) {
-                                    return utf8_decode($node->nodeValue);
-                                }
-                            )
-                        );
-                    } 
+            $nodes = $crawler->filterXPath('.//ul[@class="pagenav"]/li[last()]/a');
+
+            if (0 < count($nodes)) {
+                $pages_to_get = intval($nodes->first()->text());
+
+                // Since we already have the first page, let's parse it !
+                $this->urls = array_merge(
+                    $this->urls,
+                    $crawler->filterXPath($this->urlsListIndexPath)->extract(array('href'))
+                );
+
+                $this->estimatedDatasetCount = count($this->urls) * $pages_to_get;
+                error_log('[Get URLs] Estimated number of datasets of the portal : ' . $this->estimatedDatasetCount);
+                error_log('[Get URLs] Aproximately ' . $pages_to_get . ' requests to do');
+
+                for($i = 2 ; $i <= $pages_to_get ; $i++) {
+                    $dispatcher->queue(
+                        $this->datasetsListUrl.$i,
+                        array($this,'Odalisk\Scraper\DataPublica\DataPublicaPlatform::crawlDatasetsList')
+                    );
                 }
-                
-                if(array_key_exists('setReleasedOn', $data)) {
-                    
-                    $data['setReleasedOn'] = \Datetime::createFromFormat($this->date_format, $this->translateDate($data['setReleasedOn']));
-                    if(FALSE == $data['setReleasedOn']) {
-                        $data['setReleasedOn'] = NULL;
-                    }
-                } else {
-                    $data['setReleasedOn'] = NULL;
-                }
-                
-                if(array_key_exists('setLastUpdatedOn', $data)) {
-                    $data['setLastUpdatedOn'] = \Datetime::createFromFormat($this->date_format, $this->translateDate($data['setLastUpdatedOn']));
-                    if(FALSE == $data['setLastUpdatedOn']) {
-                        $data['setLastUpdatedOn'] = NULL;
-                    }
-                } else {
-                    $data['setLastUpdatedOn'] = NULL;
-                }
+
+                $dispatcher->dispatch(10);
             }
-        } else {
-            $data['setError'] = 'Return code : ' . $response->getStatusCode();
         }
-        error_log('[' . $this->name . '] Processed ' . $data['setUrl'] . ' with code ' . $response->getStatusCode());
-        
-        if(0 == $this->count % 100) {
-           error_log('>>>> ' . $this->count . ' done, ' . $this->total_count . ' to go.');
+
+        foreach ($this->urls as $key => $id) {
+            $this->urls[$key] = $this->base_url . $id;
         }
-       
-        
-        $dataset = NULL;
-        
-        if(NULL != $this->datasets && array_key_exists($data['setUrl'], $this->datasets)) {
-            $dataset = $this->datasets[$data['setUrl']];
-            $dataset->populate($data);
-        } else {
-            $dataset = new Dataset($data);
-            $this->portal->addDataset($dataset);
-        }
-        
-        $this->em->persist($this->portal);
-        $this->em->persist($dataset);
-        
-        if($this->count == $this->total_count || $this->count % 100 == 0) {
-            error_log('Flushing data!');
-            $this->em->flush();
-        }
+
+        $this->totalCount = count($this->urls);
+
+
+        return $this->urls;
     }
     
-    
-    public function translateDate($date_in){
-        $in = array("/janv./", "/févr./", "/mars/", "/avr./", "/mai/", "/juin/", "/juil./", "/août/", "/nov./","/déc./");
-        $out = array("01","02","03","04","05","06","07","08","09","10","11","12");
-        return preg_replace($in,$out,$date_in);   
+    protected function additionalExtraction($crawler, &$data) 
+    {
+        // Deal with UTF8
+        foreach($data as $key => $value) {
+            $data[$key] = utf8_decode($value);
+        }
+        
+        // Convert dates to known format
+        foreach($this->dateFields as $field) {
+            $data[$field] = $this->translateDate($data[$field]);
+        }
     }
-    
+
+    public function translateDate($date){
+        return preg_replace($this->monthText , $this->monthNumber , $date);
+    }
+
     public function parsePortal() {
         $this->portal = new \Odalisk\Entity\Portal();
         $this->portal->setName($this->getName());
-        $this->portal->setUrl('http://www.data-publica.com/');
+        $this->portal->setUrl($this->getBaseUrl());
+        $this->portal->setCountry($this->country);
+        $this->portal->setStatus($this->status);
+        $this->portal->setEntity($this->entity);
         $this->em->persist($this->portal);
         $this->em->flush();
     }
-
 }

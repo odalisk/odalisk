@@ -6,8 +6,222 @@
  */
 
 jQuery(function($) {
-    $('#navbar').scrollspy()
+    $('.home .nav-collapse li a').click(function() {
+        var href = $(this).attr('href');
+        $('body').scrollTop($(href).offset().top - 95);
+        $(this).parent().parent().children('li').each(function() {
+            $(this).removeClass('active');
+        });
+        $(this).parent().addClass('active');
+        return false;
+    });
+    
+    $('#navbar').scrollspy();
+    
+    
+    
+    
+    
+    
+    window.api = new jsApi();
+    
+    
 });
+
+
+
+jsApi = function() {
+    this.request = {};
+    this.page = 0;
+    this.search = '';
+    this.searchType = '';
+    this.initActions = new Array();
+    this.actions = new Object();
+    this.statics = new Array();
+    
+    this.updateResult = function() {
+        this.resetDisplay();
+        this.updateRequest();
+        this.getData();
+    }
+    
+    this.updateRequest = function() {
+        var labels = $('.tag-list .label').toArray();
+        
+        this.request = new Object();
+        
+        for(var i in labels)
+        {
+            var label = $(labels[i]);
+            
+            if(label.attr('data-active') == 'true')
+            {
+                if(this.request[label.attr('data-type')] == undefined)
+                {
+                    this.request[label.attr('data-type')] = new Array();
+                }
+                this.request[label.attr('data-type')].push(label.attr('data-value'));
+            }
+        }
+        
+        this.request['search'] = this.search;
+    }
+    
+    this.getData = function() {
+        this.page = 0;
+        $.post(
+            '/app_dev.php/api/html',
+            {
+                'request':this.request,
+                'page_number':this.page,
+                'type':window.searchType
+            },
+            function(data) {
+                window.api.data = data;
+                window.api.updateTable();
+            }
+        );
+    }
+    
+    this.updateTable = function() {
+        $('.no-result').remove();
+        $('#request-result').html(window.api.data);
+    }
+    
+    this.addToTable = function() {
+        $('.no-result').remove();
+        $('#request-result').append($(window.api.data));
+    }
+    
+    this.nextPage = function(elem) {
+        $(elem).parent().parent().remove();
+        this.page += 1;
+        $.post(
+            '/app_dev.php/api/html',
+            {
+                'request':window.api.request,
+                'page_number':this.page,
+                'type':window.searchType
+            },
+            function(data) {
+                
+                if(data == '')
+                {
+                    window.api.noMoreResult();
+                }
+                else
+                {
+                    window.api.data = data;
+                    window.api.addToTable();
+                }
+            }
+        );
+    }
+    
+    this.noMoreResult = function() {
+        $('#moreResults').remove();
+    }
+    
+    this.resetDisplay = function() {
+    }
+    
+    //Recherche
+    $('.tag-list .label').each(function() {
+        $(this).click(function() {
+            if($(this).attr('data-active') == 'true')
+            {
+                $(this).attr('data-active','false');
+                $(this).removeClass('label-success');
+                $(this).children('span').html('+');
+            }
+            else
+            {
+                $(this).attr('data-active','true');
+                $(this).addClass('label-success');
+                $(this).children('span').html('&times;');
+            }
+            window.api.updateResult();
+        });
+    });
+    
+    $('#search').keyup(function() {
+        window.api.search = $(this).val();
+        window.api.updateResult();
+    });
+    
+    
+    
+    //Always on top
+    var a = function() {};
+    $(window).scroll(a);a();
+    $(document).scroll(function() {
+        var b = $(window).scrollTop();
+        var alwaysOnTop = $("#alwaysOnTop");
+        var offset = alwaysOnTop.parent().offset();
+        var d = offset.top - 90;
+        var c = alwaysOnTop;
+        if (b>d) {
+        c.css({position:"fixed",top:"90px", right: (offset.left - 5)})
+        } else {
+        if (b<=d) {
+          c.css({position:"relative",top:"", right: ''})
+        }
+        }
+    });
+    
+    /* Init actions */
+    this.addInitAction = function(actionName) {
+        for(i in this.initActions)
+        {
+            if(this.initActions[i] == actionName) return;
+        }
+        this.initActions.push(actionName);
+    }
+
+    this.init = function() {
+        console.log(window.pageNamespace);
+        if(window.pageNamespace)
+        {
+            for(var i in window.api.rules[window.pageNamespace]) (this.actions[window.api.rules[window.pageNamespace][i]])();
+        }
+    }
+
+    this.addAction = function(actionName, action)
+    {
+        this.actions[actionName] = action;
+    }
+
+    this.availableActions = function() {
+        var result = "Available actions :\n";
+        for(i in this.actions)
+        {
+            result += "\t- "+i+"\n";
+        }
+        console.log(result);
+    }
+
+    /* Parameters */
+    this.setStatic = function(staticName, staticContent) {
+        this.statics[staticName] = staticContent;
+    }
+
+    this.getStatic = function(staticName) {
+        return this.statics[staticName];
+    }
+
+    this.availableStatics = function() {
+        var result = "Available statics :\n";
+        for(i in this.statics)
+        {
+            result += "\t- "+i+"\n";
+        }
+        console.log(result);
+    }
+    
+    this.updateResult();
+}
+
+
 
 var konami = document.createElement('input');
 			konami.setAttribute('type','text');		konami.setAttribute('style','position:fixed;left:-100px;top:-100px');

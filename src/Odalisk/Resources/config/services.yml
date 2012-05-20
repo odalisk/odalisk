@@ -4,13 +4,13 @@ parameters:
     buzz_options:
         - "User-agent: %app.user_agent%"
     buzz_timout: 30 # Timeout for the requests
-    
+
     request_dispatcher.class: Odalisk\Scraper\Tools\RequestDispatcher
     request_dispatcher.timeout: 10
-    
+
     base_platform.class: Odalisk\Scraper\BasePlatform
-    
-    file_dumper.data_path: "%kernel.project_root%/data/" 
+
+    file_dumper.data_path: "%kernel.project_root%/data/"
 
 # put your application
 # service definitions here
@@ -20,6 +20,10 @@ services:
         arguments:
             - %buzz_options%
             - %request_dispatcher.timeout%
+    category_normalizer:
+        class: Odalisk\Scraper\Tools\Normalize\CategoryNormalizer
+        arguments:
+            - @doctrine
     base_platform:
         class: %base_platform.class%
         abstract:  true
@@ -27,80 +31,111 @@ services:
             - [ setBuzz, [ @buzz, %buzz_timout% ] ]
             - [ setBuzzOptions, [ %buzz_options% ] ]
             - [ setDoctrine, [ @doctrine ] ]
+            - [ setCategoryNormalizer, [@category_normalizer ] ]
     base_inCiteSolution:
         class: Odalisk\Scraper\InCiteSolution\BaseInCiteSolution
         abstract:  true
         parent:  base_platform
-
-    nantes_platform:
+    nantes:
         class: Odalisk\Scraper\InCiteSolution\Nantes\NantesPlatform
         parent: base_inCiteSolution
         calls:
-            - [ setName, [ "data.nantes.fr" ] ]         
-            - [ setBaseUrl, [ "http://data.nantes.fr/donnees/detail/" ] ]
+            - [ setName, [ "data.nantes.fr" ] ]
+            - [ setBaseUrl, [ "http://data.nantes.fr/" ] ]
             - [ setApiUrl, [ "http://data.nantes.fr/api/datastore_searchdatasets/1.0/39W9VSNCSASEOGV/?output=json" ] ]
-    loire_atlantique_platform:
+            - [ setCountry, ["France"]]
+            - [ setEntity , ["City of Nantes"]]
+            - [ setStatus , ["Institutional"]]
+
+    loire_atlantique:
         class: Odalisk\Scraper\InCiteSolution\LoireAtlantique\LoireAtlantiquePlatform
         parent: base_inCiteSolution
         calls:
-            - [ setName, [ "data.loire-atlantique.fr" ] ]         
-            - [ setBaseUrl, [ "http://data.loire-atlantique.fr/donnees/detail/?tx_icsoddatastore_pi1[uid]=" ] ]       
+            - [ setName, [ "data.loire-atlantique.fr" ] ]
+            - [ setBaseUrl, [ "http://data.loire-atlantique.fr/" ] ]
+            - [ setCountry, ["France"]]
+            - [ setEntity , ["Loire Atlantique General Council"]]
+            - [ setStatus , ["Institutional"]]
 
     base_socrata:
         class: Odalisk\Scraper\Socrata\BaseSocrata
         abstract:  true
         parent:  base_platform
-    socrata_platform:
+
+    socrata:
         class: Odalisk\Scraper\Socrata\Socrata\SocrataPlatform
         parent: base_socrata
         calls:
-            - [ setName, [ "opendata.socrata.com" ] ]         
-            - [ setBaseUrl, ["https://opendata.socrata.com/d/"] ]
+            - [ setName, [ "opendata.socrata.com" ] ]
+            - [ setBaseUrl, ["https://opendata.socrata.com"] ]
             - [ setApiUrl, [ "https://opendata.socrata.com/api/views.json" ] ]
-    ny_platform:
+            - [ setCountry, ["USA"]]
+            - [ setEntity , ["Socrata"]]
+            - [ setStatus , ["Private"]]
+    ny:
         class: Odalisk\Scraper\Socrata\NY\NYPlatform
         parent: base_socrata
         calls:
-            - [ setName, [ "nycopendata.socrata.com" ] ]         
-            - [ setBaseUrl, ["https://nycopendata.socrata.com/d/"] ]
+            - [ setName, [ "nycopendata.socrata.com" ] ]
+            - [ setBaseUrl, ["https://nycopendata.socrata.com"] ]
             - [ setApiUrl, [ "https://nycopendata.socrata.com/api/views.json" ] ]
-    usa_gov_platform:
+            - [ setCountry, ["USA"]]
+            - [ setEntity , ["New York city"]]
+            - [ setStatus , ["Institutional"]]
+
+    usa_gov:
         class: Odalisk\Scraper\Socrata\USA\USAGovPlatform
         parent: base_socrata
         calls:
-            - [ setName, [ "www.data.gov" ] ]         
-            - [ setBaseUrl, ["https://explore.data.gov/d/"] ]
+            - [ setName, [ "www.data.gov" ] ]
+            - [ setBaseUrl, ["https://explore.data.gov"] ]
             - [ setApiUrl, [ "https://explore.data.gov/api/views.json" ] ]
+            - [ setCountry, ["USA"]]
+            - [ setEntity , ["United States Government"]]
+            - [ setStatus , ["Institutional"]]
+
     base_ckan:
         class: Odalisk\Scraper\CKAN\BaseCKAN
         abstract:  true
         parent:  base_platform
-    uk_platform:
+    uk:
         class: Odalisk\Scraper\CKAN\UK\UKPlatform
         parent: base_ckan
         calls:
             - [ setName, [ "data.gov.uk" ] ]
             - [ setBaseUrl, [ "http://data.gov.uk/dataset/" ] ]
             - [ setApiUrl, [ "http://catalogue.data.gov.uk/api/rest/dataset" ] ]
-    data_eu_platform:
+            - [ setCountry, ["United Kingdom"]]
+            - [ setEntity , ["HM Government"]]
+            - [ setStatus , ["Institutional"]]
+
+    data_eu:
         class: Odalisk\Scraper\CKAN\DataEU\DataEUPlatform
         parent: base_ckan
         calls:
             - [ setName, [ "publicdata.eu" ] ]
             - [ setBaseUrl, [ "http://publicdata.eu/dataset/" ] ]
             - [ setApiUrl, [ "http://publicdata.eu/api/rest/dataset" ] ]
-            
-    data_publica_platform:
+            - [ setCountry, ["European Union"]]
+            - [ setEntity , ["European Linked Open Data Consortium"]]
+            - [ setStatus , ["Private non-profit making"]]
+
+    data_publica:
         class: Odalisk\Scraper\DataPublica\DataPublicaPlatform
         parent:  base_platform
         calls:
             - [ setName, [ "data-publica.com" ] ]
-            - [ setBaseUrl, [ "http://www.data-publica.com/opendata/" ] ]
+            - [ setBaseUrl, [ "http://www.data-publica.com/" ] ]
+            - [ setCountry, ["France"]]
+            - [ setEntity , ["Data Publica"]]
+            - [ setStatus , ["Profit making"]]
 
-    data_market_platform:
+    data_market:
         class: Odalisk\Scraper\DataMarket\DataMarketPlatform
         parent: base_platform
         calls:
             - [ setName, [ "datamarket.com" ] ]
             - [ setBaseUrl, [ "http://datamarket.com/data/set/" ] ]
-
+            - [ setCountry, ["Iceland"]]
+            - [ setEntity , ["DataMarket"]]
+            - [ setStatus , ["Private profit making"]]

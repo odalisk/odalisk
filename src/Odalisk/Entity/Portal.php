@@ -12,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Odalisk\Portal
  *
  * @ORM\Table(name="portals")
- * @ORM\Entity(repositoryClass="Odalisk\Repository\StatisticRepository")
+ * @ORM\Entity(repositoryClass="Odalisk\Repository\PortalRepository")
  */
 class Portal
 {
@@ -39,6 +39,28 @@ class Portal
      */
     protected $url;
 
+
+    /**
+     * @var string $country
+     *
+     * @ORM\Column(name="country", type="string", length=255)
+     */
+    protected $country;
+
+    /**
+     * @var string $country
+     *
+     * @ORM\Column(name="entity", type="string", length=255)
+     */
+    protected $entity;
+
+    /**
+     * @var string $status
+     *
+     * @ORM\Column(name="status", type="string", length=255)
+     */
+    protected $status;
+
     /**
      * @var string $created_at When did we create this record
      *
@@ -46,7 +68,7 @@ class Portal
      * @Gedmo\Timestampable(on="create")
      */
     protected $created_at;
-    
+
     /**
      * @var string $updated_at When did we update this record
      *
@@ -55,20 +77,20 @@ class Portal
      */
     protected $updated_at;
 
-	/**
-	 * @ORM\OneToMany(targetEntity="Dataset", mappedBy="portal")
-	 */
-	protected $datasets;
+    /**
+     * @ORM\OneToMany(targetEntity="Dataset", mappedBy="portal")
+     */
+    protected $datasets;
 
-	public function __construct()
-	{
-		$this->datasets = new ArrayCollection();
-	}
+    public function __construct()
+    {
+        $this->datasets = new ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -88,13 +110,73 @@ class Portal
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * Set country
+     *
+     * @param string $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set entity
+     *
+     * @param string $entity
+     */
+    public function setEntity($entity)
+    {
+        $this->entity = $entity;
+    }
+
+    /**
+     * Get entity
+     *
+     * @return string
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    
     /**
      * Set url
      *
@@ -108,7 +190,7 @@ class Portal
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -128,7 +210,7 @@ class Portal
     /**
      * Get base_url
      *
-     * @return string 
+     * @return string
      */
     public function getBaseUrl()
     {
@@ -142,7 +224,7 @@ class Portal
      */
     public function addDataset(\Odalisk\Entity\Dataset $dataset)
     {
-        if(!$this->datasets->contains($dataset)) {
+        if (!$this->datasets->contains($dataset)) {
             $this->datasets[] = $dataset;
             $dataset->setPortal($this);
         }
@@ -151,7 +233,7 @@ class Portal
     /**
      * Get datasets
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getDatasets()
     {
@@ -171,7 +253,7 @@ class Portal
     /**
      * Get created_at
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -191,7 +273,7 @@ class Portal
     /**
      * Get updated_at
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdatedAt()
     {

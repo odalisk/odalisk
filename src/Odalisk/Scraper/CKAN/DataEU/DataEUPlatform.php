@@ -7,46 +7,49 @@ use Odalisk\Scraper\CKAN\BaseCKAN;
 class DataEUPlatform extends BaseCKAN {
     public function __construct() {
         $this->criteria = array(
-            'setName' => '//h1[@class="page_heading"]'
-			//, 'posted_information' = '//div[@id="tagline"]'
-			, 'setSummary' => '//div[@class="notes"]/p'
-			, 'setReleasedOn' => '//td[.="date_released" and @class="dataset-label"]/../td[2]'
-			, 'setLastUpdatedOn' => '//td[.="date_updated" and @class="dataset-label"]/../td[2]'
-			, 'setProvider' => '//td[.="published_by" and @class="dataset-label"]/../td[2]'
-			, 'setLicense' => '/li[@id="dataset-license" and @class="sidebar-section"]'
+            'setName' => '//h1[@class="page_heading"]',
+            'setSummary' => './/*[@id="notes-extract"]/p',
+            'setReleasedOn' => '//td[.="date_released" and @class="dataset-label"]/../td[2]',
+            'setOwner' => './/*[@property="dc:creator"]',
+            'setMaintainer' => './/*[@property="dc:contributor"]',
+            'setLastUpdatedOn' => '//td[.="date_updated" and @class="dataset-label"]/../td[2]',
+            'setProvider' => '//td[.="published_by" and @class="dataset-label"]/../td[2]',
+            'setLicense' => '/li[@id="dataset-license" and @class="sidebar-section"]',
+            'setCategories' => '//td[text()="categories"]/following-sibling::*',
+            'setFormat' => './/*[@property="dc:format"]'
         );
 
-		$this->date_format = 'Y-m-d';
+        $this->dateFormat = 'Y-m-d';
+        $this->inChargeFields = array('setOwner','setMaintainer');
     }
     
-    public function getDatasetsUrls() {
-        // Make the API call
-        $response = $this->buzz->get(
-            $this->api_url,
-            $this->buzz_options
-        );
-        // Get the paths
-        if(200 == $response->getStatusCode()) {
-            $data = json_decode($response->getContent());
-            
-            foreach($data as $key => $dataset_name) {
-                $data[$key] = $this->base_url . $dataset_name;
-            }
-        } else {
-            error_log('Couldn\'t fetch list of datasets for ' . $this->name);
-        }     
-        
-        $this->total_count = count($data);
-        
-        return $data;
+    protected function additionalExtraction($crawler, &$data) 
+    {
+        // Deal with UTF8
+        foreach($data as $key => $value) {
+            $data[$key] = utf8_decode($value);
+        }
     }
 
-	public function parsePortal() {
+    protected function additionalNormalization(&$data)
+    {
+        foreach ($this->inChargeFields as $field) {
+            if (array_key_exists($field, $data)) {
+                if(preg_match("/not given/i",$data[$field])){
+                    unset($data[$field]);
+                }
+            }
+        }
+    }
+
+    public function parsePortal() {
         $this->portal = new \Odalisk\Entity\Portal();
         $this->portal->setName($this->getName());
         $this->portal->setUrl('http://publicdata.eu/');
-        
+        $this->portal->setCountry($this->country);
+        $this->portal->setStatus($this->status);
+        $this->portal->setEntity($this->entity);
         $this->em->persist($this->portal);
         $this->em->flush();
-	}
+    }
 }

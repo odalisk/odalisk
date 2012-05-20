@@ -31,9 +31,9 @@ class ExtractCommand extends BaseCommand
         // Store the container so that we have an easy shortcut
         $container = $this->getContainer();
         // Get the configuration value from config/app.yml : which platforms are enabled?
-        $platformServices = $container->getParameter('app.platforms');
+        $platformServices = $container->getParameter('config.enabled_portals');
         // Get the data directory
-        $dataPath = $container->getParameter('file_dumper.data_path');
+        $dataPath = $container->getParameter('config.file_dumper.data_path');
         // Entity repository for datasets_crawls & entity manager
         $em = $this->getEntityManager();
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
@@ -114,7 +114,10 @@ class ExtractCommand extends BaseCommand
                    error_log('[Analysis] ' . $code . ' > ' . $count);
                 }
                 error_log('[Analysis] Persisting data to the database');
+                error_log('[Analysis] currently using ' . memory_get_usage(true) / (1024 * 1024) . 'MB of memory');
                 $em->flush();
+                $em->clear();
+                error_log('[Analysis] currently using ' . memory_get_usage(true) / (1024 * 1024) . 'MB of memory');
             }
         }
         $end = time();

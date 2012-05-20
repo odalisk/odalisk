@@ -3,6 +3,7 @@
 namespace Odalisk\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -14,6 +15,7 @@ class Dataset
 {
 
     public function __construct(array $values = array()) {
+        $this->categories = new ArrayCollection();
         $this->populate($values);
     }
 
@@ -64,11 +66,9 @@ class Dataset
     protected $summary;
 
     /**
-     * @var string $category
-     *
-     * @ORM\Column(name="category", type="string", nullable=true, length=255)
+     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Category", cascade={"persist", "remove"})
      */
-    protected $category;
+    protected $categories;
 
     /**
      * @var string $format
@@ -193,26 +193,6 @@ class Dataset
     public function getSummary()
     {
         return $this->summary;
-    }
-
-    /**
-     * Set category
-     *
-     * @param string $category
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-    }
-
-    /**
-     * Get category
-     *
-     * @return string
-     */
-    public function getCategory()
-    {
-        return $this->category;
     }
 
     /**
@@ -373,5 +353,37 @@ class Dataset
     public function getPortal()
     {
         return $this->portal;
+    }
+
+    /**
+     * Add categories
+     *
+     * @param Odalisk\Entity\Category $categories
+     */
+    public function addCategory(\Odalisk\Entity\Category $categories)
+    {
+        $this->categories[] = $categories;
+    }
+    
+    /**
+     * Set categories
+     *
+     * @param array $categories
+     */
+    public function setCategories(array $categories)
+    {
+        foreach($categories as $category) {
+            $this->categories[] = $category;
+        }
+    }
+
+    /**
+     * Get categories
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

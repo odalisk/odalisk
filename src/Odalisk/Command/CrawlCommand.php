@@ -35,9 +35,9 @@ class CrawlCommand extends BaseCommand
         // Get the request dispatcher
         $dispatcher = $container->get('request_dispatcher');
         // Get the file dumper
-        $this->initDumper($container->getParameter('file_dumper.data_path'), $container->get('doctrine'));
+        $this->initDumper($container->getParameter('config.file_dumper.data_path'), $container->get('doctrine'));
         // Get the configuration value from config/app.yml : which platforms are enabled?
-        $platformServices = $container->getParameter('app.platforms');
+        $platformServices = $container->getParameter('config.enabled_portals');
         // Initialize some arrrays
         $platforms = array();
         $queries = array();
@@ -73,7 +73,7 @@ class CrawlCommand extends BaseCommand
                 $queries[$name] = $platform->prepareRequestsFromUrls(FileDumper::getUrls($name));
                 // Log how many URLs we added
                 FileDumper::setTotalCount(FileDumper::getTotalCount() + count($queries[$name]));
-                //error_log($platform->getName() . ' has ' . $platform->getCount() . ' datasets');
+                //error_log($platform->getName() . ' has ' . $platform->getTotalCount() . ' datasets');
             }
 
             // While our url pool isnt empty

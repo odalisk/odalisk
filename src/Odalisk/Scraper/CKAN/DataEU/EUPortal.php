@@ -2,9 +2,9 @@
 
 namespace Odalisk\Scraper\CKAN\DataEU;
 
-use Odalisk\Scraper\CKAN\BaseCKAN;
+use Odalisk\Scraper\CKAN\BaseCkanPortal;
 
-class DataEUPlatform extends BaseCKAN {
+class EUPortal extends BaseCkanPortal {
     public function __construct() {
         $this->criteria = array(
             'setName' => '//h1[@class="page_heading"]',
@@ -15,38 +15,29 @@ class DataEUPlatform extends BaseCKAN {
             'setLastUpdatedOn' => '//td[.="date_updated" and @class="dataset-label"]/../td[2]',
             'setProvider' => '//td[.="published_by" and @class="dataset-label"]/../td[2]',
             'setLicense' => '/li[@id="dataset-license" and @class="sidebar-section"]',
-            'setCategory' => '//td[text()="categories"]/following-sibling::*',
+            'setCategories' => '//td[text()="categories"]/following-sibling::*',
             'setFormat' => './/*[@property="dc:format"]'
         );
 
-        $this->dateFormat = 'Y-m-d';
+        $this->inChargeFields = array('setOwner','setMaintainer');
+    }
+    
+    protected function additionalExtraction($crawler, &$data) 
+    {
+        // Deal with UTF8
+        foreach($data as $key => $value) {
+            $data[$key] = utf8_decode($value);
+        }
     }
 
     protected function additionalNormalization(&$data)
     {
-        if (array_key_exists('setName', $data)) {
-            $data['setName'] = utf8_decode($data['setName']);
-        }
-        if (array_key_exists('setSummary', $data)) {
-            $data['setSummary'] = utf8_decode($data['setSummary']);
-        }
-
-        $inChargeFields = array('setOwner','setMaintainer');
-        foreach ($inChargeFields as $field) {
+        foreach ($this->inChargeFields as $field) {
             if (array_key_exists($field, $data)) {
                 if(preg_match("/not given/i",$data[$field])){
                     unset($data[$field]);
                 }
             }
         }
-    }
-
-    public function parsePortal() {
-        $this->portal = new \Odalisk\Entity\Portal();
-        $this->portal->setName($this->getName());
-        $this->portal->setUrl('http://publicdata.eu/');
-
-        $this->em->persist($this->portal);
-        $this->em->flush();
     }
 }

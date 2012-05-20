@@ -4,17 +4,20 @@ namespace Odalisk\Scraper\InCiteSolution;
 
 use Buzz\Message;
 
-use Odalisk\Scraper\BasePlatform;
+use Odalisk\Scraper\BasePortal;
 
 
 /**
  * The scraper for in cite Solution Plateform
  */
-abstract class BaseInCiteSolution extends BasePlatform {
-    public function __construct() {
+abstract class BaseInCiteSolutionPortal extends BasePortal 
+{
+
+    public function __construct() 
+    {
         $this->criteria = array(
             'setName' => ".//*[@class='tx_icsoddatastore_pi1_single']/h1",
-            'setCategory' => ".//*[@class='tx_icsoddatastore_pi1_categories separator']/span[@class='value']",
+            'setCategories' => ".//*[@class='tx_icsoddatastore_pi1_categories separator']/span[@class='value']",
             'setLicense' => ".//*[@class='tx_icsoddatastore_pi1_licence separator']/span[@class='value']",
             // 'Update Frequency' => ".//*[@class='tx_icsoddatastore_pi1_updatefrequency separator']/span[@class='value']",
             'setReleasedOn' => ".//*[@class='tx_icsoddatastore_pi1_releasedate separator']/span[@class='value']",
@@ -24,25 +27,23 @@ abstract class BaseInCiteSolution extends BasePlatform {
             'setOwner' => ".//*[@class='tx_icsoddatastore_pi1_owner separator']/span[@class='value']",
             //'Technical data' => ".//*[@class='tx_icsoddatastore_pi1_technical_data separator']/span[@class='value']",
             'setFormat' => ".//*[@class='tx_icsoddatastore_pi1_file']/a/img/@alt",
-             );
-
-        $this->dateFormat = 'd/m/Y';
+        );
     }
 
-    public function getDatasetsUrls() {
-
+    public function getDatasetsUrls()
+    {
         // API Call
         $urls = array();
 
         $response = $this->buzz->get(
-            $this->api_url,
+            $this->getApiUrl(),
             $this->buzzOptions
         );
 
         if (200 == $response->getStatusCode()) {
             $data = json_decode($response->getContent());
             foreach ($data->opendata->answer->data->dataset as $dataset) {
-                $urls[] = $this->base_url . '?tx_icsoddatastore_pi1[uid]=' . $dataset->id;
+                $urls[] = $this->getBaseUrl() . 'donnees/detail/?tx_icsoddatastore_pi1[uid]=' . $dataset->id;
             }
         }  else {
             error_log('Couldn\'t fetch list of datasets for ' . $this->name);
@@ -50,11 +51,11 @@ abstract class BaseInCiteSolution extends BasePlatform {
 
         $this->totalCount = count($urls);
 
-
         return $urls;
     }
 
-    public function prepareRequestsFromUrls($urls) {
+    public function prepareRequestsFromUrls($urls)
+    {
         $factory = new Message\Factory();
         $requests = array();
 
@@ -66,7 +67,6 @@ abstract class BaseInCiteSolution extends BasePlatform {
             $formRequest->setFields(array('tx_icsoddatastore_pi1[cgu]' => 'on'));
             $requests[] = $formRequest;
         }
-
 
         return $requests;
     }

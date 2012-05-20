@@ -12,3 +12,4 @@ composer.lock
 plugin/
 .DS_Store
 data.tar.bz2
+*.php~

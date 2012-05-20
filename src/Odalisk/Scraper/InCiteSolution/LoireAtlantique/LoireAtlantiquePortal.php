@@ -2,7 +2,7 @@
 
 namespace Odalisk\Scraper\InCiteSolution\LoireAtlantique;
 
-use Odalisk\Scraper\InCiteSolution\BaseInCiteSolution;
+use Odalisk\Scraper\InCiteSolution\BaseInCiteSolutionPortal;
 
 use Odalisk\Scraper\Tools\RequestDispatcher;
 
@@ -12,7 +12,7 @@ use Symfony\Component\DomCrawler\Crawler;
 /**
  * The scraper for data.loire-atlantique.fr
  */
-class LoireAtlantiquePlatform extends BaseInCiteSolution {
+class LoireAtlantiquePortal extends BaseInCiteSolutionPortal {
 
 
     protected $nb_datasets_estimated;
@@ -59,7 +59,7 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
                 for($i = 1 ; $i <= $pages_to_get ; $i++) {
                    $this->estimatedDatasetCount += count($this->urls);
                    $dispatcher->queue($this->datasetsListUrl.$i,
-                        array($this, 'Odalisk\Scraper\InCiteSolution\LoireAtlantique\LoireAtlantiquePlatform::crawlDatasetsList'));
+                        array($this, 'Odalisk\Scraper\InCiteSolution\LoireAtlantique\LoireAtlantiquePortal::crawlDatasetsList'));
                 }
 
                 error_log('[Get URLs] Estimated number of datasets of the portal : ' . $this->estimatedDatasetCount);
@@ -70,21 +70,12 @@ class LoireAtlantiquePlatform extends BaseInCiteSolution {
         }
 
         foreach ($this->urls as $key => $id) {
-            $this->urls[$key] = $this->base_url . $id;
+            $this->urls[$key] = $this->getBaseUrl() . $id;
         }
 
         $this->totalCount = count($this->urls);
 
-
         return $this->urls;
     }
 
-    public function parsePortal() {
-        $this->portal = new \Odalisk\Entity\Portal();
-        $this->portal->setName($this->getName());
-        $this->portal->setUrl('http://data.loire-atlantique.fr/');
-
-        $this->em->persist($this->portal);
-        $this->em->flush();
-    }
 }

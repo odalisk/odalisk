@@ -6,14 +6,13 @@ use Symfony\Component\DomCrawler\Crawler;
 
 use Odalisk\Scraper\Tools\RequestDispatcher;
 
-use Odalisk\Scraper\BasePlatform;
+use Odalisk\Scraper\BasePortal;
 
 /**
  * The scraper for in DataPublica
  */
-class DataPublicaPlatform extends BasePlatform
+class DataPublicaPortal extends BasePortal
 {
-
     protected $estimatedDatasetCount = 0;
 
     protected $monthText = array("/janv./", "/févr./", "/mars/", "/avr./", "/mai/", "/juin/", "/juil./", "/août/", "/sept./", "/oct./", "/nov./","/déc./");
@@ -24,7 +23,7 @@ class DataPublicaPlatform extends BasePlatform
     {
         $this->criteria = array(
             'setName' => ".//*[@id='content']/article[1]/h2",
-            'setCategory' => "//div/h5[text()='Catégories']/../following-sibling::*/ul/li/a",
+            'setCategories' => "//div/h5[text()='Catégories']/../following-sibling::*/ul/li/a",
             'setLicense' => "//div/h5[text()='Licence']/../following-sibling::*",
             'setReleasedOn' => "//div/h5[text()='Date de création']/../following-sibling::*",
             'setLastUpdatedOn' => "//div/h5[text()='Date de mise à jour']/../following-sibling::*",
@@ -36,7 +35,6 @@ class DataPublicaPlatform extends BasePlatform
 
         $this->datasetsListUrl = 'http://www.data-publica.com/search/?page=';
         $this->urlsListIndexPath = ".//*[@id='content']/article[2]/ol/li/a";
-        $this->dateFormat = 'd m Y';
     }
 
     public function getDatasetsUrls()
@@ -65,7 +63,7 @@ class DataPublicaPlatform extends BasePlatform
                 for($i = 2 ; $i <= $pages_to_get ; $i++) {
                     $dispatcher->queue(
                         $this->datasetsListUrl.$i,
-                        array($this,'Odalisk\Scraper\DataPublica\DataPublicaPlatform::crawlDatasetsList')
+                        array($this,'Odalisk\Scraper\DataPublica\DataPublicaPortal::crawlDatasetsList')
                     );
                 }
 
@@ -74,7 +72,7 @@ class DataPublicaPlatform extends BasePlatform
         }
 
         foreach ($this->urls as $key => $id) {
-            $this->urls[$key] = $this->base_url . $id;
+            $this->urls[$key] = $this->getBaseUrl() . $id;
         }
 
         $this->totalCount = count($this->urls);
@@ -96,22 +94,7 @@ class DataPublicaPlatform extends BasePlatform
         }
     }
 
-    protected function additionalNormalization(&$data)
-    {
-        if (array_key_exists('setCategory', $data)) {
-            $data['setCategory'] = str_replace(';de;', ' de ', $data['setCategory']);
-        }
-    }
-
     public function translateDate($date){
         return preg_replace($this->monthText , $this->monthNumber , $date);
-    }
-
-    public function parsePortal() {
-        $this->portal = new \Odalisk\Entity\Portal();
-        $this->portal->setName($this->getName());
-        $this->portal->setUrl('http://www.data-publica.com/');
-        $this->em->persist($this->portal);
-        $this->em->flush();
     }
 }

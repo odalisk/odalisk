@@ -2,14 +2,14 @@
 
 namespace Odalisk\Scraper\CKAN\UK;
 
-use Odalisk\Scraper\CKAN\BaseCKAN;
+use Odalisk\Scraper\CKAN\BaseCkanPortal;
 
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * The scraper for data.gov.uk
  */
-class UKPlatform extends BaseCKAN {
+class UKGovPortal extends BaseCkanPortal {
     public function __construct() {
         $this->criteria = array(
             'setName' => '//h1[@class="title"]',
@@ -18,10 +18,8 @@ class UKPlatform extends BaseCKAN {
             'setLastUpdatedOn' => '//td[.="Last updated" and @class="package_label"]/../td[2]/div[1]',
             'setProvider' => '//td[.="Published by" and @class="package_label"]/../td[2]/div[1]',
             'setLicense' => '//td[.="Licence" and @class="package_label"]/../td[2]/div[1]',
-            'setCategory' => './/*[@class="package_label" and text() = "Categories"]/following-sibling::*'
+            'setCategories' => './/*[@class="package_label" and text() = "Categories"]/following-sibling::*'
         );
-
-        $this->dateFormat = 'Y-m-d';
     }
     
     protected function additionalExtraction($crawler, &$data)
@@ -47,14 +45,5 @@ class UKPlatform extends BaseCKAN {
                 }
             }
         }
-    }
-
-    public function parsePortal() {
-        $this->portal = new \Odalisk\Entity\Portal();
-        $this->portal->setName($this->getName());
-        $this->portal->setUrl('http://data.gov.uk/');
-
-        $this->em->persist($this->portal);
-        $this->em->flush();
     }
 }

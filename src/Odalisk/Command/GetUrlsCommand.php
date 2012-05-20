@@ -33,10 +33,11 @@ class GetUrlsCommand extends BaseCommand
         $start = time();
         // Store the container so that we have an easy shortcut
         $container = $this->getContainer();
-        // Get the file dumper
-        FileDumper::setBasePath($container->getParameter('file_dumper.data_path'));
+        // Initialize the file dumper
+        $dataPath = $container->getParameter('config.file_dumper.data_path');
+        FileDumper::setBasePath($dataPath);
         // Get the configuration value from config/app.yml : which platforms are enabled?
-        $platformServices = $container->getParameter('app.platforms');
+        $platformServices = $container->getParameter('config.enabled_portals');
         // Initialize some arrays
         $platforms = array();
 
@@ -57,11 +58,10 @@ class GetUrlsCommand extends BaseCommand
                 $platforms[$platform] = $container->get($platform);
             }
 
-            $path = $container->getParameter('file_dumper.data_path');
             foreach ($platforms as $name => $platform) {
                 error_log('[Get URLs] Getting urls for platform : ' . $platform->getName());
                 FileDumper::saveUrls($platform->getDatasetsUrls(), $name);
-                error_log('[Get URLs] ' . $platform->getName() . ' has ' . $platform->getCount() . ' urls');
+                error_log('[Get URLs] ' . $platform->getName() . ' has ' . $platform->getTotalCount() . ' urls');
             }
         }
         $end = time();

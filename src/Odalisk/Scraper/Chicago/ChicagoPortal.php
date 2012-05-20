@@ -4,14 +4,14 @@ namespace Odalisk\Scraper\Chicago;
 
 use Symfony\Component\DomCrawler\Crawler;
 
-use Odalisk\Scraper\BasePlatform;
+use Odalisk\Scraper\BasePortal;
 
 use Buzz\Message;
 
 /**
  * The scraper for data.cityofchicago.org
  */
-class ChicagoPortal extends BasePlatform {
+class ChicagoPortal extends BasePortal {
 
     private static $criteria = array(
         'Creation' => '//span[@class="aboutCreateDate"]/span',
@@ -59,7 +59,7 @@ class ChicagoPortal extends BasePlatform {
         if (200 == $response->getStatusCode()) {
             $data = json_decode($response->getContent(), true);
             foreach ($data['data'] as $dataset) {
-                self::$datasets[$this->base_url . $dataset[10][0]] = null;
+                self::$datasets[$this->getBaseUrl() . $dataset[10][0]] = null;
             }
         } else {
             throw new \RuntimeException('Couldn\'t fetch list of datasets');

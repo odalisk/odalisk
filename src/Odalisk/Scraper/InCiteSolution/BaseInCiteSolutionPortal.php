@@ -4,15 +4,17 @@ namespace Odalisk\Scraper\InCiteSolution;
 
 use Buzz\Message;
 
-use Odalisk\Scraper\BasePlatform;
+use Odalisk\Scraper\BasePortal;
 
 
 /**
  * The scraper for in cite Solution Plateform
  */
-abstract class BaseInCiteSolution extends BasePlatform {
+abstract class BaseInCiteSolutionPortal extends BasePortal 
+{
 
-    public function __construct() {
+    public function __construct() 
+    {
         $this->criteria = array(
             'setName' => ".//*[@class='tx_icsoddatastore_pi1_single']/h1",
             'setCategories' => ".//*[@class='tx_icsoddatastore_pi1_categories separator']/span[@class='value']",
@@ -25,25 +27,23 @@ abstract class BaseInCiteSolution extends BasePlatform {
             'setOwner' => ".//*[@class='tx_icsoddatastore_pi1_owner separator']/span[@class='value']",
             //'Technical data' => ".//*[@class='tx_icsoddatastore_pi1_technical_data separator']/span[@class='value']",
             'setFormat' => ".//*[@class='tx_icsoddatastore_pi1_file']/a/img/@alt",
-             );
-
-        $this->dateFormat = 'd/m/Y';
+        );
     }
 
-    public function getDatasetsUrls() {
-
+    public function getDatasetsUrls()
+    {
         // API Call
         $urls = array();
 
         $response = $this->buzz->get(
-            $this->api_url,
+            $this->getApiUrl(),
             $this->buzzOptions
         );
 
         if (200 == $response->getStatusCode()) {
             $data = json_decode($response->getContent());
             foreach ($data->opendata->answer->data->dataset as $dataset) {
-                $urls[] = $this->base_url . 'donnees/detail/?tx_icsoddatastore_pi1[uid]=' . $dataset->id;
+                $urls[] = $this->getBaseUrl() . 'donnees/detail/?tx_icsoddatastore_pi1[uid]=' . $dataset->id;
             }
         }  else {
             error_log('Couldn\'t fetch list of datasets for ' . $this->name);
@@ -51,11 +51,11 @@ abstract class BaseInCiteSolution extends BasePlatform {
 
         $this->totalCount = count($urls);
 
-
         return $urls;
     }
 
-    public function prepareRequestsFromUrls($urls) {
+    public function prepareRequestsFromUrls($urls)
+    {
         $factory = new Message\Factory();
         $requests = array();
 
@@ -68,22 +68,10 @@ abstract class BaseInCiteSolution extends BasePlatform {
             $requests[] = $formRequest;
         }
 
-
         return $requests;
     }
 
     public function sanitize($url) {
         return str_replace(']', '%5D', str_replace('[', '%5B', $url));
-    }
-
-    public function parsePortal() {
-        $this->portal = new \Odalisk\Entity\Portal();
-        $this->portal->setName($this->getName());
-        $this->portal->setUrl($this->getBaseUrl());
-        $this->portal->setCountry($this->country);
-        $this->portal->setStatus($this->status);
-        $this->portal->setEntity($this->entity);
-        $this->em->persist($this->portal);
-        $this->em->flush();
     }
 }

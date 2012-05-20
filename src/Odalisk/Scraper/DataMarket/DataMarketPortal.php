@@ -4,12 +4,12 @@ namespace Odalisk\Scraper\DataMarket;
 
 use Symfony\Component\DomCrawler\Crawler;
 
-use Odalisk\Scraper\BasePlatform;
+use Odalisk\Scraper\BasePortal;
 
 /**
  * The scraper for in DataMarket
  */
-class DataMarketPlatform extends BasePlatform {
+class DataMarketPortal extends BasePortal {
     // The url on which the datasets are listed.
     private $datasetsListUrl = 'http://datamarket.com/data/list/?q=datatype:dataset';
     // the number of datasets displayed for a request.
@@ -17,11 +17,9 @@ class DataMarketPlatform extends BasePlatform {
 
     public function __construct() {
         $this->criteria = array(
-                'setName' => '//div[@id="dataset-info"]/h1'
-                , 'setLicense' => '//strong[.="Licenses:"]/ul/li/p'
-                );
-
-        $this->dateFormat = 'd/m/Y';
+            'setName' => '//div[@id="dataset-info"]/h1', 
+            'setLicense' => '//strong[.="Licenses:"]/ul/li/p'
+        );
     }
 
     /*
@@ -39,7 +37,7 @@ class DataMarketPlatform extends BasePlatform {
      * This solution is manually verified.
      */
     public function getDatasetsUrls() {
-        $urls    = array(); // the array we will return.
+        $urls = array(); // the array we will return.
 
         // The number of datasets of the portal ; information given on
         // $dataset_list_url page.
@@ -87,7 +85,7 @@ class DataMarketPlatform extends BasePlatform {
 
         // $urls contains only the ids of the datasets, we need to add the
         // base url :
-        $base_url = $this->base_url;
+        $base_url = $this->getBaseUrl();
         $urls= array_map(
             function($id) use ($base_url) { return($base_url.$id); }
             , $urls
@@ -96,16 +94,4 @@ class DataMarketPlatform extends BasePlatform {
         return($urls);
 
     }
-
-     public function parsePortal() {
-        $this->portal = new \Odalisk\Entity\Portal();
-        $this->portal->setName($this->getName());
-        $this->portal->setUrl('http://datamarket.com/');
-        $this->portal->setCountry($this->country);
-        $this->portal->setStatus($this->status);
-        $this->portal->setEntity($this->entity);
-        $this->em->persist($this->portal);
-        $this->em->flush();
-    }
-
 }

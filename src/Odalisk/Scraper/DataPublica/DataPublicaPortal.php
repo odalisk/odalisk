@@ -6,14 +6,13 @@ use Symfony\Component\DomCrawler\Crawler;
 
 use Odalisk\Scraper\Tools\RequestDispatcher;
 
-use Odalisk\Scraper\BasePlatform;
+use Odalisk\Scraper\BasePortal;
 
 /**
  * The scraper for in DataPublica
  */
-class DataPublicaPlatform extends BasePlatform
+class DataPublicaPortal extends BasePortal
 {
-
     protected $estimatedDatasetCount = 0;
 
     protected $monthText = array("/janv./", "/févr./", "/mars/", "/avr./", "/mai/", "/juin/", "/juil./", "/août/", "/sept./", "/oct./", "/nov./","/déc./");
@@ -36,7 +35,6 @@ class DataPublicaPlatform extends BasePlatform
 
         $this->datasetsListUrl = 'http://www.data-publica.com/search/?page=';
         $this->urlsListIndexPath = ".//*[@id='content']/article[2]/ol/li/a";
-        $this->dateFormat = 'd m Y';
     }
 
     public function getDatasetsUrls()
@@ -65,7 +63,7 @@ class DataPublicaPlatform extends BasePlatform
                 for($i = 2 ; $i <= $pages_to_get ; $i++) {
                     $dispatcher->queue(
                         $this->datasetsListUrl.$i,
-                        array($this,'Odalisk\Scraper\DataPublica\DataPublicaPlatform::crawlDatasetsList')
+                        array($this,'Odalisk\Scraper\DataPublica\DataPublicaPortal::crawlDatasetsList')
                     );
                 }
 
@@ -74,7 +72,7 @@ class DataPublicaPlatform extends BasePlatform
         }
 
         foreach ($this->urls as $key => $id) {
-            $this->urls[$key] = $this->base_url . $id;
+            $this->urls[$key] = $this->getBaseUrl() . $id;
         }
 
         $this->totalCount = count($this->urls);
@@ -98,16 +96,5 @@ class DataPublicaPlatform extends BasePlatform
 
     public function translateDate($date){
         return preg_replace($this->monthText , $this->monthNumber , $date);
-    }
-
-    public function parsePortal() {
-        $this->portal = new \Odalisk\Entity\Portal();
-        $this->portal->setName($this->getName());
-        $this->portal->setUrl($this->getBaseUrl());
-        $this->portal->setCountry($this->country);
-        $this->portal->setStatus($this->status);
-        $this->portal->setEntity($this->entity);
-        $this->em->persist($this->portal);
-        $this->em->flush();
     }
 }

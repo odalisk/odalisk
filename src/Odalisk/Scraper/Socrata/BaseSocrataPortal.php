@@ -4,20 +4,16 @@ namespace Odalisk\Scraper\Socrata;
 
 use Symfony\Component\DomCrawler\Crawler;
 
-use Odalisk\Scraper\BasePlatform;
+use Odalisk\Scraper\BasePortal;
 use Odalisk\Scraper\Tools\RequestDispatcher;
 
-abstract class BaseSocrata extends BasePlatform {
+abstract class BaseSocrataPortal extends BasePortal {
 
     // The base url on which the datasets are listed.
     protected $datasetsListUrl;
 
     // the number of datasets displayed on one page.
     protected $batch_size;
-
-    // The counter of the number of finished requests.
-    protected $i_requests = 0;
-
 
     public function __construct() {
         $this->criteria = array(
@@ -36,13 +32,10 @@ abstract class BaseSocrata extends BasePlatform {
             // , 'Community Rating' => '//div[@class="aboutDataset"]/div[3]/dl/dd[1]/div'
         );
 
-        $this->dateFormat = 'M d, Y';
         $this->urlsListIndexPath = '//td[@class="nameDesc"]/a';
         $this->batch_size = 10;
     }
-
-
-
+    
     public function getDatasetsUrls() {
         $dispatcher = new RequestDispatcher($this->buzzOptions, 30);
 
@@ -68,7 +61,7 @@ abstract class BaseSocrata extends BasePlatform {
             for($i = 2 ; $i <= $request_count ; $i++) {
                 $dispatcher->queue(
                     $this->datasetsListUrl.$i,
-                    array($this,'Odalisk\Scraper\Socrata\BaseSocrata::crawlDatasetsList')
+                    array($this,'Odalisk\Scraper\Socrata\BaseSocrataPortal::crawlDatasetsList')
                 );
             }
         }
@@ -76,11 +69,10 @@ abstract class BaseSocrata extends BasePlatform {
         $dispatcher->dispatch(10);
 
         foreach ($this->urls as $key => $id) {
-            $this->urls[$key] = $this->base_url . $id . '/about';
+            $this->urls[$key] = $this->getBaseUrl() . $id . '/about';
         }
 
         $this->totalCount = count($this->urls);
-
 
         return $this->urls;
     }

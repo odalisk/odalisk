@@ -31,9 +31,9 @@ class ExtractCommand extends BaseCommand
         // Store the container so that we have an easy shortcut
         $container = $this->getContainer();
         // Get the configuration value from config/app.yml : which platforms are enabled?
-        $platformServices = $container->getParameter('app.platforms');
+        $platformServices = $container->getParameter('config.enabled_portals');
         // Get the data directory
-        $dataPath = $container->getParameter('file_dumper.data_path');
+        $dataPath = $container->getParameter('config.file_dumper.data_path');
         // Entity repository for datasets_crawls & entity manager
         $em = $this->getEntityManager();
         $em->getConnection()->getConfiguration()->setSQLLogger(null);

@@ -1,141 +1,105 @@
 # put your application
 # DIC parameters here
 parameters:
-    buzz_options:
-        - "User-agent: %app.user_agent%"
-    buzz_timout: 30 # Timeout for the requests
+    config.buzz.options:
+        - "User-agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1"
+    config.buzz.timeout: 30
+        
+    config.file_dumper.data_path: "%kernel.project_root%/data/"
 
-    request_dispatcher.class: Odalisk\Scraper\Tools\RequestDispatcher
-    request_dispatcher.timeout: 10
-
-    base_platform.class: Odalisk\Scraper\BasePlatform
-
-    file_dumper.data_path: "%kernel.project_root%/data/"
+imports:
+    # Import portals configuration
+    - { resource: "portals.yml" }
 
 # put your application
 # service definitions here
 services:
+    # The request dispatcher service, used to fire concurrent requests
     request_dispatcher:
-        class: %request_dispatcher.class%
+        class: Odalisk\Scraper\Tools\RequestDispatcher
         arguments:
-            - %buzz_options%
-            - %request_dispatcher.timeout%
+            - %config.buzz.options%
+            - %config.buzz.timeout%
+    
+    # A helper class to handle categories
     category_normalizer:
         class: Odalisk\Scraper\Tools\Normalize\CategoryNormalizer
         arguments:
             - @doctrine
+    # A helper class to handle categories
+    date_normalizer:
+        class: Odalisk\Scraper\Tools\Normalize\DateNormalizer
+            
+    # The various portals we want to analyse :
+    # Base object for all our portals
     base_platform:
-        class: %base_platform.class%
+        class: Odalisk\Scraper\BasePortal
         abstract:  true
         calls:
-            - [ setBuzz, [ @buzz, %buzz_timout% ] ]
-            - [ setBuzzOptions, [ %buzz_options% ] ]
+            - [ setBuzz, [ @buzz, %config.buzz.timeout%, %config.buzz.options% ] ]
             - [ setDoctrine, [ @doctrine ] ]
             - [ setCategoryNormalizer, [@category_normalizer ] ]
+            - [ setDateNormalizer, [@date_normalizer ] ]
+    
+    # Base object for all portals using inCiteSolution
     base_inCiteSolution:
-        class: Odalisk\Scraper\InCiteSolution\BaseInCiteSolution
+        class: Odalisk\Scraper\InCiteSolution\BaseInCiteSolutionPortal
         abstract:  true
         parent:  base_platform
     nantes:
-        class: Odalisk\Scraper\InCiteSolution\Nantes\NantesPlatform
+        class: Odalisk\Scraper\InCiteSolution\Nantes\NantesPortal
         parent: base_inCiteSolution
         calls:
-            - [ setName, [ "data.nantes.fr" ] ]
-            - [ setBaseUrl, [ "http://data.nantes.fr/" ] ]
-            - [ setApiUrl, [ "http://data.nantes.fr/api/datastore_searchdatasets/1.0/39W9VSNCSASEOGV/?output=json" ] ]
-            - [ setCountry, ["France"]]
-            - [ setEntity , ["City of Nantes"]]
-            - [ setStatus , ["Institutional"]]
-
+            - [ setConfiguration, [ "%portals.nantes%" ] ]
     loire_atlantique:
-        class: Odalisk\Scraper\InCiteSolution\LoireAtlantique\LoireAtlantiquePlatform
+        class: Odalisk\Scraper\InCiteSolution\LoireAtlantique\LoireAtlantiquePortal
         parent: base_inCiteSolution
         calls:
-            - [ setName, [ "data.loire-atlantique.fr" ] ]
-            - [ setBaseUrl, [ "http://data.loire-atlantique.fr/" ] ]
-            - [ setCountry, ["France"]]
-            - [ setEntity , ["Loire Atlantique General Council"]]
-            - [ setStatus , ["Institutional"]]
+            - [ setConfiguration, [ "%portals.loire_atlantique%" ] ]
 
     base_socrata:
-        class: Odalisk\Scraper\Socrata\BaseSocrata
+        class: Odalisk\Scraper\Socrata\BaseSocrataPortal
         abstract:  true
         parent:  base_platform
-
     socrata:
-        class: Odalisk\Scraper\Socrata\Socrata\SocrataPlatform
+        class: Odalisk\Scraper\Socrata\Socrata\SocrataPortal
         parent: base_socrata
         calls:
-            - [ setName, [ "opendata.socrata.com" ] ]
-            - [ setBaseUrl, ["https://opendata.socrata.com"] ]
-            - [ setApiUrl, [ "https://opendata.socrata.com/api/views.json" ] ]
-            - [ setCountry, ["USA"]]
-            - [ setEntity , ["Socrata"]]
-            - [ setStatus , ["Private"]]
-    ny:
-        class: Odalisk\Scraper\Socrata\NY\NYPlatform
+            - [ setConfiguration, [ "%portals.socrata%" ] ]
+    new_york:
+        class: Odalisk\Scraper\Socrata\NY\NewYorkPortal
         parent: base_socrata
         calls:
-            - [ setName, [ "nycopendata.socrata.com" ] ]
-            - [ setBaseUrl, ["https://nycopendata.socrata.com"] ]
-            - [ setApiUrl, [ "https://nycopendata.socrata.com/api/views.json" ] ]
-            - [ setCountry, ["USA"]]
-            - [ setEntity , ["New York city"]]
-            - [ setStatus , ["Institutional"]]
-
+            - [ setConfiguration, [ "%portals.new_york%" ] ]
     usa_gov:
-        class: Odalisk\Scraper\Socrata\USA\USAGovPlatform
+        class: Odalisk\Scraper\Socrata\USA\USAGovPortal
         parent: base_socrata
         calls:
-            - [ setName, [ "www.data.gov" ] ]
-            - [ setBaseUrl, ["https://explore.data.gov"] ]
-            - [ setApiUrl, [ "https://explore.data.gov/api/views.json" ] ]
-            - [ setCountry, ["USA"]]
-            - [ setEntity , ["United States Government"]]
-            - [ setStatus , ["Institutional"]]
+            - [ setConfiguration, [ "%portals.usa_gov%" ] ]
 
     base_ckan:
-        class: Odalisk\Scraper\CKAN\BaseCKAN
+        class: Odalisk\Scraper\CKAN\BaseCkanPortal
         abstract:  true
         parent:  base_platform
-    uk:
-        class: Odalisk\Scraper\CKAN\UK\UKPlatform
+    uk_gov:
+        class: Odalisk\Scraper\CKAN\UK\UKGovPortal
         parent: base_ckan
         calls:
-            - [ setName, [ "data.gov.uk" ] ]
-            - [ setBaseUrl, [ "http://data.gov.uk/dataset/" ] ]
-            - [ setApiUrl, [ "http://catalogue.data.gov.uk/api/rest/dataset" ] ]
-            - [ setCountry, ["United Kingdom"]]
-            - [ setEntity , ["HM Government"]]
-            - [ setStatus , ["Institutional"]]
-
-    data_eu:
-        class: Odalisk\Scraper\CKAN\DataEU\DataEUPlatform
+            - [ setConfiguration, [ "%portals.uk_gov%" ] ]
+    eu_gov:
+        class: Odalisk\Scraper\CKAN\DataEU\EUPortal
         parent: base_ckan
         calls:
-            - [ setName, [ "publicdata.eu" ] ]
-            - [ setBaseUrl, [ "http://publicdata.eu/dataset/" ] ]
-            - [ setApiUrl, [ "http://publicdata.eu/api/rest/dataset" ] ]
-            - [ setCountry, ["European Union"]]
-            - [ setEntity , ["European Linked Open Data Consortium"]]
-            - [ setStatus , ["Private non-profit making"]]
+            - [ setConfiguration, [ "%portals.eu_gov%" ] ]
 
     data_publica:
-        class: Odalisk\Scraper\DataPublica\DataPublicaPlatform
+        class: Odalisk\Scraper\DataPublica\DataPublicaPortal
         parent:  base_platform
         calls:
-            - [ setName, [ "data-publica.com" ] ]
-            - [ setBaseUrl, [ "http://www.data-publica.com/" ] ]
-            - [ setCountry, ["France"]]
-            - [ setEntity , ["Data Publica"]]
-            - [ setStatus , ["Profit making"]]
+            - [ setConfiguration, [ "%portals.data_publica%" ] ]
 
     data_market:
-        class: Odalisk\Scraper\DataMarket\DataMarketPlatform
+        class: Odalisk\Scraper\DataMarket\DataMarketPortal
         parent: base_platform
         calls:
-            - [ setName, [ "datamarket.com" ] ]
-            - [ setBaseUrl, [ "http://datamarket.com/data/set/" ] ]
-            - [ setCountry, ["Iceland"]]
-            - [ setEntity , ["DataMarket"]]
-            - [ setStatus , ["Private profit making"]]
+            - [ setConfiguration, [ "%portals.data_market%" ] ]

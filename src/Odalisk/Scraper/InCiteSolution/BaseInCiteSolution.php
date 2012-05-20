@@ -11,6 +11,7 @@ use Odalisk\Scraper\BasePlatform;
  * The scraper for in cite Solution Plateform
  */
 abstract class BaseInCiteSolution extends BasePlatform {
+
     public function __construct() {
         $this->criteria = array(
             'setName' => ".//*[@class='tx_icsoddatastore_pi1_single']/h1",
@@ -42,7 +43,7 @@ abstract class BaseInCiteSolution extends BasePlatform {
         if (200 == $response->getStatusCode()) {
             $data = json_decode($response->getContent());
             foreach ($data->opendata->answer->data->dataset as $dataset) {
-                $urls[] = $this->base_url . '?tx_icsoddatastore_pi1[uid]=' . $dataset->id;
+                $urls[] = $this->base_url . 'donnees/detail/?tx_icsoddatastore_pi1[uid]=' . $dataset->id;
             }
         }  else {
             error_log('Couldn\'t fetch list of datasets for ' . $this->name);
@@ -73,5 +74,16 @@ abstract class BaseInCiteSolution extends BasePlatform {
 
     public function sanitize($url) {
         return str_replace(']', '%5D', str_replace('[', '%5B', $url));
+    }
+
+    public function parsePortal() {
+        $this->portal = new \Odalisk\Entity\Portal();
+        $this->portal->setName($this->getName());
+        $this->portal->setUrl($this->getBaseUrl());
+        $this->portal->setCountry($this->country);
+        $this->portal->setStatus($this->status);
+        $this->portal->setEntity($this->entity);
+        $this->em->persist($this->portal);
+        $this->em->flush();
     }
 }

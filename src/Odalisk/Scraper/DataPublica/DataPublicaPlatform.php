@@ -103,7 +103,10 @@ class DataPublicaPlatform extends BasePlatform
     public function parsePortal() {
         $this->portal = new \Odalisk\Entity\Portal();
         $this->portal->setName($this->getName());
-        $this->portal->setUrl('http://www.data-publica.com/');
+        $this->portal->setUrl($this->getBaseUrl());
+        $this->portal->setCountry($this->country);
+        $this->portal->setStatus($this->status);
+        $this->portal->setEntity($this->entity);
         $this->em->persist($this->portal);
         $this->em->flush();
     }

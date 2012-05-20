@@ -62,7 +62,7 @@ abstract class BaseSocrata extends BasePlatform {
 		// Since we already have the first page, let's parse it !
 		$ids  = $crawler->filterXPath('//td[@class="nameDesc"]/a')->extract(array('href'));
 		// Add it to the urls array
-		self::$urls = array_merge(self::$urls, $ids);
+		self::$urls = $ids;
 		// And we update the requests counter.
 		self::$i_requests++;
 

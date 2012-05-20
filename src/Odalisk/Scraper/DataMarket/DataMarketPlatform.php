@@ -101,7 +101,9 @@ class DataMarketPlatform extends BasePlatform {
         $this->portal = new \Odalisk\Entity\Portal();
         $this->portal->setName($this->getName());
         $this->portal->setUrl('http://datamarket.com/');
-
+        $this->portal->setCountry($this->country);
+        $this->portal->setStatus($this->status);
+        $this->portal->setEntity($this->entity);
         $this->em->persist($this->portal);
         $this->em->flush();
     }

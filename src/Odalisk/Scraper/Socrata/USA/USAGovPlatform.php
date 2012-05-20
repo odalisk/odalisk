@@ -16,7 +16,9 @@ class USAGovPlatform extends BaseSocrata {
         $this->portal = new \Odalisk\Entity\Portal();
         $this->portal->setName($this->getName());
         $this->portal->setUrl('http://www.data.gov/');
-
+        $this->portal->setCountry($this->country);
+        $this->portal->setStatus($this->status);
+        $this->portal->setEntity($this->entity);
         $this->em->persist($this->portal);
         $this->em->flush();
     }

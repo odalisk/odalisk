@@ -39,6 +39,28 @@ class Portal
      */
     protected $url;
 
+
+    /**
+     * @var string $country
+     *
+     * @ORM\Column(name="country", type="string", length=255)
+     */
+    protected $country;
+
+    /**
+     * @var string $country
+     *
+     * @ORM\Column(name="entity", type="string", length=255)
+     */
+    protected $entity;
+
+    /**
+     * @var string $status
+     *
+     * @ORM\Column(name="status", type="string", length=255)
+     */
+    protected $status;
+
     /**
      * @var string $created_at When did we create this record
      *
@@ -95,6 +117,66 @@ class Portal
         return $this->name;
     }
 
+    /**
+     * Set country
+     *
+     * @param string $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set entity
+     *
+     * @param string $entity
+     */
+    public function setEntity($entity)
+    {
+        $this->entity = $entity;
+    }
+
+    /**
+     * Get entity
+     *
+     * @return string
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    
     /**
      * Set url
      *

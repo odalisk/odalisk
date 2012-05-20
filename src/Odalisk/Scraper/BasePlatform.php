@@ -419,7 +419,31 @@ abstract class BasePlatform {
     public function getName() {
         return $this->name;
     }
+    
+    public function setCountry($country) {
+        $this->country = $country;
+    }
 
+    public function getCountry() {
+        return $this->country;
+    }
+
+    public function setEntity($entity) {
+        $this->entity = $entity;
+    }
+
+    public function getEntity() {
+        return $this->entity;
+    }
+
+    public function setStatus($status) {
+        $this->status = $status;
+    }
+
+    public function getStatus() {
+        return $this->status;
+    }
+    
     public function setBaseUrl($base_url) {
         $this->base_url = $base_url;
     }

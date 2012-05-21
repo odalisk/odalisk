@@ -77,6 +77,19 @@ class Dataset
     protected $categories;
 
     /**
+     * @ORM\OneToOne(targetEntity="Odalisk\Entity\DatasetCriteria", cascade={"persist", "remove"})
+     */
+    protected $criteria;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Odalisk\Entity\License", cascade={"persist", "remove"})
+     */
+    protected $license;
+
+    /**
+     * @var string $format
+     *
+     * @ORM\Column(name="format", type="string", nullable=true, length=255)
      * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Format", cascade={"persist", "remove"})
      */
     protected $formats;
@@ -128,6 +141,8 @@ class Dataset
      * @ORM\JoinColumn(name="portal_id", referencedColumnName="id")
      */
     protected $portal;
+
+
 
     /**
      * Get id
@@ -389,6 +404,27 @@ class Dataset
     public function getCategories()
     {
         return $this->categories;
+    }
+
+
+    /**
+     * Set criteria
+     *
+     * @param Odalisk\Entity\DatasetCriteria $criteria
+     */
+    public function setCriteria(\Odalisk\Entity\DatasetCriteria $criteria)
+    {
+        $this->criteria = $criteria;
+    }
+
+    /**
+     * Get criteria
+     *
+     * @return Odalisk\Entity\DatasetCriteria 
+     */
+    public function getCriteria()
+    {
+        return $this->criteria;
     }
 
     /**

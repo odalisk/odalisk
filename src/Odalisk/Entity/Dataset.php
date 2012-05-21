@@ -80,6 +80,13 @@ class Dataset
      * @ORM\OneToOne(targetEntity="Odalisk\Entity\DatasetCriteria", cascade={"persist", "remove"})
      */
     protected $criteria;
+    
+    /**
+     * @var string $license
+     *
+     * @ORM\Column(name="license", type="string", nullable=true, length=255)
+     */
+    protected $raw_license;
 
     /**
      * @ORM\OneToOne(targetEntity="Odalisk\Entity\License", cascade={"persist", "remove"})
@@ -128,13 +135,6 @@ class Dataset
      * @ORM\Column(name="maintainer", type="string", nullable=true, length=255)
      */
     protected $maintainer;
-
-    /**
-     * @var string $license
-     *
-     * @ORM\Column(name="license", type="string", nullable=true, length=255)
-     */
-    protected $license;
 
     /**
      * @ORM\ManyToOne(targetEntity="Portal", inversedBy="data_sets")
@@ -457,4 +457,24 @@ class Dataset
         $this->formats[] = $formats;
     }
 
+
+    /**
+     * Set raw_license
+     *
+     * @param string $rawLicense
+     */
+    public function setRawLicense($rawLicense)
+    {
+        $this->raw_license = $rawLicense;
+    }
+
+    /**
+     * Get raw_license
+     *
+     * @return string 
+     */
+    public function getRawLicense()
+    {
+        return $this->raw_license;
+    }
 }

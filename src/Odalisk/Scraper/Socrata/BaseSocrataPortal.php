@@ -82,3 +82,4 @@ abstract class BaseSocrataPortal extends BasePortal {
         $data['setFormat'] = "CSV;JSON;PDF;RDF;RSS;XLS;XLSX;XML";
     }
 }
+

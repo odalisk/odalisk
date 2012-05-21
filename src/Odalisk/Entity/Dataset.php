@@ -66,16 +66,14 @@ class Dataset
     protected $summary;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Category", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Category")
      */
     protected $categories;
 
     /**
-     * @var string $format
-     *
-     * @ORM\Column(name="format", type="string", nullable=true, length=255)
+     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Format", cascade={"persist", "remove"})
      */
-    protected $format;
+    protected $formats;
 
     /**
      * @var string $released_on When did we create this record

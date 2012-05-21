@@ -89,7 +89,7 @@ class DataPublicaPortal extends BasePortal
         }
         
         // Convert dates to known format
-        foreach($this->dateFields as $field) {
+        foreach(array('setReleasedOn', 'setLastUpdatedOn') as $field) {
             $data[$field] = $this->translateDate($data[$field]);
         }
     }

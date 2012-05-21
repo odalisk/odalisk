@@ -5,12 +5,12 @@ namespace Odalisk\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Odalisk\Entity\Category
+ * Odalisk\Entity\Format
  *
- * @ORM\Table(name="categories")
- * @ORM\Entity(repositoryClass="Odalisk\Repository\CategoryRepository")
+ * @ORM\Table(name="formats")
+ * @ORM\Entity(repositoryClass="Odalisk\Repository\FormatRepository")
  */
-class Category
+class Format
 {
     /**
      * @var integer $id
@@ -22,11 +22,11 @@ class Category
     private $id;
 
     /**
-     * @var string $category
+     * @var string $format
      *
-     * @ORM\Column(name="category", type="string", length=255)
+     * @ORM\Column(name="format", type="string", length=255)
      */
-    private $category;
+    private $format;
 
     /**
      * @var array $aliases
@@ -35,15 +35,11 @@ class Category
      */
     private $aliases;
     
-    public function __construct($category, $aliases = array()) {
-        $this->setCategory($category);
+    public function __construct($format, $aliases = array()) {
+        $this->setFormat($format);
         $this->setAliases($aliases);
     }
 
-    public function __toString()
-    {
-        return  implode(';', array_merge(array($this->category), $this->aliases));     
-    }
 
     /**
      * Get id
@@ -56,23 +52,23 @@ class Category
     }
 
     /**
-     * Set category
+     * Set format
      *
-     * @param string $category
+     * @param string $format
      */
-    public function setCategory($category)
+    public function setFormat($format)
     {
-        $this->category = $category;
+        $this->format = $format;
     }
 
     /**
-     * Get category
+     * Get format
      *
      * @return string 
      */
-    public function getCategory()
+    public function getFormat()
     {
-        return $this->category;
+        return $this->format;
     }
     
     /**

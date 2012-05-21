@@ -59,6 +59,8 @@
 
 {% block jsvariables %}
     window.searchType = "portal";
-    window.pageSize = 3;  
+    window.pageSize = 3;
+    window.needResult = true;  
     {{ parent() }}
 {% endblock %}
+

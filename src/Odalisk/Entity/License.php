@@ -19,42 +19,47 @@ class License
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var array $name
      *
-     * @ORM\Column(name="name", type="")
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $alias;
+    protected $name;
+    
+    /**
+     * @ORM\Column(name="aliases", type="array")
+     */
+    protected $aliases;
 
     /**
      * @var string $authorship
      *
      * @ORM\Column(name="authorship", type="string", length=255)
      */
-    private $authorship;
+    protected $authorship;
 
     /**
      * @var string $reuse
      *
      * @ORM\Column(name="reuse", type="string", length=255)
      */
-    private $reuse;
+    protected $reuse;
 
     /**
      * @var string $redistribution
      *
      * @ORM\Column(name="redistribution", type="string", length=255)
      */
-    private $redistribution;
+    protected $redistribution;
 
     /**
      * @var string $commercial
      *
      * @ORM\Column(name="commercial", type="string", length=255)
      */
-    private $commercial;
+    protected $commercial;
 
 
     /**
@@ -145,5 +150,45 @@ class License
     public function getCommercial()
     {
         return $this->commercial;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set aliases
+     *
+     * @param array $aliases
+     */
+    public function setAliases($aliases)
+    {
+        $this->aliases = $aliases;
+    }
+
+    /**
+     * Get aliases
+     *
+     * @return array 
+     */
+    public function getAliases()
+    {
+        return $this->aliases;
     }
 }

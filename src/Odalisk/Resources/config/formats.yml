@@ -4,12 +4,14 @@ parameters:
         # api:
         asp: [ false, false, true ]
         atom: [ true, true, true ]
+        bin: [ true, false, false ]
         csv: [ true, true, true ]
         doc: [ false, true, true ]
         gtfs: [ true, true, true ]
         html: [ true, true, true ]
         jpg: [ true, true, false ] # jpeg
         json: [ true, true, true ]
+        kmz: [ true, true, true ] # kmz
         kml: [ true, true, true ] # kmz
         ods: [ false, true, true ]
         pdf: [ false, false, false ]
@@ -21,6 +23,7 @@ parameters:
         wms: [ false, false, false ]
         wfs: [ false, false, false ]
         xls: [ false, true, true ]
+        xlsx: [ false, true, true ]
         xml: [ true, true, true ]
         zip: [ true, true, false ]
         unknown: [ false, false, false ]

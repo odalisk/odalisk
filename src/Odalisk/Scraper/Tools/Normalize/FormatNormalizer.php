@@ -5,13 +5,13 @@ namespace Odalisk\Scraper\Tools\Normalize;
 class FormatNormalizer
 {
 	private $replace = array(
-		'/vnd.ms-excel|excel/'  => 'xls'
-		, '/htm/' => 'html'
-		, '/vnd.ms-word/' => 'doc'
-		, '/Otros|Unverified/' => 'Unknown'
-		, '/image\/jpg/' => 'jpg'
-		, '/openDOCument.spreadsheet/' => 'ods'
-		, '/shp.*/' => 'shp'
+		'/vnd.ms-excel|excel/'  => 'xls',
+        '/htm/' => 'html',
+		'/vnd.ms-word/' => 'doc',
+		'/Otros|Unverified/' => 'unknown',
+		'/image\/jpg|jpeg/' => 'jpg', // Aliases of jpg
+		'/openDOCument.spreadsheet/' => 'ods',
+		'/shp.*/' => 'shp', // strip (C99) or (LP *)
 	);
 
     private $formats = array();
@@ -40,26 +40,28 @@ class FormatNormalizer
     }
     
 	public function getFormats($raw_formats) {
-		error_log("raw_formats : $raw_formats");
+		//error_log("raw_formats : $raw_formats");
 		$formats = array_unique(preg_split('/;/', strtolower($raw_formats)));
 		foreach($formats as $k => $format) {
-			$formats[$k] = $this->_trim($format);
+			$format = $this->_trim($format);
 			foreach($this->replace as $bad => $good) {
-                $formats[$k] = preg_replace($bad, $good, $format);
+                $format = preg_replace($bad, $good, $format);
 			}
+            $format[$k] = $format;
 		}
 		$formats = array_unique($formats);
-		//print_r($formats);
 
 		$result = array();
 		foreach($formats as $format) {
             if(array_key_exists($format, $this->formats)) {
                 $result[] = $this->formats[$format];
 			} else {
+                error_log('Format inconnu ! => '.$format);
                 $result[] = $this->formats['unknown'];
 			}
 		}
 		//print_r($result);
+        $result['raw'] = implode(', ', $formats);
 		return($result);
 	}
 

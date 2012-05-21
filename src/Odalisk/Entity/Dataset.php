@@ -77,6 +77,11 @@ class Dataset
     protected $categories;
 
     /**
+     * @ORM\Column(name="raw_formats", type="string", nullable=true, length=255)
+     */
+    protected $raw_formats;
+    
+    /**
      * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Format", cascade={"persist", "remove"})
      */
     protected $formats;
@@ -421,4 +426,24 @@ class Dataset
         $this->formats[] = $formats;
     }
 
+
+    /**
+     * Set raw_formats
+     *
+     * @param string $rawFormats
+     */
+    public function setRawFormats($rawFormats)
+    {
+        $this->raw_formats = $rawFormats;
+    }
+
+    /**
+     * Get raw_formats
+     *
+     * @return string 
+     */
+    public function getRawFormats()
+    {
+        return $this->raw_formats;
+    }
 }

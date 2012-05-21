@@ -254,7 +254,10 @@ abstract class BasePortal {
     protected function normalizeFormat(&$data)
     {
         if (array_key_exists('setFormats', $data)) {
-            $data['setFormats'] = $this->formatNormalizer->getFormats($data['setFormats']);
+            $formats = $this->formatNormalizer->getFormats($data['setFormats']);
+            $data['setRawFormats'] = $formats['raw'];
+            unset($formats['raw']);
+            $data['setFormats'] = $formats;
         }
 		/*
         if (array_key_exists('setFormat', $data)) {

@@ -51,13 +51,18 @@ class ApiController extends Controller
         return $response;
     }
     
-    public function tagsList($current_portal)
+    public function datasetTags($current_portal)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $repository = $em->getRepository('Odalisk\Entity\Portal');
         $portals = $repository->findAll();
-        return $this->render('App:Api:tags-list.html.twig', array('portals' => $portals,
+        return $this->render('App:Api:dataset-tags.html.twig', array('portals' => $portals,
                                                                   'current_portal' => $current_portal));
+    }
+    
+    public function portalTags()
+    {
+        return $this->render('App:Api:portal-tags.html.twig', array());
     }
     
     private function constructQuery($request)

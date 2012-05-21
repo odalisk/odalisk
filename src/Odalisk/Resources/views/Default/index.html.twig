@@ -4,6 +4,7 @@
 
 {% block menu %}
     <li class="active"><a href="#why">Why Odalisk</a></li>
+    <li><a href="#tools">Tools</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contribute">Contribute</a></li>
 {% endblock %}
@@ -13,18 +14,41 @@
 {% endblock %}
 
 {% block content %}
-
-                <header class="hero-unit">
-      <div class="inner">
-        <h1>OpenData live score checking</h1>
-        <p>Check openness of major dataportal and live test your own</p>
-        <div>
-          <a class="btn btn-info btn-large">Download our Chrome extension</a>
-          <a class="btn btn-large" href="{{ path('browser') }}">Browse portal scores</a>
+<div id="headerWrapper">
+    <header class="hero-unit">
+        <div class="inner">
+            <div id="carouselHome" class="carousel slide">
+              <!-- Carousel items -->
+              <div class="carousel-inner">
+                <div class="active item" id="homeSlide">
+                    <h1>OpenData live score checking</h1>
+                    <p>Check openness of major dataportal and live test your own</p>
+                    <div>
+                        <a class="btn btn-info btn-large">Download our Chrome extension</a>
+                        <a class="btn btn-large" href="{{ path('browser') }}">Browse portal scores</a>
+                    </div>
+                    <p style="font-size:20px;"><strong>Odalisk is still in beta but you can already start to browse our database and check Dataportal openness scores</strong></p>
+                </div>
+                <div class="item" id="browserSlide">
+                    <div class="bottomImage"></div>
+                        <div class="inner-slide">
+                            <h1>Portal and Dataset Browser</h1>
+                            <p>Looking for a particular type of portal/dataset ? 
+                            Try out our browser to find your way</p>
+                
+                            <div>
+                                <a class="btn btn-large" href="{{ path('browser') }}">Lets go !</a>
+                            </div>
+                    </div>
+                </div>
+              </div>
+              <!-- Carousel nav -->
+              <a class="carousel-control left" href="#carouselHome" data-slide="prev">&lsaquo;</a>
+              <a class="carousel-control right" href="#carouselHome" data-slide="next">&rsaquo;</a>
+            </div>
         </div>
-        <p style="font-size:20px;"><strong>Odalisk is still in beta but you can already start to browse our database and check Dataportal openness scores</strong></p>
-      </div>
-</header>
+    </header>
+</div>
 <div class="container">
     <section id="why">
         <div class="page-header">
@@ -52,14 +76,135 @@
             </div>
         </div>
     </section>
-
+    
+    <section id="tools">
+        <div class="page-header">
+          <h1>Awesome tools</h1>
+        </div>
+        <div class="page-body">
+            <div class="row">
+                <div class="span4">
+                    <i class="icon icon-list-alt icon-large"></i><h2>Compare</h2>
+                    <p>
+                        Can't find out what is the best between two portals 
+                        before starting a project ? The odalisk comparator
+                        is here to help you to settle it.
+                    </p>
+                </div>
+                <div class="span4">
+                    <i class="icon icon-check icon-large"></i><h2>Test</h2>
+                    <p>
+                        You launched an Opendata platform and you are concerned
+                        by openness questions and opendata normalisations. 
+                        Download our Chrome extension and send us your 
+                        results.
+                    </p>
+                </div>
+                <div class="span4">
+                    <i class="icon icon-user icon-road"></i><h2>Help</h2>
+                    <p>
+                        Openness and opendata normalisation mean something to
+                        you ? You want to make odalisk better ? Come join us 
+                        help the project to go further. There remains some way to go !
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span4">
+                    <i class="icon icon-search icon-large"></i><h2>Search</h2>
+                    <p>
+                        Looking for a particular dataset category or theme ?
+                        Try out our search engine to find the perfect dataset !
+                    </p>
+                </div>
+                <div class="span4">
+                    <i class="icon icon-large icon-book"></i><h2>Learn</h2>
+                    <p>
+                        Want to learn more about Opendata ? Odalisk help you 
+                        to get informations about licences, platoforms, data 
+                        formats, and more.
+                    </p>
+                </div>
+                <div class="span4">
+                    <i class="icon icon-large icon-flag"></i><h2>Discover</h2>
+                    <p>
+                        Take a look at our Portal browser and discover new
+                        Portals, Datasets and maybe new ideas !
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <section id="about">
         <div class="page-header">
           <h1>About</h1>
         </div>
         <div class="page-body">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
+            <h2>The Project</h2>
+            <div class="row">
+                <div class="span6">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                </div>
+                <div class="span6">
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    
+                </div>
+            </div>
+            <h2>The Team</h2>
+            <div class="row">
+              <div class="span4">
+                  {% image '@App/Resources/public/img/bury.jpg' output='/images/maxime-bury.jpg'
+                    %}
+                    <img class="team-img" src="{{ asset_url }}"/>
+                    {% endimage %}
+                    <h3>Maxime Burry</h3>
+                    <p>Our server-side specialist</p>
+              </div>
+              <div class="span4">
+                    {% image '@App/Resources/public/img/grolleau.jpg' output='/images/florian-grolleau.jpg'
+                      %}
+                      <img class="team-img" src="{{ asset_url }}"/>
+                      {% endimage %}
+                      <h3>Florian Grolleau</h3>
+                      <p>Crowl the web like no one</p>
+              </div>
+              <div class="span4">
+                  {% image '@App/Resources/public/img/launay.jpg' output='/images/damien-launay.jpg'
+                    %}
+                  <img class="team-img" src="{{ asset_url }}"/>
+                  {% endimage %}
+                  <h3>Damien Launay</h3>
+                  <p>Fart like no one</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="span4">
+                    {% image '@App/Resources/public/img/grignon.jpg' output='/images/florian-grignon.jpg'
+                    %}
+                    <img class="team-img" src="{{ asset_url }}"/>
+                    {% endimage %}
+                    <h3>Florian Grignon</h3>
+                    <p>Licence and Debian (testing) specialist</p>
+                </div>
+              <div class="span4">
+                  {% image '@App/Resources/public/img/sanchez.jpg' output='/images/julien-sanchez.jpg'
+                  %}
+                  <img class="team-img" src="{{ asset_url }}"/>
+                  {% endimage %}
+                  <h3>Julien Sanchez</h3>
+                  <p>Design and UX specialist</p>
+              </div>
+              <div class="span4">
+                    {% image '@App/Resources/public/img/raschia.jpg' output='/images/guillaume-raschia.jpg'
+                    %}
+                    <img class="team-img" src="{{ asset_url }}"/>
+                    {% endimage %}
+                    <h3>Guillaume Raschia</h3>
+                    <p>Best professor EVER</p>
+                </div>
+            </div>
+            </div>
     </section>
 
       <section id="contribute">
@@ -78,3 +223,10 @@
 </div><!-- container -->
 
 {% endblock %}
+
+{% block jsvariables %}
+    window.page = "home";
+    
+    {{ parent() }}
+{% endblock %}
+

@@ -315,6 +315,7 @@ body {
 
 
 .home {
+    padding-top:0px;
     margin:0px;
     
     h3 {
@@ -328,15 +329,90 @@ body {
         letter-spacing:0.06em;
     }
     
-    h1:target {
-        color:#2ECBFA;
-    }
     
     & > .container-fluid {
+        
         margin-top:0px;
         padding:0px;
-    
+        
+        #headerWrapper {
+            background-color:#20B7E7;
+            
+            .item *:not(.btn) {
+                -webkit-transition: color .5s ease-in-out;
+                color:#fff;
+            }
+            
+            &.backwhite {
+                
+                
+                background-color:#FFFFFF;
+                
+                .item *:not(.btn) {
+                    -webkit-transition: color .5s ease-in-out;
+                    color:#333;
+                    
+                    
+                }
+            }
+            
+            -webkit-transition: background-color 0.5s;
+        }
+        
         header.hero-unit {
+            box-shadow:0px -20px 30px -30px black inset;
+            #carouselHome {
+                height:208px;
+                
+                .item {
+                    h1 {
+                        font-weight:200;
+                    }
+                    height:268px;
+                }
+                
+                a.carousel-control {
+                    color:white;
+                    margin-top:40px;
+                    z-index:3000;
+                }
+                
+                #browserSlide {
+                    text-align:left;
+                    
+                    padding-left:100px;
+                    padding-right:-100px;
+                    
+                    .inner-slide {
+                        z-index:2000;
+                        position:absolute;
+                    }
+                    
+                    .bottomImage {
+                        bottom:0px;
+                        left:0px;
+                        right:0px;
+                        position:absolute;
+                        background:url("/bundles/app/img/browser.png");
+                        background-repeat:no-repeat;
+                        background-position:bottom center;
+                        background-size: 80% auto;
+                        padding-bottom:0px;
+                        height:200px;
+                        z-index:2;
+                    }
+                    
+                    background-position:bottom center;
+                }
+                
+                #homeSlide {
+                      
+                    
+                }
+                
+                
+            }
+            
             p {
                 font-size:18px;
                 font-weight:200;
@@ -354,12 +430,71 @@ body {
             margin:0px;
             padding-top:40px;
             padding-bottom:40px;
-            background:url('/bundles/app/img/homeback.jpg');
-            color:white;
+            background:none;
+            background:url('/bundles/app/img/homeback.png');
             text-align:center;
             .border-radius(0px);
+            
+            
+            .carousel {
+                padding-top:80px;
+            }
+        }
+        
+        .container {
+            
+            
+            * {
+                color:#333;
+            }
+        
+            #tools {
+                i {
+                    font-size:30px;
+                    margin-right:8px;
+                }
+
+                i, h2 {
+                    display:inline-block;
+
+                }
+
+                h2 {
+                    font-weight:200;
+                    margin-bottom:7px;
+                    line-height:30px;
+                }
+
+                .row {
+                    margin-bottom:10px;
+                }
+            }
+            
+            #about {
+                .page-header {
+                    margin-bottom:5px;
+                }
+                
+                .row {
+                    margin-bottom:10px;
+                }
+                
+                .team-img {
+                    width:50px;
+                    float:left;
+                    //padding-right:4px;
+                    margin-right:4px;
+                }
+                
+                h3 {
+                    margin-top:0px;
+                    margin-bottom:3px;
+                }
+            }
         }
     }
+    
+    
 }
 
 
@@ -450,9 +585,4 @@ body {
             text-shadow: 0px 0px 20px RGBa(255,255,255,0.5);
         }
     }
-}
-
-
-#test {
-    
 }

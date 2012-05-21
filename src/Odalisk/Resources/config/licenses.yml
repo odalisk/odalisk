@@ -21,7 +21,6 @@ parameters:
             'UK Climate Projections Licence': ['UK Climate Projections Licence', 1, 0, 0, 0]
             'OKD Compliant': ['OGL', 1, 1, 1, 1]
             'No conditions apply': ['No Conditions', 1, 1, 1, 1]
-            'Copyright (Copyright Forestry Commission Scotland)': 
             'Use limitation': ['None', -1, -1, -1, -1]
             'Other': ['Other', -1, -1, -1, -1]
 

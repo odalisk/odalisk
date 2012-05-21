@@ -22,6 +22,13 @@ class License
     private $id;
 
     /**
+     * @var array $name
+     *
+     * @ORM\Column(name="name", type="")
+     */
+    private $alias;
+
+    /**
      * @var string $authorship
      *
      * @ORM\Column(name="authorship", type="string", length=255)

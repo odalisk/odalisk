@@ -6,14 +6,14 @@ use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
 
-class CategoryNormalizer
+class LicenceNormalizer
 {
     private $replace = array(
         '/\b(and|et)\b/' => '&',
         '/^(Not (A|a)pplicable|Not Av|none|N|A|[0-9\.]+||\s+|)$/' => 'N/A',
     );
     
-    protected $categories = array();
+    protected $licenses = array();
     
     protected $aliases = array();
         
@@ -25,8 +25,9 @@ class CategoryNormalizer
     
     public function init($yaml) {
         foreach($yaml as $category => $data) {
-            $c = new \Odalisk\Entity\Category($category);
-            foreach($data['aliases'] as $alias) {
+            $c = new \Odalisk\Entity\License($category);
+            
+            /*foreach($data['aliases'] as $alias) {
                 $c->addAlias($alias);
                 $this->aliases[strtolower($alias)] = strtolower($category);
             }

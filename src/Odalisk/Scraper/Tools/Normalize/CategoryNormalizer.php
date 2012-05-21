@@ -63,7 +63,7 @@ class CategoryNormalizer
                 $result[] = $this->categories['Other'];
             }
         }
-        
+        $result['raw'] = implode(', ', $categories);
         return array_unique($result);
     }
     

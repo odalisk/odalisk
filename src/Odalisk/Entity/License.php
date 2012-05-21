@@ -151,44 +151,4 @@ class License
     {
         return $this->commercial;
     }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set aliases
-     *
-     * @param array $aliases
-     */
-    public function setAliases($aliases)
-    {
-        $this->aliases = $aliases;
-    }
-
-    /**
-     * Get aliases
-     *
-     * @return array 
-     */
-    public function getAliases()
-    {
-        return $this->aliases;
-    }
 }

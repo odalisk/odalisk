@@ -77,6 +77,19 @@ class Dataset
     protected $categories;
 
     /**
+     * @ORM\Column(name="raw_formats", type="string", nullable=true, length=255)
+     */
+    protected $raw_formats;
+    
+    /**
+     * @var string $format
+     *
+     * @ORM\Column(name="format", type="string", nullable=true, length=255)
+     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Format", cascade={"persist", "remove"})
+     */
+    protected $formats;
+
+    /**
      * @ORM\OneToOne(targetEntity="Odalisk\Entity\DatasetCriteria", cascade={"persist", "remove"})
      */
     protected $criteria;
@@ -92,14 +105,6 @@ class Dataset
      * @ORM\OneToOne(targetEntity="Odalisk\Entity\License", cascade={"persist", "remove"})
      */
     protected $license;
-
-    /**
-     * @var string $format
-     *
-     * @ORM\Column(name="format", type="string", nullable=true, length=255)
-     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Format", cascade={"persist", "remove"})
-     */
-    protected $formats;
 
     /**
      * @var string $released_on When did we create this record
@@ -458,6 +463,26 @@ class Dataset
         $this->formats[] = $formats;
     }
 
+
+    /**
+     * Set raw_formats
+     *
+     * @param string $rawFormats
+     */
+    public function setRawFormats($rawFormats)
+    {
+        $this->raw_formats = $rawFormats;
+    }
+
+    /**
+     * Get raw_formats
+     *
+     * @return string 
+     */
+    public function getRawFormats()
+    {
+        return $this->raw_formats;
+    }
 
     /**
      * Set raw_license

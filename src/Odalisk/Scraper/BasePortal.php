@@ -254,31 +254,11 @@ abstract class BasePortal {
     protected function normalizeFormat(&$data)
     {
         if (array_key_exists('setFormats', $data)) {
-            $data['setFormats'] = $this->formatNormalizer->getFormats($data['setFormats']);
+            $formats = $this->formatNormalizer->getFormats($data['setFormats']);
+            $data['setRawFormats'] = $formats['raw'];
+            unset($formats['raw']);
+            $data['setFormats'] = $formats;
         }
-		/*
-        if (array_key_exists('setFormat', $data)) {
-                $formats = preg_split('/;/',$data['setFormat']);
-                $formats = array_unique($formats);
-                $output = array();
-                foreach ($formats as $format) {
-
-                    $format = preg_replace('/\s+/','', $format);
-                    $format = preg_replace($this->wildFormats, $this->normalizedFormats, $format, 1);
-
-                    if(!in_array($format, $this->normalizedFormats)){
-                       
-                       error_log('[Weird Format] ' . $format." : ".$data['setName']);
-                    }
-
-                    $output[] = $format;
-                 }
-                
-                $data['setFormat'] = implode(';', array_unique($output));
-                $formats = null;
-                $output = null;
-        }
-		*/
     }
 
     /**

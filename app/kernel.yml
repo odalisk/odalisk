@@ -31,10 +31,10 @@ all:
         database_name:      symfony
         database_user:      root
         database_password:  ~
-        mailer_transport:  smtp
-        mailer_host:       localhost
-        mailer_user:       ~
-        mailer_password:   ~
+        mailer_transport:  gmail
+        #mailer_host:       localhost
+        mailer_user:       %mailer_user%
+        mailer_password:   %mailer_password%
 
         # This parameters will be used by some bundles
         # (like monolog) to send emails

@@ -10,6 +10,10 @@ parameters:
 imports:
     # Import portals configuration
     - { resource: "portals.yml" }
+    # Import categories
+    - { resource: "categories.yml"}
+    # Import formats
+    - { resource: "formats.yml"}
 
 # put your application
 # service definitions here
@@ -26,7 +30,16 @@ services:
         class: Odalisk\Scraper\Tools\Normalize\CategoryNormalizer
         arguments:
             - @doctrine
-    # A helper class to handle categories
+        calls:
+            - [ init, [ %categories% ] ]
+    # A helper class to handle formats
+    format_normalizer:
+        class: Odalisk\Scraper\Tools\Normalize\FormatNormalizer
+        arguments:
+            - @doctrine
+        calls:
+            - [ init, [ %formats% ] ]
+    # A helper class to handle dates
     date_normalizer:
         class: Odalisk\Scraper\Tools\Normalize\DateNormalizer
             
@@ -39,6 +52,7 @@ services:
             - [ setBuzz, [ @buzz, %config.buzz.timeout%, %config.buzz.options% ] ]
             - [ setDoctrine, [ @doctrine ] ]
             - [ setCategoryNormalizer, [@category_normalizer ] ]
+            - [ setFormatNormalizer, [@format_normalizer ] ]
             - [ setDateNormalizer, [@date_normalizer ] ]
     
     # Base object for all portals using inCiteSolution

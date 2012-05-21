@@ -1,0 +1,445 @@
+parameters:    
+    categories:
+        'Administration':
+            aliases:
+                - 'Adresseadministration' # Address Administration
+                - 'Arkiver' # Archives
+                - 'Attività istituzionali' # Institutional Activities
+                - 'Government'
+                - 'Local Government'
+                - 'Local Government Finance'
+                - 'Den Europæiske Union (EU)' # The European Union
+                - 'Government - Defence Personnel'
+                - 'Federal Government Finances & Employment' 
+                - 'State & Local Government Finances & Employment'
+                - 'Ledelse og administrativ service'
+        'Agriculture':
+            aliases:
+                - 'Agriculture & Environment'
+                - 'Agriculture & Fishing'
+                - 'Agriculture & Pêche'
+                - 'Agricoltura - Programmazione' # Agriculture - Programming
+                - 'agricoltura' # Agriculture
+                - 'Jordbrug'                  
+        'Art & Culture':
+            aliases:
+                - 'Art & Culture'
+                - 'Arts & Culture'
+                - 'Cultural Affairs'
+                - 'Culture'
+                - 'Beni culturali - Biblioteche - Musei' # Cultural heritage - Libraries - Museums
+                - 'Kultur'
+                - 'Kulturarv og kulturfremme'
+                - 'Library'
+                - 'Nationalt kultursamarbejde' #National cultural cooperation
+        'Bank & Insurance':
+            aliases:
+                - 'Banking'
+                - 'Banque & Assurance'
+                - 'Lån og investering' # Loans and Investment
+        'Budget':
+            aliases:
+                - 'Bilancio e finanze' # Budget and Finance
+                - "Councillors' Allowances"        
+        'Business':
+            aliases:
+                - 'Business & Economic'
+                - 'Business & Economy'
+                - 'Business & Energy'
+                - 'Business Enterprise'
+                - 'Arbejdsmarkedsrelateret forsørgelse' # Business, financial support
+                - 'Commerce & Services'
+                - 'Commercial'
+                - 'Commercio'
+                - 'Economic & Social Research'
+        'Climate & Weather':
+            aliases:
+                - 'Climat & Météorologie'
+                - 'Meteorologisk samfundsbetjening' # Meteorological community service
+                - 'Ecologia'       
+        'Construction & Housing':
+            aliases:
+                - 'Bygnings- og boligregistrering' # Construction and housing registration
+                - 'Byggesager' # Construction Cases
+                - 'Edilizia' # Building industry
+                - 'Households'
+                - 'Housholds'
+                - 'Housing'
+                - 'Housing Market'
+                - 'Housing Need & Homelessnes'
+                - 'Housing Need & Homelessness'
+                - 'Housing Stock'
+                - 'Immobilier & Construction'
+                - 'Real Estate & Construction'
+        'Crime & Justice':
+            aliases:
+                - 'Crime & Community Safety'
+                - 'Attività giuridico - legislativa' # Legal activities - legislative
+                - 'Security & Justice'
+                - 'Law Enforcement'
+                - 'Courts'
+                - 'Sécurité & Justice'
+                - 'Politiefterforskning'           
+        'Democracy & Elections':
+            aliases:
+                - 'Demographics'
+                - 'Collectivités & Elections'
+                - 'Citoyenneté'
+                - 'Citoyens'
+                - 'Elections'
+                - 'Transparency'
+                - 'Regeringen'
+                - 'Forvaltningsgrundlag' # Administration Constitutional Law
+                - 'Folketinget' # Parliament
+        'Economy':
+            aliases:
+                - 'Business & Economic'
+                - 'Business & Economy'
+                - 'Economie & Finances'
+                - 'Economy & Finances'
+                - 'Economia montana e foreste' # Economics and mountain forests
+                - 'Commerce & Services'
+                - 'Commercial'
+                - 'Commercio'
+                - 'Economic & Social Research'
+                - 'Økonomi'
+                - 'Økonomisk orientering'
+                - 'Økonomisupport'
+                - 'wirtschaft' #Economy
+                - 'Insurance'
+                - 'styring og overvågning af økonomi' # management and monitoring of the economy
+                - 'Styring af økonomi'
+                - "Sviluppo economico ed attivitÃ\_ produttive"
+                - 'Sviluppo economico ed attività produttive'
+                - 'friluftsliv'
+                - 'Strategisk planlægning for økonomi'
+                - 'Eksportkontrol' # Export controls
+                - 'Organisering af økonomi' #Organizing Economy
+        'Education':
+            aliases:
+                - 'Bildung' # Education
+                - 'Education & Formation'
+                - 'Education & Skills'
+                - 'Education & Training'
+                - 'Éducation'
+                - 'Erhvervsuddannelser' # Vocational education
+                - 'Forberedende- og grundlæggende voksenuddannelse' # Preparatory and adult basic education
+                - 'Formazione professionale' # Vocational education
+                - 'Forskeruddannelser' # PhD degree programs
+                - 'Higher Education'
+                - 'enseignement'
+                - 'Styring af uddannelsesområdet'
+                - 'Videregående- og øvrige voksenuddannelser' #Higher and other adult education
+                - 'ph.d'
+                - 'Istruzione'
+                - 'Istruzione scolastica'
+                - 'Universitetsforskning' # University Research
+                - 'Lange videregående uddannelser'
+                - 'Gymnasiale uddannelser'
+                - 'Uddannelse'
+                - 'Uddannelsernes internationalisering'
+                - 'Undervisning i folkeskoler og frie grundskoler'
+                - 'Forskning' # Research
+                - 'Forskningsrammer' # Research Programmable
+                - 'Særlig undervisning i folkeskolen'
+                - 'Education'
+        'Energy':
+            aliases:
+                - 'Business & Energy'
+                - 'Environment & Energy'
+                - 'Environnement & Energie'
+                - 'Energy & Utilities'       
+        'Entertainment':
+            aliases:
+                - 'Sport'
+                - 'Sports'
+                - 'Sports & Entertainment'
+                - 'Sports & Loisirs'
+                - 'Fun'
+                - 'Loisirs'
+                - 'cultura e tempo libero'
+                - 'Events'
+                - 'Recreation'
+                - 'Museer'           
+        'Environment':
+            aliases:
+                - 'Ambiente e territorio' # Environment & Territory
+                - 'Environment'
+                - 'Agriculture & Environment'                
+                - 'Environment & Energy'
+                - 'Environmental Sustainability'
+                - 'Environmental protection'
+                - 'Environnement'
+                - 'Environnement & Energie'
+                - 'Ecologia'
+                - 'Water Resources'
+                - 'Water conservation'
+                - 'Water quality'
+                - 'Waste disposal'
+                - 'Waste management'
+                - 'Waste policies & regulation'
+                - 'tutela ambientale' # environmental protection
+                - 'tutela e risanamento ambientale' # protection and environmental restoration
+                - 'suolo e sottosuolo' # soil and subsoil
+                - 'acqua' 
+                - 'Recycling (waste'
+                - 'Umwelt'
+                - 'flora'
+                - 'foreste e vegetazione'
+                - 'Natural Resources'
+                - 'Nature conservation'
+                - 'Naturforvaltning af skove'
+                - 'styring og overvågning af miljøbeskyttelse' # management and supervision of environmental protection
+                - 'aree protette e patrimonio naturale' # protected areas and natural heritage
+                - 'planter'
+                - 'paesaggio e risorse naturali' # landscape and natural resources
+                - 'Klimaforhold og miljøovervågning'
+                - 'Forurenet jord' # Contaminated soil
+                - 'Parchi e aree protette' # Parks and protected areas
+        'Fishing':
+            aliases:
+                - 'Agriculture & Fishing'
+                - 'Agriculture & Pêche'
+                - 'fishing Industry'
+                - 'Erhvervsfiskeri' # Commercial fishing
+
+        'Finances':
+            aliases:
+                - 'Bilancio e finanze' # Budget and Finance
+                - 'Arbejdsmarkedsrelateret forsørgelse' # Business, financial support
+                - 'Finance'
+                - 'Financial'
+                - 'Economie & Finances'
+                - 'Finansiel controlling'
+                - 'Finansielle virksomheder' # financial enterprises
+                - 'benefits'
+                - 'Socioeconomico'
+                - 'Spending'
+                - 'Economy & Finances'
+            
+        'Geography & Environment':
+            aliases:
+                - 'Geography & Space'
+                - 'Geografisk infrastruktur' # Geographical infrastructure
+                - 'Géographie & Espace'
+                - 'Geografisk infrastruktur'
+                - 'Pollution'
+                - 'Land Use'
+                - 'Difesa del suolo' # Soil Protection
+                - 'insediamenti e infrastrutture' # settlements and infrastructure
+                - 'geo'
+                - 'idrografia' # hydrography
+                - 'localizzazioni geografiche' # geographical locations
+                - 'Geospatial'
+                - 'Landkort og topografi'
+                - 'Kortlægning og geodata'
+                - 'Parchi e aree protette' # Parks and protected areas
+
+        'Health & Social Care':
+            aliases:
+                - 'Health'
+                - 'Health & Nutrition'
+                - 'Health Service'
+                - 'Healthcare'
+                - 'well-being & Care'
+                - 'Gesundheit' #Health
+                - 'Santé'
+                - 'Santé & Nutrition'
+                - 'Soziales'
+                - 'NHS'
+                - 'NHS Geographies'
+                - 'NHS Geographies (SHAs'
+                - 'Sundhedspersoner'
+                - 'Santé'
+                - 'Santé & Nutrition'
+                - 'Patientdata'
+                - 'Patientinformation og patientrettigheder'
+                - 'medicin og udstyr'
+                - 'Sundheds- og lægemiddelberedskab' # Health and medical preparedness
+
+        'Politic':
+            aliases:
+                - 'Politiche di prevenzione'
+                - 'Politiche sociali'
+                - 'Politiche sociali e sanità'
+                - 'Strategisk planlægning af offentlig styring'
+
+        'Programming':
+            aliases:
+                - 'Agricoltura - Programmazione' # Agriculture - Programming
+            
+        'Population & Demography':
+            aliases:
+                - 'Bevölkerung' # Population
+                - 'Children'
+                - 'Births'
+                - 'Deaths'
+                - 'Divorces'
+                - 'Earnings'
+                - 'Employment'
+                - 'Employment & Skills'
+                - 'Population'
+                - 'Population & Démographie'
+                - 'demographie'
+                - 'Heritage'
+                - 'Income'
+                - 'Marriages'
+                - 'Prisons'
+                - 'Women’s Issues'
+                - 'Migration'
+                - 'Wealth'
+                - 'Personal'
+                - 'Labor Force'
+                - 'Poverty'
+                - 'Prices'
+                - 'Property'
+                - 'Public Safety'
+                - 'Social'
+                - 'Social Insurance & Human Services'
+                - 'Social Services'
+                - 'Society & Conditions of life'
+                - 'National Security & Veterans Affairs'
+                - 'Popolazione e famiglia'
+                - 'popolazione e società' #Population and society
+                - 'Sviluppo e gestione delle risorse'
+                - 'Sociétés & Conditions de vie'
+                - 'Værnepligt' # Military service
+                - 'Regioner'
+                - 'Straf og rehabilitering'
+                - 'Population Migration Immigration-control-& asylum'
+                - 'Young People'
+
+        'Statistics':
+            aliases:
+                - 'International Statistics'
+                - 'National statistik'
+                - 'limiti amministrativi e statistici' # administrative boundaries and statistical
+
+        'Territory':
+            aliases:
+                - 'Ambiente e territorio' # Environment & Territory
+                - 'Territoires'
+                - 'Tinglysning' #Land Registration
+                - 'Facilities & Structures'
+                - 'People & Places'
+                - 'Folkekirken' # Church
+                - 'Danmarks undergrund og råstofindvinding' # Danish underground and mining and quarrying
+                - 'uso e copertura del suolo' # land coverage and usage
+                - 'jagt og vildtbestand' # hunting and game population
+                - 'Interventi di recupero e riqualificazione' # Preservation and rehabilitation
+                - 'Forurenet jord' # Contaminated soil
+        'Transportation':
+            aliases:
+                - 'Overvågning af transport' # Monitoring of transport
+                - 'Transport'
+                - 'Transport & Logistics'
+                - 'Transport & Logistique'
+                - 'Transportation'
+                - 'Trasporti' # Transportation
+                - 'Travel & Transport'
+                - 'Déplacements'
+                - 'styring og overvågning af transport' # management and monitoring of 
+                - 'Trafikregulering af fly og luftfart'
+                - 'Trafikregulering af tog og jernbaner'
+                - 'Trafikregulering af veje og køretøjer'
+                - 'trasporti e viabilità'
+                - 'Drift og vedligehold af trafikinfrastruktur' # Operation and maintenance of road infrastructure
+                - 'Verkehr' #transport
+        'Tourism':
+            aliases:
+                - 'Tourism & Travel'
+                - 'Tourisme'
+                - 'Tourisme & Voyages'
+                - 'Freizeit'
+                - 'tourismus'
+                - 'Mobilité'
+                - 'Travel'
+                - 'Turismo'     
+                - transportation 
+                - 'patrimonio storico-artistico-culturale'
+        'Services':
+            aliases:
+                - 'Dagtilbud og fritidshjem til børn' # Day care and after-school for children
+                - 'Community Service'
+                - 'Fire & Rescue Services'
+                - 'Services'
+                - 'Verwaltungseinheiten'
+                - 'Pianificazione territoriale e urbanistica'
+                - 'Udbetaling af offentlige støtteordninger' #Payment of public support
+
+
+        'Media' :
+            aliases:
+                - 'Press & Media'
+                - 'Presse & Médias'
+                - 'Media'
+                - 'Kommunikation'
+        'Industry':
+            aliases:
+                - 'Industria'
+                - 'Industrie & Production'
+                - 'Industry & Production'
+                - 'Wholesale & Retail Trade'
+                - 'arbeit'
+                - 'Retail & Industrial Planning'
+                - 'Manufactures'
+                - 'Elforsyning og elforsyningsnet' #Power supply and power system
+                - 'Sviluppo e gestione delle risorse'
+                - 'Foreign Commerce & Aid'
+        'IT':
+            aliases:
+                - 'IT & Communications'
+                - 'Information & Communications'
+                - 'Informatique & Communications'
+                - 'Science & Technology'
+                - 'Sciences & Technologies'
+                - 'It-service'
+                - 'Research'
+                - 'Strategisk planlægning for it-området'
+                - 'It-sikkerhedsadministration'
+                - 'Sistemi informativi e informatica' #Information Systems and Computer
+        'Urbanisme':
+            aliases:
+                - 'Urbanisme'
+                - 'Fysisk planlægning'
+        'Other':
+            aliases:
+                - 'Others'
+                - 'Autres'
+                - 'Organisering'
+                - 'Organizzazione'
+                - 'N/A'
+                - 'Statistica'
+                - 'Statistics'
+                - 'Overvågning af HR og personale'
+                - 'Overvågning af arbejdsmarkedsområdet'
+                - 'Overvågning af kultur og fritid'
+                - 'sonstiges'
+                - 'Kvalitetsvurdering'
+                - 'Retssager'
+                - 'Forsvaret' # Armed forces
+                - 'All Payments'
+                - 'Championing London'
+                - 'Schnittstelle'
+                - 'Schnittstellen'
+                - 'Kunstarterne'
+                - 'Støtte til særligt udsatte grupper'
+                - 'Viabilità'
+                - 'Omkostningsregnskaber'
+                - 'verwaltung' # management
+                - 'Interventi di tutela e prevenzione del danno'
+                - 'Internationale relationer' # Internationale relationships
+                - 'Öffentliche Einrichtungen' # public organizations
+                - 'Kvalitetsmåling'
+                - 'Referencenet og opmåling'
+        'Work':
+            aliases:
+                - 'Travail & Salaires'
+                - 'Styring af arbejdsmarkedsområdet'
+                - 'Work & Salaries'
+                - 'Labour Market'
+                - 'Sektorforskning'
+                - 'Lavoro'
+                - 'Lavoro e famiglia'
+                - 'Planning & Development'
+                - 'forskning og arbejde' # research and work

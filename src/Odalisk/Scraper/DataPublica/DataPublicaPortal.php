@@ -30,7 +30,7 @@ class DataPublicaPortal extends BasePortal
             'setSummary' => ".//*[@id='description']",
             //'setMaintainer' => ".//*[@id='publication_tab_container']/ul/li[1]/div[2]/a",
             'setOwner' => "//div/h5[text()='Editeur']/../following-sibling::*",
-            'setFormat' => './/*[@class="format"]/li',
+            'setFormats' => './/*[@class="format"]/li',
         );
 
         $this->datasetsListUrl = 'http://www.data-publica.com/search/?page=';
@@ -88,9 +88,8 @@ class DataPublicaPortal extends BasePortal
             $data[$key] = utf8_decode($value);
         }
         
-        $dateFields = array('setReleasedOn', 'setLastUpdatedOn');
         // Convert dates to known format
-        foreach($dateFields as $field) {
+        foreach(array('setReleasedOn', 'setLastUpdatedOn') as $field) {
             $data[$field] = $this->translateDate($data[$field]);
         }
     }

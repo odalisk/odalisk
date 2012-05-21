@@ -1,0 +1,26 @@
+parameters:
+    formats:
+        # format: {isOpen, hasSpec, isComputerReadable}
+        # api:
+        asp: [ false, false, true ]
+        atom: [ true, true, true ]
+        csv: [ true, true, true ]
+        doc: [ false, true, true ]
+        gtfs: [ true, true, true ]
+        html: [ true, true, true ]
+        jpg: [ true, true, false ] # jpeg
+        json: [ true, true, true ]
+        kml: [ true, true, true ] # kmz
+        ods: [ false, true, true ]
+        pdf: [ false, false, false ]
+        ppt: [ false, false, false ]
+        rdf: [ true, true, true ]
+        rss: [ true, true, true ]
+        shp: [ true, true, false ]
+        txt: [ true, false, false ]
+        wms: [ false, false, false ]
+        wfs: [ false, false, false ]
+        xls: [ false, true, true ]
+        xml: [ true, true, true ]
+        zip: [ true, true, false ]
+        unknown: [ false, false, false ]

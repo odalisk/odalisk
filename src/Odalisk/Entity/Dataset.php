@@ -65,8 +65,14 @@ class Dataset
      */
     protected $summary;
 
+
     /**
-     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Category", cascade={"persist", "remove"})
+     * @ORM\Column(name="raw_categories", type="string", nullable=true, length=255)
+     */
+    protected $raw_categories;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Category")
      */
     protected $categories;
 
@@ -209,23 +215,23 @@ class Dataset
     }
 
     /**
-     * Set format
+     * Set formats
      *
-     * @param string $category
+     * @param array $formats
      */
-    public function setFormat($format)
+    public function setFormats(array $formats)
     {
-        $this->format = $format;
+        $this->formats = $formats;
     }
 
     /**
-     * Get format
+     * Get formats
      *
-     * @return string
+     * @return array
      */
-    public function getFormat()
+    public function getFormats()
     {
-        return $this->format;
+        return $this->formats;
     }
 
     /**
@@ -420,4 +426,35 @@ class Dataset
     {
         return $this->criteria;
     }
+
+    /**
+     * Set raw_categories
+     *
+     * @param string $rawCategories
+     */
+    public function setRawCategories($rawCategories)
+    {
+        $this->raw_categories = $rawCategories;
+    }
+
+    /**
+     * Get raw_categories
+     *
+     * @return string 
+     */
+    public function getRawCategories()
+    {
+        return $this->raw_categories;
+    }
+
+    /**
+     * Add formats
+     *
+     * @param Odalisk\Entity\Format $formats
+     */
+    public function addFormat(\Odalisk\Entity\Format $formats)
+    {
+        $this->formats[] = $formats;
+    }
+
 }

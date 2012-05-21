@@ -80,7 +80,7 @@ abstract class BaseSocrataPortal extends BasePortal {
 
     protected function additionalExtraction($crawler, &$data) 
     {
-        $data['setFormat'] = "CSV;JSON;PDF;RDF;RSS;XLS;XLSX;XML";
+        $data['setFormats'] = "CSV;JSON;PDF;RDF;RSS;XLS;XLSX;XML";
     }
 }
 

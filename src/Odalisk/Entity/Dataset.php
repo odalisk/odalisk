@@ -200,23 +200,23 @@ class Dataset
     }
 
     /**
-     * Set format
+     * Set formats
      *
-     * @param string $category
+     * @param array $formats
      */
-    public function setFormat($format)
+    public function setFormats(array $formats)
     {
-        $this->format = $format;
+        $this->formats = $formats;
     }
 
     /**
-     * Get format
+     * Get formats
      *
-     * @return string
+     * @return array
      */
-    public function getFormat()
+    public function getFormats()
     {
-        return $this->format;
+        return $this->formats;
     }
 
     /**
@@ -421,13 +421,4 @@ class Dataset
         $this->formats[] = $formats;
     }
 
-    /**
-     * Get formats
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getFormats()
-    {
-        return $this->formats;
-    }
 }

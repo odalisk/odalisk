@@ -11,3 +11,6 @@ all:
          
         bin_node: <the path to your node executable>
         node_paths: [ "<the path to the node_modules folder>" ]
+
+        mailer_user:       odaliskcontact
+        mailer_password:   password

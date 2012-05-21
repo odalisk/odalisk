@@ -26,7 +26,7 @@ abstract class BaseInCiteSolutionPortal extends BasePortal
             'setMaintainer' => ".//*[@class='tx_icsoddatastore_pi1_manager separator']/span[@class='value']",
             'setOwner' => ".//*[@class='tx_icsoddatastore_pi1_owner separator']/span[@class='value']",
             //'Technical data' => ".//*[@class='tx_icsoddatastore_pi1_technical_data separator']/span[@class='value']",
-            'setFormat' => ".//*[@class='tx_icsoddatastore_pi1_file']/a/img/@alt",
+            'setFormats' => ".//*[@class='tx_icsoddatastore_pi1_file']/a/img/@alt",
         );
     }
 

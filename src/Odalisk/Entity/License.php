@@ -61,6 +61,9 @@ class License
      */
     protected $commercial;
 
+    public function __construct($name) {
+        $this->setName($name);
+    }
 
     /**
      * Get id
@@ -150,5 +153,55 @@ class License
     public function getCommercial()
     {
         return $this->commercial;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set aliases
+     *
+     * @param array $aliases
+     */
+    public function setAliases($aliases)
+    {
+        $this->aliases = $aliases;
+    }
+    
+    /**
+     * Add aliases
+     *
+     * @param array $alias
+     */
+    public function addAliases($alias)
+    {
+        $this->aliases[] = $alias;
+    }
+
+    /**
+     * Get aliases
+     *
+     * @return array 
+     */
+    public function getAliases()
+    {
+        return $this->aliases;
     }
 }

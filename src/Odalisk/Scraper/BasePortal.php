@@ -237,11 +237,12 @@ abstract class BasePortal {
      */
     protected function normalizeLicense(&$data)
     {
-        if (array_key_exists('setLicense', $data)) {
-            if ($data['setLicense'] == '[]') {
-                unset($data['setLicense']);
+        
+        if (array_key_exists('setRawLicense', $data)) {
+            if ($data['setRawLicense'] == '[]') {
+                unset($data['setRawLicense']);
             } elseif (preg_match('/(OKD Compliant::)?UK Open Government Licence \(OGL\)/', $data['setLicense'])) {
-                $data['setLicense'] = 'OGL';
+                $data['setRawLicense'] = 'OGL';
             }
         }
     }

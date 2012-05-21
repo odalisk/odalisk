@@ -16,7 +16,7 @@ class EUPortal extends BaseCkanPortal {
             'setProvider' => '//td[.="published_by" and @class="dataset-label"]/../td[2]',
             'setLicense' => '/li[@id="dataset-license" and @class="sidebar-section"]',
             'setCategories' => '//td[text()="categories"]/following-sibling::*',
-            'setFormat' => './/*[@property="dc:format"]'
+            'setFormats' => './/*[@property="dc:format"]'
         );
 
         $this->inChargeFields = array('setOwner','setMaintainer');

@@ -10,6 +10,8 @@ parameters:
 imports:
     # Import portals configuration
     - { resource: "portals.yml" }
+    # Import categories
+    - { resource: "categories.yml"}
 
 # put your application
 # service definitions here
@@ -26,6 +28,8 @@ services:
         class: Odalisk\Scraper\Tools\Normalize\CategoryNormalizer
         arguments:
             - @doctrine
+        calls:
+            - [ init, [ %categories% ] ]
     # A helper class to handle categories
     date_normalizer:
         class: Odalisk\Scraper\Tools\Normalize\DateNormalizer

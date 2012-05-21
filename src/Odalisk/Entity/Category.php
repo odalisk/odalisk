@@ -40,6 +40,10 @@ class Category
         $this->setAliases($aliases);
     }
 
+    public function __toString()
+    {
+        return  implode(';', array_merge(array($this->category), $this->aliases));     
+    }
 
     /**
      * Get id

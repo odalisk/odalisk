@@ -66,7 +66,7 @@ class Dataset
     protected $summary;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Category", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Category")
      */
     protected $categories;
 

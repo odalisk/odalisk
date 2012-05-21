@@ -141,12 +141,12 @@ jsApi = function() {
                 if(data == '')
                 {
                     window.api.noMoreResult();
+                    
                 }
-                else
-                {
-                    window.api.data = data;
-                    window.api.addToTable();
-                }
+                
+                window.api.data = data;
+                window.api.addToTable();
+                
             }
         );
     }

@@ -329,9 +329,6 @@ body {
         letter-spacing:0.06em;
     }
     
-    h1:target {
-        color:#2ECBFA;
-    }
     
     & > .container-fluid {
         
@@ -377,15 +374,19 @@ body {
                 a.carousel-control {
                     color:white;
                     margin-top:40px;
+                    z-index:3000;
                 }
                 
                 #browserSlide {
-                    
                     text-align:left;
                     
                     padding-left:100px;
                     padding-right:-100px;
                     
+                    .inner-slide {
+                        z-index:2000;
+                        position:absolute;
+                    }
                     
                     .bottomImage {
                         bottom:0px;
@@ -398,6 +399,7 @@ body {
                         background-size: 80% auto;
                         padding-bottom:0px;
                         height:200px;
+                        z-index:2;
                     }
                     
                     background-position:bottom center;
@@ -485,7 +487,7 @@ body {
                 }
                 
                 h3 {
-                    margin-top:6px;
+                    margin-top:0px;
                     margin-bottom:3px;
                 }
             }

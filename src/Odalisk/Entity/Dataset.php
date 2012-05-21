@@ -76,11 +76,17 @@ class Dataset
     protected $criteria;
 
     /**
+     * @ORM\OneToOne(targetEntity="Odalisk\Entity\License", cascade={"persist", "remove"})
+     */
+    protected $license;
+
+    /**
      * @var string $format
      *
      * @ORM\Column(name="format", type="string", nullable=true, length=255)
+     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Format", cascade={"persist", "remove"})
      */
-    protected $format;
+    protected $formats;
 
     /**
      * @var string $released_on When did we create this record
@@ -393,6 +399,7 @@ class Dataset
     {
         return $this->categories;
     }
+
 
     /**
      * Set criteria

@@ -47,6 +47,10 @@ class ExtractCommand extends BaseCommand
                 $output->writeln('<info>' . $platform . '</info>');
             }
         } else {
+            // Empty the base
+            $this->removeData('Odalisk\Entity\Dataset');
+            $this->removeData('Odalisk\Entity\Portal');
+            
             // If we get an argument, replace the platformServices array with one containing just that plaform
             if ($platform = $input->getArgument('platform')) {
                  $platformServices = array($platform);
@@ -122,5 +126,24 @@ class ExtractCommand extends BaseCommand
         }
         $end = time();
         error_log('[Analysis] Processing ended after ' . ($end - $start) . ' seconds');
+    }
+    
+    public function removeData($class)
+    {
+        $em = $this->getEntityManager();
+        $cmd = $em->getClassMetadata($class);
+        $connection = $em->getConnection();
+        $dbPlatform = $connection->getDatabasePlatform();
+        $connection->beginTransaction();
+        try {
+            //$connection->query('SET FOREIGN_KEY_CHECKS=0');
+            $q = $dbPlatform->getTruncateTableSql($cmd->getTableName());
+            $connection->executeUpdate($q);
+            //$connection->query('SET FOREIGN_KEY_CHECKS=1');
+            $connection->commit();
+        }
+        catch (\Exception $e) {
+            $connection->rollback();
+        }
     }
 }

@@ -65,6 +65,12 @@ class Dataset
      */
     protected $summary;
 
+
+    /**
+     * @ORM\Column(name="raw_categories", type="string", nullable=true, length=255)
+     */
+    protected $raw_categories;
+    
     /**
      * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Category")
      */
@@ -383,6 +389,26 @@ class Dataset
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Set raw_categories
+     *
+     * @param string $rawCategories
+     */
+    public function setRawCategories($rawCategories)
+    {
+        $this->raw_categories = $rawCategories;
+    }
+
+    /**
+     * Get raw_categories
+     *
+     * @return string 
+     */
+    public function getRawCategories()
+    {
+        return $this->raw_categories;
     }
 
     /**

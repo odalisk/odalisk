@@ -223,7 +223,10 @@ abstract class BasePortal {
     protected function normalizeCategory(&$data)
     {
         if (array_key_exists('setCategories', $data)) {
-            $data['setCategories'] = $this->categoryNormalizer->getCategories($data['setCategories']);
+            $categories = $this->categoryNormalizer->getCategories($data['setCategories']);
+            $data['setRawCategories'] = $categories['raw'];
+            unset($categories['raw']);
+            $data['setCategories'] = $categories;
         }
     }
     

@@ -26,3 +26,7 @@ search:
 dataset_details:
     pattern:    /datasets/details/{dataset_number}/{page_number}/{_format}
     defaults:   { _controller: App:Dataset:details, _format: html, page_number: 1 }
+
+contact:
+    pattern:  /contact
+    defaults: { _controller: App:Default:contact }

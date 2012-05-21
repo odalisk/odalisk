@@ -194,23 +194,23 @@ class Dataset
     }
 
     /**
-     * Set format
+     * Set formats
      *
-     * @param string $category
+     * @param array $formats
      */
-    public function setFormat($format)
+    public function setFormats(array $formats)
     {
-        $this->format = $format;
+        $this->formats = $formats;
     }
 
     /**
-     * Get format
+     * Get formats
      *
-     * @return string
+     * @return array
      */
-    public function getFormat()
+    public function getFormats()
     {
-        return $this->format;
+        return $this->formats;
     }
 
     /**
@@ -384,4 +384,15 @@ class Dataset
     {
         return $this->categories;
     }
+
+    /**
+     * Add formats
+     *
+     * @param Odalisk\Entity\Format $formats
+     */
+    public function addFormat(\Odalisk\Entity\Format $formats)
+    {
+        $this->formats[] = $formats;
+    }
+
 }

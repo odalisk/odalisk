@@ -53,57 +53,9 @@ abstract class BasePortal {
 
     protected $portal;
     
-    protected $wildFormats = array(
-        "/.*kmz.*/i",
-        "/.*csv.*/i",
-        "/.*xml.*/i",
-        "/.*pdf.*/i",
-        "/((.*(xls|vnd.ms-excel).*)|excel)/i",
-        "/.*(html|htm).*/i",
-        "/text.*/i",
-        "/rdf/i",
-        "/ppt/i",
-        "/.*shp.*/i",
-        "/.*(vnd.ms-word|doc).*/i",
-        "/.*zip.*/i",
-        "/.*json.*/i",
-        "/rss/i",
-        "/api/i",
-        "/wms/i",
-        "/.*(Otros|Unverified).*/i",
-        "/asp/i",
-        "/(image\/jpg|jpg)/i",
-        "/atom/i",
-        "/.*(openDOCument.spreadsheet|ods).*/i",
-        "/gtfs/i"
-    );
-    
-    protected $normalizedFormats = array(
-        "KMZ",
-        "CSV",
-        "XML",
-        "PDF",
-        "XLS",
-        "HTML",
-        "TXT",
-        "RDF",
-        "PPT",
-        "SHP",
-        "DOC",
-        "ZIP",
-        "JSON",
-        "RSS",
-        "API",
-        "WMS",
-        "Unknown",
-        "ASP",
-        "JPG",
-        "ATOM",
-        "ODS",
-        "GTFS"
-    );
     
     protected $categoryNormalizer;
+    protected $formatNormalizer;
     protected $dateNormalizer;
 
     /**
@@ -292,12 +244,16 @@ abstract class BasePortal {
     }
     
     /**
-     * Attemps to transform wild licenses into a set of normalized ones
+     * Attemps to transform wild formats into a set of normalized ones
      *
      * @param array   $data    the data we are gathering
      */
     protected function normalizeFormat(&$data)
     {
+        if (array_key_exists('setFormats', $data)) {
+            $data['setFormats'] = $this->formatNormalizer->getFormats($data['setFormats']);
+        }
+		/*
         if (array_key_exists('setFormat', $data)) {
                 $formats = preg_split('/;/',$data['setFormat']);
                 $formats = array_unique($formats);
@@ -319,6 +275,7 @@ abstract class BasePortal {
                 $formats = null;
                 $output = null;
         }
+		*/
     }
 
     /**
@@ -355,6 +312,11 @@ abstract class BasePortal {
     public function setCategoryNormalizer($normalizer)
     {
         $this->categoryNormalizer = $normalizer;
+    }
+    
+    public function setFormatNormalizer($normalizer)
+    {
+        $this->formatNormalizer = $normalizer;
     }
     
     public function setDateNormalizer($normalizer)

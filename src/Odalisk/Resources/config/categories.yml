@@ -96,6 +96,7 @@ parameters:
                 - 'Business & Economic'
                 - 'Business & Economy'
                 - 'Economie & Finances'
+                - 'Economy & Finances'
                 - 'Economia montana e foreste' # Economics and mountain forests
                 - 'Commerce & Services'
                 - 'Commercial'
@@ -141,6 +142,7 @@ parameters:
                 - 'Forskning' # Research
                 - 'Forskningsrammer' # Research Programmable
                 - 'Særlig undervisning i folkeskolen'
+                - 'Education'
         'Energy':
             aliases:
                 - 'Business & Energy'
@@ -213,6 +215,7 @@ parameters:
                 - 'benefits'
                 - 'Socioeconomico'
                 - 'Spending'
+                - 'Economy & Finances'
             
         'Geography & Environment':
             aliases:
@@ -265,7 +268,6 @@ parameters:
             aliases:
                 - 'Agricoltura - Programmazione' # Agriculture - Programming
             
-            
         'Population & Demography':
             aliases:
                 - 'Bevölkerung' # Population
@@ -305,6 +307,7 @@ parameters:
                 - 'Regioner'
                 - 'Straf og rehabilitering'
                 - 'Population Migration Immigration-control-& asylum'
+                - 'Young People'
 
         'Statistics':
             aliases:

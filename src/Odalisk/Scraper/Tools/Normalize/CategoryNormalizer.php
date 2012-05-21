@@ -28,11 +28,11 @@ class CategoryNormalizer
             $c = new \Odalisk\Entity\Category($category);
             foreach($data['aliases'] as $alias) {
                 $c->addAlias($alias);
-                $this->aliases[$alias] = $category;
+                $this->aliases[strtolower($alias)] = $category;
             }
             $this->em->persist($c);
             $this->em->flush();
-            $this->categories[$category] = $c;
+            $this->categories[strtolower($category)] = $c;
         }
     }
     
@@ -52,6 +52,7 @@ class CategoryNormalizer
         
         $result = array();
         foreach($categories as $category) {
+            $category = strtolower($category);
             if(array_key_exists($category, $this->categories)) {
                 //error_log('Base category');
                 $result[] = $this->categories[$category];
@@ -60,7 +61,7 @@ class CategoryNormalizer
                 $result[] = $this->categories[$this->aliases[$category]];
             } else {
                 //error_log('Other');
-                $result[] = $this->categories['Other'];
+                $result[] = $this->categories['other'];
             }
         }
         $result['raw'] = implode(', ', $categories);

@@ -129,12 +129,6 @@ class Dataset
      */
     protected $maintainer;
 
-    /**
-     * @var string $license
-     *
-     * @ORM\Column(name="license", type="string", nullable=true, length=255)
-     */
-    protected $license;
 
     /**
      * @ORM\ManyToOne(targetEntity="Portal", inversedBy="data_sets")

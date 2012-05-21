@@ -24,24 +24,28 @@ class LicenceNormalizer
     }
     
     public function init($yaml) {
-        foreach($yaml as $category => $data) {
-            $c = new \Odalisk\Entity\License($category);
+        foreach($yaml as $licenses => $data) {
+            /*
+            echo $licenses;
+            $l = new \Odalisk\Entity\License();
             
-            /*foreach($data['aliases'] as $alias) {
+            foreach($data['aliases'] as $alias) {
                 $c->addAlias($alias);
                 $this->aliases[strtolower($alias)] = strtolower($category);
             }
-            $this->em->persist($c);
+            $this->em->persist($l);
             $this->em->flush();
             $this->categories[strtolower($category)] = $c;
-            
+            */
         }
+        
         // var_dump($this->categories);
         // var_dump($this->aliases);
     }
     
     public function getCategories($raw_categories)
     {
+        /*
         // Extract clean categories
         $categories = preg_split('/(,|;|\/|\|_)/', $raw_categories);
         foreach ($categories as $k => $category) {
@@ -68,6 +72,7 @@ class LicenceNormalizer
         $result['raw'] = implode(', ', $categories);
         
         return $result;
+        */
     }
     
     private function _trim($value)

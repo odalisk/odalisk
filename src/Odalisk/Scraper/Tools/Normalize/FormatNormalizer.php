@@ -43,10 +43,11 @@ class FormatNormalizer
 		$formats = array_unique(preg_split('/;/', strtolower($raw_formats)));
 		foreach($formats as $k => $format) {
 			$format = $this->_trim($format);
-			foreach($this->replace as $bad => $good) {
-                $format = preg_replace($bad, $good, $format);
+			foreach($this->replace as $bad => $good) {	
+                $format = preg_replace($bad, $good, $format);      
 			}
-            $format[$k] = $format;
+
+			$formats[$k] = $format;
 		}
 		$formats = array_unique($formats);
 

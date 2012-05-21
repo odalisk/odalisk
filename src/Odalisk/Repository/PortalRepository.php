@@ -35,20 +35,24 @@ class PortalRepository extends EntityRepository
 
 	  public function getLastUpdatedOnExistCount($portal)
 	  {
+
 	    return $this->getEntityManager()
 	            ->createQuery('SELECT count(d) FROM Odalisk\Entity\Dataset d WHERE d.portal = :portal and d.last_updated_on is not null')
 	            ->setParameter('portal', $portal)
 	            ->getSingleScalarResult();
-
 	  }
 
 	  public function getCategoryExistCount($portal)
 	  {
-	    return $this->getEntityManager()
-	            ->createQuery('SELECT count(d) FROM Odalisk\Entity\Dataset d WHERE d.portal = :portal and d.category is not null')
-	            ->setParameter('portal', $portal)
-	            ->getSingleScalarResult();
 
+	  	$stmt = $this->getEntityManager()
+             ->getConnection()
+             ->prepare("
+						SELECT count(*) FROM datasets WHERE portal_id = ".$portal->getId()." and id IN (SELECT DISTINCT dataset_id FROM dataset_category)"
+        );
+
+        return $stmt->execute();
+	  	
 	  }
 
 	  public function getSummaryAndTitleAtLeastCount($portal)

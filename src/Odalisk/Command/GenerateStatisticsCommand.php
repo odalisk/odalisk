@@ -51,7 +51,7 @@ class GenerateStatisticsCommand extends ContainerAwareCommand
 
         $statsRepository = $this->getContainer()
             ->get('doctrine')
-            ->getRepository('Odalisk\Entity\Statistics');
+            ->getRepository('Odalisk\Entity\Portal');
 
 
 

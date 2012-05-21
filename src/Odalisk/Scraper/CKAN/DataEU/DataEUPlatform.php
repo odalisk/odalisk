@@ -25,9 +25,16 @@ class DataEUPlatform extends BaseCKAN {
     
     protected function additionalExtraction($crawler, &$data) 
     {
+
         // Deal with UTF8
         foreach($data as $key => $value) {
             $data[$key] = utf8_decode($value);
+        }
+
+        if (array_key_exists('setCategories', $data)) {
+            if(is_array(json_decode($data['setCategories']))){
+                $data['setCategories'] = implode(';', json_decode($data['setCategories']));
+            }
         }
     }
 

@@ -36,7 +36,7 @@ class ExtractCommand extends BaseCommand
         $dataPath = $container->getParameter('config.file_dumper.data_path');
         // Entity repository for datasets_crawls & entity manager
         $em = $this->getEntityManager();
-        $em->getConnection()->getConfiguration()->setSQLLogger(null);
+        //$em->getConnection()->getConfiguration()->setSQLLogger(null);
 
         // Initialize some arrrays
         $platforms = array();

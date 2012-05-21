@@ -40,7 +40,6 @@ class FormatNormalizer
     }
     
 	public function getFormats($raw_formats) {
-		//error_log("raw_formats : $raw_formats");
 		$formats = array_unique(preg_split('/;/', strtolower($raw_formats)));
 		foreach($formats as $k => $format) {
 			$format = $this->_trim($format);
@@ -54,7 +53,7 @@ class FormatNormalizer
 		$result = array();
 		foreach($formats as $format) {
             if(array_key_exists($format, $this->formats)) {
-                $result[] = $this->formats[$format];
+                $result[$format] = $this->formats[$format];
 			} else {
                 error_log('Format inconnu ! => '.$format);
                 $result[] = $this->formats['unknown'];

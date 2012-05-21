@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 
 
 use Odalisk\Entity\Statistics;
-
+use Odalisk\Entity\DatasetCriteria;
 
 /**
  * Generates statistics
@@ -43,6 +43,48 @@ class GenerateStatisticsCommand extends ContainerAwareCommand
 
         $repository = $this->getContainer()
             ->get('doctrine')
+            ->getRepository('Odalisk\Entity\Dataset');
+        $datasets = $repository->findAll();
+        
+
+
+        $criteriaRepository = $this->getContainer()
+            ->get('doctrine')
+            ->getRepository('Odalisk\Entity\DatasetCriteria');
+
+        
+        foreach ($datasets as $dataset) {
+            //echo $dataset->getName()."\n";
+
+            //$datasetCriteria = new DatasetCriteria();
+            $criteriaRepository->getCriteria($dataset);
+            /*
+            $datasetCriteria->setIsTitleAndSummary($criteriaRepository->getIsTitleAndSummary($dataset));
+            $datasetCriteria->setIsReleasedOn($criteriaRepository->getIsReleasedOn($dataset));
+            $datasetCriteria->setIsLastUpdateOn($criteriaRepository->getIsLastUpdateOn($dataset));
+            $datasetCriteria->setIsProvider($criteriaRepository->getIsProvider($dataset));
+            $datasetCriteria->setIsOwner($criteriaRepository->getIsOwner($dataset));
+            $datasetCriteria->setIsProvider($criteriaRepository->getIsProvider($dataset));
+            $datasetCriteria->setIsMaintainer($criteriaRepository->getIsMaintainer($dataset));
+            */
+            /*
+            $stats->setDatasetsCount($statsRepository->getDatasetsCount($portal));
+            $stats->setInChargePersonCount($statsRepository->getInChargePersonCount($portal));
+            $stats->setReleasedOnExistCount($statsRepository->getReleasedOnExistCount($portal));
+            $stats->setLastUpdatedOnExistCount($statsRepository->getLastUpdatedOnExistCount($portal));
+            $stats->setCategoryExistCount($statsRepository->getCategoryExistCount($portal));
+            $stats->setSummaryAndTitleCount($statsRepository->getSummaryAndTitleAtLeastCount($portal));
+            $stats->setLicenseCount($statsRepository->getlicenseCount($portal));
+            */
+            //$this->em->persist($datasetCriteria);
+            //$this->em->flush();
+            
+        }
+        
+
+        /*
+        $repository = $this->getContainer()
+            ->get('doctrine')
             ->getRepository('Odalisk\Entity\Portal');
         $portals = $repository->findAll();
 
@@ -70,6 +112,7 @@ class GenerateStatisticsCommand extends ContainerAwareCommand
             $this->em->persist($stats);
             $this->em->flush();
         }
+        */
 
         $this->writeBlock($output, "End of generating");
     }

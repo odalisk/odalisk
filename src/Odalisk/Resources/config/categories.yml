@@ -13,6 +13,7 @@ parameters:
                 - 'Federal Government Finances & Employment' 
                 - 'State & Local Government Finances & Employment'
                 - 'Ledelse og administrativ service'
+                - 'Expenditures'
         'Agriculture':
             aliases:
                 - 'Agriculture & Environment'
@@ -23,6 +24,7 @@ parameters:
                 - 'Jordbrug'                  
         'Art & Culture':
             aliases:
+                - 'Arts'
                 - 'Art & Culture'
                 - 'Arts & Culture'
                 - 'Cultural Affairs'
@@ -37,6 +39,7 @@ parameters:
                 - 'Banking'
                 - 'Banque & Assurance'
                 - 'Lån og investering' # Loans and Investment
+                - 'Trusts'
         'Budget':
             aliases:
                 - 'Bilancio e finanze' # Budget and Finance
@@ -96,6 +99,7 @@ parameters:
                 - 'Business & Economic'
                 - 'Business & Economy'
                 - 'Economie & Finances'
+                - 'Economy & Finances'
                 - 'Economia montana e foreste' # Economics and mountain forests
                 - 'Commerce & Services'
                 - 'Commercial'
@@ -141,6 +145,7 @@ parameters:
                 - 'Forskning' # Research
                 - 'Forskningsrammer' # Research Programmable
                 - 'Særlig undervisning i folkeskolen'
+                - 'Education'
         'Energy':
             aliases:
                 - 'Business & Energy'
@@ -213,6 +218,7 @@ parameters:
                 - 'benefits'
                 - 'Socioeconomico'
                 - 'Spending'
+                - 'Economy & Finances'
             
         'Geography & Environment':
             aliases:
@@ -231,6 +237,7 @@ parameters:
                 - 'Landkort og topografi'
                 - 'Kortlægning og geodata'
                 - 'Parchi e aree protette' # Parks and protected areas
+                - 'NHS Geographies (SHAs'
 
         'Health & Social Care':
             aliases:
@@ -264,7 +271,6 @@ parameters:
         'Programming':
             aliases:
                 - 'Agricoltura - Programmazione' # Agriculture - Programming
-            
             
         'Population & Demography':
             aliases:
@@ -305,6 +311,7 @@ parameters:
                 - 'Regioner'
                 - 'Straf og rehabilitering'
                 - 'Population Migration Immigration-control-& asylum'
+                - 'Young People'
 
         'Statistics':
             aliases:
@@ -429,6 +436,7 @@ parameters:
                 - 'Öffentliche Einrichtungen' # public organizations
                 - 'Kvalitetsmåling'
                 - 'Referencenet og opmåling'
+                - 
         'Work':
             aliases:
                 - 'Travail & Salaires'

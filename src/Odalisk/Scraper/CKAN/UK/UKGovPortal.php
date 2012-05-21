@@ -45,5 +45,70 @@ class UKGovPortal extends BaseCkanPortal {
                 }
             }
         }
+
+        if (array_key_exists('setLicense', $data)) {
+            if(is_array(json_decode($data['setLicense']))){
+                $data['setLicense'] = implode(';', json_decode($data['setLicense']));
+            }
+                
+            if(preg_match('/CCGC\/CCW/i',$data['setLicense'])){
+                $data['setLicense'] = "CCW/CROWN";
+            }
+            if(preg_match('/CCW/i',$data['setLicense'])){
+                $data['setLicense'] = "CCW/CROWN";
+            }
+            if(preg_match('/Crown/i',$data['setLicense'])){
+                $data['setLicense'] = "CCW/CROWN";
+            }
+            
+            if(preg_match('/UK Climate Projections Licence/i',$data['setLicense'])){
+                $data['setLicense'] = "UK Climate Projections Licence";
+            }
+
+            if(preg_match('/^OKD Compliant/i',$data['setLicense'])){
+                if(preg_match("/pddl/i", $data['setLicense'])){
+                    $data['setLicense'] = "PDDL";
+                    return;
+                }
+                $data['setLicense'] = "ODBL";
+            }
+            if(preg_match('/digitised at/i',$data['setLicense'])){
+                unset($data['setLicense']);
+                return;
+            }
+            if(preg_match('/Other/i',$data['setLicense'])){
+                unset($data['setLicense']);
+                return;
+            }
+            if(preg_match('/indicative/i',$data['setLicense'])){
+                unset($data['setLicense']);
+                return;
+            }
+            if(preg_match('/unknow/i',$data['setLicense'])){
+                unset($data['setLicense']);
+                return;
+            }
+            if(preg_match('/accurate/i',$data['setLicense'])){
+                unset($data['setLicense']);
+                return;
+            }
+            if(preg_match('/licence/i',$data['setLicense'])){
+                unset($data['setLicense']);
+                return;
+            }
+            if(preg_match('/license/i',$data['setLicense'])){
+                unset($data['setLicense']);
+                return;
+            }
+            if(preg_match('/none/i',$data['setLicense'])){
+                unset($data['setLicense']);
+                return;
+            }
+            if(empty($data['setLicense'])){
+                unset($data['setLicense']);
+                return;
+            }
+            
+        }
     }
 }

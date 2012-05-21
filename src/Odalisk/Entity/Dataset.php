@@ -77,11 +77,34 @@ class Dataset
     protected $categories;
 
     /**
+<<<<<<< HEAD
      * @ORM\Column(name="raw_formats", type="string", nullable=true, length=255)
      */
     protected $raw_formats;
     
     /**
+=======
+     * @ORM\OneToOne(targetEntity="Odalisk\Entity\DatasetCriteria", cascade={"persist", "remove"})
+     */
+    protected $criteria;
+    
+    /**
+     * @var string $license
+     *
+     * @ORM\Column(name="raw_license", type="string", nullable=true, length=255)
+     */
+    protected $raw_license;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Odalisk\Entity\License", cascade={"persist", "remove"})
+     */
+    protected $license;
+
+    /**
+     * @var string $format
+     *
+     * @ORM\Column(name="format", type="string", nullable=true, length=255)
+>>>>>>> 3d241d71857155087e40db8b49a12196fb00a9b3
      * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Format", cascade={"persist", "remove"})
      */
     protected $formats;
@@ -121,18 +144,14 @@ class Dataset
      */
     protected $maintainer;
 
-    /**
-     * @var string $license
-     *
-     * @ORM\Column(name="license", type="string", nullable=true, length=255)
-     */
-    protected $license;
 
     /**
      * @ORM\ManyToOne(targetEntity="Portal", inversedBy="data_sets")
      * @ORM\JoinColumn(name="portal_id", referencedColumnName="id")
      */
     protected $portal;
+
+
 
     /**
      * Get id
@@ -396,6 +415,27 @@ class Dataset
         return $this->categories;
     }
 
+
+    /**
+     * Set criteria
+     *
+     * @param Odalisk\Entity\DatasetCriteria $criteria
+     */
+    public function setCriteria(\Odalisk\Entity\DatasetCriteria $criteria)
+    {
+        $this->criteria = $criteria;
+    }
+
+    /**
+     * Get criteria
+     *
+     * @return Odalisk\Entity\DatasetCriteria 
+     */
+    public function getCriteria()
+    {
+        return $this->criteria;
+    }
+
     /**
      * Set raw_categories
      *
@@ -445,5 +485,25 @@ class Dataset
     public function getRawFormats()
     {
         return $this->raw_formats;
+    }
+
+    /**
+     * Set raw_license
+     *
+     * @param string $rawLicense
+     */
+    public function setRawLicense($rawLicense)
+    {
+        $this->raw_license = $rawLicense;
+    }
+
+    /**
+     * Get raw_license
+     *
+     * @return string 
+     */
+    public function getRawLicense()
+    {
+        return $this->raw_license;
     }
 }

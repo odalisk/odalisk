@@ -77,13 +77,19 @@ class Dataset
     protected $categories;
 
     /**
-<<<<<<< HEAD
      * @ORM\Column(name="raw_formats", type="string", nullable=true, length=255)
      */
     protected $raw_formats;
     
     /**
-=======
+     * @var string $format
+     *
+     * @ORM\Column(name="format", type="string", nullable=true, length=255)
+     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Format", cascade={"persist", "remove"})
+     */
+    protected $formats;
+
+    /**
      * @ORM\OneToOne(targetEntity="Odalisk\Entity\DatasetCriteria", cascade={"persist", "remove"})
      */
     protected $criteria;
@@ -99,15 +105,6 @@ class Dataset
      * @ORM\OneToOne(targetEntity="Odalisk\Entity\License", cascade={"persist", "remove"})
      */
     protected $license;
-
-    /**
-     * @var string $format
-     *
-     * @ORM\Column(name="format", type="string", nullable=true, length=255)
->>>>>>> 3d241d71857155087e40db8b49a12196fb00a9b3
-     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Format", cascade={"persist", "remove"})
-     */
-    protected $formats;
 
     /**
      * @var string $released_on When did we create this record

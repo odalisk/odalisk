@@ -24,7 +24,7 @@ class License
     /**
      * @var array $name
      *
-     * @ORM\Column(name="name", type="")
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $alias;
 

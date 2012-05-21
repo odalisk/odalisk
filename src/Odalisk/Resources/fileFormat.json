@@ -1,68 +1,68 @@
 [
 {
-format: pdf,
-proprietary: 1,
-documentation: 0,
-readable: 0
+    format: pdf,
+    proprietary: 1,
+    documentation: 0,
+    readable: 0
 },
 {
-format: xls,
-proprietary: 1,
-documentation: 1,
-readable: 1
+    format: xls,
+    proprietary: 1,
+    documentation: 1,
+    readable: 1
 },
 {
-format: csv,
-proprietary: 0,
-documentation: 1,
-readable: 1
+    format: csv,
+    proprietary: 0,
+    documentation: 1,
+    readable: 1
 },
 {
-format: ods,
-proprietary: 1,
-documentation: 1,
-readable: 1
+    format: ods,
+    proprietary: 1,
+    documentation: 1,
+    readable: 1
 },
 {
-format: text/xml,
-proprietary: 0,
-documentation: 1,
-readable: 1
+    format: text/xml,
+    proprietary: 0,
+    documentation: 1,
+    readable: 1
 },
 {
-format: doc,
-proprietary: 1,
-documentation: 1,
-readable: 1
+    format: doc,
+    proprietary: 1,
+    documentation: 1,
+    readable: 1
 },
 {
-format: ms-word,
-proprietary: 1,
-documentation: 1,
-readable: 1
+    format: ms-word,
+    proprietary: 1,
+    documentation: 1,
+    readable: 1
 },
 {
-format: text/html,
-proprietary: 0,
-documentation: 1,
-readable: 1
+    format: text / html,
+    proprietary: 0,
+    documentation: 1,
+    readable: 1
 },
 {
-format: octet-stream,
-proprietary: 0,
-documentation: 0,
-readable: 0
+    format: octet-stream,
+    proprietary: 0,
+    documentation: 0,
+    readable: 0
 },
 {
-format: wfs,
-proprietary: 1,
-documentation: 0,
-readable: 0
+    format: wfs,
+    proprietary: 1,
+    documentation: 0,
+    readable: 0
 },
 {
-format: wms,
-proprietary: 1,
-documentation: 0,
-readable: 0
+    format: wms,
+    proprietary: 1,
+    documentation: 0,
+    readable: 0
 }
 ]

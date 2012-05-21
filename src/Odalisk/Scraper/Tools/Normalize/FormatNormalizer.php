@@ -40,7 +40,7 @@ class FormatNormalizer
     }
     
 	public function getFormats($raw_formats) {
-		error_log("raw_formats : $raw_formats");
+		// error_log("raw_formats : $raw_formats");
 		$formats = array_unique(preg_split('/;/', strtolower($raw_formats)));
 		foreach($formats as $k => $format) {
 			$formats[$k] = $this->_trim($format);

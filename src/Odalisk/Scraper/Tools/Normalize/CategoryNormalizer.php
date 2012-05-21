@@ -28,7 +28,7 @@ class CategoryNormalizer
             $c = new \Odalisk\Entity\Category($category);
             foreach($data['aliases'] as $alias) {
                 $c->addAlias($alias);
-                $this->aliases[strtolower($alias)] = $category;
+                $this->aliases[strtolower($alias)] = strtolower($category);
             }
             $this->em->persist($c);
             $this->em->flush();

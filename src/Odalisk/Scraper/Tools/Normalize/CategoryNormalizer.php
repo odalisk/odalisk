@@ -33,7 +33,10 @@ class CategoryNormalizer
             $this->em->persist($c);
             $this->em->flush();
             $this->categories[strtolower($category)] = $c;
+            
         }
+        // var_dump($this->categories);
+        // var_dump($this->aliases);
     }
     
     public function getCategories($raw_categories)
@@ -54,18 +57,16 @@ class CategoryNormalizer
         foreach($categories as $category) {
             $category = strtolower($category);
             if(array_key_exists($category, $this->categories)) {
-                //error_log('Base category');
-                $result[] = $this->categories[$category];
+                $result[$category] = $this->categories[$category];
             } elseif (array_key_exists($category, $this->aliases)) {
-                //error_log('Alias category');
-                $result[] = $this->categories[$this->aliases[$category]];
+                $result[$this->aliases[$category]] = $this->categories[$this->aliases[$category]];
             } else {
-                //error_log('Other');
-                $result[] = $this->categories['other'];
+                $result['other'] = $this->categories['other'];
             }
         }
         $result['raw'] = implode(', ', $categories);
-        return array_unique($result);
+        
+        return $result;
     }
     
     private function _trim($value)

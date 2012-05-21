@@ -5,13 +5,13 @@ namespace Odalisk\Scraper\Tools\Normalize;
 class FormatNormalizer
 {
 	private $replace = array(
-		'/vnd.ms-excel|excel/'  => 'xls'
-		, '/htm/' => 'html'
-		, '/vnd.ms-word/' => 'doc'
-		, '/Otros|Unverified/' => 'Unknown'
-		, '/image\/jpg/' => 'jpg'
-		, '/openDOCument.spreadsheet/' => 'ods'
-		, '/shp.*/' => 'shp'
+		'/vnd.ms-excel|excel/'  => 'xls',
+		'/htm/' => 'html',
+		'/vnd.ms-word/' => 'doc',
+		'/Otros|Unverified/' => 'Unknown', 
+		'/image\/jpg/' => 'jpg',
+		'/openDOCument.spreadsheet/' => 'ods',
+		'/shp.*/' => 'shp'
 	);
 
     private $formats = array();
@@ -49,18 +49,16 @@ class FormatNormalizer
 			}
 		}
 		$formats = array_unique($formats);
-		//print_r($formats);
 
 		$result = array();
 		foreach($formats as $format) {
             if(array_key_exists($format, $this->formats)) {
-                $result[] = $this->formats[$format];
+                $result[$format] = $this->formats[$format];
 			} else {
-                $result[] = $this->formats['unknown'];
+                $result['unknown'] = $this->formats['unknown'];
 			}
 		}
-		//print_r($result);
-		return($result);
+		return $result;
 	}
 
     private function _trim($value)

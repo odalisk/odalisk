@@ -2,9 +2,9 @@
 
 namespace Odalisk\Scraper\CKAN\DataEU;
 
-use Odalisk\Scraper\CKAN\BaseCKAN;
+use Odalisk\Scraper\CKAN\BaseCkanPortal;
 
-class DataEUPlatform extends BaseCKAN {
+class EUPortal extends BaseCkanPortal {
     public function __construct() {
         $this->criteria = array(
             'setName' => '//h1[@class="page_heading"]',
@@ -19,7 +19,6 @@ class DataEUPlatform extends BaseCKAN {
             'setFormat' => './/*[@property="dc:format"]'
         );
 
-        $this->dateFormat = 'Y-m-d';
         $this->inChargeFields = array('setOwner','setMaintainer');
     }
     
@@ -47,16 +46,5 @@ class DataEUPlatform extends BaseCKAN {
                 }
             }
         }
-    }
-
-    public function parsePortal() {
-        $this->portal = new \Odalisk\Entity\Portal();
-        $this->portal->setName($this->getName());
-        $this->portal->setUrl('http://publicdata.eu/');
-        $this->portal->setCountry($this->country);
-        $this->portal->setStatus($this->status);
-        $this->portal->setEntity($this->entity);
-        $this->em->persist($this->portal);
-        $this->em->flush();
     }
 }

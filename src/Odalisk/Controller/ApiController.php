@@ -11,6 +11,8 @@ class ApiController extends Controller
 {
     private $type;
     
+    
+    private $page_size = 20;
     /**
      * api.
      */
@@ -22,8 +24,10 @@ class ApiController extends Controller
         $this->type = $params['type'];
         
         $params['page_number'] = intval($params['page_number']);
-        $result = $this->constructQuery($params);
+        $this->page_size = (isset($params['page_size'])) ? intval($params['page_size']) : $this->page_size;
         
+        
+        $result = $this->constructQuery($params);
         
         
         if($_format == 'json')
@@ -47,13 +51,18 @@ class ApiController extends Controller
         return $response;
     }
     
-    public function tagsList($current_portal)
+    public function datasetTags($current_portal)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $repository = $em->getRepository('Odalisk\Entity\Portal');
         $portals = $repository->findAll();
-        return $this->render('App:Api:tags-list.html.twig', array('portals' => $portals,
+        return $this->render('App:Api:dataset-tags.html.twig', array('portals' => $portals,
                                                                   'current_portal' => $current_portal));
+    }
+    
+    public function portalTags()
+    {
+        return $this->render('App:Api:portal-tags.html.twig', array());
     }
     
     private function constructQuery($request)
@@ -66,7 +75,6 @@ class ApiController extends Controller
         $result = $this->getWhere($forWhere);
         
         $qb = null;
-        error_log($this->type);
         if($this->type == 'dataset')
         {
             $qb = $repository->createQueryBuilder('d');
@@ -84,8 +92,8 @@ class ApiController extends Controller
         }
         
         $qb->add('where', $result['where'])
-            ->setFirstResult(20 * $request['page_number'])
-            ->setMaxResults(20)
+            ->setFirstResult($this->page_size * $request['page_number'])
+            ->setMaxResults($this->page_size)
             ->setParameters($result['params']);
         
         

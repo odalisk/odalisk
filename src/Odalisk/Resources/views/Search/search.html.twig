@@ -7,7 +7,7 @@
     <div class="span12">
         <ul class="breadcrumb">
           <li>
-            <a href="{{ path('portals') }}">Portals</a> <span class="divider">/</span>
+            <a href="{{ path('browser') }}">Browser</a> <span class="divider">/</span>
             <li class="active">Search</li>
           </li>
           <li class="active"></li>
@@ -28,5 +28,6 @@
 
 {% block jsvariables %}
     window.searchType = "dataset";  
+    window.needResult = true; 
     {{ parent() }}
 {% endblock %}

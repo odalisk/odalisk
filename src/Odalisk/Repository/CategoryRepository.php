@@ -1,6 +1,6 @@
 <?php
 
-namespace Odalisk;
+namespace Odalisk\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

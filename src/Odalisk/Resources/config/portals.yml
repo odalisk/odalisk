@@ -1,0 +1,85 @@
+parameters:
+    config.enabled_portals:
+        - nantes
+        - loire_atlantique
+        - socrata
+        - new_york
+        - usa_gov
+        - uk_gov
+        - eu_gov
+        - data_publica
+        #- data_market
+
+    # All the information we need for each platfom. Will be used to initialize the services
+    portals.nantes:
+        name:       "data.nantes.fr"
+        base_url:   "http://data.nantes.fr/"
+        api_url:    "http://data.nantes.fr/api/datastore_searchdatasets/1.0/39W9VSNCSASEOGV/?output=json"
+        country:    "France"
+        entity:     "City of Nantes"
+        status:     "Institutional"
+    
+    portals.loire_atlantique:
+        name:       "data.loire-atlantique.fr"
+        base_url:   "http://data.loire-atlantique.fr/"
+        api_url:    ""
+        country:    "France"
+        entity:     "Loire Atlantique General Council"
+        status:     "Institutional"
+
+    portals.socrata:
+        name:       "opendata.socrata.com"
+        base_url:   "https://opendata.socrata.com"
+        api_url:    "https://opendata.socrata.com/api/views.json"
+        country:    "USA"
+        entity:     "Socrata"
+        status:     "Private"
+
+    portals.new_york:
+        name:       "nycopendata.socrata.com"
+        base_url:   "https://nycopendata.socrata.com"
+        api_url:    "https://nycopendata.socrata.com/api/views.json"
+        country:    "USA"
+        entity:     "City of New York"
+        status:     "Institutional"
+
+    portals.usa_gov:
+        name:       "www.data.gov"
+        base_url:   "https://explore.data.gov"
+        api_url:    "https://explore.data.gov/api/views.json"
+        country:    "USA"
+        entity:     "United States Government"
+        status:     "Institutional"
+        
+    portals.uk_gov:
+        name:       "data.gov.uk"
+        base_url:   "http://data.gov.uk/dataset/"
+        api_url:    "http://catalogue.data.gov.uk/api/rest/dataset"
+        country:    "United Kingdom"
+        entity:     "UK Government"
+        status:     "Institutional"
+        
+    portals.eu_gov:
+        name:       "publicdata.eu"
+        base_url:   "http://publicdata.eu/dataset/"
+        api_url:    "http://publicdata.eu/api/rest/dataset"
+        country:    "European Union"
+        entity:     "European Linked Open Data Consortium"
+        status:     "Private non-profit making"
+    
+    portals.data_publica:
+        name:       "data-publica.com"
+        base_url:   "http://www.data-publica.com/"
+        api_url:    ""
+        country:    "France"
+        entity:     "Data Publica"
+        status:     "For profit"
+    
+    portals.data_market:
+        name:       "datamarket.com"
+        base_url:   "http://datamarket.com/data/set/"
+        api_url:    ""
+        country:    "Iceland"
+        entity:     "DataMarket"
+        status:     "Private, For profit"
+    

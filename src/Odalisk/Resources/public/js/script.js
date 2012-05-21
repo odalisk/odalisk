@@ -1,7 +1,8 @@
 /* 
  *= require libs/jquery
- *= require plugins
  *= require scrollspy
+ *= require transition
+ *= require carousel
  *= require modal
  */
 
@@ -19,14 +20,43 @@ jQuery(function($) {
     $('#navbar').scrollspy();
     
     
-    
-    
-    
+    if(typeof window.page != 'undefined' && window.page == 'home')
+    {
+        $('#carouselHome').carousel({
+            interval:10000
+        });
+        
+        $('#carouselHome').on('slide',function() {
+            var active = $('#carouselHome .item.active');
+            if(active.attr('id') == 'browserSlide')
+            {
+                $('#headerWrapper').attr('class','backblue');
+            }
+            else
+            {
+                $('#headerWrapper').attr('class','backwhite');
+                
+            }
+        });
+        
+        /*$('#carouselHome').on('slid',function() {
+            var active = $('#carouselHome .item.active');
+            if(active.attr('id') == 'browserSlide')
+            {
+                $('#headerWrapper').addClass('afterBackblue');
+            }
+            else
+            {
+                $('#headerWrapper').addClass('afterBackwhite');
+                
+            }
+        });*/
+    }
     
     window.api = new jsApi();
     
-    
 });
+
 
 
 
@@ -38,6 +68,7 @@ jsApi = function() {
     this.initActions = new Array();
     this.actions = new Object();
     this.statics = new Array();
+    this.pageSize = (typeof window.pageSize === 'number') ? window.pageSize : 20;
     
     this.updateResult = function() {
         this.resetDisplay();
@@ -74,7 +105,8 @@ jsApi = function() {
             {
                 'request':this.request,
                 'page_number':this.page,
-                'type':window.searchType
+                'type':window.searchType,
+                'page_size':this.pageSize
             },
             function(data) {
                 window.api.data = data;
@@ -101,7 +133,8 @@ jsApi = function() {
             {
                 'request':window.api.request,
                 'page_number':this.page,
-                'type':window.searchType
+                'type':window.searchType,
+                'page_size':this.pageSize
             },
             function(data) {
                 
@@ -218,7 +251,10 @@ jsApi = function() {
         console.log(result);
     }
     
-    this.updateResult();
+    if(window.needResult)
+    {
+        this.updateResult();
+    }
 }
 
 

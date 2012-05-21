@@ -73,20 +73,13 @@ class PortalRepository extends EntityRepository
 
 	  }
 
-	  public function findByPortalSearch($portal_id, $page_from, $page_size,$search)
-	  {
-	      return $this->getEntityManager()
-	          ->createQuery('SELECT d
-	                         FROM Odalisk\Entity\Portal as p, Odalisk\Entity\Dataset as d
-	                         WHERE
-	                              p.id = :portal_id
-	                              AND d.portal = p.id
-	                              AND d.name LIKE :search
-	                         ORDER BY d.name ASC')
-	          ->setFirstResult($page_from)
-	          ->setMaxResults($page_size)
-	          ->setParameter('portal_id', $portal_id)
-	          ->setParameter('search', '%'.$search.'%')
-	          ->getResult();
-	  }
+	  public function findAllWithLimit()
+      {
+          return $this->getEntityManager()
+              ->createQuery('SELECT p FROM Odalisk\Entity\Portal p ORDER BY p.name ASC')
+              ->limit(5)
+              ->getResult();
+      }
+	  
+	  
 }

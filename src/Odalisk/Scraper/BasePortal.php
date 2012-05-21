@@ -9,7 +9,7 @@ use Buzz\Message;
 use Odalisk\Scraper\Tools\Normalize\CategoryNormalizer;
 
 
-abstract class BasePlatform {
+abstract class BasePortal {
     /**
      * Buzz instance
      *
@@ -37,27 +37,13 @@ abstract class BasePlatform {
      * @var string
      */
     protected $em;
-
+    
     /**
-     * The name of the current platform
+     * The configuration values of this portal
      *
      * @var string
      */
-    protected $name;
-
-    /**
-     * The base of a dataset url.
-     *
-     * @var string
-     */
-    protected $base_url;
-
-    /**
-     * The api url that retrieves urls of all the datasets of the platform.
-     *
-     * @var string
-     */
-    protected $api_url;
+    protected $config;
 
     protected $criteria;
 
@@ -66,68 +52,6 @@ abstract class BasePlatform {
     protected $totalCount = 0;
 
     protected $portal;
-    
-    /**
-     * The date type fields we need to process so we can transform them into DateTime objects
-     *
-     * @var array $dateFields
-     */
-    protected $dateFields = array('setReleasedOn', 'setLastUpdatedOn');
-    
-    /**
-     * Match some regex to known date formats. Order is IMPORTANT!
-     *
-     * @var string
-     */
-    protected $correctDates = array(
-        '/^[0-9]{4}(.[0-9]{1,2}(.[0-9]{1,2}( [0-9]{2}(:[0-9]{2}(:[0-9]{2})?)?)?)?)?$/' =>  array(
-            '!Y',
-            '!Y*m',
-            '!Y*m*d',
-            '!Y*m*d H',
-            '!Y*m*d H:i',
-            '!Y*m*d H:i:s',
-        ),
-        '/^(([0-9]{1,2}.)?[0-9]{1,2}.)?[0-9]{4}( [0-9]{2}(:[0-9]{2}(:[0-9]{2})?)?)?$/' => array(
-            '!Y',
-            '!m*Y',
-            '!d*m*Y',
-            '!d*m*Y H',
-            '!d*m*Y H:i',
-            '!d*m*Y H:i:s',
-        ),
-        '/^(([0-9]{1,2}.)?[0-9]{1,2}.)?[0-9]{2}( [0-9]{2}(:[0-9]{2}(:[0-9]{2})?)?)?$/' => array(
-            '!y',
-            '!m*y',
-            '!d*m*y',
-            '!d*m*y H',
-            '!d*m*y H:i',
-            '!d*m*y H:i:s',
-        ),
-        '/^(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{1,2}[^0-9]+)?[0-9]{4}$/' => array(
-            '!M*Y',
-            '!M*d?*Y',
-        ),
-        '/^([0-9]{1,2}.)?(?:January|February|March|April|May|June|July|August|September|October|November|December).[0-9]{4}$/' => array(
-            '!F?Y',
-            '!d?F?Y',
-        ),
-        '/^([0-9]{1,2}.)?(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec).[0-9]{2}$/' => array(
-            '!M?y',
-            '!d?M?y',
-        ),
-        '/^([0-9]{1,2}.)?(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec).[0-9]{4}?$/' => array(
-            '!M?Y',
-            '!d?M?Y',
-        ),
-    );
-    
-    /**
-     * Values for date fields that are considered equivalent to empty
-     *
-     * @var array $emptyDates
-     */
-    protected $emptyDates = array('N/A', 'n/a', 'TBC', 'not known', '');
     
     protected $wildFormats = array(
         "/.*kmz.*/i",
@@ -180,6 +104,7 @@ abstract class BasePlatform {
     );
     
     protected $categoryNormalizer;
+    protected $dateNormalizer;
 
     /**
      * The platform's datasets URLs list
@@ -241,7 +166,18 @@ abstract class BasePlatform {
      *
      * @return void
      */
-    abstract public function parsePortal();
+    public function parsePortal() {
+        $this->portal = new \Odalisk\Entity\Portal();
+        
+        $this->portal->setName($this->getName());
+        $this->portal->setUrl($this->getBaseUrl());
+        $this->portal->setCountry($this->getCountry());
+        $this->portal->setStatus($this->getStatus());
+        $this->portal->setEntity($this->getEntity());
+        
+        $this->em->persist($this->portal);
+        $this->em->flush();
+    }
 
     public function analyseHtmlContent($html, &$dataset) 
     {
@@ -392,36 +328,7 @@ abstract class BasePlatform {
      */
     protected function parseDates(&$data)
     {
-        // We transform dates strings in datetime.
-        foreach ($this->dateFields as $field) {
-            if (array_key_exists($field, $data)) {
-                $date = $data[$field];
-                // Try to match the date against something we know
-                foreach($this->correctDates as $regex => $formats) {
-                    // Check if we have a match
-                    if(preg_match($regex, $date, $m)) {
-                        // Depending on how many matches we have, we know which format to pick
-                        $data[$field] = \Datetime::createFromFormat($formats[count($m)-1], $date)->format("d-m-Y H:i");
-                        if(false === $data[$field]) {
-                            error_log('[>>> False positive ] ' . $date . ' with ' . $regex . ' (count = ' . (count($m)-1) .')');
-                            $data[$field] = null;
-                        }
-                        // Check out the next field directly
-                        continue 2;
-                    }
-                }
-                // This is executed only if we have no match
-                // Check if it is a known empty-ish value
-                if(in_array($date, $this->emptyDates)) {
-                    $data[$field] = null;
-                } else {
-                    // Not something we recognize
-                    error_log('[Unknown date format ] ' . $date);
-                    $data[$field] = $date;
-                }
-                $date = null;
-            }
-        }
+        $this->dateNormalizer->normalize($data);
     }
     
     /**
@@ -434,12 +341,9 @@ abstract class BasePlatform {
     {
     }
     
-    public function setBuzz(\Buzz\Browser $buzz, $timeout = 30) {
+    public function setBuzz(\Buzz\Browser $buzz, $timeout = 30, $options) {
         $this->buzz = $buzz;
         $this->buzz->getClient()->setTimeout($timeout);
-    }
-
-    public function setBuzzOptions(array $options) {
         $this->buzzOptions = $options;
     }
 
@@ -448,56 +352,46 @@ abstract class BasePlatform {
         $this->em = $this->doctrine->getEntityManager();
     }
     
-    public function setCategoryNormalizer($categoryNormalizer)
+    public function setCategoryNormalizer($normalizer)
     {
-        $this->categoryNormalizer = $categoryNormalizer;
-    }
-
-    public function setName($name) {
-        $this->name = $name;
-    }
-
-    public function getName() {
-        return $this->name;
+        $this->categoryNormalizer = $normalizer;
     }
     
-    public function setCountry($country) {
-        $this->country = $country;
-    }
-
-    public function getCountry() {
-        return $this->country;
-    }
-
-    public function setEntity($entity) {
-        $this->entity = $entity;
-    }
-
-    public function getEntity() {
-        return $this->entity;
-    }
-
-    public function setStatus($status) {
-        $this->status = $status;
-    }
-
-    public function getStatus() {
-        return $this->status;
+    public function setDateNormalizer($normalizer)
+    {
+        $this->dateNormalizer = $normalizer;
     }
     
-    public function setBaseUrl($base_url) {
-        $this->base_url = $base_url;
+    public function setConfiguration($config)
+    {
+        $this->config = $config;
     }
 
-    public function getBaseUrl() {
-        return $this->base_url;
-    }
-
-    public function setApiUrl($api_url) {
-        $this->api_url = $api_url;
-    }
-
-    public function getCount() {
+    public function getTotalCount()
+    {
         return $this->totalCount;
+    }
+    
+    public function __call($name, $arguments) {
+        if(0 === strpos($name, 'get')) {
+            if(array_key_exists($name, $this->config)) {
+                return $this->config[$name];
+            } else {
+                $property = substr($name, 3);
+                $property[0] = strtolower($property[0]);
+                $property = preg_replace_callback(
+                    '/[A-Z]/',
+                    function($match) {
+                        return '_' . strtolower($match[0]);
+                    },
+                    $property
+                );
+                
+                if(array_key_exists($property, $this->config)) {
+                    $this->config[$name] = $this->config[$property];
+                    return $this->config[$name];
+                }
+            }
+        }
     }
 }

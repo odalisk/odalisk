@@ -3,10 +3,10 @@
 namespace Odalisk\Scraper\CKAN;
 
 
-use Odalisk\Scraper\BasePlatform;
+use Odalisk\Scraper\BasePortal;
 
 
-abstract class BaseCKAN extends BasePlatform {
+abstract class BaseCkanPortal extends BasePortal {
 
     protected $datasets = array();
 
@@ -26,8 +26,6 @@ abstract class BaseCKAN extends BasePlatform {
             // , 'Frequency' => '//div[@class="aboutDataset"]/div[8]/dl/dd[3]/span'
             // , 'Community Rating' => '//div[@class="aboutDataset"]/div[3]/dl/dd[1]/div'
         );
-
-        $this->dateFormat = 'M d, Y';
     }
 
     public function getDatasetsUrls() {
@@ -35,7 +33,7 @@ abstract class BaseCKAN extends BasePlatform {
 
         // Make the API call
         $response = $this->buzz->get(
-            $this->api_url,
+            $this->getApiUrl(),
             $this->buzzOptions
         );
 
@@ -44,7 +42,7 @@ abstract class BaseCKAN extends BasePlatform {
             $data = json_decode($response->getContent());
 
             foreach ($data as $key => $dataset_name) {
-                $urls[] = $this->base_url . $dataset_name;
+                $urls[] = $this->getBaseUrl() . $dataset_name;
             }
         } else {
             error_log('Couldn\'t fetch list of datasets for ' . $this->getName());
@@ -52,9 +50,6 @@ abstract class BaseCKAN extends BasePlatform {
 
         $this->totalCount = count($urls);
 
-
         return $urls;
     }
-
-
 }

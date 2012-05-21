@@ -20,14 +20,17 @@
         </div>
     </td>
     <td class="labels">
-        {% if dataset.category is not empty %}
-            {% if dataset.category|length > 20 %}
-                <span class="label label-info">{{ dataset.category|slice(0,20) }}...</span>
-            {% else %}
-                <span class="label label-info">{{ dataset.category|slice(0,20) }}</span>
+        {#
+        {% for category in dataset.category %}
+            {% if category is not empty %}
+                {% if category|length > 20 %}
+                    <span class="label label-info">{{ category|slice(0,20) }}...</span>
+                {% else %}
+                    <span class="label label-info">{{ category|slice(0,20) }}</span>
+                {% endif %}
             {% endif %}
-        {% endif %}
-
+        {% endfor %}
+        #}
         {% if dataset.license is not empty %}
             {% if dataset.license|length > 20 %}
                 <span class="label label-success">{{ dataset.license|slice(0,20) }}...</span>

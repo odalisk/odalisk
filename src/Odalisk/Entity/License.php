@@ -190,7 +190,7 @@ class License
      *
      * @param array $alias
      */
-    public function addAliases($alias)
+    public function addAlias($alias)
     {
         $this->aliases[] = $alias;
     }

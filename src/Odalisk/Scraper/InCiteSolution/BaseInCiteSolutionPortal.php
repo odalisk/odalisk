@@ -18,7 +18,7 @@ abstract class BaseInCiteSolutionPortal extends BasePortal
         $this->criteria = array(
             'setName' => ".//*[@class='tx_icsoddatastore_pi1_single']/h1",
             'setCategories' => ".//*[@class='tx_icsoddatastore_pi1_categories separator']/span[@class='value']",
-            'setLicense' => ".//*[@class='tx_icsoddatastore_pi1_licence separator']/span[@class='value']",
+            'setRawLicense' => ".//*[@class='tx_icsoddatastore_pi1_licence separator']/span[@class='value']",
             // 'Update Frequency' => ".//*[@class='tx_icsoddatastore_pi1_updatefrequency separator']/span[@class='value']",
             'setReleasedOn' => ".//*[@class='tx_icsoddatastore_pi1_releasedate separator']/span[@class='value']",
             'setLastUpdatedOn' => ".//*[@class='tx_icsoddatastore_pi1_updatedate separator']/span[@class='value']",

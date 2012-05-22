@@ -24,7 +24,7 @@ class DataPublicaPortal extends BasePortal
         $this->criteria = array(
             'setName' => ".//*[@id='content']/article[1]/h2",
             'setCategories' => "//div/h5[text()='Catégories']/../following-sibling::*/ul/li/a",
-            'setLicense' => "//div/h5[text()='Licence']/../following-sibling::*",
+            'setRawLicense' => "//div/h5[text()='Licence']/../following-sibling::*",
             'setReleasedOn' => "//div/h5[text()='Date de création']/../following-sibling::*",
             'setLastUpdatedOn' => "//div/h5[text()='Date de mise à jour']/../following-sibling::*",
             'setSummary' => ".//*[@id='description']",

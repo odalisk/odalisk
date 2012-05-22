@@ -39,7 +39,7 @@ class RunPHPCommand extends BaseCommand
                 $this->categories[$category] = $c;
             }
             
-            var_dump($this->categories);
+            //var_dump($this->categories);
         } catch (ParseException $e) {
             printf("Unable to parse the YAML string: %s", $e->getMessage());
         }

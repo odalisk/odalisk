@@ -237,11 +237,11 @@ abstract class BasePortal {
      */
     protected function normalizeLicense(&$data)
     {
-        
         if (array_key_exists('setRawLicense', $data)) {
+            $this->licenseNormalizer->getLicenses($data['setRawLicense']);
             if ($data['setRawLicense'] == '[]') {
                 unset($data['setRawLicense']);
-            } elseif (preg_match('/(OKD Compliant::)?UK Open Government Licence \(OGL\)/', $data['setLicense'])) {
+            } elseif (preg_match('/(OKD Compliant::)?UK Open Government Licence \(OGL\)/', $data['setRawLicense'])) {
                 $data['setRawLicense'] = 'OGL';
             }
         }
@@ -306,6 +306,10 @@ abstract class BasePortal {
     public function setDateNormalizer($normalizer)
     {
         $this->dateNormalizer = $normalizer;
+    }
+    
+    public function setLicenseNormalizer($normalizer) {
+        $this->licenseNormalizer = $normalizer;
     }
     
     public function setConfiguration($config)

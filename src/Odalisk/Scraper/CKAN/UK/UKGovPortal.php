@@ -17,7 +17,7 @@ class UKGovPortal extends BaseCkanPortal {
             'setReleasedOn' => '//td[.="Released" and @class="package_label"]/../td[2]/div[1]',
             'setLastUpdatedOn' => '//td[.="Last updated" and @class="package_label"]/../td[2]/div[1]',
             'setProvider' => '//td[.="Published by" and @class="package_label"]/../td[2]/div[1]',
-            'setLicense' => '//td[.="Licence" and @class="package_label"]/../td[2]/div[1]',
+            'setRawLicense' => '//td[.="Licence" and @class="package_label"]/../td[2]/div[1]',
             'setCategories' => './/*[@class="package_label" and text() = "Categories"]/following-sibling::*'
         );
     }
@@ -46,66 +46,66 @@ class UKGovPortal extends BaseCkanPortal {
             }
         }
 
-        if (array_key_exists('setLicense', $data)) {
-            if(is_array(json_decode($data['setLicense']))){
-                $data['setLicense'] = implode(';', json_decode($data['setLicense']));
+        if (array_key_exists('setRawLicense', $data)) {
+            if(is_array(json_decode($data['setRawLicense']))){
+                $data['setRawLicense'] = implode(';', json_decode($data['setRawLicense']));
             }
                 
-            if(preg_match('/CCGC\/CCW/i',$data['setLicense'])){
-                $data['setLicense'] = "CCW/CROWN";
+            if(preg_match('/CCGC\/CCW/i',$data['setRawLicense'])){
+                $data['setRawLicense'] = "CCW/CROWN";
             }
-            if(preg_match('/CCW/i',$data['setLicense'])){
-                $data['setLicense'] = "CCW/CROWN";
+            if(preg_match('/CCW/i',$data['setRawLicense'])){
+                $data['setRawLicense'] = "CCW/CROWN";
             }
-            if(preg_match('/Crown/i',$data['setLicense'])){
-                $data['setLicense'] = "CCW/CROWN";
+            if(preg_match('/Crown/i',$data['setRawLicense'])){
+                $data['setRawLicense'] = "CCW/CROWN";
             }
             
-            if(preg_match('/UK Climate Projections Licence/i',$data['setLicense'])){
-                $data['setLicense'] = "UK Climate Projections Licence";
+            if(preg_match('/UK Climate Projections Licence/i',$data['setRawLicense'])){
+                $data['setRawLicense'] = "UK Climate Projections Licence";
             }
 
-            if(preg_match('/^OKD Compliant/i',$data['setLicense'])){
-                if(preg_match("/pddl/i", $data['setLicense'])){
-                    $data['setLicense'] = "PDDL";
+            if(preg_match('/^OKD Compliant/i',$data['setRawLicense'])){
+                if(preg_match("/pddl/i", $data['setRawLicense'])){
+                    $data['setRawLicense'] = "PDDL";
                     return;
                 }
-                $data['setLicense'] = "ODBL";
+                $data['setRawLicense'] = "ODBL";
             }
-            if(preg_match('/digitised at/i',$data['setLicense'])){
-                unset($data['setLicense']);
+            if(preg_match('/digitised at/i',$data['setRawLicense'])){
+                unset($data['setRawLicense']);
                 return;
             }
-            if(preg_match('/Other/i',$data['setLicense'])){
-                unset($data['setLicense']);
+            if(preg_match('/Other/i',$data['setRawLicense'])){
+                unset($data['setRawLicense']);
                 return;
             }
-            if(preg_match('/indicative/i',$data['setLicense'])){
-                unset($data['setLicense']);
+            if(preg_match('/indicative/i',$data['setRawLicense'])){
+                unset($data['setRawLicense']);
                 return;
             }
-            if(preg_match('/unknow/i',$data['setLicense'])){
-                unset($data['setLicense']);
+            if(preg_match('/unknow/i',$data['setRawLicense'])){
+                unset($data['setRawLicense']);
                 return;
             }
-            if(preg_match('/accurate/i',$data['setLicense'])){
-                unset($data['setLicense']);
+            if(preg_match('/accurate/i',$data['setRawLicense'])){
+                unset($data['setRawLicense']);
                 return;
             }
-            if(preg_match('/licence/i',$data['setLicense'])){
-                unset($data['setLicense']);
+            if(preg_match('/licence/i',$data['setRawLicense'])){
+                unset($data['setRawLicense']);
                 return;
             }
-            if(preg_match('/license/i',$data['setLicense'])){
-                unset($data['setLicense']);
+            if(preg_match('/license/i',$data['setRawLicense'])){
+                unset($data['setRawLicense']);
                 return;
             }
-            if(preg_match('/none/i',$data['setLicense'])){
-                unset($data['setLicense']);
+            if(preg_match('/none/i',$data['setRawLicense'])){
+                unset($data['setRawLicense']);
                 return;
             }
-            if(empty($data['setLicense'])){
-                unset($data['setLicense']);
+            if(empty($data['setRawLicense'])){
+                unset($data['setRawLicense']);
                 return;
             }
             

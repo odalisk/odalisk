@@ -84,7 +84,6 @@ class Dataset
     /**
      * @var string $format
      *
-     * @ORM\Column(name="format", type="string", nullable=true, length=255)
      * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Format", cascade={"persist", "remove"})
      */
     protected $formats;
@@ -102,7 +101,7 @@ class Dataset
     protected $raw_license;
 
     /**
-     * @ORM\OneToOne(targetEntity="Odalisk\Entity\License", cascade={"persist", "remove"})
+     * @ORM\Column(name="format", type="string", nullable=true, length=255)
      */
     protected $license;
 

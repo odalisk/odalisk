@@ -9,16 +9,20 @@ parameters:
         doc: [ false, true, true ]
         gtfs: [ true, true, true ]
         html: [ true, true, true ]
+        ical: [ true, true, true ]
         jpg: [ true, true, false ] # jpeg
         json: [ true, true, true ]
         kmz: [ true, true, true ] # kmz
         kml: [ true, true, true ] # kmz
+        mif: [ false, false, false ]
+        msaccess: [ false, false, false ]
         ods: [ false, true, true ]
         pdf: [ false, false, false ]
         ppt: [ false, false, false ]
         rdf: [ true, true, true ]
         rss: [ true, true, true ]
         shp: [ true, true, false ]
+        sql: [ true, true, true ]
         txt: [ true, false, false ]
         wms: [ false, false, false ]
         wfs: [ false, false, false ]

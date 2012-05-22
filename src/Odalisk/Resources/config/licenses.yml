@@ -1,27 +1,125 @@
 parameters:
-      licenses:
-            #equivalent  authorship reuse redistribution commercial
-            'Licence Information Publique':  ['Licence Information Publique', 1, 1, 1, 1]
-            'Licence EuroStat': ['EuroStat', -1, -1, -1, -1]
-            'Licence La Française des Jeux': ['Française des Jeux', 1, 0, 0, 0]
-            'Licence ODBL Ville de Paris': ['ODBL', 1, 1, 1, 1]
-            'Licence Data Publica': ['Licence Data Publica', 1, 1, 1, 1]
-            'Licence ODBL': ['ODBL', 1, 1, 1, 1]
-            'ODBL' : ['ODBL', 1, 1, 1, 1]
-            'PDDL' : ['PDDL', 1, 1, 1, 1]
-            'Open Database License (ODbL)': ['ODBL', 1, 1, 1, 1]
-            'Licence inconnue': ['None', -1, -1, -1, -1]
-            'Licence du BODACC': ['BODACC', 1, 1, 1, -1]
-            'Licence Prix-Carburant': ['Prix-Carburant', 1, 1, 1, 1]
-            'GNU General Public License v2': ['GNU', 1, 1, 1, 1]
-            'Public': ['Public', 1, 1, 1, 1]
-            'Licence Agence du Patrimoine Immatériel de l''État (Livraison successives de données)': ['APIE', 1, 1, 1, 1]
-            'Conditions générales de réutilisation des informations publiques (APIE)': ['APIE', 1, 1, 1, 1]
-            'CCW/CROWN': ['CCW/CROWN', 1, 1, 1, 1]
-            'UK Climate Projections Licence': ['UK Climate Projections Licence', 1, 0, 0, 0]
-            'OKD Compliant': ['OGL', 1, 1, 1, 1]
-            'No conditions apply': ['No Conditions', 1, 1, 1, 1]
-            'Use limitation': ['None', -1, -1, -1, -1]
-            'Other': ['Other', -1, -1, -1, -1]
-
+    licenses:
+        'APIE':
+            aliases:
+                - 'Conditions générales de réutilisation des informations publiques (APIE)'
+                - 'Licence Agence du Patrimoine Immatériel de l''État (Livraison successives de données)'
+            authorship: true
+            reuse: true
+            redistribution: true
+            commercial: false
+        'BODACC':
+            aliases:
+                - 'Licence du BODACC'
+            authorship: true
+            reuse: true
+            redistribution: true
+            commercial: false
+        'CCW/CROWN':
+            aliases: []
+            authorship: true
+            reuse: true
+            redistribution: true
+            commercial: true
+        'Data Publica':
+            aliases:
+                - 'Licence Data Publica'
+            authorship: true
+            reuse: true
+            redistribution: true
+            commercial: true
+        'EuroStat':
+            aliases:
+                - 'Licence EuroStat'
+            authorship: false
+            reuse: false
+            redistribution: false
+            commercial: false
+        'Française des Jeux':
+            aliases:
+                - 'Licence La Française des Jeux'
+            authorship: true
+            reuse: false
+            redistribution: false
+            commercial: false
+        'GNU':
+            aliases:
+                - 'GNU General Public License v2'
+            authorship: true
+            reuse: true
+            redistribution: true
+            commercial: true
+        'Information Publique':
+            aliases:
+                - 'Licence Information Publique'
+            authorship: true
+            reuse: true
+            redistribution: true
+            commercial: true
+        'No Conditions':
+            aliases:
+                - 'No conditions apply'
+                - 'None'
+            authorship: true
+            reuse: true
+            redistribution: true
+            commercial: true
+        'Unknown':
+            aliases:
+                - 'Licence inconnue'
+                - 'Use limitation'
+                
+            authorship: false
+            reuse: false
+            redistribution: false
+            commercial: false
+        'ODBL':
+            aliases:
+                - 'Licence ODBL Ville de Paris'
+                - 'Licence ODBL'
+                - 'Open Database License (ODbL)'
+            authorship: true
+            reuse: true
+            redistribution: true
+            commercial: true
+        'OGL':
+            aliases:
+                - 'OKD Compliant'
+            authorship: true
+            reuse: true
+            redistribution: true
+            commercial: true
+        'Other':
+            aliases: []
+            authorship: false
+            reuse: false
+            redistribution: false
+            commercial: false
+        'PDDL':
+            aliases: []
+            authorship: true
+            reuse: true
+            redistribution: true
+            commercial: true
+        'Public':
+            aliases:
+                - 'Public'
+            authorship: true
+            reuse: true
+            redistribution: true
+            commercial: true
+        'Prix-Carburant':
+            aliases:
+                - 'Licence Prix-Carburant'
+            authorship: true
+            reuse: true
+            redistribution: true
+            commercial: true
+        'UK Climate Projections':
+            aliases:
+                - 'UK Climate Projections Licence'
+            authorship: true
+            reuse: false
+            redistribution: false
+            commercial: false
 

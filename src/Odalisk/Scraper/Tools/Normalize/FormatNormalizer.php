@@ -100,8 +100,10 @@ class FormatNormalizer
 		foreach($formats as $k => $format) {
 			$format = $this->_trim($format);
             if(array_key_exists($format, $this->replace)) {
-                $formats[$k] = $this->replace[$format];
+                $format = $this->replace[$format];
             }
+
+			$formats[$k] = $format;
 		}
 		$formats = array_unique($formats);
 

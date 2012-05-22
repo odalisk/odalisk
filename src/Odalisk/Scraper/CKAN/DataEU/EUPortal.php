@@ -14,7 +14,7 @@ class EUPortal extends BaseCkanPortal {
             'setMaintainer' => './/*[@property="dc:contributor"]',
             'setLastUpdatedOn' => '//td[.="date_updated" and @class="dataset-label"]/../td[2]',
             'setProvider' => '//td[.="published_by" and @class="dataset-label"]/../td[2]',
-            'setLicense' => '/li[@id="dataset-license" and @class="sidebar-section"]',
+            'setRawLicense' => '/li[@id="dataset-license" and @class="sidebar-section"]',
             'setCategories' => '//td[text()="categories"]/following-sibling::*',
             'setFormats' => './/*[@property="dc:format"]'
         );

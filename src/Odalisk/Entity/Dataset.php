@@ -13,28 +13,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Dataset
 {
-
-    public function __construct(array $values = array()) {
-        $this->categories = new ArrayCollection();
-        $this->populate($values);
-    }
-
-    /**
-     * Builds the entity from the array
-     *
-     * array(
-     *  'setUrl' => 'http://some.url',
-     *  'setName' => 'A name'
-     * )
-     *
-     * @param array $values
-     */
-    public function populate(array $values = array()) {
-        foreach ($values as $name => $value) {
-            call_user_func(array($this, $name), $value);
-        }
-    }
-
     /**
      * @var integer $id
      *
@@ -84,12 +62,12 @@ class Dataset
     /**
      * @var string $format
      *
-     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Format", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Format")
      */
     protected $formats;
 
     /**
-     * @ORM\OneToOne(targetEntity="Odalisk\Entity\DatasetCriteria", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Odalisk\Entity\DatasetCriteria")
      */
     protected $criteria;
     
@@ -101,7 +79,7 @@ class Dataset
     protected $raw_license;
 
     /**
-     * @ORM\Column(name="format", type="string", nullable=true, length=255)
+     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\License")
      */
     protected $license;
 
@@ -146,13 +124,34 @@ class Dataset
      * @ORM\JoinColumn(name="portal_id", referencedColumnName="id")
      */
     protected $portal;
+    
+    public function __construct(array $values = array()) {
+        $this->categories = new ArrayCollection();
+        $this->formats = new ArrayCollection();
+        $this->license = new ArrayCollection();
+        $this->populate($values);
+    }
 
-
+    /**
+     * Builds the entity from the array
+     *
+     * array(
+     *  'setUrl' => 'http://some.url',
+     *  'setName' => 'A name'
+     * )
+     *
+     * @param array $values
+     */
+    public function populate(array $values = array()) {
+        foreach ($values as $name => $value) {
+            call_user_func(array($this, $name), $value);
+        }
+    }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -172,7 +171,7 @@ class Dataset
     /**
      * Get url
      *
-     * @return string
+     * @return string 
      */
     public function getUrl()
     {
@@ -192,7 +191,7 @@ class Dataset
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
@@ -212,224 +211,11 @@ class Dataset
     /**
      * Get summary
      *
-     * @return text
+     * @return text 
      */
     public function getSummary()
     {
         return $this->summary;
-    }
-
-    /**
-     * Set formats
-     *
-     * @param array $formats
-     */
-    public function setFormats(array $formats)
-    {
-        $this->formats = $formats;
-    }
-
-    /**
-     * Get formats
-     *
-     * @return array
-     */
-    public function getFormats()
-    {
-        return $this->formats;
-    }
-
-    /**
-     * Set released_on
-     *
-     * @param datetime $releasedOn
-     */
-    public function setReleasedOn($releasedOn)
-    {
-        $this->released_on = $releasedOn;
-    }
-
-    /**
-     * Get released_on
-     *
-     * @return datetime
-     */
-    public function getReleasedOn()
-    {
-        return $this->released_on;
-    }
-
-    /**
-     * Set last_updated_on
-     *
-     * @param datetime $lastUpdatedOn
-     */
-    public function setLastUpdatedOn($lastUpdatedOn)
-    {
-        $this->last_updated_on = $lastUpdatedOn;
-    }
-
-    /**
-     * Get last_updated_on
-     *
-     * @return datetime
-     */
-    public function getLastUpdatedOn()
-    {
-        return $this->last_updated_on;
-    }
-
-    /**
-     * Set owner
-     *
-     * @param string $owner
-     */
-    public function setOwner($owner)
-    {
-        $this->owner = $owner;
-    }
-
-    /**
-     * Get owner
-     *
-     * @return string
-     */
-    public function getOwner()
-    {
-        return $this->owner;
-    }
-
-    /**
-     * Set maintainer
-     *
-     * @param string $maintainer
-     */
-    public function setMaintainer($maintainer)
-    {
-        $this->maintainer = $maintainer;
-    }
-
-    /**
-     * Get maintainer
-     *
-     * @return string
-     */
-    public function getMaintainer()
-    {
-        return $this->maintainer;
-    }
-
-    /**
-     * Set license
-     *
-     * @param string $license
-     */
-    public function setLicense($license)
-    {
-        $this->license = $license;
-    }
-
-    /**
-     * Get license
-     *
-     * @return string
-     */
-    public function getLicense()
-    {
-        return $this->license;
-    }
-
-    /**
-     * Set provider
-     *
-     * @param string $provider
-     */
-    public function setProvider($provider)
-    {
-        $this->provider = $provider;
-    }
-
-    /**
-     * Get provider
-     *
-     * @return string
-     */
-    public function getProvider()
-    {
-        return $this->provider;
-    }
-
-    /**
-     * Set portal
-     *
-     * @param Odalisk\Entity\Portal $portal
-     */
-    public function setPortal(\Odalisk\Entity\Portal $portal)
-    {
-        $this->portal = $portal;
-    }
-
-    /**
-     * Get portal
-     *
-     * @return Odalisk\Entity\Portal
-     */
-    public function getPortal()
-    {
-        return $this->portal;
-    }
-
-    /**
-     * Add categories
-     *
-     * @param Odalisk\Entity\Category $categories
-     */
-    public function addCategory(\Odalisk\Entity\Category $categories)
-    {
-        $this->categories[] = $categories;
-    }
-    
-    /**
-     * Set categories
-     *
-     * @param array $categories
-     */
-    public function setCategories(array $categories)
-    {
-        foreach($categories as $category) {
-            $this->categories[] = $category;
-        }
-    }
-
-    /**
-     * Get categories
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
-
-
-    /**
-     * Set criteria
-     *
-     * @param Odalisk\Entity\DatasetCriteria $criteria
-     */
-    public function setCriteria(\Odalisk\Entity\DatasetCriteria $criteria)
-    {
-        $this->criteria = $criteria;
-    }
-
-    /**
-     * Get criteria
-     *
-     * @return Odalisk\Entity\DatasetCriteria 
-     */
-    public function getCriteria()
-    {
-        return $this->criteria;
     }
 
     /**
@@ -451,17 +237,6 @@ class Dataset
     {
         return $this->raw_categories;
     }
-
-    /**
-     * Add formats
-     *
-     * @param Odalisk\Entity\Format $formats
-     */
-    public function addFormat(\Odalisk\Entity\Format $formats)
-    {
-        $this->formats[] = $formats;
-    }
-
 
     /**
      * Set raw_formats
@@ -501,5 +276,223 @@ class Dataset
     public function getRawLicense()
     {
         return $this->raw_license;
+    }
+
+    /**
+     * Set released_on
+     *
+     * @param string $releasedOn
+     */
+    public function setReleasedOn($releasedOn)
+    {
+        $this->released_on = $releasedOn;
+    }
+
+    /**
+     * Get released_on
+     *
+     * @return string 
+     */
+    public function getReleasedOn()
+    {
+        return $this->released_on;
+    }
+
+    /**
+     * Set last_updated_on
+     *
+     * @param string $lastUpdatedOn
+     */
+    public function setLastUpdatedOn($lastUpdatedOn)
+    {
+        $this->last_updated_on = $lastUpdatedOn;
+    }
+
+    /**
+     * Get last_updated_on
+     *
+     * @return string 
+     */
+    public function getLastUpdatedOn()
+    {
+        return $this->last_updated_on;
+    }
+
+    /**
+     * Set provider
+     *
+     * @param string $provider
+     */
+    public function setProvider($provider)
+    {
+        $this->provider = $provider;
+    }
+
+    /**
+     * Get provider
+     *
+     * @return string 
+     */
+    public function getProvider()
+    {
+        return $this->provider;
+    }
+
+    /**
+     * Set owner
+     *
+     * @param string $owner
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return string 
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * Set maintainer
+     *
+     * @param string $maintainer
+     */
+    public function setMaintainer($maintainer)
+    {
+        $this->maintainer = $maintainer;
+    }
+
+    /**
+     * Get maintainer
+     *
+     * @return string 
+     */
+    public function getMaintainer()
+    {
+        return $this->maintainer;
+    }
+
+    /**
+     * Add categories
+     *
+     * @param Odalisk\Entity\Category $categories
+     */
+    public function addCategory(\Odalisk\Entity\Category $categories)
+    {
+        $this->categories[] = $categories;
+    }
+    
+    public function setCategories(array $categories) {
+        foreach($categories as $category) {
+            $this->addCategory($category);
+        }
+    }
+
+    /**
+     * Get categories
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Add formats
+     *
+     * @param Odalisk\Entity\Format $formats
+     */
+    public function addFormat(\Odalisk\Entity\Format $formats)
+    {
+        $this->formats[] = $formats;
+    }
+    
+    /**
+     * Get formats
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function setFormats(array $formats)
+    {
+        foreach($formats as $format) {
+            $this->addFormat($format);
+        }
+    }
+
+    /**
+     * Get formats
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getFormats()
+    {
+        return $this->formats;
+    }
+
+    /**
+     * Set criteria
+     *
+     * @param Odalisk\Entity\DatasetCriteria $criteria
+     */
+    public function setCriteria(\Odalisk\Entity\DatasetCriteria $criteria)
+    {
+        $this->criteria = $criteria;
+    }
+
+    /**
+     * Get criteria
+     *
+     * @return Odalisk\Entity\DatasetCriteria 
+     */
+    public function getCriteria()
+    {
+        return $this->criteria;
+    }
+
+    /**
+     * Set license
+     *
+     * @param Odalisk\Entity\License $license
+     */
+    public function setLicense(\Odalisk\Entity\License $license)
+    {
+        $this->license = $license;
+    }
+
+    /**
+     * Get license
+     *
+     * @return Odalisk\Entity\License 
+     */
+    public function getLicense()
+    {
+        return $this->license;
+    }
+
+    /**
+     * Set portal
+     *
+     * @param Odalisk\Entity\Portal $portal
+     */
+    public function setPortal(\Odalisk\Entity\Portal $portal)
+    {
+        $this->portal = $portal;
+    }
+
+    /**
+     * Get portal
+     *
+     * @return Odalisk\Entity\Portal 
+     */
+    public function getPortal()
+    {
+        return $this->portal;
     }
 }

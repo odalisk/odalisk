@@ -65,6 +65,7 @@ services:
             - [ setCategoryNormalizer, [@category_normalizer ] ]
             - [ setFormatNormalizer, [@format_normalizer ] ]
             - [ setDateNormalizer, [@date_normalizer ] ]
+            - [ setLicenseNormalizer, [@license_normalizer ] ]
     
     # Base object for all portals using inCiteSolution
     base_inCiteSolution:

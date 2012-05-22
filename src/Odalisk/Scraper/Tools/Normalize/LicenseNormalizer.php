@@ -6,7 +6,7 @@ use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
 
-class LicenceNormalizer
+class LicenseNormalizer
 {
     private $replace = array(
         '/\b(and|et)\b/' => '&',
@@ -24,55 +24,34 @@ class LicenceNormalizer
     }
     
     public function init($yaml) {
-        foreach($yaml as $licenses => $data) {
-            /*
-            echo $licenses;
-            $l = new \Odalisk\Entity\License();
-            
-            foreach($data['aliases'] as $alias) {
-                $c->addAlias($alias);
-                $this->aliases[strtolower($alias)] = strtolower($category);
+        foreach($yaml as $name => $license) {
+            $l = new \Odalisk\Entity\License($name);
+            //var_dump($license);
+            foreach($license['aliases'] as $alias) {
+                $l->addAlias($alias);
+                $this->aliases[strtolower($alias)] = strtolower($name);
             }
+            $l->setAuthorship($license['authorship']);
+            $l->setReuse($license['reuse']);
+            $l->setRedistribution($license['redistribution']);
+            $l->setCommercial($license['commercial']);
             $this->em->persist($l);
-            $this->em->flush();
-            $this->categories[strtolower($category)] = $c;
-            */
+            $this->licenses[strtolower($name)] = $l;
         }
-        
-        // var_dump($this->categories);
-        // var_dump($this->aliases);
+        $this->em->flush();
     }
     
-    public function getCategories($raw_categories)
+    public function getLicenses($raw_license)
     {
-        /*
-        // Extract clean categories
-        $categories = preg_split('/(,|;|\/|\|_)/', $raw_categories);
-        foreach ($categories as $k => $category) {
-            $categories[$k] = $this->_trim($categories[$k]);
-            foreach ($this->replace as $bad => $good) {
-                $categories[$k] = preg_replace($bad, $good, $categories[$k]);
-            }
-            $categories[$k] = $this->_trim($categories[$k]);
+        $raw_license = strtolower($raw_license);
+        if(array_key_exists($raw_license, $this->licenses)) {
+            return $this->licenses[$raw_license];
+        } elseif (array_key_exists($raw_license, $this->aliases)) {
+            return $this->licenses[$this->aliases[$raw_license]];
+        } else {
+            error_log('Unknown license : ' . $raw_license);
+            return $this->licenses['unknown'];
         }
-        
-        $categories = array_unique(array_filter($categories));
-        
-        $result = array();
-        foreach($categories as $category) {
-            $category = strtolower($category);
-            if(array_key_exists($category, $this->categories)) {
-                $result[$category] = $this->categories[$category];
-            } elseif (array_key_exists($category, $this->aliases)) {
-                $result[$this->aliases[$category]] = $this->categories[$this->aliases[$category]];
-            } else {
-                $result['other'] = $this->categories['other'];
-            }
-        }
-        $result['raw'] = implode(', ', $categories);
-        
-        return $result;
-        */
     }
     
     private function _trim($value)

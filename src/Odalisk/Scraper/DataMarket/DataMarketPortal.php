@@ -18,7 +18,7 @@ class DataMarketPortal extends BasePortal {
     public function __construct() {
         $this->criteria = array(
             'setName' => '//div[@id="dataset-info"]/h1', 
-            'setLicense' => '//strong[.="Licenses:"]/ul/li/p'
+            'setRawLicense' => '//strong[.="Licenses:"]/ul/li/p'
         );
     }
 

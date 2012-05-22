@@ -30,7 +30,7 @@ parameters:
             commercial: true
         'EuroStat':
             aliases:
-                'Licence EuroStat'
+                - 'Licence EuroStat'
             authorship: false
             reuse: false
             redistribution: false
@@ -59,14 +59,16 @@ parameters:
         'No Conditions':
             aliases:
                 - 'No conditions apply'
+                - 'None'
             authorship: true
             reuse: true
             redistribution: true
             commercial: true
-        'None':
+        'Unknown':
             aliases:
                 - 'Licence inconnue'
                 - 'Use limitation'
+                
             authorship: false
             reuse: false
             redistribution: false

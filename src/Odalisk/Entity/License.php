@@ -61,6 +61,9 @@ class License
      */
     protected $commercial;
 
+    public function __construct($name) {
+        $this->setName($name);
+    }
 
     /**
      * Get id
@@ -180,6 +183,16 @@ class License
     public function setAliases($aliases)
     {
         $this->aliases = $aliases;
+    }
+    
+    /**
+     * Add aliases
+     *
+     * @param array $alias
+     */
+    public function addAlias($alias)
+    {
+        $this->aliases[] = $alias;
     }
 
     /**

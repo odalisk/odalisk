@@ -177,7 +177,7 @@ class Portal
     {
         return $this->status;
     }
-    
+
     /**
      * Set url
      *

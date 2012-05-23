@@ -45,7 +45,7 @@ class GenerateStatisticsCommand extends ContainerAwareCommand
             ->get('doctrine')
             ->getRepository('Odalisk\Entity\Dataset');
         $datasets = $repository->findAll();
-        
+
 
         $portalRepository = $this->getContainer()
             ->get('doctrine')
@@ -66,7 +66,7 @@ class GenerateStatisticsCommand extends ContainerAwareCommand
             ->get('doctrine')
             ->getRepository('Odalisk\Entity\DatasetCriteria');
 
-        
+
         foreach ($datasets as $dataset) {
             //echo $dataset->getName()."\n";
 
@@ -92,9 +92,9 @@ class GenerateStatisticsCommand extends ContainerAwareCommand
             */
             //$this->em->persist($datasetCriteria);
             //$this->em->flush();
-            
+
         }
-        
+
 
         /*
         $repository = $this->getContainer()

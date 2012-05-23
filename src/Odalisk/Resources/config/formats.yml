@@ -2,7 +2,7 @@ parameters:
     formats:
         # format: {isOpen, hasSpec, isComputerReadable}
         # api:
-        asp: 
+        asp:
             aliases: []
             is_open: false
             has_spec: false

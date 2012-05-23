@@ -32,11 +32,11 @@ class DatasetCriteriaRepository extends EntityRepository
 
         foreach ($result as $key => $value) {
 
-        	if ($value === NULL) {
-        		$null_value_key[] = "$key";
-        	}
+            if ($value === NULL) {
+                $null_value_key[] = "$key";
+            }
         }
-        
+
         $boolean_res["isTitleAndSummary"] = TRUE;
         $boolean_res["isReleasedOn"] = TRUE;
         $boolean_res["isProvider"] = TRUE;
@@ -46,29 +46,29 @@ class DatasetCriteriaRepository extends EntityRepository
         $boolean_res["isGoodLicense"] = TRUE;
         //$boolean_res["isAtLeastOneGoodFormat"] = TRUE;
 
-        if( in_array("name", $null_value_key ) || in_array("summary", $null_value_key)  ){
-        	$boolean_res["isTitleAndSummary"] = FALSE;
+        if ( in_array("name", $null_value_key ) || in_array("summary", $null_value_key)  ) {
+            $boolean_res["isTitleAndSummary"] = FALSE;
         }
-        if( in_array("owner", $null_value_key )){
-        	$boolean_res["isOwner"] = FALSE;
+        if ( in_array("owner", $null_value_key )) {
+            $boolean_res["isOwner"] = FALSE;
         }
-        if( in_array("provider", $null_value_key )){
-        	$boolean_res["isProvider"] = FALSE;
+        if ( in_array("provider", $null_value_key )) {
+            $boolean_res["isProvider"] = FALSE;
         }
-        if( in_array("last_updated_on", $null_value_key )){
-        	$boolean_res["isLastUpdateOn"] = FALSE;
+        if ( in_array("last_updated_on", $null_value_key )) {
+            $boolean_res["isLastUpdateOn"] = FALSE;
         }
-        if( in_array("maintainer", $null_value_key )){
-        	$boolean_res["isMaintainer"] = FALSE;
+        if ( in_array("maintainer", $null_value_key )) {
+            $boolean_res["isMaintainer"] = FALSE;
         }
-        if( in_array("released_on", $null_value_key )){
-        	$boolean_res["isReleasedOn"] = FALSE;
+        if ( in_array("released_on", $null_value_key )) {
+            $boolean_res["isReleasedOn"] = FALSE;
         }
-        if( in_array("released_on", $null_value_key )){
-        	$boolean_res["isReleasedOn"] = FALSE;
+        if ( in_array("released_on", $null_value_key )) {
+            $boolean_res["isReleasedOn"] = FALSE;
         }
-		if( in_array("license", $null_value_key )){
-        	$boolean_res["isGoodLicence"] = FALSE;
+        if ( in_array("license", $null_value_key )) {
+            $boolean_res["isGoodLicence"] = FALSE;
         }
 
         // License is good ?
@@ -77,12 +77,12 @@ class DatasetCriteriaRepository extends EntityRepository
 
         //$licenses = json_decode(file_get_contents("src/Odalisk/Resources/licenses.json") );
         //print_r($licenses);
-	}
+    }
 
-	
-	/*
-	protected $is_good_license;
-	/*
-	protected $is_at_least_one_good_format;
-	*/
+
+    /*
+    protected $is_good_license;
+    /*
+    protected $is_at_least_one_good_format;
+    */
 }

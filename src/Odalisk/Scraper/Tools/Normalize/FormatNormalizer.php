@@ -23,61 +23,66 @@ class FormatNormalizer
         '/zip (.*)/' => 'zip',
     );
 
-    
-    public function __construct($doctrine)
+
+    public function __construct($doctrine, $log)
     {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getEntityManager();
-		$this->er = $this->em->getRepository('Odalisk\Entity\Format');
+        $this->er = $this->em->getRepository('Odalisk\Entity\Format');
+
+        $this->log = $log;
     }
-    
-    public function init($yaml) {
-        foreach($yaml as $format => $data) {
-			$f = $this->er->findOneByFormat($format);
-			if(!$f) {
-				$f = new \Odalisk\Entity\Format($format);
-			}
+
+    public function init($yaml)
+    {
+        foreach ($yaml as $format => $data) {
+            $f = $this->er->findOneByFormat($format);
+            if (!$f) {
+                $f = new \Odalisk\Entity\Format($format);
+            }
             $f->setAliases($data['aliases']);
-            foreach($data['aliases'] as $alias) {
+            foreach ($data['aliases'] as $alias) {
                 $this->aliases[$alias] = $format;
             }
-			$f->setIsOpen($data['is_open']);
-			$f->setHasSpec($data['has_spec']);
-			$f->setIsComputerReadable($data['is_computer_readable']);
+            $f->setIsOpen($data['is_open']);
+            $f->setHasSpec($data['has_spec']);
+            $f->setIsComputerReadable($data['is_computer_readable']);
 
             $this->em->persist($f);
             $this->formats[$format] = $f;
         }
-		$this->em->flush();
+        $this->em->flush();
     }
-    
-	public function getFormats($raw_formats) {
-		$formats = array_unique(preg_split('/[;,&]/', strtolower($raw_formats)));
-		foreach($formats as $k => $format) {
-			$format = $this->_trim($format);
-            foreach($this->replace as $bad => $good) {
+
+    public function getFormats($raw_formats)
+    {
+        $formats = array_unique(preg_split('/[;,&]/', strtolower($raw_formats)));
+        foreach ($formats as $k => $format) {
+            $format = $this->_trim($format);
+            foreach ($this->replace as $bad => $good) {
                 $format = preg_replace($bad, $good, $format);
             }
 
-			$formats[$k] = $format;
-		}
-		$formats = array_unique($formats);
+            $formats[$k] = $format;
+        }
+        $formats = array_unique($formats);
 
-		$result = array();
-		foreach($formats as $format) {
-            if(array_key_exists($format, $this->formats)) {
+        $result = array();
+        foreach ($formats as $format) {
+            if (array_key_exists($format, $this->formats)) {
                 $result[$format] = $this->formats[$format];
-            } elseif(array_key_exists($format, $this->aliases)) {
+            } elseif (array_key_exists($format, $this->aliases)) {
                 $result[$this->aliases[$format]] = $this->formats[$this->aliases[$format]];
-			} else {
-                error_log('[Unknown file format ] '.$format);
+            } else {
+                error_log('[Unknown file format] ' . $format . "\n", 3, $this->log);
                 $result['unknown'] = $this->formats['unknown'];
-			}
-		}
-		//print_r($result);
+            }
+        }
+
         $result['raw'] = implode(', ', $formats);
-		return($result);
-	}
+
+        return $result;
+    }
 
     private function _trim($value)
     {

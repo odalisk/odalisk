@@ -11,7 +11,7 @@ class Contact
     protected $subject;
 
     protected $body;
-    
+
     protected $currentPage;
 
     public function getName()
@@ -53,7 +53,7 @@ class Contact
     {
         $this->body = $body;
     }
-    
+
     public function getCurrentPage()
     {
         return $this->currentPage;

@@ -68,7 +68,7 @@ parameters:
             aliases:
                 - 'Licence inconnue'
                 - 'Use limitation'
-                
+                - 'Other'
             authorship: false
             reuse: false
             redistribution: false
@@ -89,12 +89,6 @@ parameters:
             reuse: true
             redistribution: true
             commercial: true
-        'Other':
-            aliases: []
-            authorship: false
-            reuse: false
-            redistribution: false
-            commercial: false
         'PDDL':
             aliases: []
             authorship: true
@@ -122,4 +116,9 @@ parameters:
             reuse: false
             redistribution: false
             commercial: false
-
+        'licence ouverte / open licence':
+            aliases: []
+            authorship: true
+            reuse: true
+            redistribution: true
+            commercial: true

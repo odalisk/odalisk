@@ -11,8 +11,8 @@ use Buzz\Message;
 /**
  * The scraper for data.cityofchicago.org
  */
-class ChicagoPortal extends BasePortal {
-
+class ChicagoPortal extends BasePortal
+{
     private static $criteria = array(
         'Creation' => '//span[@class="aboutCreateDate"]/span',
         'Description' => '//div[@class="aboutDataset"]/div[2]/div/p',
@@ -35,7 +35,8 @@ class ChicagoPortal extends BasePortal {
 
     private static $i = 0;
 
-    public function __construct($buzz) {
+    public function __construct($buzz)
+    {
         parent::__construct(
                 $buzz
                 , 'https://data.cityofchicago.org/'
@@ -43,11 +44,13 @@ class ChicagoPortal extends BasePortal {
             );
     }
 
-    public function getDatasetsData() {
+    public function getDatasetsData()
+    {
         return self::$datasets;
     }
 
-    public function getDatasetsUrls() {
+    public function getDatasetsUrls()
+    {
         // Get the paths
         $this->buzz->getClient()->setTimeout(20);
         $response = $this->buzz->get(
@@ -69,7 +72,8 @@ class ChicagoPortal extends BasePortal {
         return array_keys(self::$datasets);
     }
 
-    public static function parseDataset(Message\Request $request, Message\Response $response) {
+    public static function parseDataset(Message\Request $request, Message\Response $response)
+    {
         $data = array(
             '#' => self::$i++,
             'url' => $request->getUrl(),
@@ -104,11 +108,12 @@ class ChicagoPortal extends BasePortal {
         }
     }
 
-    public static function parseDatasetCriteria($datasetUrl, Message\Request $request, Message\Response $response){
-
+    public static function parseDatasetCriteria($datasetUrl, Message\Request $request, Message\Response $response)
+    {
     }
 
-    public function removeDataset($dataset) {
+    public function removeDataset($dataset)
+    {
         unset(self::$datasets[$dataset]);
     }
 }

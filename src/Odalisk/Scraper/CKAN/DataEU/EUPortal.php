@@ -4,8 +4,10 @@ namespace Odalisk\Scraper\CKAN\DataEU;
 
 use Odalisk\Scraper\CKAN\BaseCkanPortal;
 
-class EUPortal extends BaseCkanPortal {
-    public function __construct() {
+class EUPortal extends BaseCkanPortal
+{
+    public function __construct()
+    {
         $this->criteria = array(
             'setName' => '//h1[@class="page_heading"]',
             'setSummary' => './/*[@id="notes-extract"]/p',
@@ -21,17 +23,17 @@ class EUPortal extends BaseCkanPortal {
 
         $this->inChargeFields = array('setOwner','setMaintainer');
     }
-    
-    protected function additionalExtraction($crawler, &$data) 
+
+    protected function additionalExtraction($crawler, &$data)
     {
 
         // Deal with UTF8
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             $data[$key] = utf8_decode($value);
         }
 
         if (array_key_exists('setCategories', $data)) {
-            if(is_array(json_decode($data['setCategories']))){
+            if (is_array(json_decode($data['setCategories']))) {
                 $data['setCategories'] = implode(';', json_decode($data['setCategories']));
             }
         }
@@ -41,7 +43,7 @@ class EUPortal extends BaseCkanPortal {
     {
         foreach ($this->inChargeFields as $field) {
             if (array_key_exists($field, $data)) {
-                if(preg_match("/not given/i",$data[$field])){
+                if (preg_match("/not given/i",$data[$field])) {
                     unset($data[$field]);
                 }
             }

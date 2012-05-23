@@ -4,7 +4,8 @@ namespace Odalisk\Scraper\Tools;
 
 use Buzz\Message;
 
-class FileDumper {
+class FileDumper
+{
     /**
      * The doctrine handle
      */
@@ -22,7 +23,8 @@ class FileDumper {
 
     protected static $base_path;
 
-    public static function saveToDisk(Message\Request $request, Message\Response $response) {
+    public static function saveToDisk(Message\Request $request, Message\Response $response)
+    {
         self::$count++;
 
         $file = array();
@@ -46,13 +48,15 @@ class FileDumper {
         }
     }
 
-    public static function saveUrls($urls, $portal_name) {
+    public static function saveUrls($urls, $portal_name)
+    {
         self::verifyPortalPath($portal_name);
         $file = self::$base_path.$portal_name.'/urls.json';
         file_put_contents($file, json_encode($urls));
     }
 
-    public static function getUrls($portal_name) {
+    public static function getUrls($portal_name)
+    {
         $file = self::$base_path.$portal_name.'/urls.json';
         $data = file_get_contents($file);
 
@@ -65,31 +69,37 @@ class FileDumper {
         }
     }
 
-    public static function verifyPortalPath($portal_name) {
+    public static function verifyPortalPath($portal_name)
+    {
         $path = self::$base_path . $portal_name;
         if (! is_dir($path)) {
             mkdir($path, 0755, true);
         }
     }
 
-    public static function setBasePath($path) {
+    public static function setBasePath($path)
+    {
         self::$base_path = $path;
     }
 
-    public static function setTotalCount($count) {
+    public static function setTotalCount($count)
+    {
         self::$totalCount = $count;
     }
 
-    public static function getTotalCount() {
+    public static function getTotalCount()
+    {
         return self::$totalCount;
     }
 
-    public static function addMapping($name, $url, $portal) {
+    public static function addMapping($name, $url, $portal)
+    {
         self::$mapping[$name] = array('url' => $url, 'portal' => $portal);
         self::verifyPortalPath($name);
     }
 
-    public static function getPlatformName($dataset_url) {
+    public static function getPlatformName($dataset_url)
+    {
         foreach (self::$mapping as $name => $data) {
             if (0 === strpos($dataset_url, $data['url'])) {
                 return $name;
@@ -98,7 +108,8 @@ class FileDumper {
         error_log('[FileDumper] No match found for : ' . $dataset_url);
     }
 
-    public static function setDoctrine($doctrine) {
+    public static function setDoctrine($doctrine)
+    {
         self::$doctrine = $doctrine;
         self::$em = self::$doctrine->getEntityManager();
         self::$em->getConnection()->getConfiguration()->setSQLLogger(null);

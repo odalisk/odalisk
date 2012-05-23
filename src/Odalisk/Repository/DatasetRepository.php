@@ -5,7 +5,8 @@ use Doctrine\ORM\EntityRepository;
 
 class DatasetRepository extends EntityRepository
 {
-    public function getFileFormatsCount($datasetId) {
+    public function getFileFormatsCount($datasetId)
+    {
         $query = $this->getEntityManager()
             ->createQuery('
                     SELECT count(*)

@@ -12,7 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class DatasetCrawlRepository extends EntityRepository
 {
-    public function getSuccessfullCrawls($portal) {
+    public function getSuccessfullCrawls($portal)
+    {
         $query = $this->getEntityManager()
             ->createQuery('
                     SELECT MAX(c.id), c
@@ -29,7 +30,8 @@ class DatasetCrawlRepository extends EntityRepository
         }
     }
 
-    public function getErrorRate() {
+    public function getErrorRate()
+    {
         $stmt = $this->getEntityManager()
                      ->getConnection()
                      ->prepare('

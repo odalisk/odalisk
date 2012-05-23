@@ -33,21 +33,21 @@ class Format
      *
      * @ORM\Column(name="is_open", type="boolean")
      */
-	private $is_open;
+    private $is_open;
 
     /**
      * @var bool $has_spec
      *
      * @ORM\Column(name="has_spec", type="boolean")
      */
-	private $has_spec;
+    private $has_spec;
 
     /**
      * @var bool $is_computer_readable
      *
      * @ORM\Column(name="is_computer_readable", type="boolean")
      */
-	private $is_computer_readable;
+    private $is_computer_readable;
 
     /**
      * @var array $aliases
@@ -55,8 +55,9 @@ class Format
      * @ORM\Column(name="aliases", type="array")
      */
     private $aliases;
-    
-    public function __construct($format, $aliases = array()) {
+
+    public function __construct($format, $aliases = array())
+    {
         $this->setFormat($format);
         $this->setAliases($aliases);
     }
@@ -65,7 +66,7 @@ class Format
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -85,20 +86,21 @@ class Format
     /**
      * Get format
      *
-     * @return string 
+     * @return string
      */
     public function getFormat()
     {
         return $this->format;
     }
-    
+
     /**
      * Add alias
      *
-     * @param string $alias 
+     * @param string $alias
      */
-    public function addAlias($alias) {
-        if(!in_array($alias, $this->aliases)) {
+    public function addAlias($alias)
+    {
+        if (!in_array($alias, $this->aliases)) {
             $this->aliases[] = $alias;
         }
     }
@@ -116,7 +118,7 @@ class Format
     /**
      * Get aliases
      *
-     * @return array 
+     * @return array
      */
     public function getAliases()
     {
@@ -136,7 +138,7 @@ class Format
     /**
      * Get is_open
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsOpen()
     {
@@ -156,7 +158,7 @@ class Format
     /**
      * Get has_spec
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getHasSpec()
     {
@@ -176,7 +178,7 @@ class Format
     /**
      * Get is_computer_readable
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsComputerReadable()
     {

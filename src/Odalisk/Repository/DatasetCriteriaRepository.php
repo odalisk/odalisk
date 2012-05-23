@@ -20,6 +20,13 @@ class DatasetCriteriaRepository extends EntityRepository
         $this->criteria = array();
     }
 
+    public function clear() {
+        $sth = $this->getEntityManager()
+            ->getConnection()
+            ->prepare('TRUNCATE TABLE dataset_criteria')
+            ->execute();
+    }
+
     public function getCriteria($dataset) {
         $this->dataset = $dataset;
 

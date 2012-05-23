@@ -67,6 +67,7 @@ class Dataset
 
     /**
      * @ORM\OneToOne(targetEntity="Odalisk\Entity\DatasetCriteria")
+     * @ORM\JoinColumn(name="criteria", referencedColumnName="id", onDelete="set null")
      */
     protected $criteria;
 

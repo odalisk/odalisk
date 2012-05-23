@@ -18,7 +18,12 @@ api_portal:
     pattern:    /api/portals/{page_index}/{page_size}
     defaults:   { _controller: App:Api:portals, page_index:0, page_size:10}
     requirements:
-            limit:  \d+
+        page_index: \d+
+        page_size:  \d+
+
+api_datasets:
+    pattern:    /api/datasets
+    defaults:   { _controller: App:Api:datasets }
 
 api:
     pattern:    /api/{_format}

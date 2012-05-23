@@ -105,7 +105,7 @@ body {
                 text-align:right;
                 margin-right:10px;
                 min-width:110px;
-                vertical-align:middl;
+                vertical-align:middle;
                 
             }
             
@@ -261,7 +261,7 @@ body {
     
     table.table-dataset-list, .table-portal-list {
         
-        &.table-striped {
+        /*&.table-striped {
           tbody {
             tr:nth-child(odd) td,
             tr:nth-child(odd) td {
@@ -277,7 +277,7 @@ body {
               background-color: @tableBackgroundAccent - #050505;
             }
           }
-        }
+        }*/
         
 
         &.table {
@@ -309,6 +309,26 @@ body {
         }
         
         
+        .loading {
+            
+            td {
+                text-align:center;
+                vertical-align:middle;
+                span {
+                    display:inline-block;
+                    font-size:25px;
+                    margin-right:10px;
+                }
+                span:after {
+                    content:url('/bundles/app/img/loader.gif');
+                    margin-left:10px;
+                    display:inline-block;
+                    position:relative;
+                    top:10px;
+                }
+                
+            }
+        }
         
         tr.dataset-item{
             a {
@@ -323,22 +343,46 @@ body {
                 margin-top:0px;
             }
             
+            
+            
             td {
                 border-top:none;
                 
                 &.sumary {
-                    width:80%;
+                    width:60%;
                 }
                 
                 &.labels {
-                    width:20%;
+                    width:30%;
                     min-width:150px;
+                    font-size:10px;
+                    table {
+                        background:white;
+                        td {
+                            padding:2px;
+                            
+                            &.key {
+                                text-align:right;
+                                margin-right:3px;
+                                vertical-align:middle;
+                                width:40%;
+                            }
+
+                            .label {
+                                position:relative;
+                                display:inline-block;
+                                top:-2px;
+                            }
+                        }
+                    }
                 }
                 
                 &.button {
                     width:10%;
                     min-width:70px;
                     text-align:right;
+                    
+                    
                 }
             }
         }

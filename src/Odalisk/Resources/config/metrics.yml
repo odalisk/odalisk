@@ -4,7 +4,11 @@
 # This weight refers to the weight of the section in the category. Sections
 # may have a "subsections" attribute.
 # - subsections of these sections. Each subsection must have a "weight"
+# attribute. A subsection may have a "subsubsections" attribute.
+# - subsubsections of these subsections. Each subsubsection must have a "weight"
 # attribute.
+# No more levels !
+
 parameters:
     metrics:
         # Usability category

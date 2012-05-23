@@ -78,9 +78,9 @@ class Dataset
     protected $raw_license;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Odalisk\Entity\License")
+     * @ORM\ManyToOne(targetEntity="Odalisk\Entity\License")
      */
-    protected $licenses;
+    protected $license;
 
     /**
      * @var string $released_on When did we create this record
@@ -128,7 +128,6 @@ class Dataset
     {
         $this->categories = new ArrayCollection();
         $this->formats = new ArrayCollection();
-        $this->license = new ArrayCollection();
         $this->populate($values);
     }
 
@@ -463,11 +462,9 @@ class Dataset
      *
      * @param Odalisk\Entity\License $license
      */
-    public function setLicenses(array $licenses)
+    public function setLicense($license)
     {
-        foreach ($licenses as $licence) {
-            $this->addLicense($licence);
-        }
+        $this->license = $license;
     }
 
     /**
@@ -475,21 +472,11 @@ class Dataset
      *
      * @return Odalisk\Entity\License
      */
-    public function getLicenses()
+    public function getLicense()
     {
-        return $this->licenses;
+        return $this->license;
     }
     
-    /**
-     * Add license
-     *
-     * @param Odalisk\Entity\License $license
-     */
-    public function addLicense(\Odalisk\Entity\License $license)
-    {
-        $this->license[] = $license;
-    }
-
     /**
      * Set portal
      *

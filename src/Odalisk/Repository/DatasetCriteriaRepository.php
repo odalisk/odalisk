@@ -15,21 +15,20 @@ class DatasetCriteriaRepository extends EntityRepository
 
 	public function getCriteria($dataset){
 
-		$stmt = $this->getEntityManager()
+        $stmt = $this->getEntityManager()
              ->getConnection()
              ->prepare("
-						SELECT * 
-						FROM  `datasets` 
-						WHERE  `id` = ".$dataset->getId().""
+			SELECT * 
+			FROM  `datasets` 
+			WHERE  `id` = ".$dataset->getId().""
         		);
-             	//.$dataset->getId().""
+
         $stmt->execute();
         $result = $stmt->fetch();
 
-        //var_dump($result);
         
         $boolean_res = array();
- 		$null_value_key = array();
+        $null_value_key = array();
 
         foreach ($result as $key => $value) {
 

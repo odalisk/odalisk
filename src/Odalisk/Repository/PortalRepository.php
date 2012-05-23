@@ -3,6 +3,7 @@ namespace Odalisk\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
+
 class PortalRepository extends EntityRepository
 {
 	public function getDatasetsCount($portal)
@@ -72,6 +73,46 @@ class PortalRepository extends EntityRepository
 	            ->getSingleScalarResult();
 
 	  }
+
+	  public function getFormatDistribution($portal){
+
+	  	$stmt = $this->getEntityManager()
+	  			->getConnection()
+	  			->prepare('SELECT format, COUNT(*) FROM ( SELECT id FROM `datasets` WHERE portal_id = ? ) as d JOIN  `dataset_format` ON d.id = dataset_id, formats WHERE  `formats`.id =  `format_id` GROUP BY format'
+	  			);
+
+	  	$stmt->bindValue(1, $portal->getId());
+	  	$stmt->execute();
+	  	$res = $stmt->fetchAll();
+
+	  	$output = array();
+	  	foreach ($res as $key => $value) {
+	  		$output[$value['format']] = $value['COUNT(*)'];
+	  	}
+
+	  	return $output;
+	  }
+
+	  public function getCategoryDistribution($portal){
+
+	  	$stmt = $this->getEntityManager()
+	  			->getConnection()
+	  			->prepare('SELECT category, COUNT(*) FROM ( SELECT id FROM `datasets` WHERE portal_id = :portal_id ) as d JOIN dataset_category on `dataset_id` = d.id, categories WHERE `category_id` = categories.id
+					group by category'
+	  			);
+
+	  	$stmt->bindValue("portal_id", $portal->getId());
+	  	$stmt->execute();
+	  	$res = $stmt->fetchAll();
+
+	  	$output = array();
+	  	foreach ($res as $key => $value) {
+	  		$output[$value['category']] = $value['COUNT(*)'];
+	  	}
+
+	  	return $output;
+	  }
+
 
 	  public function findAllWithLimit()
       {

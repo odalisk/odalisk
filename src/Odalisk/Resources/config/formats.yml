@@ -166,6 +166,8 @@ parameters:
                 - 'shapefile'
                 - 'shp (cc47)'
                 - 'shp (l93)'
+                - 'shp (cc47'
+                - 'shp (l93'
                 - 'zip:shp'
             is_open: true
             has_spec: true

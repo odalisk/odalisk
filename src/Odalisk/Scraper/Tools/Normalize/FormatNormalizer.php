@@ -9,7 +9,6 @@ class FormatNormalizer
 
     /**
      * Issue : how classify file types like : zip (xls, doc, pdf) ? Is it good to
-     :w
      * deliver a zip ? Do we say that the dataset is disponible in 3 formats
      * even if we need to download a zip ?
      * For now, we say the file format is zip

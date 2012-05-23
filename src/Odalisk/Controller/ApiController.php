@@ -4,15 +4,22 @@ namespace Odalisk\Controller;
 
 use Knp\Bundle\RadBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 /**
  * Api controller.
  */
 class ApiController extends Controller
-{
-    private $type;
-
-
-    private $page_size = 20;
+{  
+    public function portals($page_index, $page_size)
+    {
+        $portals = $this->getEntityRepository('Odalisk\Entity\Portal')
+            ->getPortalsSlice($page_index, $page_size);
+        
+        return $this->render('App:Api:portal.html.twig', array(
+            'portals' => $portals,
+        ));
+    }
+    
     /**
      * api.
      */
@@ -21,6 +28,7 @@ class ApiController extends Controller
 
         $request = $this->getRequest();
         $params = $request->request->all();
+        error_log(json_encode($params));
         $this->type = $params['type'];
 
         $params['page_number'] = intval($params['page_number']);

@@ -32,10 +32,10 @@
         {% endfor %}
         #}
         {% if dataset.license is not empty %}
-            {% if dataset.license|length > 20 %}
-                <span class="label label-success">{{ dataset.license|slice(0,20) }}...</span>
+            {% if dataset.license.name|length > 20 %}
+                <span class="label label-success">{{ dataset.license.name|slice(0,20) }}...</span>
             {% else %}
-                <span class="label label-success">{{ dataset.license|slice(0,20) }}</span>
+                <span class="label label-success">{{ dataset.license.name|slice(0,20) }}</span>
             {% endif %}
         {% endif %}
 

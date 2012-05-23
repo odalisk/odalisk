@@ -96,37 +96,84 @@ jsApi = function() {
         this.getData();
     }
     
+    /*
+        $params = array(
+         *    'in' => array(
+         *        'portal' => array(1,2),
+         *        'categories' => array(1,2),
+         *    ),
+         *    // WHERE name LIKE %test% AND id > 4
+         *    'where' => array(
+         *        array('name', 'LIKE', '%test%'),
+         *        array('id', '>', 4),
+         *    ),
+         * );
+         
+    */
     this.updateRequest = function() {
         var labels = $('.tag-list .label').toArray();
         
         this.request = new Object();
-        
+        this.request['in'] = new Array();
+        this.request['where'] = new Array();
         for(var i in labels)
         {
             var label = $(labels[i]);
+            var dataType = label.attr('data-type');
             
             if(label.attr('data-active') == 'true')
             {
-                if(this.request[label.attr('data-type')] == undefined)
+                switch(dataType)
                 {
-                    this.request[label.attr('data-type')] = new Array();
+                    case 'portal':
+                        if(this.request['in']['portal'] == undefined)
+                        {
+                            this.request['in']['portal'] = new Array();
+                        }
+                        this.request['in']['portal'].push(label.attr('data-value'));
+                    break;
+                    case 'category':
+                        if(this.request['in']['categories'] == undefined)
+                        {
+                            this.request['in']['categories'] = new Array();
+                        }
+                        this.request['in']['categories'].push(label.attr('data-value'));
+                    break;
+                    case 'format':
+                        if(this.request['in']['format'] == undefined)
+                        {
+                            this.request['in']['format'] = new Array();
+                        }
+                        this.request['in']['format'].push(label.attr('data-value'));
+                    break;
+                    case 'license':
+                        if(this.request['in']['license'] == undefined)
+                        {
+                            this.request['in']['license'] = new Array();
+                        }
+                        this.request['in']['license'].push(label.attr('data-value'));
+                    break;
+                    default:
+                        this.request['where'].push([dataType, '=', label.attr('data-value')]);
+                    break;
                 }
-                this.request[label.attr('data-type')].push(label.attr('data-value'));
+                
+                
             }
         }
         
-        this.request['search'] = this.search;
+        this.request['where'].push(['search', 'LIKE', '%'+this.search+'%']);
+        console.log(this.request);
     }
+    
+    
     
     this.getData = function() {
         this.page = 0;
         $.post(
-            '/app_dev.php/api/html',
+            '/app_dev.php/api/'+window.searchType+'s/'+this.page+'/'+this.pageSize,
             {
-                'request':this.request,
-                'page_number':this.page,
-                'type':window.searchType,
-                'page_size':this.pageSize
+                'request':this.request
             },
             function(data) {
                 window.api.data = data;

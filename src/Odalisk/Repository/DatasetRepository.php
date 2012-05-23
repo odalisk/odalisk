@@ -6,12 +6,13 @@ use Doctrine\ORM\EntityRepository;
 class DatasetRepository extends EntityRepository
 {
     public function getDatasetsMatching($criterias, $page_index, $page_size) {
+        error_log(print_r($criterias, true));
         $qb = $this->createQueryBuilder('d');
         if(array_key_exists('in', $criterias)) {
             // JOIN ... WITH IN (...)
             $join = 0;
             foreach($criterias['in'] as $column => $values) {
-                $qb->leftJoin('d.' . $column, 'j' . $join, 'WITH', $qb->expr()->in('j' . $join . '.id', $values));
+                $qb->join('d.' . $column, 'j' . $join, 'WITH', $qb->expr()->in('j' . $join . '.id', $values));
                 $join++;
             }
         }
@@ -36,6 +37,8 @@ class DatasetRepository extends EntityRepository
         $qb->orderBy('d.name', 'ASC');
         $qb->setFirstResult($page_index * $page_size);
         $qb->setMaxResults($page_size);
+        
+        error_log($qb->getDql());
         
         return $qb->getQuery()->getResult();
     }

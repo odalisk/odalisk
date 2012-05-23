@@ -6,6 +6,49 @@ use Doctrine\ORM\EntityRepository;
 
 class PortalRepository extends EntityRepository
 {
+    public function getCategories($id)
+    {
+        $sth = $this->getEntityManager()
+            ->getConnection()
+            ->prepare('
+                SELECT DISTINCT c.id, c.category
+                FROM categories c
+                    JOIN dataset_category dc on c.id = dc.category_id
+                    JOIN datasets d ON (d.id = dc.dataset_id AND d.portal_id = :portal_id)
+            ');
+        $sth->execute(array('portal_id' => $id));
+        
+        return $sth->fetchAll();
+    }
+    
+    public function getLicenses($id)
+    {
+        $sth = $this->getEntityManager()
+            ->getConnection()
+            ->prepare('
+                SELECT DISTINCT l.id, l.name
+                FROM licenses l
+                    JOIN datasets d ON (d.license_id = l.id AND d.portal_id = :portal_id)
+            ');
+        $sth->execute(array('portal_id' => $id));
+        
+        return $sth->fetchAll();
+    }
+    
+    public function getFormats($id)
+    {
+        $sth = $this->getEntityManager()
+            ->getConnection()
+            ->prepare('
+                SELECT DISTINCT f.id, f.format
+                FROM formats f
+                    JOIN dataset_format df on f.id = df.format_id
+                    JOIN datasets d ON (d.id = df.dataset_id AND d.portal_id = :portal_id)
+            ');
+        $sth->execute(array('portal_id' => $id));
+        
+        return $sth->fetchAll();
+    }
     
     public function clearData($portal) {
         $sth = $this->getEntityManager()

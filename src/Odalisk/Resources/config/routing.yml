@@ -14,9 +14,17 @@ portal_details:
     pattern:    /browser/portals/details/{portal_number}/{page_number}
     defaults:   { _controller: App:Portal:details, page_number:1, _format:html}
 
+api_portal:
+    pattern:    /api/portals/{page_index}/{page_size}
+    defaults:   { _controller: App:Api:portals, page_index:0, page_size:10}
+    requirements:
+            limit:  \d+
+
 api:
     pattern:    /api/{_format}
     defaults:   { _controller: App:Api:api, _format:json }
+    
+
 
 search:
     pattern:    /search

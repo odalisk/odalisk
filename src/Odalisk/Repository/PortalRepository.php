@@ -6,6 +6,19 @@ use Doctrine\ORM\EntityRepository;
 
 class PortalRepository extends EntityRepository
 {
+    public function getPortalsSlice($page_index, $page_size)
+    {
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT p
+                FROM Odalisk\Entity\Portal p
+                ORDER BY p.name ASC
+            ')
+            ->setFirstResult($page_index * $page_size)
+            ->setMaxResults($page_size)
+            ->getResult();
+    }
+    
     public function getPortalCountries()
     {
         $data = $this->getEntityManager()

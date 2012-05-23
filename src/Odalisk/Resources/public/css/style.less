@@ -104,9 +104,32 @@ body {
             .key {
                 text-align:right;
                 margin-right:10px;
+                min-width:110px;
+                vertical-align:middl;
+                
+            }
+            
+            .label {
+                position:relative;
+                display:inline-block;
+                top:-1px;
             }
             
         }
+        
+        .dataset-summary {
+            margin-top:20px;
+            background:white;
+            padding:10px;
+            color:#555;
+            .border-radius(3px);
+            border:1px solid #DDD;
+        }
+        
+        .container-fluid {
+            padding:0px;
+        }
+        
         .row-fluid {
             margin-top:0px;
         }
@@ -530,6 +553,10 @@ body {
     #contact_body {
         width:500px;
         height:170px;
+    }
+    
+    #contact_subject {
+        width:300px;
     }
     
     input {

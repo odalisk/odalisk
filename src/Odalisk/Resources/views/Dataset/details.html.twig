@@ -11,32 +11,49 @@
                 <div class="span4">
                     <table class="table table-bordered ">
                         <tr>
-                            <td class="key">Category</td>
+                            <td class="key">Category <span class="label icon-info label-info" rel="popover" title="Category name" data-content="To normalize categories, we changed the original category name.<br/><strong>Orignal category name was</strong> : {{ dataset.rawCategories}}.">i</span></td>
                             <td>
                                 {% for category in dataset.categories %}
-                                    {{ category }}{% if dataset.categories|length == loop.index and dataset.categories|length > 1 %}, {% endif %}
+                                    {{ category.category }}{% if dataset.categories|length != loop.index and dataset.categories|length > 1 %}, {% endif %}
                                 {% endfor %}
                             </td>
                         </tr>
                         <tr>
-                            <td class="key">Released on</td>
+                            <td class="key">Released on <span class="label icon-info label-info" rel="popover" title="Resealed on" data-content="First release of the dataset (provided by the portal).">i</span></td>
                             <td>{{ dataset.releasedOn|date("d/m/Y") }}</td>
                         </tr>
                         <tr>
-                            <td class="key">Last update on</td>
+                            <td class="key">Last update on <span class="label icon-info label-info" rel="popover" title="Last update on" data-content="Last update of the dataset (provided by the portal).">i</span></td>
                             <td>{{ dataset.lastUpdatedOn|date("d/m/Y") }}</td>
                         </tr>
                         <tr>
-                            <td class="key">Licence</td>
-                            <td><span class="label label-success">
-                                {% for license in dataset.licenses %}
-                                    {{ license }}{% if dataset.license|length > 1 %}, {% endif %}
+                            <td class="key">License <span class="label icon-info label-info" rel="popover" title="License" data-content="To normalize licenses, we changed the original license name with ours<br/><strong>Original license name</strong> : {{ dataset.rawLicense}}.">i</span></td>
+                            <td>
+                                <span class="label label-success">{{ dataset.license.name }}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="key">Formats <span class="label icon-info label-info" rel="popover" title="Formats" data-content="To normalize formats, we changed the original format name with ours<br/><strong>Original format name</strong> : {{ dataset.rawFormats}}.">i</span></td>
+                            <td>
+                                {% for format in dataset.formats %}
+                                    {% if format.isOpen == 1 %}
+                                        <span class="label label-success" rel="popover" title="{{ format.format }}" data-content="This format is open as possible ! His specification is public, and he is computer readable, enjoy !">{{ format.format }}</span>
+                                    {% elseif format.hasSpec == 1 %}
+                                        <span class="label label-info" rel="popover" title="{{ format.format }}" data-content="This format is not fully open ! His specification is public, and he is computer readable, but this format is proprietary.">{{ format.format }}</span>
+                                    {% elseif format.isComputer_readable == 1 %}
+                                        <span class="label label-warning" rel="popover" title="{{ format.format }}" data-content="This format is not very open ! His specification is not public and this format is proprietary.">{{ format.format }}</span>
+                                    {% else %}
+                                        <span class="label label-error">{{ format.format }}</span>
+                                    {% endif %}
                                 {% endfor %}
-                                </span></td>
+                                </td>
                         </tr>
                     </table>
                 </div>
                 <div class="span8">
+                    <div class="dataset-summary">
+                        <h3>Dataset summary :</h3>
+                        {{ dataset.summary }}
+                    </div>
                     <table class="table score table-bordered">
                         <tr class="total-score">
                             <td class="key">Score</td>

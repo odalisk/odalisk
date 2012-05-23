@@ -18,6 +18,7 @@ class LicenseNormalizer
     {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getEntityManager();
+        $this->er = $this->em->getRepository('Odalisk\Entity\License');
 
         $this->log = $log;
     }
@@ -25,7 +26,10 @@ class LicenseNormalizer
     public function init($yaml)
     {
         foreach ($yaml as $name => $license) {
-            $l = new \Odalisk\Entity\License($name);
+            $l = $this->er->findOneByName($name);
+            if (!$l) {
+                $l = new \Odalisk\Entity\License($name);
+            }
             //var_dump($license);
             foreach ($license['aliases'] as $alias) {
                 $l->addAlias($alias);

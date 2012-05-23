@@ -38,6 +38,8 @@ class ExtractCommand extends BaseCommand
         $em = $this->getEntityManager();
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
 
+        $portalRepo = $this->getEntityRepository('Odalisk\Entity\Portal');
+
         // Initialize some arrrays
         $platforms = array();
 
@@ -65,6 +67,8 @@ class ExtractCommand extends BaseCommand
                 error_log('[Analysis] Beginning to process ' . $platform->getName());
                 // Load the portal object from the database
                 $portal = $platform->loadPortal();
+                // Clear the data of this portal from the database
+                $portalRepo->clearData($portal);
                 // Cache the platform path
                 $platformPath = $dataPath . $name . '/';
 

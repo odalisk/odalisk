@@ -4,6 +4,8 @@
  *= require transition
  *= require carousel
  *= require modal
+ *= require tooltip
+ *= require popover
  */
 
  /*

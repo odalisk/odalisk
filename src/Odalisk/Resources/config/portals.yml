@@ -26,6 +26,9 @@ parameters:
         rating_dataset: false   
         comment_dataset: false
         suggest_dataset: false
+        api: true
+        api_documentation: true
+        opendata_concept_explained: true
 
     portals.loire_atlantique:
         name:       "data.loire-atlantique.fr"
@@ -41,7 +44,10 @@ parameters:
         contact_form: true
         rating_dataset: false 
         comment_dataset: false
-        suggest_dataset: true
+        suggest_dataset: false
+        api: false
+        api_documentation: false
+        opendata_concept_explained: true
 
     portals.socrata:
         name:       "opendata.socrata.com"
@@ -57,7 +63,12 @@ parameters:
         contact_form: true
         rating_dataset: true
         comment_dataset: true
-        
+        suggest_dataset: true
+        suggest_dataset: true
+        api: true
+        api_documentation: true
+        opendata_concept_explained: false
+    
     portals.new_york:
         name:       "nycopendata.socrata.com"
         base_url:   "https://nycopendata.socrata.com"
@@ -72,6 +83,10 @@ parameters:
         contact_form: true
         rating_dataset: true
         comment_dataset: true
+        suggest_dataset: true
+        api: true
+        api_documentation: true
+        opendata_concept_explained: false
 
     portals.usa_gov:
         name:       "www.data.gov"
@@ -87,6 +102,10 @@ parameters:
         contact_form: true
         rating_dataset: true
         comment_dataset: true
+        suggest_dataset: true
+        api: true
+        api_documentation: true
+        opendata_concept_explained: false
 
     portals.uk_gov:
         name:       "data.gov.uk"
@@ -102,6 +121,10 @@ parameters:
         contact_form: true
         rating_dataset: true
         comment_dataset: true
+        suggest_dataset: true
+        api: true
+        api_documentation: true
+        opendata_concept_explained: false
 
     portals.eu_gov:
         name:       "publicdata.eu"
@@ -117,6 +140,10 @@ parameters:
         contact_form: true
         rating_dataset: false
         comment_dataset: false
+        suggest_dataset: false
+        api: true
+        api_documentation: true
+        opendata_concept_explained: false
 
     portals.data_publica:
         name:       "data-publica.com"
@@ -132,6 +159,10 @@ parameters:
         contact_form: true
         rating_dataset: false
         comment_dataset: true
+        suggest_dataset: true
+        api: true
+        api_documentation: true
+        opendata_concept_explained: true
 
     portals.data_market:
         name:       "datamarket.com"
@@ -142,8 +173,10 @@ parameters:
         status:     "Private, For profit"
         search_engine:   true
         metadata_search: true
-        filtering_license_search: false
-        forum_section:   false
-        contact_form: true
-        rating_dataset: false
-        comment_dataset: false
+        #filtering_license_search: false
+        #forum_section:   false
+        #contact_form: true
+        #rating_dataset: false
+        #comment_dataset: false
+        #suggest_dataset: false
+        #api_documentation: false

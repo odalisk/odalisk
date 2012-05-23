@@ -1,11 +1,11 @@
 # The arborescence of this file has 4 levels :
-# - The category
-# - sections of these catgories. Each section must have a "weight" attribute.
+#The category
+#sections of these catgories. Each section must have a "weight" attribute.
 # This weight refers to the weight of the section in the category. Sections
 # may have a "subsections" attribute.
-# - subsections of these sections. Each subsection must have a "weight"
+#subsections of these sections. Each subsection must have a "weight"
 # attribute. A subsection may have a "subsubsections" attribute.
-# - subsubsections of these subsections. Each subsubsection must have a "weight"
+#subsubsections of these subsections. Each subsubsection must have a "weight"
 # attribute.
 # No more levels !
 
@@ -14,79 +14,79 @@ parameters:
         # Usability category
         usability:
             sections:
-                - search:
+               search:
                     weight: 100
                     subsections:
-                        - search_engine_provided:
+                       search_engine_provided:
                             weight: 60
                             subsubsections: []
-                        - searchable_metadata:
+                       searchable_metadata:
                             weight: 25
                             subsubsections: []
-                        - licence_filtering:
+                       licence_filtering:
                             weight: 15
                             subsubsections: []
         # Cataloging category
         cataloging:
             sections:
-                - identification:
+               identification:
                     weigth: 20
                     subsections:
-                        - identity_person_in_charge:
+                       identity_person_in_charge:
                             weight: 100
                             subsubsections: []
-                - general:
+               general:
                     weight: 60
                     subsections:
-                        - title_and_summary:
+                       title_and_summary:
                             weight: 60
                             subsubsections: []
-                        - category:
+                       category:
                             weigth: 40
                             subsubsections: []
-                - temporal:
+               temporal:
                     weight: 20
                     subsections:
-                        - creation_date:
+                       creation_date:
                             weight: 40
                             subsubsections: []
-                        - update_date:
+                       update_date:
                             weight: 60
                             subsubsections: []
         # API category
         api:
             sections:
-                - exists:
+               exists:
                     weight: 70
                     subsections: []
-                - documentation:
+               documentation:
                     weight: 30
                     subsections: []
         # Liveliness category
         liveliness:
             sections:
-                - user_input:
+               user_input:
                     weight: 80
                     subsections:
-                        - rating_possibilty:
+                       rating_possibilty:
                             weight: 15
                             subsubsections: []
-                        - link_support_resources:
+                       link_support_resources:
                             weight: 50
                             subsubsections:
-                                - forum_section:
+                               forum_section:
                                     weight: 80
-                                - contact_form_link:
+                               contact_form_link:
                                     weight: 20
-                        - feedback_channel:
+                       feedback_channel:
                             weight: 15
                             subsubsections: []
-                        - suggest_dataset:
+                       suggest_dataset:
                             weight: 20
                             subsubsections: []
-                - information:
+               information:
                     weight: 20
                     subsections:
-                        - opendata_explained:
+                       opendata_explained:
                             weight: 100
                             subsubsections: []

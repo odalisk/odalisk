@@ -243,7 +243,9 @@ abstract class BasePortal
     protected function normalizeLicense(&$data)
     {
         if (array_key_exists('setRawLicense', $data)) {
-            $data['addLicense'] = $this->licenseNormalizer->getLicenses($data['setRawLicense']);
+            $data['setLicense'] = $this->licenseNormalizer->getLicenses($data['setRawLicense']);
+        } else {
+            $data['setLicense'] = $this->licenseNormalizer->getLicenses('');
         }
     }
 

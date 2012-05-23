@@ -205,4 +205,29 @@ class License
     {
         return $this->aliases;
     }
+
+    /**
+     * Return true if the license is a good one, false otherwise.
+     */
+    public function isGoodLicense() {
+        return(
+                $this->getAuthorship() &&
+                $this->getReuse() &&
+                $this->getRedistribution() &&
+                $this->getCommercial()
+              );
+    }
+
+    /**
+     * Return the quality of the license in pourcentage
+     */
+     public function getQuality() {
+         $quality = 0;
+         $quality+= (int)$this->getAuthorship() * 25;
+         $quality+= (int)$this->getReuse() * 25;
+         $quality+= (int)$this->getRedistribution() * 25;
+         $quality+= (int)$this->getCommercial() * 25;
+
+         return($quality);
+     }
 }

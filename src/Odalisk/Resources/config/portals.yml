@@ -12,7 +12,7 @@ parameters:
 
     # All the information we need for each platfom. Will be used to initialize the services
     portals.nantes:
-        name:            "data.nantes.fr"
+        name:            "Nantes Open Data"
         base_url:        "http://data.nantes.fr/"
         api_url:         "http://data.nantes.fr/api/datastore_searchdatasets/1.0/39W9VSNCSASEOGV/?output=json"
         country:         "France"
@@ -31,7 +31,7 @@ parameters:
         opendata_concept_explained: true
 
     portals.loire_atlantique:
-        name:       "data.loire-atlantique.fr"
+        name:       "Loire Atlantique Open Data"
         base_url:   "http://data.loire-atlantique.fr/"
         api_url:    ""
         country:    "France"
@@ -50,7 +50,7 @@ parameters:
         opendata_concept_explained: true
 
     portals.socrata:
-        name:       "opendata.socrata.com"
+        name:       "Opendata by Socrata"
         base_url:   "https://opendata.socrata.com"
         api_url:    "https://opendata.socrata.com/api/views.json"
         country:    "USA"
@@ -70,7 +70,7 @@ parameters:
         opendata_concept_explained: false
     
     portals.new_york:
-        name:       "nycopendata.socrata.com"
+        name:       "NYC OpenData"
         base_url:   "https://nycopendata.socrata.com"
         api_url:    "https://nycopendata.socrata.com/api/views.json"
         country:    "USA"
@@ -89,7 +89,7 @@ parameters:
         opendata_concept_explained: false
 
     portals.usa_gov:
-        name:       "www.data.gov"
+        name:       "USA OpenData"
         base_url:   "https://explore.data.gov"
         api_url:    "https://explore.data.gov/api/views.json"
         country:    "USA"
@@ -108,7 +108,7 @@ parameters:
         opendata_concept_explained: false
 
     portals.uk_gov:
-        name:       "data.gov.uk"
+        name:       "UK OpenData"
         base_url:   "http://data.gov.uk/dataset/"
         api_url:    "http://catalogue.data.gov.uk/api/rest/dataset"
         country:    "United Kingdom"
@@ -127,7 +127,7 @@ parameters:
         opendata_concept_explained: false
 
     portals.eu_gov:
-        name:       "publicdata.eu"
+        name:       "Europe's Public Data"
         base_url:   "http://publicdata.eu/dataset/"
         api_url:    "http://publicdata.eu/api/rest/dataset"
         country:    "European Union"
@@ -146,7 +146,7 @@ parameters:
         opendata_concept_explained: false
 
     portals.data_publica:
-        name:       "data-publica.com"
+        name:       "Data Publica"
         base_url:   "http://www.data-publica.com/"
         api_url:    ""
         country:    "France"
@@ -165,7 +165,7 @@ parameters:
         opendata_concept_explained: true
 
     portals.data_market:
-        name:       "datamarket.com"
+        name:       "DataMarket"
         base_url:   "http://datamarket.com/data/set/"
         api_url:    ""
         country:    "Iceland"

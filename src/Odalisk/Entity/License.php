@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Odalisk\Entity\License
  *
  * @ORM\Table(name="licenses")
- * @ORM\Entity(repositoryClass="Odalisk\Repository\LicenseRepository")
+ * @ORM\Entity
  */
 class License
 {

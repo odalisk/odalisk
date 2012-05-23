@@ -38,7 +38,7 @@ class ApiController extends Controller
      */
     public function datasets(Request $request, $page_index, $page_size) {
         $datasets = $this->getEntityRepository('Odalisk\Entity\Dataset')
-            ->getDatasetsMatching($params);
+            ->getDatasetsMatching($request->request->all(), $page_index, $page_size);
         
         //var_dump($datasets);
             

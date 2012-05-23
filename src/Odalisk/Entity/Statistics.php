@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Odalisk\Statistics
  *
  * @ORM\Table(name="statistics")
- * @ORM\Entity(repositoryClass="Odalisk\Repository\StatisticsRepository")
+ * @ORM\Entity
  */
 class Statistics
 {

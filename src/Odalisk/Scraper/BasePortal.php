@@ -134,7 +134,6 @@ abstract class BasePortal
         $this->portal->setEntity($this->getEntity());
 
         $criteria = new \Odalisk\Entity\PortalCriteria();
-        echo $this->getSearchEngine();
         $criteria->setSearchEngine($this->getSearchEngine());
         $criteria->setMetadataSearch($this->getMetadataSearch());
         $criteria->setForumSection($this->getForumSection());

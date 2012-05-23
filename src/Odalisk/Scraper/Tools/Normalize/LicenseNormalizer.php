@@ -53,7 +53,7 @@ class LicenseNormalizer
         } elseif (array_key_exists($raw_license, $this->aliases)) {
             return $this->licenses[$this->aliases[$raw_license]];
         } else {
-            error_log('[Unknown license]' . $raw_license . "\n", 3, $this->log);
+            error_log('[' . date('d-M-Y H:i:s') . '] [Unknown license]' . $raw_license . "\n", 3, $this->log);
 
             return $this->licenses['unknown'];
         }

@@ -4,6 +4,7 @@ logs/*
 vendor/*
 web/css/*
 web/js/*
+web/bundles/*
 data/*
 composer.lock
 !.gitkeep

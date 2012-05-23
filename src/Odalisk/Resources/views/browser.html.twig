@@ -2,6 +2,7 @@
 
 {% block menu %}
     <li class="active"><a href="{{ path('homepage') }}">Home</a></li>
-    <li class="active"><a href="{{ path('search') }}">Recherche avancée</a></li>
+    <li><a href="{{ path('search') }}">Advanced Search</a></li>
+    <li><a onclick="$('#contactModal').modal()">Contact Us !</a></li>
 {% endblock %}
 

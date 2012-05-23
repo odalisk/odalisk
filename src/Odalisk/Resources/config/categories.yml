@@ -14,6 +14,9 @@ parameters:
                 - 'State & Local Government Finances & Employment'
                 - 'Ledelse og administrativ service'
                 - 'Expenditures'
+                - 'Bilancio e finanze' # Budget and Finance
+                - "Councillors' Allowances"
+                - 'Budget'
         'Agriculture':
             aliases:
                 - 'Agriculture & Environment'
@@ -40,10 +43,6 @@ parameters:
                 - 'Banque & Assurance'
                 - 'Lån og investering' # Loans and Investment
                 - 'Trusts'
-        'Budget':
-            aliases:
-                - 'Bilancio e finanze' # Budget and Finance
-                - "Councillors' Allowances"
         'Business':
             aliases:
                 - 'Business & Economic'
@@ -94,6 +93,12 @@ parameters:
                 - 'Regeringen'
                 - 'Forvaltningsgrundlag' # Administration Constitutional Law
                 - 'Folketinget' # Parliament
+                - 'forbrugeroplysning' # consumer information
+                - 'Politiche di prevenzione'
+                - 'Politiche sociali'
+                - 'Politiche sociali e sanità'
+                - 'Strategisk planlægning af offentlig styring'
+                - 'Politic'
         'Economy':
             aliases:
                 - 'Business & Economic'
@@ -261,17 +266,6 @@ parameters:
                 - 'medicin og udstyr'
                 - 'Sundheds- og lægemiddelberedskab' # Health and medical preparedness
 
-        'Politic':
-            aliases:
-                - 'Politiche di prevenzione'
-                - 'Politiche sociali'
-                - 'Politiche sociali e sanità'
-                - 'Strategisk planlægning af offentlig styring'
-
-        'Programming':
-            aliases:
-                - 'Agricoltura - Programmazione' # Agriculture - Programming
-
         'Population & Demography':
             aliases:
                 - 'Bevölkerung' # Population
@@ -402,7 +396,7 @@ parameters:
                 - 'Strategisk planlægning for it-området'
                 - 'It-sikkerhedsadministration'
                 - 'Sistemi informativi e informatica' #Information Systems and Computer
-        'Urbanisme':
+        'Urbanism':
             aliases:
                 - 'Urbanisme'
                 - 'Fysisk planlægning'
@@ -436,7 +430,9 @@ parameters:
                 - 'Öffentliche Einrichtungen' # public organizations
                 - 'Kvalitetsmåling'
                 - 'Referencenet og opmåling'
-                -
+                - 'planning'
+                - 'Agricoltura - Programmazione' # Agriculture - Programming
+
         'Work':
             aliases:
                 - 'Travail & Salaires'

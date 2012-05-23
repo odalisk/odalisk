@@ -1,0 +1,163 @@
+{% extends "App::browser.html.twig" %}
+
+{% block title %}Odalisk project{% endblock %}
+
+{% block content %}
+    <div class="well hero-unit hero-unit-intro hero-unit-dataset">
+        <h1>{{ dataset.name }}</h1>
+        <div class="clearfix"></div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span4">
+                    <table class="table table-bordered ">
+                        <tr>
+                            <td class="key">Category</td>
+                            <td>
+                                {% for category in dataset.categories %}
+                                    {{ category }}{% if dataset.categories|length > 1 %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="key">Released on</td>
+                            <td>{{ dataset.releasedOn|date("d/m/Y") }}</td>
+                        </tr>
+                        <tr>
+                            <td class="key">Last update on</td>
+                            <td>{{ dataset.lastUpdatedOn|date("d/m/Y") }}</td>
+                        </tr>
+                        <tr>
+                            <td class="key">Licence</td>
+                            <td><span class="label label-success">
+                                {% for license in dataset.license %}
+                                    {{ license }}{% if dataset.license|length > 1 %}, {% endif %}
+                                {% endfor %}
+                                </span></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="span8">
+                    <table class="table score table-bordered">
+                        <tr class="total-score">
+                            <td class="key">Score</td>
+                            <td class="progress-bar">
+                                <div class="progress progress-striped
+                                 active progress-success">
+                                  <div class="bar"
+                                       style="width: 85%;"></div>
+                                </div>
+                            </td>
+                            <td class="note">163/200</td>
+                        </tr>
+                        <tr>
+                            <td class="key">Feedback</td>
+                            <td class="progress-bar">
+                                <div class="progress progress-striped
+                                 active progress-warning">
+                                  <div class="bar"
+                                       style="width: 40%;"></div>
+                                </div>
+                            </td>
+                            <td class="note">83/200</td>
+                        </tr>
+                        <tr>
+                            <td class="key">Openess</td>
+                            <td class="progress-bar">
+                                <div class="progress progress-striped
+                                 active progress-info">
+                                  <div class="bar"
+                                       style="width: 70%;"></div>
+                                </div>
+                            </td>
+                            <td class="note">155/200</td>
+                        </tr>
+                        <tr>
+                            <td class="key">API</td>
+                            <td class="progress-bar">
+                                <div class="progress progress-striped
+                                 active progress-danger">
+                                  <div class="bar"
+                                       style="width: 20%;"></div>
+                                </div>
+                            </td>
+                            <td class="note">42/200</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <table class="table check table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Criteria</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>A specific API call can yield the license details</td>
+                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>A list of third-party apps developed using the datasets is available</td>
+                    <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>A description of the content</td>
+                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>A specific API call can yield the license details</td>
+                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>A list of third-party apps developed using the datasets is available</td>
+                    <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>A description of the content</td>
+                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>A specific API call can yield the license details</td>
+                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>A list of third-party apps developed using the datasets is available</td>
+                    <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>A description of the content</td>
+                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>A specific API call can yield the license details</td>
+                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>A list of third-party apps developed using the datasets is available</td>
+                    <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>A description of the content</td>
+                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div><!--/row-->
+{% endblock %}

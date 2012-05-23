@@ -86,9 +86,9 @@ body {
         background:url('/bundles/app/img/homeback.jpg');
         margin-bottom:10px;
         
-        h1, h2 {
+        /*h1, h2 {
             float:left;
-        }
+        }*/
         
         h1:first-letter {
             text-transform:uppercase;
@@ -144,6 +144,15 @@ body {
             }
             
         }
+        
+        &.hero-unit-dataset {
+            h1 {
+                font-size:28px;
+                font-weight:100;
+                
+                letter-spacing:0.05em;
+            }
+        }
     }
     
     table.check {
@@ -151,6 +160,8 @@ body {
         tr:hover, tr {
             .tick {
                 width:10px;
+                color:white;
+                text-align:center;
             }
 
             .tick-success {
@@ -344,7 +355,11 @@ body {
             
             .item *:not(.btn) {
                 -webkit-transition: color .5s ease-in-out;
-                color:#fff;
+                -moz-transition: color .5s ease-in-out;
+                -o-transition: color .5s ease-in-out;
+                transition: color .5s ease-in-out;
+                
+                *02color:#fff;
             }
             
             &.backwhite {
@@ -354,13 +369,18 @@ body {
                 
                 .item *:not(.btn) {
                     -webkit-transition: color .5s ease-in-out;
+                    -moz-transition: color .5s ease-in-out;
+                    -o-transition: color .5s ease-in-out;
+                    transition: color .5s ease-in-out;
                     color:#333;
                     
                     
                 }
             }
-            
-            -webkit-transition: background-color 0.5s;
+            -webkit-transition: background-color .5s ease-in-out;
+            -moz-transition: background-color .5s ease-in-out;
+            -o-transition: background-color .5s ease-in-out;
+            transition: background-color .5s ease-in-out;
         }
         
         header.hero-unit {
@@ -406,7 +426,6 @@ body {
                         z-index:2;
                     }
                     
-                    background-position:bottom center;
                 }
                 
                 #homeSlide {
@@ -505,10 +524,71 @@ body {
 
 
 
+.modal {
+    z-index:10000000;
+    
+    #contact_body {
+        width:500px;
+        height:170px;
+    }
+    
+    input {
+        margin-left:10px;
+    }
+    
+    form {
+        margin:0px;
+    }
+    
+    .nav > li > a {
+        font-weight:normal;
+    }
+    
+    .tag-list span.label span {
+        float:right;
+    }
+    
+    .tag-list span.label span.label-name {
+        float:none !important;
+    }
+}
 
 
 
-
+.gecko {
+    .blue-font {
+        color:#2081AD;
+        background:none;
+        
+        
+    }
+    
+    span.blue-font {
+        font-family:'Helvetica Neue', Helvetica;
+        color:#2081AD !important;
+    }
+    
+    .home {
+        p {
+            font-weight:normal;
+            font-size:13px;
+        }
+    }
+    
+    .bottomImage {
+        bottom:0px;
+        left:0px;
+        right:0px;
+        position:absolute;
+        background:url("/bundles/app/img/browser.png");
+        background-repeat:no-repeat;
+        background-position:bottom center;
+        background-size: auto 80% !important;
+        padding-bottom:0px;
+        height:200px;
+        z-index:2;
+    }
+}
 
 
 
@@ -524,6 +604,9 @@ body {
     height:100%;
     background-color:#2ECBFA;
     background-image:url('/bundles/app/img/noise.png'), -webkit-gradient(linear, left top, left bottom, from(#2ECBFA), to(#2081AD));
+    background-image:url('/bundles/app/img/noise.png'), -mox-gradient(linear, left top, left bottom, from(#2ECBFA), to(#2081AD));
+    
+    background-image:url('/bundles/app/img/noise.png'), -o-gradient(linear, left top, left bottom, from(#2ECBFA), to(#2081AD));
     #center_block {
         text-align:center;
         margin-top:100px;
@@ -551,7 +634,8 @@ body {
 
           -webkit-mask-image: -webkit-gradient(linear, left top, 
             left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
-
+            mask-image: gradient(linear, left top, 
+                left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
             width:700px;
             display:inline-block;
           }

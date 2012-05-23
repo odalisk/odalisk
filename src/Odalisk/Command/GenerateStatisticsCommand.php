@@ -2,11 +2,10 @@
 
 namespace Odalisk\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Helper\FormatterHelper;
-use Symfony\Component\Console\Output\OutputInterface;
-
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Output\OutputInterface;
 
 
 use Odalisk\Entity\Dataset;
@@ -22,24 +21,33 @@ class GenerateStatisticsCommand extends BaseCommand
     {
         $this
             ->setName('odalisk:statistics:generate')
-            ->setDescription('generate statistics from datasets');
+            ->setDescription('generate statistics from datasets')
+            ->addArgument('platform', InputArgument::OPTIONAL,
+                'Which platform do you want to analyse?'
+            )
+            ->addOption('list', null, InputOption::VALUE_NONE,
+                'If set, the task will display available platforms names rather than analyse them'
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->em = $this->getEntityManager();
-        $datasetRepo = $this->getEntityRepository('Odalisk\Entity\Dataset');
+        $datasetRepo  = $this->getEntityRepository('Odalisk\Entity\Dataset');
         $criteriaRepo = $this->getEntityRepository('Odalisk\Entity\DatasetCriteria');
+
+        $container = $this->getContainer();
+        $platformServices = $container->getParameter('config.enabled_portals');
 
         // Initialization
         $criteriaRepo->init();
         // This make us capable to iterate on all datasets without load them in one
         // shot.
-        $datasetsIds = $this->em->createQuery('SELECT d.id FROM Odalisk\Entity\Dataset d')->iterate();
+        $sql = 'SELECT d.id FROM Odalisk\Entity\Dataset d';
+        $datasetsIds = $this->em->createQuery($sql)->iterate();
         $datasetsCount = count($datasetsIds);
 
         $this->writeBlock($output, "[Statistics] Beginning of generation");
-
         foreach($datasetsIds as $i => $datasetId) {
             $datasetId = $datasetId[$i]['id'];
             $dataset = $datasetRepo->find($datasetId);

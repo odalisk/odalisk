@@ -34,21 +34,22 @@ class Category
      * @ORM\Column(name="aliases", type="array")
      */
     private $aliases;
-    
-    public function __construct($category, $aliases = array()) {
+
+    public function __construct($category, $aliases = array())
+    {
         $this->setCategory($category);
         $this->setAliases($aliases);
     }
 
     public function __toString()
     {
-        return  implode(';', array_merge(array($this->category), $this->aliases));     
+        return  implode(';', array_merge(array($this->category), $this->aliases));
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -68,20 +69,21 @@ class Category
     /**
      * Get category
      *
-     * @return string 
+     * @return string
      */
     public function getCategory()
     {
         return $this->category;
     }
-    
+
     /**
      * Add alias
      *
-     * @param string $alias 
+     * @param string $alias
      */
-    public function addAlias($alias) {
-        if(!in_array($alias, $this->aliases)) {
+    public function addAlias($alias)
+    {
+        if (!in_array($alias, $this->aliases)) {
             $this->aliases[] = $alias;
         }
     }
@@ -99,7 +101,7 @@ class Category
     /**
      * Get aliases
      *
-     * @return array 
+     * @return array
      */
     public function getAliases()
     {

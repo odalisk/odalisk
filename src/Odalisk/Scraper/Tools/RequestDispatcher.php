@@ -5,7 +5,8 @@ namespace Odalisk\Scraper\Tools;
 use Buzz\Browser;
 use Buzz\Message;
 
-class RequestDispatcher {
+class RequestDispatcher
+{
     /**
      * Handle to our cURL wrapper library
      *
@@ -27,7 +28,8 @@ class RequestDispatcher {
      */
     private $client;
 
-    public function __construct(array $buzzOptions, $timeout = 5) {
+    public function __construct(array $buzzOptions, $timeout = 5)
+    {
         $this->client = new MultiCurlAsync();
         $this->client->setTimeout($timeout);
         $this->buzz = new Browser($this->client);
@@ -42,7 +44,8 @@ class RequestDispatcher {
      * @param string $callback
      * @param array  $options
      */
-    public function queueUrl($url, $callback, array $options = array()) {
+    public function queueUrl($url, $callback, array $options = array())
+    {
         // Create the request
         $request = new Message\Request(Message\Request::METHOD_GET, '/', null);
 
@@ -64,8 +67,8 @@ class RequestDispatcher {
      * @param string          $callback
      * @param array           $options
      */
-    public function queueRequest($request, $callback, array $options = array()) {
-
+    public function queueRequest($request, $callback, array $options = array())
+    {
         // Create the response
         $response = new Message\Response();
 
@@ -80,7 +83,8 @@ class RequestDispatcher {
      * @param string $callback the callback function for these urls
      * @param array  $options  optional headers for the request
      */
-    public function batchQueue(array $urls, $callback, array $options = array()) {
+    public function batchQueue(array $urls, $callback, array $options = array())
+    {
         foreach ($urls as $url) {
             $this->client->queue($url, $callback, $options);
         }
@@ -95,13 +99,14 @@ class RequestDispatcher {
      *
      * @param int $windowSize
      */
-    public function dispatch($windowSize = 5) {
+    public function dispatch($windowSize = 5)
+    {
         $this->client->flush($windowSize);
     }
 
 
-    public function __call($nom, $args) {
-
+    public function __call($nom, $args)
+    {
       switch ($nom) {
          case 'queue':
             // If the first arg is a URL, call queueUrl, else queueRequest

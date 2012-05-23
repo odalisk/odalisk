@@ -7,15 +7,16 @@ use Symfony\Component\DomCrawler\Crawler;
 use Odalisk\Scraper\BasePortal;
 use Odalisk\Scraper\Tools\RequestDispatcher;
 
-abstract class BaseSocrataPortal extends BasePortal {
-
+abstract class BaseSocrataPortal extends BasePortal
+{
     // The base url on which the datasets are listed.
     protected $datasetsListUrl;
 
     // the number of datasets displayed on one page.
     protected $batch_size;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->criteria = array(
             'setName' => '//h2[@id="datasetName" and @class="clipText currentViewName"]'
             , 'setSummary' => '/p[@class=""]'
@@ -36,8 +37,9 @@ abstract class BaseSocrataPortal extends BasePortal {
         $this->urlsListIndexPath = '//td[@class="nameDesc"]/a';
         $this->batch_size = 10;
     }
-    
-    public function getDatasetsUrls() {
+
+    public function getDatasetsUrls()
+    {
         $dispatcher = new RequestDispatcher($this->buzzOptions, 30);
 
         $response = $this->buzz->get($this->datasetsListUrl.'1');
@@ -59,7 +61,7 @@ abstract class BaseSocrataPortal extends BasePortal {
             $request_count = ceil($this->estimatedDatasetCount / $this->batch_size);
             error_log('[Get URLs] Aproximately ' . $request_count . ' requests to do');
 
-            for($i = 2 ; $i <= $request_count ; $i++) {
+            for ($i = 2 ; $i <= $request_count ; $i++) {
                 $dispatcher->queue(
                     $this->datasetsListUrl.$i,
                     array($this,'Odalisk\Scraper\Socrata\BaseSocrataPortal::crawlDatasetsList')
@@ -78,7 +80,7 @@ abstract class BaseSocrataPortal extends BasePortal {
         return $this->urls;
     }
 
-    protected function additionalExtraction($crawler, &$data) 
+    protected function additionalExtraction($crawler, &$data)
     {
         $data['setFormats'] = "CSV;JSON;PDF;RDF;RSS;XLS;XLSX;XML";
     }

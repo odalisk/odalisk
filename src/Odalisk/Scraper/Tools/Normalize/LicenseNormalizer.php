@@ -2,9 +2,6 @@
 
 namespace Odalisk\Scraper\Tools\Normalize;
 
-use Symfony\Component\Yaml\Dumper;
-use Symfony\Component\Yaml\Parser;
-use Symfony\Component\Yaml\Exception\ParseException;
 
 class LicenseNormalizer
 {
@@ -12,22 +9,25 @@ class LicenseNormalizer
         '/\b(and|et)\b/' => '&',
         '/^(Not (A|a)pplicable|Not Av|none|N|A|[0-9\.]+||\s+|)$/' => 'N/A',
     );
-    
+
     protected $licenses = array();
-    
+
     protected $aliases = array();
-        
-    public function __construct($doctrine)
+
+    public function __construct($doctrine, $log)
     {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getEntityManager();
+
+        $this->log = $log;
     }
-    
-    public function init($yaml) {
-        foreach($yaml as $name => $license) {
+
+    public function init($yaml)
+    {
+        foreach ($yaml as $name => $license) {
             $l = new \Odalisk\Entity\License($name);
             //var_dump($license);
-            foreach($license['aliases'] as $alias) {
+            foreach ($license['aliases'] as $alias) {
                 $l->addAlias($alias);
                 $this->aliases[strtolower($alias)] = strtolower($name);
             }
@@ -40,20 +40,21 @@ class LicenseNormalizer
         }
         $this->em->flush();
     }
-    
+
     public function getLicenses($raw_license)
     {
         $raw_license = strtolower($raw_license);
-        if(array_key_exists($raw_license, $this->licenses)) {
+        if (array_key_exists($raw_license, $this->licenses)) {
             return $this->licenses[$raw_license];
         } elseif (array_key_exists($raw_license, $this->aliases)) {
             return $this->licenses[$this->aliases[$raw_license]];
         } else {
-            error_log('Unknown license : ' . $raw_license);
+            error_log('[ Unknown license ]' . $raw_license . "\n", 3, $this->log);
+
             return $this->licenses['unknown'];
         }
     }
-    
+
     private function _trim($value)
     {
         return trim($value, " \t\n\r\0\x0B\"'[]()&.");

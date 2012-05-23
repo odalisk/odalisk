@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class License
 {
-	/**
+    /**
      * @var integer $id
      *
      * @ORM\Column(name="id", type="integer")
@@ -27,7 +27,7 @@ class License
      * @ORM\Column(name="name", type="string", length=255)
      */
     protected $name;
-    
+
     /**
      * @ORM\Column(name="aliases", type="array")
      */
@@ -61,14 +61,15 @@ class License
      */
     protected $commercial;
 
-    public function __construct($name) {
+    public function __construct($name)
+    {
         $this->setName($name);
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -88,7 +89,7 @@ class License
     /**
      * Get authorship
      *
-     * @return string 
+     * @return string
      */
     public function getAuthorship()
     {
@@ -108,7 +109,7 @@ class License
     /**
      * Get reuse
      *
-     * @return string 
+     * @return string
      */
     public function getReuse()
     {
@@ -128,7 +129,7 @@ class License
     /**
      * Get redistribution
      *
-     * @return string 
+     * @return string
      */
     public function getRedistribution()
     {
@@ -148,7 +149,7 @@ class License
     /**
      * Get commercial
      *
-     * @return string 
+     * @return string
      */
     public function getCommercial()
     {
@@ -168,7 +169,7 @@ class License
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -184,7 +185,7 @@ class License
     {
         $this->aliases = $aliases;
     }
-    
+
     /**
      * Add aliases
      *
@@ -198,7 +199,7 @@ class License
     /**
      * Get aliases
      *
-     * @return array 
+     * @return array
      */
     public function getAliases()
     {

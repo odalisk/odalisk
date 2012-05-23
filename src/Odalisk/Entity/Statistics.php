@@ -105,7 +105,7 @@ class Statistics
     /**
      * Get datasets_count
      *
-     * @return integer 
+     * @return integer
      */
     public function getDatasetsCount()
     {
@@ -125,7 +125,7 @@ class Statistics
     /**
      * Get inChargePersonCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getInChargePersonCount()
     {
@@ -145,7 +145,7 @@ class Statistics
     /**
      * Get releasedOnExistCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getReleasedOnExistCount()
     {
@@ -165,7 +165,7 @@ class Statistics
     /**
      * Get lastUpdatedOnExistCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getLastUpdatedOnExistCount()
     {
@@ -185,7 +185,7 @@ class Statistics
     /**
      * Get categoryExistCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getCategoryExistCount()
     {
@@ -205,7 +205,7 @@ class Statistics
     /**
      * Get summaryAndTitleCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getSummaryAndTitleCount()
     {
@@ -225,7 +225,7 @@ class Statistics
     /**
      * Get licenseCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getLicenseCount()
     {
@@ -245,7 +245,7 @@ class Statistics
     /**
      * Get created_at
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -265,7 +265,7 @@ class Statistics
     /**
      * Get updated_at
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdatedAt()
     {
@@ -285,7 +285,7 @@ class Statistics
     /**
      * Get portal
      *
-     * @return Odalisk\Entity\Portal 
+     * @return Odalisk\Entity\Portal
      */
     public function getPortal()
     {

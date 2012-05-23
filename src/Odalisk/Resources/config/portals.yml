@@ -18,7 +18,7 @@ parameters:
         country:    "France"
         entity:     "City of Nantes"
         status:     "Institutional"
-    
+
     portals.loire_atlantique:
         name:       "data.loire-atlantique.fr"
         base_url:   "http://data.loire-atlantique.fr/"
@@ -50,7 +50,7 @@ parameters:
         country:    "USA"
         entity:     "United States Government"
         status:     "Institutional"
-        
+
     portals.uk_gov:
         name:       "data.gov.uk"
         base_url:   "http://data.gov.uk/dataset/"
@@ -58,7 +58,7 @@ parameters:
         country:    "United Kingdom"
         entity:     "UK Government"
         status:     "Institutional"
-        
+
     portals.eu_gov:
         name:       "publicdata.eu"
         base_url:   "http://publicdata.eu/dataset/"
@@ -66,7 +66,7 @@ parameters:
         country:    "European Union"
         entity:     "European Linked Open Data Consortium"
         status:     "Private non-profit making"
-    
+
     portals.data_publica:
         name:       "data-publica.com"
         base_url:   "http://www.data-publica.com/"
@@ -74,7 +74,7 @@ parameters:
         country:    "France"
         entity:     "Data Publica"
         status:     "For profit"
-    
+
     portals.data_market:
         name:       "datamarket.com"
         base_url:   "http://datamarket.com/data/set/"
@@ -82,4 +82,3 @@ parameters:
         country:    "Iceland"
         entity:     "DataMarket"
         status:     "Private, For profit"
-    

@@ -5,7 +5,6 @@ namespace Odalisk\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="datasets")
@@ -48,7 +47,7 @@ class Dataset
      * @ORM\Column(name="raw_categories", type="string", nullable=true, length=255)
      */
     protected $raw_categories;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="Odalisk\Entity\Category")
      */
@@ -58,7 +57,7 @@ class Dataset
      * @ORM\Column(name="raw_formats", type="string", nullable=true, length=255)
      */
     protected $raw_formats;
-    
+
     /**
      * @var string $format
      *
@@ -70,7 +69,7 @@ class Dataset
      * @ORM\OneToOne(targetEntity="Odalisk\Entity\DatasetCriteria")
      */
     protected $criteria;
-    
+
     /**
      * @var string $license
      *
@@ -124,8 +123,9 @@ class Dataset
      * @ORM\JoinColumn(name="portal_id", referencedColumnName="id")
      */
     protected $portal;
-    
-    public function __construct(array $values = array()) {
+
+    public function __construct(array $values = array())
+    {
         $this->categories = new ArrayCollection();
         $this->formats = new ArrayCollection();
         $this->license = new ArrayCollection();
@@ -142,7 +142,8 @@ class Dataset
      *
      * @param array $values
      */
-    public function populate(array $values = array()) {
+    public function populate(array $values = array())
+    {
         foreach ($values as $name => $value) {
             call_user_func(array($this, $name), $value);
         }
@@ -151,7 +152,7 @@ class Dataset
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -171,7 +172,7 @@ class Dataset
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -191,7 +192,7 @@ class Dataset
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -211,7 +212,7 @@ class Dataset
     /**
      * Get summary
      *
-     * @return text 
+     * @return text
      */
     public function getSummary()
     {
@@ -231,7 +232,7 @@ class Dataset
     /**
      * Get raw_categories
      *
-     * @return string 
+     * @return string
      */
     public function getRawCategories()
     {
@@ -251,7 +252,7 @@ class Dataset
     /**
      * Get raw_formats
      *
-     * @return string 
+     * @return string
      */
     public function getRawFormats()
     {
@@ -271,7 +272,7 @@ class Dataset
     /**
      * Get raw_license
      *
-     * @return string 
+     * @return string
      */
     public function getRawLicense()
     {
@@ -291,7 +292,7 @@ class Dataset
     /**
      * Get released_on
      *
-     * @return string 
+     * @return string
      */
     public function getReleasedOn()
     {
@@ -311,7 +312,7 @@ class Dataset
     /**
      * Get last_updated_on
      *
-     * @return string 
+     * @return string
      */
     public function getLastUpdatedOn()
     {
@@ -331,7 +332,7 @@ class Dataset
     /**
      * Get provider
      *
-     * @return string 
+     * @return string
      */
     public function getProvider()
     {
@@ -351,7 +352,7 @@ class Dataset
     /**
      * Get owner
      *
-     * @return string 
+     * @return string
      */
     public function getOwner()
     {
@@ -371,7 +372,7 @@ class Dataset
     /**
      * Get maintainer
      *
-     * @return string 
+     * @return string
      */
     public function getMaintainer()
     {
@@ -387,9 +388,10 @@ class Dataset
     {
         $this->categories[] = $categories;
     }
-    
-    public function setCategories(array $categories) {
-        foreach($categories as $category) {
+
+    public function setCategories(array $categories)
+    {
+        foreach ($categories as $category) {
             $this->addCategory($category);
         }
     }
@@ -397,7 +399,7 @@ class Dataset
     /**
      * Get categories
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getCategories()
     {
@@ -413,15 +415,15 @@ class Dataset
     {
         $this->formats[] = $formats;
     }
-    
+
     /**
      * Get formats
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function setFormats(array $formats)
     {
-        foreach($formats as $format) {
+        foreach ($formats as $format) {
             $this->addFormat($format);
         }
     }
@@ -429,7 +431,7 @@ class Dataset
     /**
      * Get formats
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getFormats()
     {
@@ -449,7 +451,7 @@ class Dataset
     /**
      * Get criteria
      *
-     * @return Odalisk\Entity\DatasetCriteria 
+     * @return Odalisk\Entity\DatasetCriteria
      */
     public function getCriteria()
     {
@@ -469,7 +471,7 @@ class Dataset
     /**
      * Get license
      *
-     * @return Odalisk\Entity\License 
+     * @return Odalisk\Entity\License
      */
     public function getLicense()
     {
@@ -489,7 +491,7 @@ class Dataset
     /**
      * Get portal
      *
-     * @return Odalisk\Entity\Portal 
+     * @return Odalisk\Entity\Portal
      */
     public function getPortal()
     {

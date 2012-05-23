@@ -10,10 +10,10 @@ use Odalisk\Scraper\BasePortal;
 /**
  * The scraper for in cite Solution Plateform
  */
-abstract class BaseInCiteSolutionPortal extends BasePortal 
+abstract class BaseInCiteSolutionPortal extends BasePortal
 {
 
-    public function __construct() 
+    public function __construct()
     {
         $this->criteria = array(
             'setName' => ".//*[@class='tx_icsoddatastore_pi1_single']/h1",
@@ -45,7 +45,7 @@ abstract class BaseInCiteSolutionPortal extends BasePortal
             foreach ($data->opendata->answer->data->dataset as $dataset) {
                 $urls[] = $this->getBaseUrl() . 'donnees/detail/?tx_icsoddatastore_pi1[uid]=' . $dataset->id;
             }
-        }  else {
+        } else {
             error_log('Couldn\'t fetch list of datasets for ' . $this->name);
         }
 
@@ -71,7 +71,8 @@ abstract class BaseInCiteSolutionPortal extends BasePortal
         return $requests;
     }
 
-    public function sanitize($url) {
+    public function sanitize($url)
+    {
         return str_replace(']', '%5D', str_replace('[', '%5B', $url));
     }
 }

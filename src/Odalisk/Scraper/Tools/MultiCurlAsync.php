@@ -10,8 +10,8 @@ use Buzz\Client\Curl;
  *
  * Acknolegdement : This work was inspired by https://github.com/LionsAd/rolling-curl
  */
-class MultiCurlAsync extends Curl {
-
+class MultiCurlAsync extends Curl
+{
     /**
      * The main cURL handle
      */
@@ -32,7 +32,8 @@ class MultiCurlAsync extends Curl {
     /**
      * Initializes the cURL multi handle
      */
-    public function __construct() {
+    public function __construct()
+    {
         if (false == $this->master = curl_multi_init()) {
             throw new RuntimeException("Error initializing cURL");
         }
@@ -41,8 +42,8 @@ class MultiCurlAsync extends Curl {
     /**
      * Adds a request to the queue. The queue is processed when flush() is called.
      *
-     * @param Request  $request  The request.
-     * @param Response $response The response.
+     * @param  Request  $request  The request.
+     * @param  Response $response The response.
      * @return void
      */
     public function queue(Message\Request $request, Message\Response $response, $callback)
@@ -54,11 +55,12 @@ class MultiCurlAsync extends Curl {
      * This processes the request queue. When a request finishes, the callback is called.
      * The callback will be passed the request and the response as arguments (in that order).
      *
-     * @param string $callback    The callback function that will process the result of the request
-     * @param string $windowSize How many concurrent requests do we fire?
+     * @param  string $callback   The callback function that will process the result of the request
+     * @param  string $windowSize How many concurrent requests do we fire?
      * @return void
      */
-    public function flush($windowSize) {
+    public function flush($windowSize)
+    {
         // Check that the window size doesn't exceed the number of requests in the queue
         $this->totalCount = count($this->queue);
         if ($windowSize > $queue_size = $this->totalCount) {
@@ -117,7 +119,8 @@ class MultiCurlAsync extends Curl {
         curl_multi_close($this->master);
     }
 
-    private function fireRequest($i) {
+    private function fireRequest($i)
+    {
         list($request, $response) = $this->queue[$i];
 
         $curl = static::createCurlHandle();

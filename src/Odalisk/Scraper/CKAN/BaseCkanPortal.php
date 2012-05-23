@@ -6,11 +6,12 @@ namespace Odalisk\Scraper\CKAN;
 use Odalisk\Scraper\BasePortal;
 
 
-abstract class BaseCkanPortal extends BasePortal {
-
+abstract class BaseCkanPortal extends BasePortal
+{
     protected $datasets = array();
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->criteria = array(
             'setName' => '//h2[@id="datasetName" and @class="clipText currentViewName"]',
             'setSummary' => '//p[@class=""]',
@@ -28,7 +29,8 @@ abstract class BaseCkanPortal extends BasePortal {
         );
     }
 
-    public function getDatasetsUrls() {
+    public function getDatasetsUrls()
+    {
         $urls = array();
 
         // Make the API call

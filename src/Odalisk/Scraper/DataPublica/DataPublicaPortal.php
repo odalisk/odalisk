@@ -19,7 +19,7 @@ class DataPublicaPortal extends BasePortal
 
     protected $monthNumber = array("01","02","03","04","05","06","07","08","09","10","11","12");
 
-    public function __construct() 
+    public function __construct()
     {
         $this->criteria = array(
             'setName' => ".//*[@id='content']/article[1]/h2",
@@ -60,7 +60,7 @@ class DataPublicaPortal extends BasePortal
                 error_log('[Get URLs] Estimated number of datasets of the portal : ' . $this->estimatedDatasetCount);
                 error_log('[Get URLs] Aproximately ' . $pages_to_get . ' requests to do');
 
-                for($i = 2 ; $i <= $pages_to_get ; $i++) {
+                for ($i = 2 ; $i <= $pages_to_get ; $i++) {
                     $dispatcher->queue(
                         $this->datasetsListUrl.$i,
                         array($this,'Odalisk\Scraper\DataPublica\DataPublicaPortal::crawlDatasetsList')
@@ -80,21 +80,22 @@ class DataPublicaPortal extends BasePortal
 
         return $this->urls;
     }
-    
-    protected function additionalExtraction($crawler, &$data) 
+
+    protected function additionalExtraction($crawler, &$data)
     {
         // Deal with UTF8
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             $data[$key] = utf8_decode($value);
         }
-        
+
         // Convert dates to known format
-        foreach(array('setReleasedOn', 'setLastUpdatedOn') as $field) {
+        foreach (array('setReleasedOn', 'setLastUpdatedOn') as $field) {
             $data[$field] = $this->translateDate($data[$field]);
         }
     }
 
-    public function translateDate($date){
+    public function translateDate($date)
+    {
         return preg_replace($this->monthText , $this->monthNumber , $date);
     }
 }

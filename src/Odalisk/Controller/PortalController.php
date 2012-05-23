@@ -3,14 +3,13 @@
 namespace Odalisk\Controller;
 
 use Knp\Bundle\RadBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Portal controller.
  */
 class PortalController extends Controller
 {
-    static private $page_size = 20;
+    private static $page_size = 20;
 
     /**
      * index.
@@ -51,14 +50,14 @@ class PortalController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $repository = $em->getRepository('Odalisk\Entity\Portal');
         $portal = $repository->findOneById($portal_number);
-        
+
         return $this->render('App:Portal:details.html.twig', array(
             'maintenance_status' => $this->container->getParameter('app.maintenance'),
             'portal' => $portal));
     }
-    
+
     public function getPortalList()
     {
-        
+
     }
 }

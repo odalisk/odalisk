@@ -51,34 +51,39 @@ class DateNormalizer
             '!d?M?Y',
         ),
     );
-    
+
     /**
      * Values for date fields that are considered equivalent to empty
      *
      * @var array $emptyDates
      */
     protected $emptyDates = array('N/A', 'n/a', 'TBC', 'not known', '');
-    
+
     /**
      * The date type fields we need to process so we can transform them into DateTime objects
      *
      * @var array $dateFields
      */
     protected $dateFields = array('setReleasedOn', 'setLastUpdatedOn');
-    
-    
-    public function normalize(array &$data) {
+
+    public function __construct($log)
+    {
+        $this->log = $log;
+    }
+
+    public function normalize(array &$data)
+    {
         // We transform dates strings in datetime.
         foreach ($this->dateFields as $field) {
             if (array_key_exists($field, $data)) {
                 $date = $data[$field];
                 // Try to match the date against something we know
-                foreach($this->correctDates as $regex => $formats) {
+                foreach ($this->correctDates as $regex => $formats) {
                     // Check if we have a match
-                    if(preg_match($regex, $date, $m)) {
+                    if (preg_match($regex, $date, $m)) {
                         // Depending on how many matches we have, we know which format to pick
                         $data[$field] = \Datetime::createFromFormat($formats[count($m)-1], $date)->format("d-m-Y H:i");
-                        if(false === $data[$field]) {
+                        if (false === $data[$field]) {
                             error_log('[>>> False positive ] ' . $date . ' with ' . $regex . ' (count = ' . (count($m)-1) .')');
                             $data[$field] = null;
                         }
@@ -88,11 +93,11 @@ class DateNormalizer
                 }
                 // This is executed only if we have no match
                 // Check if it is a known empty-ish value
-                if(in_array($date, $this->emptyDates)) {
+                if (in_array($date, $this->emptyDates)) {
                     $data[$field] = null;
                 } else {
                     // Not something we recognize
-                    error_log('[Unknown date format ] ' . $date);
+                    error_log('[ Unknown date format ] ' . $date . "\n", 3, $this->log);
                     $data[$field] = $date;
                 }
                 $date = null;

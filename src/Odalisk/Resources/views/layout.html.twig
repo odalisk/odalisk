@@ -9,13 +9,13 @@
     <title>{% block title %}{% endblock %}</title>
     <meta name="description" content="">
 
-    
+
     {% block stylesheets %}
         {# This uses the "assetic pipeline" - it loads style.* from the application bundle #}
-        
+
         <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Raleway:50' rel='stylesheet' type='text/css'>
-        
+
         {% stylesheets '|style' filter="cssrewrite"  %}
             <link rel="stylesheet" href="{{ asset_url }}">
         {% endstylesheets %}
@@ -52,7 +52,7 @@
 {% else %}
     {% block page %}
         {% block navbar %}
-        
+
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container-fluid">
@@ -65,7 +65,7 @@
                     <div class="nav-collapse pull-right">
                         <ul class="nav">
                             {% block menu %}
-                                
+
                             {% endblock %}
                         </ul>
                         {% block userinfos %}
@@ -74,10 +74,10 @@
                     </div><!--/.nav-collapse -->
                 </div>
             </div>
-            
+
         </div>
         {% endblock %}
-        
+
         <div class="container-fluid">
             <div class="row-fluid row-nomargin-top">
                 <div class="span12">
@@ -93,7 +93,7 @@
                     </div>
                 </div>
             </div>
-            
+
 
         </div><!--/.fluid-container-->
 
@@ -108,7 +108,7 @@
 
 <script type="text/javascript">
     {% block jsvariables %}
-        
+
     {% endblock %}
 </script>
 
@@ -117,8 +117,8 @@
     {% javascripts '|script' %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    
-    
+
+
 {% endblock %}
 
 </body>

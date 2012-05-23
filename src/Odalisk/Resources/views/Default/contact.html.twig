@@ -1,24 +1,41 @@
-{% extends "App::layout.html.twig" %}
-
-{% block title %}Contact{% endblock%}
-
-{% block content %}
-    <header>
-        <h1>Contact symblog</h1>
-    </header>
-
-    <p>Want to contact symblog?</p>
-
+<div id="contactModal" class="modal hide fade">
+    <div class="modal-header">
+        <span class="close" data-dismiss="modal">&times;</span>
+        <h3>Contact Us</h3>
+    </div>
+    
     <form action="{{ path('contact') }}" method="post" {{ form_enctype(form) }} class="blogger">
+        <div class="modal-body">
+            <p>An error on the website or just want to contact us ? This form is for you !</p>
             {{ form_errors(form) }}
-
-            {{ form_row(form.name) }}
-            {{ form_row(form.email) }}
-            {{ form_row(form.subject) }}
-            {{ form_row(form.body) }}
+            <table>
+                <tr>
+                    <td>
+                        {{ form_row(form.name) }}
+                    </td>
+                    <td>
+                        {{ form_row(form.email) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        {{ form_row(form.subject) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        {{ form_row(form.body) }}
+                    </td>
+                </tr>
+            </table>
 
             {{ form_rest(form) }}
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal" >Close</a>
+            <input class="btn" class="btn btn-primary" type="submit" value="Submit" />
+        </div>
+    </form>
+</div>
 
-            <input type="submit" value="Submit" />
-        </form>
-{% endblock %}
+

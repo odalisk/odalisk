@@ -24,7 +24,7 @@ search:
     defaults:   { _controller: App:Search:search, _format:html }
 
 dataset_details:
-    pattern:    /datasets/details/{dataset_number}/{page_number}/{_format}
+    pattern:    /browser/datasets/details/{dataset_number}/{page_number}/{_format}
     defaults:   { _controller: App:Dataset:details, _format: html, page_number: 1 }
 
 contact:

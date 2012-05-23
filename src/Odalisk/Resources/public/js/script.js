@@ -1,5 +1,6 @@
 /* 
  *= require libs/jquery
+ *= require plugins
  *= require scrollspy
  *= require transition
  *= require carousel

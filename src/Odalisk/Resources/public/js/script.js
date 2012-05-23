@@ -50,7 +50,6 @@ jQuery(function($) {
             if(active.attr('id') == 'browserSlide')
             {
                 $('#headerWrapper').attr('class','backblue');
-                console.log('kikou');
             }
             else
             {
@@ -172,6 +171,7 @@ jsApi = function() {
     
     this.getData = function() {
         this.page = 0;
+        $('#request-result').html('<tr class="loading"><td colspan="3" class="dataset-item"><span>Chargement</span></td></tr>');
         $.post(
             '/app_dev.php/api/'+window.searchType+'s/'+this.page+'/'+this.pageSize,
             {
@@ -184,14 +184,28 @@ jsApi = function() {
         );
     }
     
+    this.beforeRequest = function() {
+        
+    }
+    
+    this.afterRequest = function() {
+        $(".icon-info[rel=popover], span[rel=popover]")
+          .popover()
+          .click(function(e) {
+            e.preventDefault()
+          });
+    }
+    
     this.updateTable = function() {
-        $('.no-result').remove();
+        $('.no-result, .loading').remove();
         $('#request-result').html(window.api.data);
+        this.afterRequest();
     }
     
     this.addToTable = function() {
-        $('.no-result').remove();
+        $('.no-result, .loading').remove();
         $('#request-result').append($(window.api.data));
+        this.afterRequest();
     }
     
     this.nextPage = function(elem) {

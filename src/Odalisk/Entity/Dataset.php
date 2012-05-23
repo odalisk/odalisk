@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Table(name="datasets")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Odalisk\Repository\DatasetRepository")
  */
 class Dataset
 {

@@ -13,77 +13,100 @@ use Doctrine\ORM\EntityRepository;
 class DatasetCriteriaRepository extends EntityRepository
 {
 
-    public function getCriteria($dataset)
-    {
-        $stmt = $this->getEntityManager()
-             ->getConnection()
-             ->prepare("
-                        SELECT *
-                        FROM  `datasets`
-                        WHERE  `id` = ".$dataset->getId().""
-                );
-                 //.$dataset->getId().""
-        $stmt->execute();
-        $result = $stmt->fetch();
+	public function getCriteria($dataset){
 
-        //var_dump($result);
+                $stmt = $this->getEntityManager()
+                     ->getConnection()
+                     ->prepare("
+        			SELECT * 
+        			FROM  `datasets` 
+        			WHERE  `id` = :dataset_id"
+                		);
+                $stmt->bindvalue("dataset_id",$dataset->getId());
+                $stmt->execute();
+                $result = $stmt->fetch();
 
-        $boolean_res = array();
-         $null_value_key = array();
+                
+                $boolean_res = array();
+                $null_value_key = array();
 
-        foreach ($result as $key => $value) {
+                foreach ($result as $key => $value) {
 
-            if ($value === NULL) {
-                $null_value_key[] = "$key";
-            }
+                    if ($value === NULL) {
+                        $null_value_key[] = "$key";
+                    }
+                }
+
+                $boolean_res["setIsTitleAndSummary"] = TRUE;
+                $boolean_res["setIsReleasedOn"] = TRUE;
+                $boolean_res["setIsProvider"] = TRUE;
+                $boolean_res["setIsLastUpdateOn"] = TRUE;
+                $boolean_res["setIsOwner"] = TRUE;
+                $boolean_res["setIsMaintainer"] = TRUE;
+                $boolean_res["setIsGoodLicense"] = TRUE;
+                $boolean_res["setIsAtLeastOneGoodFormat"] = TRUE;
+
+                if ( in_array("name", $null_value_key ) || in_array("summary", $null_value_key)  ) {
+                    $boolean_res["setIsTitleAndSummary"] = FALSE;
+                }
+                if ( in_array("owner", $null_value_key )) {
+                    $boolean_res["setIsOwner"] = FALSE;
+                }
+                if ( in_array("provider", $null_value_key ) and in_array("owner", $null_value_key )) {
+                    $boolean_res["setIsProvider"] = FALSE;
+                }
+                if ( in_array("last_updated_on", $null_value_key )) {
+                    $boolean_res["setIsLastUpdateOn"] = FALSE;
+                }
+                if ( in_array("maintainer", $null_value_key )) {
+                    $boolean_res["setIsMaintainer"] = FALSE;
+                }
+                if ( in_array("released_on", $null_value_key )) {
+                    $boolean_res["setIsReleasedOn"] = FALSE;
+                }
+                if ( in_array("released_on", $null_value_key )) {
+                    $boolean_res["setIsReleasedOn"] = FALSE;
+                }
+                if ( in_array("license", $null_value_key )) {
+                    $boolean_res["setIsGoodLicense"] = FALSE;
+                }
+
+
+                // License is good ?
+                $stmt = $this->getEntityManager()
+                     ->getConnection()
+                     ->prepare("
+                                SELECT authorship, reuse, redistribution, commercial 
+                                FROM (SELECT * FROM `dataset_license` WHERE `dataset_id` = :dataset_id) as d 
+                                JOIN licenses on d.`license_id` = licenses.id 
+                                WHERE authorship = TRUE 
+                                AND reuse = TRUE
+                                AND redistribution = TRUE 
+                                AND commercial = TRUE
+                                "
+                                );
+                $stmt->bindValue("dataset_id",$dataset->getId());
+                $stmt->execute();
+                $result = $stmt->fetch();
+
+                // One good format ?
+                $stmt = $this->getEntityManager()
+                     ->getConnection()
+                     ->prepare("
+                                SELECT * FROM (SELECT * FROM `dataset_format` WHERE `dataset_id` = 50) as d 
+                                JOIN formats on `format_id` = formats.id 
+                                WHERE is_open = TRUE 
+                                AND has_spec = TRUE 
+                                AND is_computer_readable = TRUE"
+                                );
+                $stmt->bindValue("dataset_id",$dataset->getId());
+                $stmt->execute();
+                $result = $stmt->fetch();
+
+                if(count($result)<=1){
+                     $boolean_res["setIsGoodLicense"] = FALSE;   
+                }
+                
+                return $boolean_res;
         }
-
-        $boolean_res["isTitleAndSummary"] = TRUE;
-        $boolean_res["isReleasedOn"] = TRUE;
-        $boolean_res["isProvider"] = TRUE;
-        $boolean_res["isLastUpdateOn"] = TRUE;
-        $boolean_res["isOwner"] = TRUE;
-        $boolean_res["isMaintainer"] = TRUE;
-        $boolean_res["isGoodLicense"] = TRUE;
-        //$boolean_res["isAtLeastOneGoodFormat"] = TRUE;
-
-        if ( in_array("name", $null_value_key ) || in_array("summary", $null_value_key)  ) {
-            $boolean_res["isTitleAndSummary"] = FALSE;
-        }
-        if ( in_array("owner", $null_value_key )) {
-            $boolean_res["isOwner"] = FALSE;
-        }
-        if ( in_array("provider", $null_value_key )) {
-            $boolean_res["isProvider"] = FALSE;
-        }
-        if ( in_array("last_updated_on", $null_value_key )) {
-            $boolean_res["isLastUpdateOn"] = FALSE;
-        }
-        if ( in_array("maintainer", $null_value_key )) {
-            $boolean_res["isMaintainer"] = FALSE;
-        }
-        if ( in_array("released_on", $null_value_key )) {
-            $boolean_res["isReleasedOn"] = FALSE;
-        }
-        if ( in_array("released_on", $null_value_key )) {
-            $boolean_res["isReleasedOn"] = FALSE;
-        }
-        if ( in_array("license", $null_value_key )) {
-            $boolean_res["isGoodLicence"] = FALSE;
-        }
-
-        // License is good ?
-        //echo getcwd()."/src/Odalisk/Resources/licences.json";
-        //echo file_get_contents("src/Odalisk/Resources/licenses.json");
-
-        //$licenses = json_decode(file_get_contents("src/Odalisk/Resources/licenses.json") );
-        //print_r($licenses);
-    }
-
-
-    /*
-    protected $is_good_license;
-    /*
-    protected $is_at_least_one_good_format;
-    */
 }

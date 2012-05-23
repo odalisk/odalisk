@@ -36,28 +36,28 @@ class License
     /**
      * @var string $authorship
      *
-     * @ORM\Column(name="authorship", type="string", length=255)
+     * @ORM\Column(name="authorship", type="boolean")
      */
     protected $authorship;
 
     /**
      * @var string $reuse
      *
-     * @ORM\Column(name="reuse", type="string", length=255)
+     * @ORM\Column(name="reuse", type="boolean")
      */
     protected $reuse;
 
     /**
      * @var string $redistribution
      *
-     * @ORM\Column(name="redistribution", type="string", length=255)
+     * @ORM\Column(name="redistribution", type="boolean")
      */
     protected $redistribution;
 
     /**
      * @var string $commercial
      *
-     * @ORM\Column(name="commercial", type="string", length=255)
+     * @ORM\Column(name="commercial", type="boolean")
      */
     protected $commercial;
 

@@ -57,12 +57,12 @@ class FormatNormalizer
                 $result[$format] = $this->formats[$format];
 			} else {
                 error_log('Format inconnu ! => '.$format);
-                $result[] = $this->formats['unknown'];
+                $result['unknown'] = $this->formats['unknown'];
 			}
 		}
-		//print_r($result);
+
         $result['raw'] = implode(', ', $formats);
-		return($result);
+		return $result;
 	}
 
     private function _trim($value)

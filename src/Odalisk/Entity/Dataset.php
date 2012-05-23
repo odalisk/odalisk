@@ -495,4 +495,14 @@ class Dataset
     {
         return $this->portal;
     }
+
+    /**
+     * Add license
+     *
+     * @param Odalisk\Entity\License $license
+     */
+    public function addLicense(\Odalisk\Entity\License $license)
+    {
+        $this->license[] = $license;
+    }
 }

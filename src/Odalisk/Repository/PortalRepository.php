@@ -11,9 +11,9 @@ class PortalRepository extends EntityRepository
         $sth = $this->getEntityManager()
             ->getConnection()
             ->prepare('DELETE FROM datasets
-                    WHERE portal_id = :poral_id
-                    ')
-            ->execute(array('portal_id' => $portal->getId()));
+                    WHERE portal_id = :portal_id
+                    ');
+        $sth->execute(array('portal_id' => $portal->getId()));
     }
 
     public function getPortalsSlice($page_index, $page_size)

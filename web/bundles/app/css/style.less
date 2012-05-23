@@ -104,9 +104,32 @@ body {
             .key {
                 text-align:right;
                 margin-right:10px;
+                min-width:110px;
+                vertical-align:middl;
+                
+            }
+            
+            .label {
+                position:relative;
+                display:inline-block;
+                top:-1px;
             }
             
         }
+        
+        .dataset-summary {
+            margin-top:20px;
+            background:white;
+            padding:10px;
+            color:#555;
+            .border-radius(3px);
+            border:1px solid #DDD;
+        }
+        
+        .container-fluid {
+            padding:0px;
+        }
+        
         .row-fluid {
             margin-top:0px;
         }
@@ -287,7 +310,7 @@ body {
         
         
         
-        tr.dataset-item, tr.portal-item {
+        tr.dataset-item{
             a {
                 //color:#555;
             }
@@ -323,7 +346,24 @@ body {
         
     }
     
-    
+    .portal-item {
+        .border-radius(3px);
+        border:1px solid #ddd;
+        
+        margin-bottom:10px;
+        header {
+            #gradient > .vertical(#eee, #ddd);
+            padding:5px 10px;
+            h3:first-letter {
+                text-transform:uppercase;
+            }
+        }
+        
+        .content {
+            padding:10px;
+        }
+        
+    }
 }
 
 
@@ -420,7 +460,7 @@ body {
                         background:url("/bundles/app/img/browser.png");
                         background-repeat:no-repeat;
                         background-position:bottom center;
-                        background-size: 80% auto;
+                        background-size: 70% auto;
                         padding-bottom:0px;
                         height:200px;
                         z-index:2;
@@ -544,17 +584,7 @@ body {
         margin:0px;
     }
     
-    .nav > li > a {
-        font-weight:normal;
-    }
     
-    .tag-list span.label span {
-        float:right;
-    }
-    
-    .tag-list span.label span.label-name {
-        float:none !important;
-    }
 }
 
 
@@ -591,6 +621,18 @@ body {
         padding-bottom:0px;
         height:200px;
         z-index:2;
+    }
+    
+    .nav > li > a {
+        font-weight:normal;
+    }
+    
+    .tag-list span.label span {
+        float:right;
+    }
+    
+    .tag-list span.label span.label-name {
+        float:none !important;
     }
 }
 

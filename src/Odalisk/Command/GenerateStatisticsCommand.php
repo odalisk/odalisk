@@ -47,51 +47,22 @@ class GenerateStatisticsCommand extends ContainerAwareCommand
         $datasets = $repository->findAll();
 
 
-        $portalRepository = $this->getContainer()
-            ->get('doctrine')
-            ->getRepository('Odalisk\Entity\Portal');
-        $portals = $portalRepository->findAll();
-
-        foreach ($portals as $portal) {
-            $rep = $portalRepository->getLicenseDistribution($portal);
-            foreach ($rep as $format => $qt) {
-                echo "$format -> $qt\n";
-            }
-        }
-        
-
-
-
         $criteriaRepository = $this->getContainer()
             ->get('doctrine')
             ->getRepository('Odalisk\Entity\DatasetCriteria');
 
 
         foreach ($datasets as $dataset) {
-            //echo $dataset->getName()."\n";
 
-            //$datasetCriteria = new DatasetCriteria();
-            //$criteriaRepository->getCriteria($dataset);
-            /*
-            $datasetCriteria->setIsTitleAndSummary($criteriaRepository->getIsTitleAndSummary($dataset));
-            $datasetCriteria->setIsReleasedOn($criteriaRepository->getIsReleasedOn($dataset));
-            $datasetCriteria->setIsLastUpdateOn($criteriaRepository->getIsLastUpdateOn($dataset));
-            $datasetCriteria->setIsProvider($criteriaRepository->getIsProvider($dataset));
-            $datasetCriteria->setIsOwner($criteriaRepository->getIsOwner($dataset));
-            $datasetCriteria->setIsProvider($criteriaRepository->getIsProvider($dataset));
-            $datasetCriteria->setIsMaintainer($criteriaRepository->getIsMaintainer($dataset));
-            */
-            /*
-            $stats->setDatasetsCount($statsRepository->getDatasetsCount($portal));
-            $stats->setInChargePersonCount($statsRepository->getInChargePersonCount($portal));
-            $stats->setReleasedOnExistCount($statsRepository->getReleasedOnExistCount($portal));
-            $stats->setLastUpdatedOnExistCount($statsRepository->getLastUpdatedOnExistCount($portal));
-            $stats->setCategoryExistCount($statsRepository->getCategoryExistCount($portal));
-            $stats->setSummaryAndTitleCount($statsRepository->getSummaryAndTitleAtLeastCount($portal));
-            $stats->setLicenseCount($statsRepository->getlicenseCount($portal));
-            */
-            //$this->em->persist($datasetCriteria);
-            //$this->em->flush();
+            $datasetCriteria = new DatasetCriteria();
+            $metrics = $criteriaRepository->getCriteria($dataset);
+            foreach ($metrics as $key => $value) {
+                call_user_func(array($datasetCriteria,$key), $value);
+            }
+
+            $dataset->setCriteria($datasetCriteria);
+            $this->em->persist($datasetCriteria);
+            $this->em->flush();
 
         }
 

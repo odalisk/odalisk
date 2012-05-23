@@ -1,25 +1,88 @@
+# The arborescence of this file has 4 levels :
+# - The category
+# - sections of these catgories. Each section must have a "weight" attribute.
+# This weight refers to the weight of the section in the category. Sections
+# may have a "subsections" attribute.
+# - subsections of these sections. Each subsection must have a "weight"
+# attribute.
 parameters:
     metrics:
-        dataset:
-            # general 
-            is_title_and_summary:
-                ponderation: 1
-            is_owner:
-                ponderation: 1
-            is_provider:
-                ponderation: 1
-            is_last_updated_on:
-                ponderation: 1
-            is_maintainer:
-                ponderation: 1
-            is_released_on:
-                ponderation: 1
-            # license
-            is_good_license:
-                ponderation: 1
-            is_license_quality:
-                ponderation: 1
-            # format
-            is_at_least_one_good_format:
-                ponderation: 1
-        portal:
+        # Usability category
+        usability:
+            sections:
+                - search:
+                    weight: 100
+                    subsections:
+                        - search_engine_provided:
+                            weight: 60
+                            subsubsections: []
+                        - searchable_metadata:
+                            weight: 25
+                            subsubsections: []
+                        - licence_filtering:
+                            weight: 15
+                            subsubsections: []
+        # Cataloging category
+        cataloging:
+            sections:
+                - identification:
+                    weigth: 20
+                    subsections:
+                        - identity_person_in_charge:
+                            weight: 100
+                            subsubsections: []
+                - general:
+                    weight: 60
+                    subsections:
+                        - title_and_summary:
+                            weight: 60
+                            subsubsections: []
+                        - category:
+                            weigth: 40
+                            subsubsections: []
+                - temporal:
+                    weight: 20
+                    subsections:
+                        - creation_date:
+                            weight: 40
+                            subsubsections: []
+                        - update_date:
+                            weight: 60
+                            subsubsections: []
+        # API category
+        api:
+            sections:
+                - exists:
+                    weight: 70
+                    subsections: []
+                - documentation:
+                    weight: 30
+                    subsections: []
+        # Liveliness category
+        liveliness:
+            sections:
+                - user_input:
+                    weight: 80
+                    subsections:
+                        - rating_possibilty:
+                            weight: 15
+                            subsubsections: []
+                        - link_support_resources:
+                            weight: 50
+                            subsubsections:
+                                - forum_section:
+                                    weight: 80
+                                - contact_form_link:
+                                    weight: 20
+                        - feedback_channel:
+                            weight: 15
+                            subsubsections: []
+                        - suggest_dataset:
+                            weight: 20
+                            subsubsections: []
+                - information:
+                    weight: 20
+                    subsections:
+                        - opendata_explained:
+                            weight: 100
+                            subsubsections: []

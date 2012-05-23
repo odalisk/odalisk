@@ -57,7 +57,7 @@ services:
     date_normalizer:
         class: Odalisk\Scraper\Tools\Normalize\DateNormalizer
         arguments:
-            - %kernel.project_root%/logs/formats.log
+            - %kernel.project_root%/logs/dates.log
 
     # The various portals we want to analyse :
     # Base object for all our portals

@@ -18,6 +18,7 @@ class CategoryNormalizer
     {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getEntityManager();
+        $this->er = $this->em->getRepository('Odalisk\Entity\Category');
 
         $this->log = $log;
     }
@@ -25,7 +26,10 @@ class CategoryNormalizer
     public function init($yaml)
     {
         foreach ($yaml as $category => $data) {
-            $c = new \Odalisk\Entity\Category($category);
+            $c = $this->er->findOneByCategory($category);
+            if (!$c) {
+                $c = new \Odalisk\Entity\Category($category);
+            }
             foreach ($data['aliases'] as $alias) {
                 $c->addAlias($alias);
                 $this->aliases[strtolower($alias)] = strtolower($category);

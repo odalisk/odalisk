@@ -83,6 +83,11 @@ class Portal
      */
     protected $datasets;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Odalisk\Entity\PortalCriteria")
+     */
+    protected $criteria;
+
     public function __construct()
     {
         $this->datasets = new ArrayCollection();
@@ -279,5 +284,25 @@ class Portal
     public function getUpdatedAt()
     {
         return $this->updated_at;
+    }
+
+    /**
+     * Set criteria
+     *
+     * @param Odalisk\Entity\PortalCriteria $criteria
+     */
+    public function setCriteria(\Odalisk\Entity\PortalCriteria $criteria)
+    {
+        $this->criteria = $criteria;
+    }
+
+    /**
+     * Get criteria
+     *
+     * @return Odalisk\Entity\PortalCriteria 
+     */
+    public function getCriteria()
+    {
+        return $this->criteria;
     }
 }

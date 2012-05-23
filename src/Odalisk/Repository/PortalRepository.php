@@ -11,31 +11,18 @@ class PortalRepository extends EntityRepository
         $sth = $this->getEntityManager()
             ->getConnection()
             ->prepare('DELETE FROM datasets
-                    WHERE portal_id = :poral_id
-                    ')
-            ->execute(array('portal_id' => $portal->getId()));
-    }
-
-    public function getPortalsSlice($page_index, $page_size)
-    {
-        return $this->getEntityManager()
-            ->createQuery('
-                SELECT p
-                FROM Odalisk\Entity\Portal p
-                ORDER BY p.name ASC
-            ')
-            ->setFirstResult($page_index * $page_size)
-            ->setMaxResults($page_size)
-            ->getResult();
+                    WHERE portal_id = :portal_id
+                    ');
+        $sth->execute(array('portal_id' => $portal->getId()));
     }
     
     public function getPortalCountries()
     {
         $data = $this->getEntityManager()
             ->createQuery('
-                    SELECT DISTINCT p.country 
-                    FROM Odalisk\Entity\Portal p
-                    ORDER BY p.country ASC')
+                SELECT DISTINCT p.country 
+                FROM Odalisk\Entity\Portal p
+                ORDER BY p.country ASC')
             ->getResult();
 
         $result = array();
@@ -49,9 +36,9 @@ class PortalRepository extends EntityRepository
     {
         $data = $this->getEntityManager()
             ->createQuery('
-                    SELECT DISTINCT p.entity 
-                    FROM Odalisk\Entity\Portal p
-                    ORDER BY p.entity ASC')
+                SELECT DISTINCT p.entity 
+                FROM Odalisk\Entity\Portal p
+                ORDER BY p.entity ASC')
             ->getResult();
 
         $result = array();

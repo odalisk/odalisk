@@ -1,6 +1,6 @@
 {% if datasets|length > 0 %}
     {% for dataset in datasets %}
-        {% include 'App:Dataset:table-item.html.twig' with {'dataset': dataset[0]} %}
+        {% include 'App:Dataset:table-item.html.twig' with {'dataset': dataset} %}
     {% endfor %}
     {% if datasets|length == 20 %}
         <tr>

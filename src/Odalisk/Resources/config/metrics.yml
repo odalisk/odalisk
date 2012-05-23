@@ -1,0 +1,25 @@
+parameters:
+    metrics:
+        dataset:
+            # general 
+            is_title_and_summary:
+                ponderation: 1
+            is_owner:
+                ponderation: 1
+            is_provider:
+                ponderation: 1
+            is_last_updated_on:
+                ponderation: 1
+            is_maintainer:
+                ponderation: 1
+            is_released_on:
+                ponderation: 1
+            # license
+            is_good_license:
+                ponderation: 1
+            is_license_quality:
+                ponderation: 1
+            # format
+            is_at_least_one_good_format:
+                ponderation: 1
+        portal:

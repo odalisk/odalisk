@@ -71,7 +71,7 @@ class FormatNormalizer
             } elseif(array_key_exists($format, $this->aliases)) {
                 $result[$this->aliases[$format]] = $this->formats[$this->aliases[$format]];
 			} else {
-                error_log('[Unknown file format ] ' . $format);
+                error_log('[Unknown file format ] '.$format);
                 $result['unknown'] = $this->formats['unknown'];
 			}
 		}
@@ -82,7 +82,7 @@ class FormatNormalizer
 
     private function _trim($value)
     {
-        return(trim($value));
-        //return trim($value, " \t\n\r\0\x0B\"'[]&.");
+        //return(trim($value));
+        return trim($value, " \t\n\r\0\x0B\"'[]()&.");
     }
 }

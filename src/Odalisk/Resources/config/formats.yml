@@ -19,7 +19,7 @@ parameters:
             is_computer_readable: false
         csv:
             aliases:
-                - 'comma separated variable (csv)'
+                - 'comma separated variable (csv' # The parenthesis was striped by regexs.
                 - 'csv file'
                 - 'csv per garmin tom tom'
                 - 'csv zip'

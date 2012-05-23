@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Odalisk\Entity\Category
  *
  * @ORM\Table(name="categories")
- * @ORM\Entity(repositoryClass="Odalisk\Repository\CategoryRepository")
+ * @ORM\Entity
  */
 class Category
 {

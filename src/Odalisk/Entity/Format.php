@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Odalisk\Entity\Format
  *
  * @ORM\Table(name="formats")
- * @ORM\Entity(repositoryClass="Odalisk\Repository\FormatRepository")
+ * @ORM\Entity
  */
 class Format
 {

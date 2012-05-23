@@ -20,24 +20,24 @@
                     <div class="span4">
                         <table class="table table-bordered ">
                             <tr>
-                                <td class="key">Catégories</td>
-                                <td>Urbanisme</td>
+                                <td class="key">Entity</td>
+                                <td>{{ portal.entity }}</td>
                             </tr>
                             <tr>
-                                <td class="key">Fréquence</td>
-                                <td>Trimestrielle</td>
+                                <td class="key">Country</td>
+                                <td>{{ portal.country }}</td>
                             </tr>
                             <tr>
-                                <td class="key">Mise à disposition</td>
-                                <td>17/11/2011</td>
+                                <td class="key">Type</td>
+                                <td>{{ portal.status}}</td>
                             </tr>
                             <tr>
-                                <td class="key">Mise à jour</td>
-                                <td>15/02/2012</td>
+                                <td class="key">First crawl <span class="label icon-info label-info" rel="popover" title="First crawl" data-content="First time we crawled the portal.">i</span></td>
+                                <td>{{ portal.createdAt|date("d/m/Y") }}</td>
                             </tr>
                             <tr>
-                                <td class="key">Licence</td>
-                                <td><span class="label label-success">ODBL</span></td>
+                                <td class="key">Last crawl <span class="label icon-info label-info" rel="popover" title="Last crawl" data-content="Last time we crawled the portal.">i</span></td>
+                                <td>{{ portal.createdAt|date("d/m/Y") }}</td>
                             </tr>
                         </table>
                     </div>

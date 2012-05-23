@@ -69,6 +69,7 @@ parameters:
                 - 'Licence inconnue'
                 - 'Use limitation'
                 - 'Other'
+                - ''
             authorship: false
             reuse: false
             redistribution: false

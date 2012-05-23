@@ -43,19 +43,24 @@ class DatasetCriteriaRepository extends EntityRepository
 
     public function getLicenseCriteria() {
         $license = $this->dataset->getLicense();
-        $this->criteria['setIsGoodLicense']  = $license->isGoodLicense();
-        $this->criteria['setLicenseQuality'] = $license->getQuality();
+        if($license) {
+            $this->criteria['setIsGoodLicense']  = $license->isGoodLicense();
+            $this->criteria['setLicenseQuality'] = $license->getQuality();
+        } else {
+            $this->criteria['setIsGoodLicense']  = 0;
+            $this->criteria['setLicenseQuality'] = 0;
+        }
     }
 
     public function getFormatCriteria() {
         $formats = $this->dataset->getFormats();
         foreach($formats as $format) {
             if($format->isGood()) {
-                $this->criteria['isIsAtLeastOneGoodFormat'] = true;
+                $this->criteria['setIsAtLeastOneGoodFormat'] = true;
                 return;
             }
         }
 
-        $this->criteria['isIsAtLeastOneGoodFormat'] = false;
+        $this->criteria['setIsAtLeastOneGoodFormat'] = false;
     }
 }

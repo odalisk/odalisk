@@ -40,9 +40,8 @@ class GenerateStatisticsCommand extends BaseCommand
 
         $this->writeBlock($output, "[Statistics] Beginning of generation");
 
-        $i = 0;
-        foreach($datasetsIds as $datasetId) {
-            $datasetId = $datasetId[0]['id'];
+        foreach($datasetsIds as $i => $datasetId) {
+            $datasetId = $datasetId[$i]['id'];
             $dataset = $datasetRepo->find($datasetId);
             $criteria = $criteriaRepo->getCriteria($dataset);
 
@@ -55,7 +54,7 @@ class GenerateStatisticsCommand extends BaseCommand
             $this->em->persist($datasetCriteria);
 
             $i++;
-            if($i % 1000 == 0) {
+            if($i % 100 == 0) {
                 $this->em->flush();
                 error_log("[Statistics] flush $i% datasets' criteria on $datasetsCount");
             }

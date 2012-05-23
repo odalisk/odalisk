@@ -5,18 +5,18 @@ use Doctrine\ORM\EntityRepository;
 
 class DatasetRepository extends EntityRepository
 {
-    public function getFileFormatsCount($datasetId)
+    public function getFormats($datasetId)
     {
-        $query = $this->getEntityManager()
-            ->createQuery('
-                    SELECT count(*)
+        $sth = $this->getEntityManager()
+            ->getConnection()
+            ->prepare('
+                    SELECT (formats.format)
                     FROM formats JOIN dataset_format ON (id = format_id)
                     WHERE dataset_id = :datasetId
                     GROUP BY(format);
-            ')->setParameter('datasetId', $datasetId)
-        ;
-
-
+                    ');
+        $sth = $sth->execute(array('datasetId' => $datasetId));
+        $res = $sth->fetchColumn();
     }
 
 }

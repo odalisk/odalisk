@@ -13,100 +13,49 @@ use Doctrine\ORM\EntityRepository;
 class DatasetCriteriaRepository extends EntityRepository
 {
 
-	public function getCriteria($dataset){
+    private $criteria;
+    private $dataset;
 
-                $stmt = $this->getEntityManager()
-                     ->getConnection()
-                     ->prepare("
-        			SELECT * 
-        			FROM  `datasets` 
-        			WHERE  `id` = :dataset_id"
-                		);
-                $stmt->bindvalue("dataset_id",$dataset->getId());
-                $stmt->execute();
-                $result = $stmt->fetch();
+    public function init() {
+        $this->criteria = array();
+    }
 
-                
-                $boolean_res = array();
-                $null_value_key = array();
+    public function getCriteria($dataset) {
+        $this->dataset = $dataset;
 
-                foreach ($result as $key => $value) {
+        $this->getGeneralCriteria();
+        $this->getLicenseCriteria();
+        $this->getFormatCriteria();
 
-                    if ($value === NULL) {
-                        $null_value_key[] = "$key";
-                    }
-                }
+        return($this->criteria);
+    }
 
-                $boolean_res["setIsTitleAndSummary"] = TRUE;
-                $boolean_res["setIsReleasedOn"] = TRUE;
-                $boolean_res["setIsProvider"] = TRUE;
-                $boolean_res["setIsLastUpdateOn"] = TRUE;
-                $boolean_res["setIsOwner"] = TRUE;
-                $boolean_res["setIsMaintainer"] = TRUE;
-                $boolean_res["setIsGoodLicense"] = TRUE;
-                $boolean_res["setIsAtLeastOneGoodFormat"] = TRUE;
+    public function getGeneralCriteria() {
+        $d = $this->dataset;
 
-                if ( in_array("name", $null_value_key ) || in_array("summary", $null_value_key)  ) {
-                    $boolean_res["setIsTitleAndSummary"] = FALSE;
-                }
-                if ( in_array("owner", $null_value_key )) {
-                    $boolean_res["setIsOwner"] = FALSE;
-                }
-                if ( in_array("provider", $null_value_key ) and in_array("owner", $null_value_key )) {
-                    $boolean_res["setIsProvider"] = FALSE;
-                }
-                if ( in_array("last_updated_on", $null_value_key )) {
-                    $boolean_res["setIsLastUpdateOn"] = FALSE;
-                }
-                if ( in_array("maintainer", $null_value_key )) {
-                    $boolean_res["setIsMaintainer"] = FALSE;
-                }
-                if ( in_array("released_on", $null_value_key )) {
-                    $boolean_res["setIsReleasedOn"] = FALSE;
-                }
-                if ( in_array("released_on", $null_value_key )) {
-                    $boolean_res["setIsReleasedOn"] = FALSE;
-                }
-                if ( in_array("license", $null_value_key )) {
-                    $boolean_res["setIsGoodLicense"] = FALSE;
-                }
+        $this->criteria['setIsTitleAndSummary'] = ($d->getName() && $d->getSummary());
+        $this->criteria['setIsOwner'] = $d->getOwner() != NULL;
+        $this->criteria['setIsProvider'] = ($d->getProvider() && $d->getOwner());
+        $this->criteria['setIsLastUpdateOn'] = $d->getLastUpdatedOn() != NULL;
+        $this->criteria['setIsMaintainer'] = $d->getMaintainer() != NULL;
+        $this->criteria['setIsReleasedOn'] = $d->getReleasedOn() != NULL;
+    }
 
+    public function getLicenseCriteria() {
+        $license = $this->dataset->getLicense();
+        $this->criteria['setIsGoodLicense']  = $license->isGoodLicense();
+        $this->criteria['setLicenseQuality'] = $license->getQuality();
+    }
 
-                // License is good ?
-                $stmt = $this->getEntityManager()
-                     ->getConnection()
-                     ->prepare("
-                                SELECT authorship, reuse, redistribution, commercial 
-                                FROM (SELECT * FROM `dataset_license` WHERE `dataset_id` = :dataset_id) as d 
-                                JOIN licenses on d.`license_id` = licenses.id 
-                                WHERE authorship = TRUE 
-                                AND reuse = TRUE
-                                AND redistribution = TRUE 
-                                AND commercial = TRUE
-                                "
-                                );
-                $stmt->bindValue("dataset_id",$dataset->getId());
-                $stmt->execute();
-                $result = $stmt->fetch();
-
-                // One good format ?
-                $stmt = $this->getEntityManager()
-                     ->getConnection()
-                     ->prepare("
-                                SELECT * FROM (SELECT * FROM `dataset_format` WHERE `dataset_id` = 50) as d 
-                                JOIN formats on `format_id` = formats.id 
-                                WHERE is_open = TRUE 
-                                AND has_spec = TRUE 
-                                AND is_computer_readable = TRUE"
-                                );
-                $stmt->bindValue("dataset_id",$dataset->getId());
-                $stmt->execute();
-                $result = $stmt->fetch();
-
-                if(count($result)<=1){
-                     $boolean_res["setIsGoodLicense"] = FALSE;   
-                }
-                
-                return $boolean_res;
+    public function getFormatCriteria() {
+        $formats = $this->dataset->getFormats();
+        foreach($formats as $format) {
+            if($format->isGood()) {
+                $this->criteria['isIsAtLeastOneGoodFormat'] = true;
+                return;
+            }
         }
+
+        $this->criteria['isIsAtLeastOneGoodFormat'] = false;
+    }
 }

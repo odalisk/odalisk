@@ -72,6 +72,13 @@ class DatasetCriteria
     protected $is_good_license;
 
     /**
+     * @var string $is_good_license
+     *
+     * @ORM\Column(name="license_quality", type="integer")
+     */
+    protected $license_quality;
+
+    /**
      * @var string $is_at_least_one_good_format
      *
      * @ORM\Column(name="is_at_least_one_good_format", type="boolean", nullable=false)
@@ -247,5 +254,25 @@ class DatasetCriteria
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set license_quality
+     *
+     * @param integer $licenseQuality
+     */
+    public function setLicenseQuality($licenseQuality)
+    {
+        $this->license_quality = $licenseQuality;
+    }
+
+    /**
+     * Get license_quality
+     *
+     * @return integer 
+     */
+    public function getLicenseQuality()
+    {
+        return $this->license_quality;
     }
 }

@@ -184,4 +184,17 @@ class Format
     {
         return $this->is_computer_readable;
     }
+
+    /**
+     * Is the format good ?
+     *
+     * @return boolean
+     */
+    public function isGood() {
+        return(
+                $this->getIsOpen() &&
+                $this->getHasSpec() &&
+                $this->getIsComputerReadable()
+              );
+    }
 }

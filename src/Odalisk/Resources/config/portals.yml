@@ -12,12 +12,20 @@ parameters:
 
     # All the information we need for each platfom. Will be used to initialize the services
     portals.nantes:
-        name:       "data.nantes.fr"
-        base_url:   "http://data.nantes.fr/"
-        api_url:    "http://data.nantes.fr/api/datastore_searchdatasets/1.0/39W9VSNCSASEOGV/?output=json"
-        country:    "France"
-        entity:     "City of Nantes"
-        status:     "Institutional"
+        name:            "data.nantes.fr"
+        base_url:        "http://data.nantes.fr/"
+        api_url:         "http://data.nantes.fr/api/datastore_searchdatasets/1.0/39W9VSNCSASEOGV/?output=json"
+        country:         "France"
+        entity:          "City of Nantes"
+        status:          "Institutional"
+        search_engine:   true
+        metadata_search: true
+        filtering_license_search: false
+        forum_section:   true
+        contact_form: true
+        rating_dataset: false   
+        comment_dataset: false
+        suggest_dataset: false
 
     portals.loire_atlantique:
         name:       "data.loire-atlantique.fr"
@@ -26,6 +34,14 @@ parameters:
         country:    "France"
         entity:     "Loire Atlantique General Council"
         status:     "Institutional"
+        search_engine:   true
+        metadata_search: true
+        filtering_license_search: false
+        forum_section:   true
+        contact_form: true
+        rating_dataset: false 
+        comment_dataset: false
+        suggest_dataset: true
 
     portals.socrata:
         name:       "opendata.socrata.com"
@@ -34,7 +50,14 @@ parameters:
         country:    "USA"
         entity:     "Socrata"
         status:     "Private"
-
+        search_engine:   true
+        metadata_search: true
+        filtering_license_search: false
+        forum_section:   false
+        contact_form: true
+        rating_dataset: true
+        comment_dataset: true
+        
     portals.new_york:
         name:       "nycopendata.socrata.com"
         base_url:   "https://nycopendata.socrata.com"
@@ -42,6 +65,13 @@ parameters:
         country:    "USA"
         entity:     "City of New York"
         status:     "Institutional"
+        search_engine:   true
+        metadata_search: true
+        filtering_license_search: false
+        forum_section:   false
+        contact_form: true
+        rating_dataset: true
+        comment_dataset: true
 
     portals.usa_gov:
         name:       "www.data.gov"
@@ -50,6 +80,13 @@ parameters:
         country:    "USA"
         entity:     "United States Government"
         status:     "Institutional"
+        search_engine:   true
+        metadata_search: true
+        filtering_license_search: false
+        forum_section:   true
+        contact_form: true
+        rating_dataset: true
+        comment_dataset: true
 
     portals.uk_gov:
         name:       "data.gov.uk"
@@ -58,6 +95,13 @@ parameters:
         country:    "United Kingdom"
         entity:     "UK Government"
         status:     "Institutional"
+        search_engine:   true
+        metadata_search: true
+        filtering_license_search: false
+        forum_section:   true
+        contact_form: true
+        rating_dataset: true
+        comment_dataset: true
 
     portals.eu_gov:
         name:       "publicdata.eu"
@@ -66,6 +110,13 @@ parameters:
         country:    "European Union"
         entity:     "European Linked Open Data Consortium"
         status:     "Private non-profit making"
+        search_engine:   true
+        metadata_search: true
+        filtering_license_search: false
+        forum_section:   false
+        contact_form: true
+        rating_dataset: false
+        comment_dataset: false
 
     portals.data_publica:
         name:       "data-publica.com"
@@ -74,6 +125,13 @@ parameters:
         country:    "France"
         entity:     "Data Publica"
         status:     "For profit"
+        search_engine:   true
+        metadata_search: true
+        filtering_license_search: true
+        forum_section:   false
+        contact_form: true
+        rating_dataset: false
+        comment_dataset: true
 
     portals.data_market:
         name:       "datamarket.com"
@@ -82,3 +140,10 @@ parameters:
         country:    "Iceland"
         entity:     "DataMarket"
         status:     "Private, For profit"
+        search_engine:   true
+        metadata_search: true
+        filtering_license_search: false
+        forum_section:   false
+        contact_form: true
+        rating_dataset: false
+        comment_dataset: false

@@ -14,7 +14,7 @@
                             <td class="key">Category</td>
                             <td>
                                 {% for category in dataset.categories %}
-                                    {{ category }}{% if dataset.categories|length > 1 %}, {% endif %}
+                                    {{ category }}{% if dataset.categories|length == loop.index and dataset.categories|length > 1 %}, {% endif %}
                                 {% endfor %}
                             </td>
                         </tr>
@@ -29,7 +29,7 @@
                         <tr>
                             <td class="key">Licence</td>
                             <td><span class="label label-success">
-                                {% for license in dataset.license %}
+                                {% for license in dataset.licenses %}
                                     {{ license }}{% if dataset.license|length > 1 %}, {% endif %}
                                 {% endfor %}
                                 </span></td>

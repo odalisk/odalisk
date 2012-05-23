@@ -85,7 +85,8 @@ class DateNormalizer
                         $data[$field] = \Datetime::createFromFormat($formats[count($m)-1], $date)->format("d-m-Y H:i");
                         if (false === $data[$field]) {
                             error_log(
-                                '[>>> False positive] ' . $date . ' with ' . $regex . ' (count = ' . (count($m)-1) .")\n", 
+                                '[' . date('d-M-Y H:i:s') . '] [>>> False positive] ' 
+                                . $date . ' with ' . $regex . ' (count = ' . (count($m)-1) .")\n", 
                                 3, $this->log
                             );
                             $data[$field] = null;
@@ -100,7 +101,7 @@ class DateNormalizer
                     $data[$field] = null;
                 } else {
                     // Not something we recognize
-                    error_log('[Unknown date format] ' . $date . "\n", 3, $this->log);
+                    error_log('[' . date('d-M-Y H:i:s') . '] [Unknown date format] ' . $date . "\n", 3, $this->log);
                     $data[$field] = $date;
                 }
                 $date = null;

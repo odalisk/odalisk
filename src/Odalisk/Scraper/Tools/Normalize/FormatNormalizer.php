@@ -74,7 +74,7 @@ class FormatNormalizer
             } elseif (array_key_exists($format, $this->aliases)) {
                 $result[$this->aliases[$format]] = $this->formats[$this->aliases[$format]];
             } else {
-                error_log('[Unknown file format] ' . $format . "\n", 3, $this->log);
+                error_log('[' . date('d-M-Y H:i:s') . '] [Unknown file format] ' . $format . "\n", 3, $this->log);
                 $result['unknown'] = $this->formats['unknown'];
             }
         }

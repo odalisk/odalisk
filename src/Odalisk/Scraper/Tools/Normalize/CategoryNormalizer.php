@@ -65,7 +65,7 @@ class CategoryNormalizer
             } elseif (array_key_exists($category, $this->aliases)) {
                 $result[$this->aliases[$category]] = $this->categories[$this->aliases[$category]];
             } else {
-                error_log('[Unknown category] ' . $category . "\n", 3, $this->log);
+                error_log('[' . date('d-M-Y H:i:s') . '] [Unknown category] ' . $category . "\n", 3, $this->log);
                 $result['other'] = $this->categories['other'];
             }
         }

@@ -114,7 +114,7 @@ jsApi = function() {
         var labels = $('.tag-list .label').toArray();
         
         this.request = new Object();
-        this.request['in'] = new Array();
+        this.request['in'] = new Object();
         this.request['where'] = new Array();
         for(var i in labels)
         {
@@ -128,41 +128,44 @@ jsApi = function() {
                     case 'portal':
                         if(this.request['in']['portal'] == undefined)
                         {
-                            this.request['portal'] = new Array();
+                            this.request['in']['portal'] = new Array();
                         }
                         this.request['in']['portal'].push(label.attr('data-value'));
                     break;
                     case 'category':
-                        if(this.request['in']['category'] == undefined)
+                        if(this.request['in']['categories'] == undefined)
                         {
-                            this.request['category'] = new Array();
+                            this.request['in']['categories'] = new Array();
                         }
-                        this.request['in']['category'].push(label.attr('data-value'));
+                        this.request['in']['categories'].push(label.attr('data-value'));
                     break;
                     case 'format':
-                        if(this.request['in']['format'] == undefined)
+                        if(this.request['in']['formats'] == undefined)
                         {
-                            this.request['format'] = new Array();
+                            this.request['in']['formats'] = new Array();
                         }
-                        this.request['in']['format'].push(label.attr('data-value'));
+                        this.request['in']['formats'].push(label.attr('data-value'));
                     break;
                     case 'license':
                         if(this.request['in']['license'] == undefined)
                         {
-                            this.request['license'] = new Array();
+                            this.request['in']['license'] = new Array();
                         }
                         this.request['in']['license'].push(label.attr('data-value'));
                     break;
                     default:
-                        this.request['where'].push([dataType, '=', label.attr('data-value');
+                        this.request['where'].push([dataType, '=', label.attr('data-value')]);
                     break;
                 }
                 
                 
             }
         }
-        
-        this.request['where'].push(['search', 'LIKE', '%'+this.search+'%';
+        if(this.search != '')
+        {
+            this.request['where'].push(['name', 'LIKE', '%'+this.search+'%']);
+        }
+        console.log(this.request);
     }
     
     
@@ -195,12 +198,9 @@ jsApi = function() {
         $(elem).parent().parent().remove();
         this.page += 1;
         $.post(
-            '/app_dev.php/api/html',
+            '/app_dev.php/api/'+window.searchType+'s/'+this.page+'/'+this.pageSize,
             {
-                'request':window.api.request,
-                'page_number':this.page,
-                'type':window.searchType,
-                'page_size':this.pageSize
+                'request':this.request
             },
             function(data) {
                 

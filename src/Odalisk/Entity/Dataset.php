@@ -463,9 +463,11 @@ class Dataset
      *
      * @param Odalisk\Entity\License $license
      */
-    public function setLicense(\Odalisk\Entity\License $license)
+    public function setLicense(array $licenses)
     {
-        $this->license = $license;
+        foreach ($licenses as $licence) {
+            $this->addLicense($licence);
+        }
     }
 
     /**

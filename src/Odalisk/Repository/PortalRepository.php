@@ -113,6 +113,27 @@ class PortalRepository extends EntityRepository
 	  	return $output;
 	  }
 
+	  public function getLicenseDistribution($portal){
+
+	  	$stmt = $this->getEntityManager()
+	  			->getConnection()
+	  			->prepare('SELECT name, COUNT(*) FROM ( SELECT id FROM `datasets` WHERE portal_id = :portal_id ) as d join `dataset_license` on `dataset_id` = d.id, licenses where `license_id` =  `licenses`.id 
+					GROUP BY `name`'
+	  			);
+
+	  	$stmt->bindValue("portal_id", $portal->getId());
+	  	$stmt->execute();
+	  	$res = $stmt->fetchAll();
+
+	  	$output = array();
+	  	foreach ($res as $key => $value) {
+	  		$output[$value['name']] = $value['COUNT(*)'];
+	  	}
+
+	  	return $output;
+	  }
+
+
 
       public function findAllWithLimit()
       {

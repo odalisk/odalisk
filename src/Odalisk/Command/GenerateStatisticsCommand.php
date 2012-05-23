@@ -53,7 +53,7 @@ class GenerateStatisticsCommand extends ContainerAwareCommand
         $portals = $portalRepository->findAll();
 
         foreach ($portals as $portal) {
-            $rep = $portalRepository->getCategoryDistribution($portal);
+            $rep = $portalRepository->getLicenseDistribution($portal);
             foreach ($rep as $format => $qt) {
                 echo "$format -> $qt\n";
             }
@@ -94,39 +94,6 @@ class GenerateStatisticsCommand extends ContainerAwareCommand
             //$this->em->flush();
 
         }
-
-
-        /*
-        $repository = $this->getContainer()
-            ->get('doctrine')
-            ->getRepository('Odalisk\Entity\Portal');
-        $portals = $repository->findAll();
-
-        $this->em->getConnection()->prepare('TRUNCATE statistics;')->execute();
-        $this->em->flush();
-
-        $statsRepository = $this->getContainer()
-            ->get('doctrine')
-            ->getRepository('Odalisk\Entity\Portal');
-
-
-
-        foreach ($portals as $portal) {
-            echo $portal->getName()."\n";
-
-            $stats = new Statistics();
-            $stats->setPortal($portal);
-            $stats->setDatasetsCount($statsRepository->getDatasetsCount($portal));
-            $stats->setInChargePersonCount($statsRepository->getInChargePersonCount($portal));
-            $stats->setReleasedOnExistCount($statsRepository->getReleasedOnExistCount($portal));
-            $stats->setLastUpdatedOnExistCount($statsRepository->getLastUpdatedOnExistCount($portal));
-            $stats->setCategoryExistCount($statsRepository->getCategoryExistCount($portal));
-            $stats->setSummaryAndTitleCount($statsRepository->getSummaryAndTitleAtLeastCount($portal));
-            $stats->setLicenseCount($statsRepository->getlicenseCount($portal));
-            $this->em->persist($stats);
-            $this->em->flush();
-        }
-        */
 
         $this->writeBlock($output, "End of generating");
     }

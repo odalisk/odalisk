@@ -86,9 +86,9 @@ body {
         background:url('/bundles/app/img/homeback.jpg');
         margin-bottom:10px;
         
-        h1, h2 {
+        /*h1, h2 {
             float:left;
-        }
+        }*/
         
         h1:first-letter {
             text-transform:uppercase;
@@ -143,6 +143,15 @@ body {
                 }
             }
             
+        }
+        
+        &.hero-unit-dataset {
+            h1 {
+                font-size:28px;
+                font-weight:100;
+                
+                letter-spacing:0.05em;
+            }
         }
     }
     
@@ -417,7 +426,6 @@ body {
                         z-index:2;
                     }
                     
-                    background-position:bottom center;
                 }
                 
                 #homeSlide {
@@ -531,15 +539,54 @@ body {
     form {
         margin:0px;
     }
+    
+    .nav > li > a {
+        font-weight:normal;
+    }
+    
+    .tag-list span.label span {
+        float:right;
+    }
+    
+    .tag-list span.label span.label-name {
+        float:none !important;
+    }
 }
 
 
 
 .gecko {
     .blue-font {
-        font-family: Pacifico, cursive;
-        color:#2ECBFA;
+        color:#2081AD;
         background:none;
+        
+        
+    }
+    
+    span.blue-font {
+        font-family:'Helvetica Neue', Helvetica;
+        color:#2081AD !important;
+    }
+    
+    .home {
+        p {
+            font-weight:normal;
+            font-size:13px;
+        }
+    }
+    
+    .bottomImage {
+        bottom:0px;
+        left:0px;
+        right:0px;
+        position:absolute;
+        background:url("/bundles/app/img/browser.png");
+        background-repeat:no-repeat;
+        background-position:bottom center;
+        background-size: auto 80% !important;
+        padding-bottom:0px;
+        height:200px;
+        z-index:2;
     }
 }
 

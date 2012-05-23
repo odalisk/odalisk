@@ -31,6 +31,7 @@ jQuery(function($) {
             if(active.attr('id') == 'browserSlide')
             {
                 $('#headerWrapper').attr('class','backblue');
+                console.log('kikou');
             }
             else
             {

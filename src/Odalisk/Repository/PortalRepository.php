@@ -178,12 +178,11 @@ class PortalRepository extends EntityRepository
 
         $stmt = $this->getEntityManager()
             ->getConnection()
-            ->prepare('SELECT name, COUNT(*) FROM ( SELECT id FROM `datasets` WHERE portal_id = :portal_id ) as d join `dataset_license` on `dataset_id` = d.id, licenses where `license_id` =  `licenses`.id 
-                    GROUP BY `name`'
-                    );
-
-        $stmt->bindValue("portal_id", $portal->getId());
-        $stmt->execute();
+            ->prepare('SELECT licenses.name, COUNT(*)
+            FROM datasets JOIN licenses ON datasets.license_id = licenses.id
+            WHERE datasets.portal_id = :portal_id
+            GROUP BY licenses.name;');
+        $stmt->execute(array('portal_id' => $portal->getId()));
         $res = $stmt->fetchAll();
 
         $output = array();

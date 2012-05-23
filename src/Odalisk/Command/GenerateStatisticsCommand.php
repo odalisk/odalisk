@@ -42,8 +42,8 @@ class GenerateStatisticsCommand extends BaseCommand
         $this->writeBlock($output, "[Statistics] Beginning of generation");
         foreach($datasetsIds as $i => $datasetId) {
             $datasetId = $datasetId[$i]['id'];
-            $dataset = $datasetRepo->find($datasetId);
-            $criteria = $criteriaRepo->getCriteria($dataset);
+            $dataset   = $datasetRepo->find($datasetId);
+            $criteria  = $criteriaRepo->getCriteria($dataset);
 
             $datasetCriteria = new DatasetCriteria();
             foreach($criteria as $name => $value) {

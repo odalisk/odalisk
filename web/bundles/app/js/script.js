@@ -114,7 +114,7 @@ jsApi = function() {
         var labels = $('.tag-list .label').toArray();
         
         this.request = new Object();
-        this.request['in'] = new Array();
+        this.request['in'] = new Object();
         this.request['where'] = new Array();
         for(var i in labels)
         {
@@ -140,11 +140,11 @@ jsApi = function() {
                         this.request['in']['categories'].push(label.attr('data-value'));
                     break;
                     case 'format':
-                        if(this.request['in']['format'] == undefined)
+                        if(this.request['in']['formats'] == undefined)
                         {
-                            this.request['in']['format'] = new Array();
+                            this.request['in']['formats'] = new Array();
                         }
-                        this.request['in']['format'].push(label.attr('data-value'));
+                        this.request['in']['formats'].push(label.attr('data-value'));
                     break;
                     case 'license':
                         if(this.request['in']['license'] == undefined)
@@ -161,8 +161,10 @@ jsApi = function() {
                 
             }
         }
-        
-        this.request['where'].push(['search', 'LIKE', '%'+this.search+'%']);
+        if(this.search != '')
+        {
+            this.request['where'].push(['name', 'LIKE', '%'+this.search+'%']);
+        }
         console.log(this.request);
     }
     
@@ -196,12 +198,9 @@ jsApi = function() {
         $(elem).parent().parent().remove();
         this.page += 1;
         $.post(
-            '/app_dev.php/api/html',
+            '/app_dev.php/api/'+window.searchType+'s/'+this.page+'/'+this.pageSize,
             {
-                'request':window.api.request,
-                'page_number':this.page,
-                'type':window.searchType,
-                'page_size':this.pageSize
+                'request':this.request
             },
             function(data) {
                 

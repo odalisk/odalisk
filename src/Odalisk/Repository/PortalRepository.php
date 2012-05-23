@@ -50,15 +50,6 @@ class PortalRepository extends EntityRepository
         return $sth->fetchAll();
     }
     
-    public function clearData($portal) {
-        $sth = $this->getEntityManager()
-            ->getConnection()
-            ->prepare('DELETE FROM datasets
-                    WHERE portal_id = :portal_id
-                    ');
-        $sth->execute(array('portal_id' => $portal->getId()));
-    }
-    
     public function getPortalCountries()
     {
         $data = $this->getEntityManager()

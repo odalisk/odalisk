@@ -17,15 +17,13 @@ class BrowserController extends Controller
      */
     public function index($_format)
     {
-
-
-        $repository = $this->getDoctrine()
-            ->getRepository('Odalisk\Entity\Portal');
-        $portals = $repository->findAll();
-
+        $portals = $this->getDoctrine()
+            ->getRepository('Odalisk\Entity\Portal')
+            ->findAll();
 
         return $this->render('App:Browser:index.html.twig', array(
             'maintenance_status' => $this->container->getParameter('app.maintenance'),
-            'portals' => $portals));
+            'portals' => $portals)
+        );
     }
 }

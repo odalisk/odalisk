@@ -2,14 +2,13 @@ homepage:
     pattern:    /
     defaults:   { _controller: App:Default:index }
 
+browser:
+    pattern:    /browser
+    defaults:   { _controller: App:Browser:index, _format: html }
 
 portals:
     pattern:    /browser/portals/{_format}
     defaults:   { _controller: App:Portal:index, page_number: 1, _format: html }
-
-browser:
-    pattern:    /browser
-    defaults:   { _controller: App:Browser:index, _format: html }
 
 portal_details:
     pattern:    /browser/portals/details/{portal_number}/{page_number}

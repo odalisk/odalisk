@@ -121,7 +121,7 @@ class Dataset
 
     /**
      * @ORM\ManyToOne(targetEntity="Portal", inversedBy="data_sets")
-     * @ORM\JoinColumn(name="portal_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="portal_id", referencedColumnName="id", onDelete="cascade")
      */
     protected $portal;
 

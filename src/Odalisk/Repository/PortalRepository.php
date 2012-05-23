@@ -6,6 +6,54 @@ use Doctrine\ORM\EntityRepository;
 
 class PortalRepository extends EntityRepository
 {
+    public function getPortalCountries()
+    {
+         $data = $this->getEntityManager()
+            ->createQuery('
+                SELECT DISTINCT p.country 
+                FROM Odalisk\Entity\Portal p
+                ORDER BY p.country ASC')
+            ->getResult();
+        
+        $result = array();
+        foreach($data as $row) {
+            $result[] = $row['country'];
+        }
+        return $result;
+    }
+    
+    public function getPortalEntities()
+    {
+         $data = $this->getEntityManager()
+            ->createQuery('
+                SELECT DISTINCT p.entity 
+                FROM Odalisk\Entity\Portal p
+                ORDER BY p.entity ASC')
+            ->getResult();
+        
+        $result = array();
+        foreach($data as $row) {
+            $result[] = $row['entity'];
+        }
+        return $result;
+    }
+    
+    public function getPortalStatuses()
+    {
+         $data = $this->getEntityManager()
+            ->createQuery('
+                SELECT DISTINCT p.status 
+                FROM Odalisk\Entity\Portal p
+                ORDER BY p.status ASC')
+            ->getResult();
+
+        $result = array();
+        foreach($data as $row) {
+            $result[] = $row['status'];
+        }
+        return $result;
+    }
+    
     public function getDatasetsCount($portal)
       {
         return $this->getEntityManager()

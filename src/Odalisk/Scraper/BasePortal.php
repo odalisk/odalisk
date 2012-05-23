@@ -243,20 +243,8 @@ abstract class BasePortal
     protected function normalizeLicense(&$data)
     {
         if (array_key_exists('setRawLicense', $data)) {
-            $licenses = $this->licenseNormalizer->getLicenses($data['setRawLicense']);
-            if ($data['setRawLicense'] == '[]') {
-                unset($data['setRawLicense']);
-            } elseif (preg_match('/(OKD Compliant::)?UK Open Government Licence \(OGL\)/', $data['setRawLicense'])) {
-                $data['setRawLicense'] = 'OGL';
-            }
-            if(!is_array($licenses)){
-                $licenses = array($licenses);
-            }  
+            $data['addLicense'] = $this->licenseNormalizer->getLicenses($data['setRawLicense']);
         }
-        else{
-            $licenses = array($this->licenseNormalizer->getLicenses(""));
-        }
-        $data['setLicense'] = $licenses;
     }
 
     /**

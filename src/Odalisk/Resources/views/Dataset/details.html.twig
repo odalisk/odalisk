@@ -1,34 +1,38 @@
-{% extends "App::layout.html.twig" %}
+{% extends "App::browser.html.twig" %}
 
 {% block title %}Odalisk project{% endblock %}
 
 {% block content %}
-    <div class="well hero-unit hero-unit-intro">
-        <h1>Data.nantes.fr : </h1><h2>Adresses postales</h2>
+    <div class="well hero-unit hero-unit-intro hero-unit-dataset">
+        <h1>{{ dataset.name }}</h1>
         <div class="clearfix"></div>
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="span4">
                     <table class="table table-bordered ">
                         <tr>
-                            <td class="key">Catégories</td>
-                            <td>Urbanisme</td>
+                            <td class="key">Category</td>
+                            <td>
+                                {% for category in dataset.categories %}
+                                    {{ category }}{% if dataset.categories|length > 1 %}, {% endif %}
+                                {% endfor %}
+                            </td>
                         </tr>
                         <tr>
-                            <td class="key">Fréquence</td>
-                            <td>Trimestrielle</td>
+                            <td class="key">Released on</td>
+                            <td>{{ dataset.releasedOn|date("d/m/Y") }}</td>
                         </tr>
                         <tr>
-                            <td class="key">Mise à disposition</td>
-                            <td>17/11/2011</td>
-                        </tr>
-                        <tr>
-                            <td class="key">Mise à jour</td>
-                            <td>15/02/2012</td>
+                            <td class="key">Last update on</td>
+                            <td>{{ dataset.lastUpdatedOn|date("d/m/Y") }}</td>
                         </tr>
                         <tr>
                             <td class="key">Licence</td>
-                            <td><span class="label label-success">ODBL</span></td>
+                            <td><span class="label label-success">
+                                {% for license in dataset.license %}
+                                    {{ license }}{% if dataset.license|length > 1 %}, {% endif %}
+                                {% endfor %}
+                                </span></td>
                         </tr>
                     </table>
                 </div>

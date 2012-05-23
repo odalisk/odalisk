@@ -57,7 +57,14 @@ class ApiController extends Controller
 
     public function portalTags()
     {
-        return $this->render('App:Api:portal-tags.html.twig', array());
+        $er = $this->getEntityRepository('Odalisk\Entity\Portal');
+        $countries = $er->getPortalCountries();
+        $statuses = $er->getPortalStatuses();
+                
+        return $this->render('App:Api:portal-tags.html.twig', array(
+            'countries' => $countries,
+            'statuses' => $statuses,
+        ));
     }
 
     private function constructQuery($request)

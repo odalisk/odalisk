@@ -67,7 +67,7 @@ class DatasetCriteria
     /**
      * @var string $is_good_license
      *
-     * @ORM\Column(name="is_good_licence", type="boolean", nullable=false)
+     * @ORM\Column(name="is_good_license", type="boolean", nullable=false)
      */
     protected $is_good_license;
 

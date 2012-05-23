@@ -42,8 +42,10 @@ class Metric
 
     /**
      * @ORM\ManyToOne(targetEntity="Metric", inversedBy="subsections")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
 	private $parent;
+
     public function __construct()
     {
         $this->subsections = new \Doctrine\Common\Collections\ArrayCollection();

@@ -62,6 +62,34 @@ class GenerateStatisticsCommand extends BaseCommand
         $this->em->flush();
         error_log("[Statistics] flush $i datasets' criteria");
 
+        // Metrics generation
+        error_log("[Statistics] Metrics generation");
+        $container  = $this->getContainer();
+        $metrics    = $container->getParameter('metrics');
+        $portalRepo = $this->getEntityRepository('Odalisk\Entity\Portal');
+        $portals    = $portalRepo->findAll();
+
+        foreach($portals as $portal) {
+            foreach($metrics as $name => $category) {
+                switch($name) {
+                    case 'cataloging' :
+                        $avgs = $criteriaRepo->getPortalAverages($portal->getId());
+                        // Get all datasets metrics
+                        // Group them
+                        // Apply weights
+                        // Persits in database (metric table)
+                    break;
+
+                    default:
+                        error_log("PROUT");
+                        // Get data from portal criteria
+                        // Apply weights
+                        // Persits in database (metric table)
+                    break;
+                }
+            }
+        }
+
         $this->writeBlock($output, "[Statistics] The end !");
     }
 }

@@ -70,4 +70,27 @@ class DatasetCriteriaRepository extends EntityRepository
 
         $this->criteria['setIsAtLeastOneGoodFormat'] = false;
     }
+
+    public function getPortalAverages($portalId) {
+        $sth = $this->getEntityManager()
+            ->getConnection()
+            ->prepare('
+                    SELECT
+                        (SUM(is_title_and_summary) / COUNT(*)) as title,
+                        (SUM(is_released_on) / COUNT(*)) as released_on,
+                        (SUM(is_last_update_on) / COUNT(*)) as last_update_on,
+                        (SUM(is_provider) / COUNT(*)) as provider,
+                        (SUM(is_owner) / COUNT(*)) as owner,
+                        (SUM(is_maintainer) / COUNT(*)) as maintainer,
+                        (SUM(is_good_license) / COUNT(*)) as good_license,
+                        (SUM(license_quality) / COUNT(*)) as license_quality,
+                        (SUM(is_at_least_one_good_format) / COUNT(*)) as at_least_one_good_format
+                    FROM dataset_criteria JOIN datasets ON dataset_criteria.id = datasets.criteria
+                    WHERE datasets.portal_id = :portal_id
+            ');
+        $sth->execute(array('portal_id' => $portalId));
+
+        return($sth->fetch(\PDO::FETCH_ASSOC));
+    }
+
 }

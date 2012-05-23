@@ -124,6 +124,7 @@ abstract class BasePortal
      */
     public function parsePortal()
     {
+
         $this->portal = new \Odalisk\Entity\Portal();
 
         $this->portal->setName($this->getName());
@@ -131,6 +132,22 @@ abstract class BasePortal
         $this->portal->setCountry($this->getCountry());
         $this->portal->setStatus($this->getStatus());
         $this->portal->setEntity($this->getEntity());
+
+        $criteria = new \Odalisk\Entity\PortalCriteria();
+        echo $this->getSearchEngine();
+        $criteria->setSearchEngine($this->getSearchEngine());
+        $criteria->setMetadataSearch($this->getMetadataSearch());
+        $criteria->setForumSection($this->getForumSection());
+        $criteria->setFilteringLicenseSearch($this->getFilteringLicenseSearch());
+        $criteria->setContactForm($this->getContactForm());
+        $criteria->setRatingDataset($this->getRatingDataset());
+        $criteria->setCommentDataset($this->getCommentDataset());
+        $criteria->setSuggestDataset($this->getSuggestDataset());
+        $criteria->setApi($this->getApi());
+        $criteria->setApiDocumentation($this->getApiDocumentation());
+        $criteria->setOpendataConceptExplained($this->getOpendataConceptExplained());
+        $this->em->persist($criteria);
+        $this->portal->setCriteria($criteria);
 
         $this->em->persist($this->portal);
         $this->em->flush();

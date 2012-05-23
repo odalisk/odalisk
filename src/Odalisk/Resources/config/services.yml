@@ -4,7 +4,7 @@ parameters:
     config.buzz.options:
         - "User-agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1"
     config.buzz.timeout: 30
-        
+
     config.file_dumper.data_path: "%kernel.project_root%/data/"
 
 imports:
@@ -26,20 +26,22 @@ services:
         arguments:
             - %config.buzz.options%
             - %config.buzz.timeout%
-    
+
     # A helper class to handle categories
     category_normalizer:
         class: Odalisk\Scraper\Tools\Normalize\CategoryNormalizer
         arguments:
             - @doctrine
+            - %kernel.project_root%/logs/categories.log
         calls:
             - [ init, [ %categories% ] ]
-    
+
     # A helper class to handle categories
     license_normalizer:
         class: Odalisk\Scraper\Tools\Normalize\LicenseNormalizer
         arguments:
             - @doctrine
+            - %kernel.project_root%/logs/licenses.log
         calls:
             - [ init, [ %licenses% ] ]
 
@@ -48,12 +50,15 @@ services:
         class: Odalisk\Scraper\Tools\Normalize\FormatNormalizer
         arguments:
             - @doctrine
+            - %kernel.project_root%/logs/formats.log
         calls:
             - [ init, [ %formats% ] ]
     # A helper class to handle dates
     date_normalizer:
         class: Odalisk\Scraper\Tools\Normalize\DateNormalizer
-            
+        arguments:
+            - %kernel.project_root%/logs/dates.log
+
     # The various portals we want to analyse :
     # Base object for all our portals
     base_platform:
@@ -66,7 +71,7 @@ services:
             - [ setFormatNormalizer, [@format_normalizer ] ]
             - [ setDateNormalizer, [@date_normalizer ] ]
             - [ setLicenseNormalizer, [@license_normalizer ] ]
-    
+
     # Base object for all portals using inCiteSolution
     base_inCiteSolution:
         class: Odalisk\Scraper\InCiteSolution\BaseInCiteSolutionPortal

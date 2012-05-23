@@ -9,15 +9,17 @@ use Odalisk\Scraper\BasePortal;
 /**
  * The scraper for in DataMarket
  */
-class DataMarketPortal extends BasePortal {
+class DataMarketPortal extends BasePortal
+{
     // The url on which the datasets are listed.
     private $datasetsListUrl = 'http://datamarket.com/data/list/?q=datatype:dataset';
     // the number of datasets displayed for a request.
     private $batch_size = 20;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->criteria = array(
-            'setName' => '//div[@id="dataset-info"]/h1', 
+            'setName' => '//div[@id="dataset-info"]/h1',
             'setRawLicense' => '//strong[.="Licenses:"]/ul/li/p'
         );
     }
@@ -36,7 +38,8 @@ class DataMarketPortal extends BasePortal {
      *
      * This solution is manually verified.
      */
-    public function getDatasetsUrls() {
+    public function getDatasetsUrls()
+    {
         $urls = array(); // the array we will return.
 
         // The number of datasets of the portal ; information given on
@@ -68,7 +71,7 @@ class DataMarketPortal extends BasePortal {
 
         // $max = ceil($this->datasets_number / $this->batch_size);
         $max = 5;
-        for($i = 2 ; $i <= $max ; $i++) {
+        for ($i = 2 ; $i <= $max ; $i++) {
             // We loop on all pages left.
             echo("$i\n");
             $response = $this->buzz->get('http://datamarket.com/data/list/?q=datatype:dataset&page='.$i);

@@ -16,13 +16,13 @@
             <div class="span12">
                 {% include "App:Search:portal-list.html.twig" %}
             </div>
-            
+
         </div><!--/row-->
     </div>
 {% endblock %}
 
 {% block jsvariables %}
     window.searchType = "portal";
-    window.needResult = true;  
+    window.needResult = true;
     {{ parent() }}
 {% endblock %}

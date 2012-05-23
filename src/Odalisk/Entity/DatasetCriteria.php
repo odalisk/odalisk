@@ -22,61 +22,61 @@ class DatasetCriteria
      */
     protected $id;
 
-	/**
+    /**
      * @var string $is_title_and_summary
      *
      * @ORM\Column(name="is_title_and_summary", type="boolean", nullable=false)
      */
-	protected $is_title_and_summary;
+    protected $is_title_and_summary;
 
-	/**
+    /**
      * @var string $is_released_on
      *
      * @ORM\Column(name="is_released_on", type="boolean", nullable=false)
      */
-	protected $is_released_on;
+    protected $is_released_on;
 
-	/**
+    /**
      * @var string $is_last_update_on
      *
      * @ORM\Column(name="is_last_update_on", type="boolean", nullable=false)
      */
-	protected $is_last_update_on;
+    protected $is_last_update_on;
 
-	/**
+    /**
      * @var string $is_provider
      *
      * @ORM\Column(name="is_provider", type="boolean", nullable=false)
      */
-	protected $is_provider;
+    protected $is_provider;
 
-	/**
+    /**
      * @var string $is_owner
      *
      * @ORM\Column(name="is_owner", type="boolean", nullable=false)
      */
-	protected $is_owner;
+    protected $is_owner;
 
-	/**
+    /**
      * @var string $is_maintainer
      *
      * @ORM\Column(name="is_maintainer", type="boolean", nullable=false)
      */
-	protected $is_maintainer;
+    protected $is_maintainer;
 
-	/**
+    /**
      * @var string $is_good_license
      *
      * @ORM\Column(name="is_good_licence", type="boolean", nullable=false)
      */
-	protected $is_good_license;
+    protected $is_good_license;
 
-	/**
+    /**
      * @var string $is_at_least_one_good_format
      *
      * @ORM\Column(name="is_at_least_one_good_format", type="boolean", nullable=false)
      */
-	protected $is_at_least_one_good_format;
+    protected $is_at_least_one_good_format;
 
 
     /**
@@ -92,7 +92,7 @@ class DatasetCriteria
     /**
      * Get is_title_and_summary
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsTitleAndSummary()
     {
@@ -112,7 +112,7 @@ class DatasetCriteria
     /**
      * Get is_released_on
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsReleasedOn()
     {
@@ -132,7 +132,7 @@ class DatasetCriteria
     /**
      * Get is_last_update_on
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsLastUpdateOn()
     {
@@ -152,7 +152,7 @@ class DatasetCriteria
     /**
      * Get is_provider
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsProvider()
     {
@@ -172,7 +172,7 @@ class DatasetCriteria
     /**
      * Get is_owner
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsOwner()
     {
@@ -192,7 +192,7 @@ class DatasetCriteria
     /**
      * Get is_maintainer
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsMaintainer()
     {
@@ -212,7 +212,7 @@ class DatasetCriteria
     /**
      * Get is_good_license
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsGoodLicense()
     {
@@ -232,7 +232,7 @@ class DatasetCriteria
     /**
      * Get is_at_least_one_good_format
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsAtLeastOneGoodFormat()
     {
@@ -242,7 +242,7 @@ class DatasetCriteria
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

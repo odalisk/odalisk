@@ -3,7 +3,6 @@
 namespace Odalisk\Controller;
 
 use Knp\Bundle\RadBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 /**
  * Search controller.
  */

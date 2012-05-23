@@ -46,7 +46,7 @@ class ExtractCommand extends BaseCommand
             foreach ($platformServices as $platform) {
                 $output->writeln('<info>' . $platform . '</info>');
             }
-        } else {      
+        } else {
             // If we get an argument, replace the platformServices array with one containing just that plaform
             if ($platform = $input->getArgument('platform')) {
                  $platformServices = array($platform);

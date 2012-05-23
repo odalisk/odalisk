@@ -4,125 +4,89 @@ namespace Odalisk\Scraper\Tools\Normalize;
 
 class FormatNormalizer
 {
-    /*
-	private $replace = array(
-		'/vnd.ms-excel|excel/'  => 'xls',
-        '/htm/' => 'html',
-		'/vnd.ms-word/' => 'doc',
-		'/Otros|Unverified/' => 'unknown',
-		'/image\/jpg|jpeg/' => 'jpg', // Aliases of jpg
-		'/openDOCument.spreadsheet/' => 'ods',
-		'/shp *' => 'shp'
-	);
-    */
+    private $formats = array();
+    private $aliases = array();
 
+    /**
+     * Issue : how classify file types like : zip (xls, doc, pdf) ? Is it good to
+     * deliver a zip ? Do we say that the dataset is disponible in 3 formats
+     * even if we need to download a zip ?
+     * For now, we say the file format is zip
+     */
     private $replace = array(
-        'api' => 'unknown',
-        'application/octet-stream' => 'unknown',
-        'application/octet-stream+esri' => 'shp',
-        'application/pdf' => 'pdf',
-        'application/rdf+xml' => 'rdf',
-        'application/rss+xml' => 'rss',
-        'application/vnd.ms-excel' => 'xls',
-        'application/vnd.ms-word' => 'doc',
-        'application/xml+xls+pdf' => 'unknown',
-        'application/x-msexcel' => 'xls',
-        'application/xml' => 'xml',
-        'application/zip' => 'zip',
-        'aree' => 'unknown',
-        'catálogos' => 'unknown',
-        'comma separated variable (csv)' => 'csv',
-        'csv file' => 'csv',
-        'csv (zip)' => 'csv',
-        'excel (xls)' => 'xls',
-        'gpx' => 'unknown',
-        'htm' => 'html',
-        'html+rdfa' => 'html',
-        'hoja de cálculo' => 'unknown',
-        'imagen/texto' => 'unknown',
-        'imagen' => 'jpeg',
-        'image/jpeg' => 'jpeg',
-        'jpeg' => 'jpeg',
-        'mdb (zip)' => 'unknown',
-        'other xml' => 'xml',
-        'netcdf' => 'unknown',
-        'otros' => 'unknown',
-        'rar:shp' => 'shp',
-        'shp (cc47)' => 'shp',
-        'shp (l93)' => 'shp',
-        'texto' => 'txt',
-        'text/calendar' => 'ical',
-        'text/csv' => 'csv',
-        'text/html' => 'html',
-        'text/plain' => 'txt',
-        'text/sql' => 'sql',
-        'text/tsv' => 'unknown',
-        'text/xml' => 'xml',
-        'text/rss-xml' => 'rss',
-        'tms' => 'unknown',
-        'unverified' => 'unknown',
-        'word' => 'doc',
-        'wmts' => 'unknown',
-        'wsdl' => 'unknown',
-        'zipped csv' => 'csv',
-        '\.csv' => 'csv',
-        '\.csv zipped' => 'csv',
-        '\.xls' => 'xls',
+        '/^application\//' => '',
+        '/^image\//' => '',
+        '/^text\//' => '',
+        '/^zip\//' => '',
+        '/[+-]xml$/' => '',
+        '/\./' => '',
+        '/zip (.*)/' => 'zip',
     );
 
-    private $formats = array();
-    
-    public function __construct($doctrine)
+
+    public function __construct($doctrine, $log)
     {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getEntityManager();
-		$this->er = $this->em->getRepository('Odalisk\Entity\Format');
+        $this->er = $this->em->getRepository('Odalisk\Entity\Format');
+
+        $this->log = $log;
     }
-    
-    public function init($yaml) {
-        foreach($yaml as $format => $data) {
-			$f = $this->er->findOneByFormat($format);
-			if(!$f) {
-				$f = new \Odalisk\Entity\Format($format);
-			}
-			$f->setIsOpen($data[0]);
-			$f->setHasSpec($data[1]);
-			$f->setIsComputerReadable($data[2]);
+
+    public function init($yaml)
+    {
+        foreach ($yaml as $format => $data) {
+            $f = $this->er->findOneByFormat($format);
+            if (!$f) {
+                $f = new \Odalisk\Entity\Format($format);
+            }
+            $f->setAliases($data['aliases']);
+            foreach ($data['aliases'] as $alias) {
+                $this->aliases[$alias] = $format;
+            }
+            $f->setIsOpen($data['is_open']);
+            $f->setHasSpec($data['has_spec']);
+            $f->setIsComputerReadable($data['is_computer_readable']);
 
             $this->em->persist($f);
             $this->formats[$format] = $f;
         }
-		$this->em->flush();
+        $this->em->flush();
     }
-    
-	public function getFormats($raw_formats) {
-		$formats = array_unique(preg_split('/;/', strtolower($raw_formats)));
-		foreach($formats as $k => $format) {
-			$format = $this->_trim($format);
-            if(array_key_exists($format, $this->replace)) {
-                $format = $this->replace[$format];
+
+    public function getFormats($raw_formats)
+    {
+        $formats = array_unique(preg_split('/[;,&]/', strtolower($raw_formats)));
+        foreach ($formats as $k => $format) {
+            $format = $this->_trim($format);
+            foreach ($this->replace as $bad => $good) {
+                $format = preg_replace($bad, $good, $format);
             }
 
-			$formats[$k] = $format;
-		}
-		$formats = array_unique($formats);
+            $formats[$k] = $format;
+        }
+        $formats = array_unique($formats);
 
-		$result = array();
-		foreach($formats as $format) {
-            if(array_key_exists($format, $this->formats)) {
+        $result = array();
+        foreach ($formats as $format) {
+            if (array_key_exists($format, $this->formats)) {
                 $result[$format] = $this->formats[$format];
-			} else {
-                error_log('[Unknown file format ] ' . $format);
+            } elseif (array_key_exists($format, $this->aliases)) {
+                $result[$this->aliases[$format]] = $this->formats[$this->aliases[$format]];
+            } else {
+                error_log('[Unknown file format] ' . $format . "\n", 3, $this->log);
                 $result['unknown'] = $this->formats['unknown'];
-			}
-		}
-		//print_r($result);
+            }
+        }
+
         $result['raw'] = implode(', ', $formats);
-		return($result);
-	}
+
+        return $result;
+    }
 
     private function _trim($value)
     {
-        return trim($value, " \t\n\r\0\x0B\"'[]&.");
+        //return(trim($value));
+        return trim($value, " \t\n\r\0\x0B\"'[]()&.");
     }
 }

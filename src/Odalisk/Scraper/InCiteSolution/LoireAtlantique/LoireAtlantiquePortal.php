@@ -12,14 +12,13 @@ use Symfony\Component\DomCrawler\Crawler;
 /**
  * The scraper for data.loire-atlantique.fr
  */
-class LoireAtlantiquePortal extends BaseInCiteSolutionPortal {
-
-
+class LoireAtlantiquePortal extends BaseInCiteSolutionPortal
+{
     protected $nb_datasets_estimated;
 
 
-    public function __construct() {
-
+    public function __construct()
+    {
         parent::__construct();
 
         $this->datasetsListUrl = 'http://data.loire-atlantique.fr/donnees/?tx_icsoddatastore_pi1[page]=';
@@ -27,7 +26,8 @@ class LoireAtlantiquePortal extends BaseInCiteSolutionPortal {
         $this->urlsListIndexPath = ".//*[@class='tx_icsoddatastore_pi1_list']//td[@class='first']/h3/a";
     }
 
-    public function getDatasetsUrls() {
+    public function getDatasetsUrls()
+    {
         // Create a new Buzz handle, with asynchronous requests
         $dispatcher = new RequestDispatcher($this->buzzOptions, 30);
 
@@ -56,7 +56,7 @@ class LoireAtlantiquePortal extends BaseInCiteSolutionPortal {
                 }
 
                 // Add requests to the queue
-                for($i = 1 ; $i <= $pages_to_get ; $i++) {
+                for ($i = 1 ; $i <= $pages_to_get ; $i++) {
                    $this->estimatedDatasetCount += count($this->urls);
                    $dispatcher->queue($this->datasetsListUrl.$i,
                         array($this, 'Odalisk\Scraper\InCiteSolution\LoireAtlantique\LoireAtlantiquePortal::crawlDatasetsList'));

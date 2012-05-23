@@ -9,7 +9,8 @@ use Buzz\Message;
 use Odalisk\Scraper\Tools\Normalize\CategoryNormalizer;
 
 
-abstract class BasePortal {
+abstract class BasePortal
+{
     /**
      * Buzz instance
      *
@@ -37,7 +38,7 @@ abstract class BasePortal {
      * @var string
      */
     protected $em;
-    
+
     /**
      * The configuration values of this portal
      *
@@ -52,15 +53,15 @@ abstract class BasePortal {
     protected $totalCount = 0;
 
     protected $portal;
-    
-    
+
+
     protected $categoryNormalizer;
     protected $formatNormalizer;
     protected $dateNormalizer;
 
     /**
      * The platform's datasets URLs list
-     * 
+     *
      * @var array $urls
      */
     protected $urls = array();
@@ -69,8 +70,8 @@ abstract class BasePortal {
 
     abstract public function getDatasetsUrls();
 
-    public function crawlDatasetsList(Message\Request $request, Message\Response $response) {
-
+    public function crawlDatasetsList(Message\Request $request, Message\Response $response)
+    {
         if ($response->getStatusCode() != 200) {
             error_log('[Get URLs] Failed to download ' . $request->getUrl() . '. Skipping.');
 
@@ -89,16 +90,18 @@ abstract class BasePortal {
         }
     }
 
-    public function prepareRequestsFromUrls($urls) {
+    public function prepareRequestsFromUrls($urls)
+    {
         return $urls;
     }
-    
+
     /**
      * Load the portal object from the database. If none is found, parse it from the website.
      *
      * @return Portal
      */
-    public function loadPortal() {
+    public function loadPortal()
+    {
         $this->portal = $this->em->getRepository('Odalisk\Entity\Portal')
             ->findOneByName($this->getName());
 
@@ -109,7 +112,8 @@ abstract class BasePortal {
         return $this->portal;
     }
 
-    public function getPortal() {
+    public function getPortal()
+    {
         return $this->portal;
     }
 
@@ -118,20 +122,21 @@ abstract class BasePortal {
      *
      * @return void
      */
-    public function parsePortal() {
+    public function parsePortal()
+    {
         $this->portal = new \Odalisk\Entity\Portal();
-        
+
         $this->portal->setName($this->getName());
         $this->portal->setUrl($this->getBaseUrl());
         $this->portal->setCountry($this->getCountry());
         $this->portal->setStatus($this->getStatus());
         $this->portal->setEntity($this->getEntity());
-        
+
         $this->em->persist($this->portal);
         $this->em->flush();
     }
 
-    public function analyseHtmlContent($html, &$dataset) 
+    public function analyseHtmlContent($html, &$dataset)
     {
         $crawler = new Crawler($html);
         $data = array();
@@ -139,13 +144,13 @@ abstract class BasePortal {
         if (0 != count($crawler)) {
             // Default data extraction process
             $this->defaultExtraction($crawler, $data);
-            
+
             // If the default implementation is not smart enough, you can add your own logic here
             $this->additionalExtraction($crawler, $data);
-            
+
             // This is the default, it should be good enough for most cases
             $this->defaultNormalization($data);
-            
+
             // If the default implementation is not smart enough, you can add your own logic here
             $this->additionalNormalization($data);
         }
@@ -154,7 +159,7 @@ abstract class BasePortal {
         $crawler = null;
         $data = null;
     }
-    
+
     /**
      * This function goes through the criteria array, and extracts the information. If
      * an XPath expression yields several nodes, their value is joined using the ';'
@@ -163,7 +168,7 @@ abstract class BasePortal {
      * @param Crawler $crawler the crawler
      * @param array   $data    the data we are gathering
      */
-    protected function defaultExtraction($crawler, &$data) 
+    protected function defaultExtraction($crawler, &$data)
     {
         foreach ($this->criteria as $name => $path) {
             $nodes = $crawler->filterXPath($path);
@@ -175,14 +180,14 @@ abstract class BasePortal {
                             function($node,$i) {
                                 return trim($node->nodeValue);
                             }
-                        ), 
+                        ),
                         'strlen'
                     )
                 );
             }
         }
     }
-    
+
     /**
      * Override this function in subclasses if you find that the default one is not
      * good enough. This implementation does nothing.
@@ -190,10 +195,10 @@ abstract class BasePortal {
      * @param Crawler $crawler the crawler
      * @param array   $data    the data we are gathering
      */
-    protected function additionalExtraction($crawler, &$data) 
+    protected function additionalExtraction($crawler, &$data)
     {
     }
-    
+
     protected function defaultNormalization(&$data)
     {
         $this->normalizeSummary($data);
@@ -202,11 +207,11 @@ abstract class BasePortal {
         $this->normalizeFormat($data);
         $this->parseDates($data);
     }
-    
+
     /**
      * Trim the summary if it exists
      *
-     * @param array   $data    the data we are gathering
+     * @param array $data the data we are gathering
      */
     protected function normalizeSummary(&$data)
     {
@@ -214,11 +219,11 @@ abstract class BasePortal {
             $data['setSummary'] = trim($data['setSummary']);
         }
     }
-    
+
     /**
      * Trim categories and transform it into a lower-case, semi-colon separated list
      *
-     * @param array   $data    the data we are gathering
+     * @param array $data the data we are gathering
      **/
     protected function normalizeCategory(&$data)
     {
@@ -229,11 +234,11 @@ abstract class BasePortal {
             $data['setCategories'] = $categories;
         }
     }
-    
+
     /**
      * Attemps to transform wild licenses into a set of normalized ones
      *
-     * @param array   $data    the data we are gathering
+     * @param array $data the data we are gathering
      */
     protected function normalizeLicense(&$data)
     {
@@ -246,11 +251,11 @@ abstract class BasePortal {
             }
         }
     }
-    
+
     /**
      * Attemps to transform wild formats into a set of normalized ones
      *
-     * @param array   $data    the data we are gathering
+     * @param array $data the data we are gathering
      */
     protected function normalizeFormat(&$data)
     {
@@ -265,53 +270,56 @@ abstract class BasePortal {
     /**
      * Do some magic on the dates to transform them into datetime objects
      *
-     * @param array   $data    the data we are gathering
+     * @param array $data the data we are gathering
      */
     protected function parseDates(&$data)
     {
         $this->dateNormalizer->normalize($data);
     }
-    
+
     /**
      * Override this function in subclasses if you find that the default one is not
      * good enough. This implementation does nothing.
      *
-     * @param array   $data    the data we are gathering
+     * @param array $data the data we are gathering
      */
     protected function additionalNormalization(&$data)
     {
     }
-    
-    public function setBuzz(\Buzz\Browser $buzz, $timeout = 30, $options) {
+
+    public function setBuzz(\Buzz\Browser $buzz, $timeout = 30, $options)
+    {
         $this->buzz = $buzz;
         $this->buzz->getClient()->setTimeout($timeout);
         $this->buzzOptions = $options;
     }
 
-    public function setDoctrine($doctrine) {
+    public function setDoctrine($doctrine)
+    {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getEntityManager();
     }
-    
+
     public function setCategoryNormalizer($normalizer)
     {
         $this->categoryNormalizer = $normalizer;
     }
-    
+
     public function setFormatNormalizer($normalizer)
     {
         $this->formatNormalizer = $normalizer;
     }
-    
+
     public function setDateNormalizer($normalizer)
     {
         $this->dateNormalizer = $normalizer;
     }
-    
-    public function setLicenseNormalizer($normalizer) {
+
+    public function setLicenseNormalizer($normalizer)
+    {
         $this->licenseNormalizer = $normalizer;
     }
-    
+
     public function setConfiguration($config)
     {
         $this->config = $config;
@@ -321,10 +329,11 @@ abstract class BasePortal {
     {
         return $this->totalCount;
     }
-    
-    public function __call($name, $arguments) {
-        if(0 === strpos($name, 'get')) {
-            if(array_key_exists($name, $this->config)) {
+
+    public function __call($name, $arguments)
+    {
+        if (0 === strpos($name, 'get')) {
+            if (array_key_exists($name, $this->config)) {
                 return $this->config[$name];
             } else {
                 $property = substr($name, 3);
@@ -336,9 +345,10 @@ abstract class BasePortal {
                     },
                     $property
                 );
-                
-                if(array_key_exists($property, $this->config)) {
+
+                if (array_key_exists($property, $this->config)) {
                     $this->config[$name] = $this->config[$property];
+
                     return $this->config[$name];
                 }
             }

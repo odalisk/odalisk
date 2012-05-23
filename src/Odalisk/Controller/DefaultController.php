@@ -38,13 +38,13 @@ class DefaultController extends Controller
 
         return $this->redirect($this->generateUrl('portal_details', array('portal_number' => $portal_id)));
     }
-    
+
     public function contactAction()
     {
-        $previousUrl = $this->getRequest()->headers->get('referer'); 
+        $previousUrl = $this->getRequest()->headers->get('referer');
         $contact = new Contact();
         $contact->setCurrentPage($previousUrl);
-        
+
         $form = $this->createForm(new ContactType(), $contact);
 
         $request = $this->getRequest();
@@ -60,7 +60,7 @@ class DefaultController extends Controller
                         ->setTo('contact@odalisk.org')
                         ->setBody($contact->getBody()."\n\nMail de contact : ".$contact->getEmail()."\n\nNom d'utilisateur : ".$contact->getName()."\n\nPage d'origine : ".$contact->getCurrentPage())
                     ;
-                    
+
                 $this->get('mailer')->send($message);
                 // Redirect - This is important to prevent users re-posting
                 // the form if they refresh the page

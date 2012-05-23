@@ -1,4 +1,4 @@
-parameters:    
+parameters:
     categories:
         'Administration':
             aliases:
@@ -10,7 +10,7 @@ parameters:
                 - 'Local Government Finance'
                 - 'Den Europæiske Union (EU)' # The European Union
                 - 'Government - Defence Personnel'
-                - 'Federal Government Finances & Employment' 
+                - 'Federal Government Finances & Employment'
                 - 'State & Local Government Finances & Employment'
                 - 'Ledelse og administrativ service'
                 - 'Expenditures'
@@ -21,7 +21,7 @@ parameters:
                 - 'Agriculture & Pêche'
                 - 'Agricoltura - Programmazione' # Agriculture - Programming
                 - 'agricoltura' # Agriculture
-                - 'Jordbrug'                  
+                - 'Jordbrug'
         'Art & Culture':
             aliases:
                 - 'Arts'
@@ -43,7 +43,7 @@ parameters:
         'Budget':
             aliases:
                 - 'Bilancio e finanze' # Budget and Finance
-                - "Councillors' Allowances"        
+                - "Councillors' Allowances"
         'Business':
             aliases:
                 - 'Business & Economic'
@@ -59,7 +59,7 @@ parameters:
             aliases:
                 - 'Climat & Météorologie'
                 - 'Meteorologisk samfundsbetjening' # Meteorological community service
-                - 'Ecologia'       
+                - 'Ecologia'
         'Construction & Housing':
             aliases:
                 - 'Bygnings- og boligregistrering' # Construction and housing registration
@@ -82,7 +82,7 @@ parameters:
                 - 'Law Enforcement'
                 - 'Courts'
                 - 'Sécurité & Justice'
-                - 'Politiefterforskning'           
+                - 'Politiefterforskning'
         'Democracy & Elections':
             aliases:
                 - 'Demographics'
@@ -151,7 +151,7 @@ parameters:
                 - 'Business & Energy'
                 - 'Environment & Energy'
                 - 'Environnement & Energie'
-                - 'Energy & Utilities'       
+                - 'Energy & Utilities'
         'Entertainment':
             aliases:
                 - 'Sport'
@@ -163,12 +163,12 @@ parameters:
                 - 'cultura e tempo libero'
                 - 'Events'
                 - 'Recreation'
-                - 'Museer'           
+                - 'Museer'
         'Environment':
             aliases:
                 - 'Ambiente e territorio' # Environment & Territory
                 - 'Environment'
-                - 'Agriculture & Environment'                
+                - 'Agriculture & Environment'
                 - 'Environment & Energy'
                 - 'Environmental Sustainability'
                 - 'Environmental protection'
@@ -184,7 +184,7 @@ parameters:
                 - 'tutela ambientale' # environmental protection
                 - 'tutela e risanamento ambientale' # protection and environmental restoration
                 - 'suolo e sottosuolo' # soil and subsoil
-                - 'acqua' 
+                - 'acqua'
                 - 'Recycling (waste'
                 - 'Umwelt'
                 - 'flora'
@@ -219,7 +219,7 @@ parameters:
                 - 'Socioeconomico'
                 - 'Spending'
                 - 'Economy & Finances'
-            
+
         'Geography & Environment':
             aliases:
                 - 'Geography & Space'
@@ -271,7 +271,7 @@ parameters:
         'Programming':
             aliases:
                 - 'Agricoltura - Programmazione' # Agriculture - Programming
-            
+
         'Population & Demography':
             aliases:
                 - 'Bevölkerung' # Population
@@ -342,7 +342,7 @@ parameters:
                 - 'Trasporti' # Transportation
                 - 'Travel & Transport'
                 - 'Déplacements'
-                - 'styring og overvågning af transport' # management and monitoring of 
+                - 'styring og overvågning af transport' # management and monitoring of
                 - 'Trafikregulering af fly og luftfart'
                 - 'Trafikregulering af tog og jernbaner'
                 - 'Trafikregulering af veje og køretøjer'
@@ -358,8 +358,8 @@ parameters:
                 - 'tourismus'
                 - 'Mobilité'
                 - 'Travel'
-                - 'Turismo'     
-                - transportation 
+                - 'Turismo'
+                - transportation
                 - 'patrimonio storico-artistico-culturale'
         'Services':
             aliases:
@@ -436,7 +436,7 @@ parameters:
                 - 'Öffentliche Einrichtungen' # public organizations
                 - 'Kvalitetsmåling'
                 - 'Referencenet og opmåling'
-                - 
+                -
         'Work':
             aliases:
                 - 'Travail & Salaires'

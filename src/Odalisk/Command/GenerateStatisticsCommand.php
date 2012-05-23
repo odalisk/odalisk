@@ -56,11 +56,11 @@ class GenerateStatisticsCommand extends BaseCommand
             $i++;
             if($i % 100 == 0) {
                 $this->em->flush();
-                error_log("[Statistics] flush $i% datasets' criteria on $datasetsCount");
+                error_log("[Statistics] flush $i datasets' criteria on $datasetsCount");
             }
         }
         $this->em->flush();
-        error_log("[Statistics] flush $i% datasets' criteria on $datasetsCount");
+        error_log("[Statistics] flush $i datasets' criteria on $datasetsCount");
 
         $this->writeBlock($output, "[Statistics] The end !");
     }

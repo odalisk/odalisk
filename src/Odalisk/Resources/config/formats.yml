@@ -2,32 +2,346 @@ parameters:
     formats:
         # format: {isOpen, hasSpec, isComputerReadable}
         # api:
-        asp: [ false, false, true ]
-        atom: [ true, true, true ]
-        bin: [ true, false, false ]
-        csv: [ true, true, true ]
-        doc: [ false, true, true ]
-        gtfs: [ true, true, true ]
-        html: [ true, true, true ]
-        ical: [ true, true, true ]
-        jpg: [ true, true, false ] # jpeg
-        json: [ true, true, true ]
-        kmz: [ true, true, true ] # kmz
-        kml: [ true, true, true ] # kmz
-        mif: [ false, false, false ]
-        msaccess: [ false, false, false ]
-        ods: [ false, true, true ]
-        pdf: [ false, false, false ]
-        ppt: [ false, false, false ]
-        rdf: [ true, true, true ]
-        rss: [ true, true, true ]
-        shp: [ true, true, false ]
-        sql: [ true, true, true ]
-        txt: [ true, false, false ]
-        wms: [ false, false, false ]
-        wfs: [ false, false, false ]
-        xls: [ false, true, true ]
-        xlsx: [ false, true, true ]
-        xml: [ true, true, true ]
-        zip: [ true, true, false ]
-        unknown: [ false, false, false ]
+        asp: 
+            aliases: []
+            is_open: false
+            has_spec: false
+            is_computer_readable: true
+        atom:
+            aliases: []
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        bin:
+            aliases: []
+            is_open: true
+            has_spec: false
+            is_computer_readable: false
+        csv:
+            aliases:
+                - 'comma separated variable (csv)'
+                - 'csv file'
+                - 'csv per garmin tom tom'
+                - 'csv zip'
+                - 'csv zipped'
+                - 'csv (zip)'
+                - 'zipped csv'
+                - 'zip:csv'
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        dbf: # https://en.wikipedia.org/wiki/Dbf
+            aliases:
+                - 'dbase'
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        doc:
+            aliases:
+                - 'vnd.ms-word'
+                - 'vndms-word'
+                - 'word'
+                - 'word doc'
+            is_open: false
+            has_spec: true
+            is_computer_readable: true
+        dxf:
+            aliases: []
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        gif:
+            aliases: []
+            is_open: false
+            has_spec: true
+            is_computer_readable: false
+        gtfs:
+            aliases: []
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        html:
+            aliases:
+                - 'htm'
+                - 'html+rdfa'
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        ical:
+            aliases:
+                - 'calendar'
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        jpg:
+            aliases:
+                - 'imagen'
+                - 'jpeg'
+            is_open: true
+            has_spec: true
+            is_computer_readable: false
+        json:
+            aliases:
+                - 'gjson'
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        kmz:
+            aliases: []
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        kml:
+            aliases: []
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        mif:
+            aliases: []
+            is_open: false
+            has_spec: false
+            is_computer_readable: false
+        msaccess:
+            aliases: []
+            is_open: false
+            has_spec: false
+            is_computer_readable: false
+        ods:
+            aliases: []
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        odp: # https://en.wikipedia.org/wiki/OpenDocument#Specifications
+            aliases: []
+            is_open: true
+            has_spec: true
+            is_computer_readable: false
+        odt: # https://en.wikipedia.org/wiki/OpenDocument#Specifications
+            aliases:
+                - 'openoffice'
+            is_open: false
+            has_spec: true
+            is_computer_readable: true
+        pdf:
+            aliases:
+                - 'adobe pdf'
+                - 'pdf file'
+                - 'pdf/word'
+                - 'portable document file'
+            is_open: false
+            has_spec: false
+            is_computer_readable: false
+        png:
+            aliases: []
+            is_open: true
+            has_spec: true
+            is_computer_readable: false
+        ppt:
+            aliases: []
+            is_open: false
+            has_spec: false
+            is_computer_readable: false
+        rdf:
+            aliases:
+                - 'rdf json'
+                - 'rdf/xml'
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        rss:
+            aliases:
+                - 'georss'
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        sas: # https://en.wikipedia.org/wiki/SAS_language
+            aliases: []
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        shp:
+            aliases:
+                - 'octet-stream+esri'
+                - 'rar:shp'
+                - 'shapefile'
+                - 'shp (cc47)'
+                - 'shp (l93)'
+                - 'zip:shp'
+            is_open: true
+            has_spec: true
+            is_computer_readable: false
+        spss: # https://en.wikipedia.org/wiki/Spss
+            aliases: []
+            is_open: false
+            has_spec: false
+            is_computer_readable: true
+        sql:
+            aliases: []
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        rtf: # https://en.wikipedia.org/wiki/Rich_Text_Format
+            aliases: []
+            is_open: false
+            has_spec: true
+            is_computer_readable: true
+        txt:
+            aliases:
+                - 'ascii'
+                - 'ascii-txt'
+                - 'plain'
+                - 'text'
+                - 'texto'
+            is_open: true
+            has_spec: false
+            is_computer_readable: false
+        wms:
+            aliases: []
+            is_open: false
+            has_spec: false
+            is_computer_readable: false
+        wfs:
+            aliases: []
+            is_open: false
+            has_spec: false
+            is_computer_readable: false
+        xls:
+            aliases:
+                - 'excel'
+                - 'excel (xls)'
+                - 'excel (xml)'
+                - 'vnd.ms-excel'
+                - 'vndms-excel'
+                - 'vndopenxmlformats-officedocumentspreadsheetmlsheet'
+                - 'xls1'
+                - 'xls-html'
+                - 'x-msexcel'
+            is_open: false
+            has_spec: true
+            is_computer_readable: true
+        xlsx:
+            aliases: []
+            is_open: false
+            has_spec: true
+            is_computer_readable: true
+        xml:
+            aliases:
+                - 'other xml'
+                - 'xml: oai-pmh dublin core'
+                - 'xml rpc'
+                - 'xml (zip)'
+            is_open: true
+            has_spec: true
+            is_computer_readable: true
+        zip:
+            aliases:
+                - 'gzip+txt'
+                - 'gz (txt)'
+                - 'x-zip-compressed'
+                - 'zip:xls'
+                - 'zip / xml'
+            is_open: true
+            has_spec: true
+            is_computer_readable: false
+        unknown:
+            is_open: false
+            has_spec: false
+            is_computer_readable: false
+            aliases:
+                - 'api'
+                - 'api/search'
+                - 'api/sparql'
+                - 'api/vndgoogle-spreadsheet'
+                - 'aree'
+                - 'blog'
+                - 'bz2:nt'
+                - 'catálogos'
+                - 'council property utilities consumption'
+                - 'csv/pdf'
+                - 'csx'
+                - 'cvs'
+                - 'cvv'
+                - 'dat/csv'
+                - 'esri arcsde 8x/sde 3x'
+                - 'flash player version 10'
+                - 'force-download'
+                - 'format datex 2 version 10'
+                - 'garmin'
+                - 'geotif'
+                - 'gis'
+                - 'gpx'
+                - 'gml' # Ambiguous : https://en.wikipedia.org/wiki/Gml ; need
+                        # to verify on the portal himself.
+                - 'gml /api'
+                - 'gml / api'
+                - 'hoja de cálculo'
+                - 'imagen/texto'
+                - 'jrss'
+                - 'mdb (zip)'
+                - 'netcdf'
+                - 'nodi'
+                - 'other'
+                - 'other as appropriate'
+                - 'octet-stream'
+                - 'otros'
+                - 'rest'
+                - 'sparql endpoint'
+                - 'tms'
+                - 'tsv'
+                - 'unverified'
+                - 'varios'
+                - 'vnd'
+                - 'webservice'
+                - 'wmts'
+                - 'wsdl'
+                - 'xml+xls+pdf'
+                # TODO
+                - 'grafika'
+                - 'gzipped tarball'
+                - 'html5'
+                - 'indicator portal'
+                - 'iso'
+                - 'linee'
+                - 'linked data api'
+                - 'marcxml'
+                - 'mdb'
+                - 'meta/void'
+                - 'ntf'
+                - 'ogc/sos'
+                - 'ogc/wfs'
+                - 'ogc/wms'
+                - 'ovl (binär5)'
+                - 'pbf'
+                - 'por'
+                - 'portal'
+                - 'pptx'
+                - 'prj'
+                - 'punti'
+                - 'sav'
+                - 'sbn'
+                - 'sbx'
+                - 'see http://wwwdatex2eu/'
+                - 'shx en xml'
+                - 'soap'
+                - 'sps'
+                - 'sqlite 3'
+                - 'tabella'
+                - 'tag'
+                - 'tif'
+                - 'tiff'
+                - 'tiff-lzw'
+                - 'tomtom'
+                - 'ttl'
+                - 'turtle'
+                - 'uk shopping portal'
+                - 'vnd'
+                - 'vndgoogle-earthkml'
+                - 'vndgoogle-earthkmz'
+                - 'vndogcwms_xml'
+                - 'wc'
+                - 'web'
+                - 'wmt-s'
+                - 'x-mmz'
+                - 'xms'
+                - 'xsd'
+                - 'xsl'

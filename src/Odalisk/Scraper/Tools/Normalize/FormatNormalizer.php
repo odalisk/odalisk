@@ -86,7 +86,7 @@ class FormatNormalizer
 
     private function _trim($value)
     {
-        return(trim($value));
-        //return trim($value, " \t\n\r\0\x0B\"'[]&.");
+        //return(trim($value));
+        return trim($value, " \t\n\r\0\x0B\"'[]()&.");
     }
 }

@@ -31,10 +31,10 @@ parameters:
         'EuroStat':
             aliases:
                 - 'Licence EuroStat'
-            authorship: false
-            reuse: false
-            redistribution: false
-            commercial: false
+            authorship: true
+            reuse: true
+            redistribution: true
+            commercial: true
         'Française des Jeux':
             aliases:
                 - 'Licence La Française des Jeux'

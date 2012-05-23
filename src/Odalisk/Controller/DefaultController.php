@@ -58,13 +58,14 @@ class DefaultController extends Controller
                         ->setSubject($contact->getSubject())
                         ->setFrom($contact->getEmail())
                         ->setTo('contact@odalisk.org')
-                        ->setBody($contact->getBody()."\n\nMail de contact : ".$contact->getEmail()."\n\nNom d'utilisateur : ".$contact->getName()."\n\nPage d'origine : ".$contact->getCurrentPage())
+                        ->setBody($contact->getBody()."\nMail de contact : ".$contact->getEmail()."\nNom d'utilisateur : ".$contact->getName()."\nPage d'origine : ".$contact->getCurrentPage())
                     ;
 
                 $this->get('mailer')->send($message);
                 // Redirect - This is important to prevent users re-posting
                 // the form if they refresh the page
-                return $this->redirect($this->generateUrl('contact'));
+                error_log($contact->getCurrentPage());
+                return $this->redirect($contact->getCurrentPage());
             }
         }
 

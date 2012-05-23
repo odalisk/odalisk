@@ -12,18 +12,18 @@ portals:
 
 portal_details:
     pattern:    /browser/portals/details/{portal_number}/{page_number}
-    defaults:   { _controller: App:Portal:details, page_number:1, _format:html}
+    defaults:   { _controller: App:Portal:details, page_number:1, _format:html }
 
 api_portal:
     pattern:    /api/portals/{page_index}/{page_size}
-    defaults:   { _controller: App:Api:portals, page_index:0, page_size:10}
+    defaults:   { _controller: App:Api:portals, page_index:0, page_size:10 }
     requirements:
         page_index: \d+
         page_size:  \d+
 
 api_datasets:
-    pattern:    /api/datasets
-    defaults:   { _controller: App:Api:datasets }
+    pattern:    /api/datasets/{page_index}/{page_size}
+    defaults:   { _controller: App:Api:datasets, page_index:0, page_size:10 }
 
 api:
     pattern:    /api/{_format}

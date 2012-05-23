@@ -19,7 +19,7 @@ class DatasetRepository extends EntityRepository
         $res = $sth->fetchColumn();
     }
 
-    public function getDatasetsMatching($criterias) {
+    public function getDatasetsMatching($criterias, $page_index, $page_size) {
         $qb = $this->createQueryBuilder('d');
         // JOIN ... WITH IN (...)
         $join = 0;
@@ -43,7 +43,8 @@ class DatasetRepository extends EntityRepository
         $qb->setParameters($parameters);
         
         $qb->orderBy('d.name', 'ASC');
-        error_log($qb->getDql());
+        $qb->setFirstResult($page_index * $page_size);
+        $qb->setMaxResults($page_size);
         
         return $qb->getQuery()->getResult();
     }

@@ -38,15 +38,15 @@ class DatasetCriteriaRepository extends EntityRepository
             ->getConnection()
             ->prepare('
                     SELECT
-                        (SUM(is_title_and_summary) / COUNT(*)) as title_and_summary,
-                        (SUM(is_released_on) / COUNT(*)) as creation_date,
-                        (SUM(is_category) / COUNT(*)) as category,
-                        (SUM(is_last_update_on) / COUNT(*)) as update_date,
-                        (SUM(is_provider) / COUNT(*)) as person_in_charge,
-                        (SUM(is_maintainer) / COUNT(*)) as maintainer,
-                        (SUM(is_good_license) / COUNT(*)) as good_license,
+                        (SUM(has_title_and_summary) / COUNT(*)) as title_and_summary,
+                        (SUM(has_released_on) / COUNT(*)) as creation_date,
+                        (SUM(has_category) / COUNT(*)) as category,
+                        (SUM(has_last_update_on) / COUNT(*)) as update_date,
+                        (SUM(has_provider) / COUNT(*)) as person_in_charge,
+                        (SUM(has_maintainer) / COUNT(*)) as maintainer,
+                        (SUM(has_good_license) / COUNT(*)) as good_license,
                         (SUM(license_quality) / COUNT(*)) as license_quality,
-                        (SUM(is_at_least_one_good_format) / COUNT(*)) as at_least_one_good_format
+                        (SUM(has_at_least_one_good_format) / COUNT(*)) as at_least_one_good_format
                     FROM dataset_criteria JOIN datasets ON dataset_criteria.id = datasets.criteria
                     WHERE datasets.portal_id = :portal_id
             ');

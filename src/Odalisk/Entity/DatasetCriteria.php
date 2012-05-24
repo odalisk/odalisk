@@ -5,7 +5,7 @@ namespace Odalisk\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Odalisk\Entity\DatasetCriteria
+ * Odalhask\Entity\DatasetCriteria
  *
  * @ORM\Table(name="dataset_criteria")
  * @ORM\Entity(repositoryClass="Odalisk\Repository\DatasetCriteriaRepository")
@@ -23,93 +23,93 @@ class DatasetCriteria
     protected $id;
 
     /**
-     * @var string $is_title_and_summary
+     * @var string $has_title_and_summary
      *
-     * @ORM\Column(name="is_title_and_summary", type="boolean", nullable=false)
+     * @ORM\Column(name="has_title_and_summary", type="boolean", nullable=false)
      */
-    protected $is_title_and_summary;
+    protected $has_title_and_summary;
 
     /**
-     * @var string $is_released_on
+     * @var string $has_released_on
      *
-     * @ORM\Column(name="is_released_on", type="boolean", nullable=false)
+     * @ORM\Column(name="has_released_on", type="boolean", nullable=false)
      */
-    protected $is_released_on;
+    protected $has_released_on;
 
     /**
-     * @var string $is_last_update_on
+     * @var string $has_last_update_on
      *
-     * @ORM\Column(name="is_last_update_on", type="boolean", nullable=false)
+     * @ORM\Column(name="has_last_update_on", type="boolean", nullable=false)
      */
-    protected $is_last_update_on;
+    protected $has_last_update_on;
 
     /**
-     * @var string $is_provider
+     * @var string $has_provider
      *
-     * @ORM\Column(name="is_provider", type="boolean", nullable=false)
+     * @ORM\Column(name="has_provider", type="boolean", nullable=false)
      */
-    protected $is_provider;
+    protected $has_provider;
 
     /**
-     * @var string $is_owner
+     * @var string $has_owner
      *
-     * @ORM\Column(name="is_owner", type="boolean", nullable=false)
+     * @ORM\Column(name="has_owner", type="boolean", nullable=false)
      */
-    protected $is_owner;
+    protected $has_owner;
 
     /**
-     * @var string $is_maintainer
+     * @var string $has_maintainer
      *
-     * @ORM\Column(name="is_maintainer", type="boolean", nullable=false)
+     * @ORM\Column(name="has_maintainer", type="boolean", nullable=false)
      */
-    protected $is_maintainer;
+    protected $has_maintainer;
 
     /**
-     * @var string $is_good_license
+     * @var string $has_good_license
      *
-     * @ORM\Column(name="is_good_license", type="boolean", nullable=false)
+     * @ORM\Column(name="has_good_license", type="boolean", nullable=false)
      */
-    protected $is_good_license = false;
+    protected $has_good_license = false;
 
     /**
-     * @var string $is_good_license
+     * @var string $has_good_license
      *
-     * @ORM\Column(name="license_quality", type="integer")
+     * @ORM\Column(name="license_quality", type="float")
      */
     protected $license_quality = 0;
 
     /**
-     * @var string $is_category
+     * @var string $has_category
      *
-     * @ORM\Column(name="is_category", type="boolean")
+     * @ORM\Column(name="has_category", type="boolean")
      */
-    protected $is_category;
+    protected $has_category;
 
     /**
-     * @var string $is_at_least_one_good_format
+     * @var string $has_at_least_one_good_format
      *
-     * @ORM\Column(name="is_at_least_one_good_format", type="boolean", nullable=false)
+     * @ORM\Column(name="has_at_least_one_good_format", type="boolean", nullable=false)
      */
-    protected $is_at_least_one_good_format = false;
+    protected $has_at_least_one_good_format = false;
     
     public function __construct($d) {
-        $this->setIsTitleAndSummary($this->not_empty($d->getName() . $d->getSummary()));
-        $this->setIsOwner($this->not_empty($d->getOwner()));
-        $this->setIsProvider($this->not_empty($d->getProvider() . $d->getOwner()));
-        $this->setIsMaintainer($this->not_empty($d->getMaintainer()));
-        $this->setIsReleasedOn($this->not_empty($d->getReleasedOn()));
-        $this->setIsLastUpdateOn($this->not_empty($d->getLastUpdatedOn()));
-        $this->setIsCategory($this->not_empty($d->getCategories()));
+        $this->setHasTitleAndSummary($this->not_empty($d->getName() . $d->getSummary()));
+        $this->setHasOwner($this->not_empty($d->getOwner()));
+        $this->setHasProvider($this->not_empty($d->getProvider() . $d->getOwner()));
+        $this->setHasMaintainer($this->not_empty($d->getMaintainer()));
+        $this->setHasReleasedOn($this->not_empty($d->getReleasedOn()));
+        $this->setHasLastUpdateOn($this->not_empty($d->getLastUpdatedOn()));
+        $this->setHasCategory($this->not_empty($d->getCategories()));
         
         if(($license = $d->getLicense()) !== null) {
-            $this->setIsGoodLicense($license->getIsGood());
+            $this->setHasGoodLicense($license->getIsGood());
             $this->setLicenseQuality($license->getQuality());
         }
         
         if(($formats = $d->getFormats()) !== null) {
             foreach($formats as $format) {
                 if($format->getIsGood()) {
-                    $this->setIsAtLeastOneGoodFormat(true);
+                    $this->setHasAtLeastOneGoodFormat(true);
                     break;
                 }
             }
@@ -121,163 +121,163 @@ class DatasetCriteria
     }
 
     /**
-     * Set is_title_and_summary
+     * Set has_title_and_summary
      *
-     * @param boolean $isTitleAndSummary
+     * @param boolean $hasTitleAndSummary
      */
-    public function setIsTitleAndSummary($isTitleAndSummary)
+    public function setHasTitleAndSummary($hasTitleAndSummary)
     {
-        $this->is_title_and_summary = $isTitleAndSummary;
+        $this->has_title_and_summary = $hasTitleAndSummary;
     }
 
     /**
-     * Get is_title_and_summary
+     * Get has_title_and_summary
      *
      * @return boolean
      */
-    public function getIsTitleAndSummary()
+    public function getHasTitleAndSummary()
     {
-        return $this->is_title_and_summary;
+        return $this->has_title_and_summary;
     }
 
     /**
-     * Set is_released_on
+     * Set has_released_on
      *
-     * @param boolean $isReleasedOn
+     * @param boolean $hasReleasedOn
      */
-    public function setIsReleasedOn($isReleasedOn)
+    public function setHasReleasedOn($hasReleasedOn)
     {
-        $this->is_released_on = $isReleasedOn;
+        $this->has_released_on = $hasReleasedOn;
     }
 
     /**
-     * Get is_released_on
-     *
-     * @return boolean
-     */
-    public function getIsReleasedOn()
-    {
-        return $this->is_released_on;
-    }
-
-    /**
-     * Set is_last_update_on
-     *
-     * @param boolean $isLastUpdateOn
-     */
-    public function setIsLastUpdateOn($isLastUpdateOn)
-    {
-        $this->is_last_update_on = $isLastUpdateOn;
-    }
-
-    /**
-     * Get is_last_update_on
+     * Get has_released_on
      *
      * @return boolean
      */
-    public function getIsLastUpdateOn()
+    public function getHasReleasedOn()
     {
-        return $this->is_last_update_on;
+        return $this->has_released_on;
     }
 
     /**
-     * Set is_provider
+     * Set has_last_update_on
      *
-     * @param boolean $isProvider
+     * @param boolean $hasLastUpdateOn
      */
-    public function setIsProvider($isProvider)
+    public function setHasLastUpdateOn($hasLastUpdateOn)
     {
-        $this->is_provider = $isProvider;
+        $this->has_last_update_on = $hasLastUpdateOn;
     }
 
     /**
-     * Get is_provider
-     *
-     * @return boolean
-     */
-    public function getIsProvider()
-    {
-        return $this->is_provider;
-    }
-
-    /**
-     * Set is_owner
-     *
-     * @param boolean $isOwner
-     */
-    public function setIsOwner($isOwner)
-    {
-        $this->is_owner = $isOwner;
-    }
-
-    /**
-     * Get is_owner
+     * Get has_last_update_on
      *
      * @return boolean
      */
-    public function getIsOwner()
+    public function getHasLastUpdateOn()
     {
-        return $this->is_owner;
+        return $this->has_last_update_on;
     }
 
     /**
-     * Set is_maintainer
+     * Set has_provider
      *
-     * @param boolean $isMaintainer
+     * @param boolean $hasProvider
      */
-    public function setIsMaintainer($isMaintainer)
+    public function setHasProvider($hasProvider)
     {
-        $this->is_maintainer = $isMaintainer;
+        $this->has_provider = $hasProvider;
     }
 
     /**
-     * Get is_maintainer
-     *
-     * @return boolean
-     */
-    public function getIsMaintainer()
-    {
-        return $this->is_maintainer;
-    }
-
-    /**
-     * Set is_good_license
-     *
-     * @param boolean $isGoodLicense
-     */
-    public function setIsGoodLicense($isGoodLicense)
-    {
-        $this->is_good_license = $isGoodLicense;
-    }
-
-    /**
-     * Get is_good_license
+     * Get has_provider
      *
      * @return boolean
      */
-    public function getIsGoodLicense()
+    public function getHasProvider()
     {
-        return $this->is_good_license;
+        return $this->has_provider;
     }
 
     /**
-     * Set is_at_least_one_good_format
+     * Set has_owner
      *
-     * @param boolean $isAtLeastOneGoodFormat
+     * @param boolean $hasOwner
      */
-    public function setIsAtLeastOneGoodFormat($isAtLeastOneGoodFormat)
+    public function setHasOwner($hasOwner)
     {
-        $this->is_at_least_one_good_format = $isAtLeastOneGoodFormat;
+        $this->has_owner = $hasOwner;
     }
 
     /**
-     * Get is_at_least_one_good_format
+     * Get has_owner
      *
      * @return boolean
      */
-    public function getIsAtLeastOneGoodFormat()
+    public function getHasOwner()
     {
-        return $this->is_at_least_one_good_format;
+        return $this->has_owner;
+    }
+
+    /**
+     * Set has_maintainer
+     *
+     * @param boolean $hasMaintainer
+     */
+    public function setHasMaintainer($hasMaintainer)
+    {
+        $this->has_maintainer = $hasMaintainer;
+    }
+
+    /**
+     * Get has_maintainer
+     *
+     * @return boolean
+     */
+    public function getHasMaintainer()
+    {
+        return $this->has_maintainer;
+    }
+
+    /**
+     * Set has_good_license
+     *
+     * @param boolean $hasGoodLicense
+     */
+    public function setHasGoodLicense($hasGoodLicense)
+    {
+        $this->has_good_license = $hasGoodLicense;
+    }
+
+    /**
+     * Get has_good_license
+     *
+     * @return boolean
+     */
+    public function getHasGoodLicense()
+    {
+        return $this->has_good_license;
+    }
+
+    /**
+     * Set has_at_least_one_good_format
+     *
+     * @param boolean $hasAtLeastOneGoodFormat
+     */
+    public function setHasAtLeastOneGoodFormat($hasAtLeastOneGoodFormat)
+    {
+        $this->has_at_least_one_good_format = $hasAtLeastOneGoodFormat;
+    }
+
+    /**
+     * Get has_at_least_one_good_format
+     *
+     * @return boolean
+     */
+    public function getHasAtLeastOneGoodFormat()
+    {
+        return $this->has_at_least_one_good_format;
     }
 
     /**
@@ -311,22 +311,22 @@ class DatasetCriteria
     }
 
     /**
-     * Set is_category
+     * Set has_category
      *
-     * @param boolean $isCategory
+     * @param boolean $hasCategory
      */
-    public function setIsCategory($isCategory)
+    public function setHasCategory($hasCategory)
     {
-        $this->is_category = $isCategory;
+        $this->has_category = $hasCategory;
     }
 
     /**
-     * Get is_category
+     * Get has_category
      *
      * @return boolean 
      */
-    public function getIsCategory()
+    public function getHasCategory()
     {
-        return $this->is_category;
+        return $this->has_category;
     }
 }

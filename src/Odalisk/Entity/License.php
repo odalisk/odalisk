@@ -228,10 +228,10 @@ class License
     public function setQuality()
     {
         $this->quality = 0;
-        $this->quality += ($this->getAuthorship()) ? 25 : 0;
-        $this->quality += ($this->getReuse()) ? 25 : 0;
-        $this->quality += ($this->getRedistribution()) ? 25 : 0;
-        $this->quality += ($this->getCommercial()) ? 25 : 0;
+        $this->quality += ($this->getAuthorship()) ? 0.25 : 0;
+        $this->quality += ($this->getReuse()) ? 0.25 : 0;
+        $this->quality += ($this->getRedistribution()) ? 0.25 : 0;
+        $this->quality += ($this->getCommercial()) ? 0.25 : 0;
     }
 
     /**

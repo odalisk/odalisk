@@ -96,7 +96,8 @@ class GenerateStatisticsCommand extends BaseCommand
                         $this->em->persist($metric_parent);
                     break;
                 }
-                $general_value += $metric_parent->getScore();
+                error_log($category['weight']);
+                $general_value += $category['weight'] * $metric_parent->getScore();
                 $metric_general->addMetric($metric_parent);
                 $metric_parent->setParent($metric_general);
             }

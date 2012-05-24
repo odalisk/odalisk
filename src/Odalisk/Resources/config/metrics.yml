@@ -13,7 +13,7 @@ parameters:
     metrics:
         # Usability category
         usability:
-            weight: 1
+            weight: 0.25
             sections:
                  search:
                     weight: 1
@@ -30,7 +30,7 @@ parameters:
 
          # Cataloging category
         cataloging:
-            weight: 1
+            weight: 0.25
             sections:
                  identification:
                     weight: 0.2
@@ -60,7 +60,7 @@ parameters:
                             description: "There is an update date"
         # API category
         api:
-            weight: 1
+            weight: 0.25
             sections:
                  api_exists:
                     weight: 0.70
@@ -71,7 +71,7 @@ parameters:
 
         # Liveliness category
         liveliness:
-            weight: 1
+            weight: 0.25
             sections:
                  user_input:
                     weight: 0.80

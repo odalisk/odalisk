@@ -19,42 +19,49 @@ class Format
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string $format
      *
      * @ORM\Column(name="format", type="string", length=255)
      */
-    private $format;
+    protected $format;
 
     /**
      * @var bool $is_open
      *
      * @ORM\Column(name="is_open", type="boolean")
      */
-    private $is_open;
+    protected $is_open;
 
     /**
      * @var bool $has_spec
      *
      * @ORM\Column(name="has_spec", type="boolean")
      */
-    private $has_spec;
+    protected $has_spec;
 
     /**
      * @var bool $is_computer_readable
      *
      * @ORM\Column(name="is_computer_readable", type="boolean")
      */
-    private $is_computer_readable;
+    protected $is_computer_readable;
+    
+    /**
+     * @var bool $is_good
+     *
+     * @ORM\Column(name="is_good", type="boolean")
+     */
+    protected $is_good = false;
 
     /**
      * @var array $aliases
      *
      * @ORM\Column(name="aliases", type="array")
      */
-    private $aliases;
+    protected $aliases;
 
     public function __construct($format, $aliases = array())
     {
@@ -186,15 +193,24 @@ class Format
     }
 
     /**
-     * Is the format good ?
+     * Set is_good
      *
-     * @return boolean
+     * @param boolean $isGood
      */
-    public function isGood() {
-        return(
-                $this->getIsOpen() &&
-                $this->getHasSpec() &&
-                $this->getIsComputerReadable()
-              );
+    public function setIsGood()
+    {
+        $this->is_good = $this->getIsOpen() 
+            && $this->getHasSpec()
+            && $this->getIsComputerReadable();
+    }
+
+    /**
+     * Get is_good
+     *
+     * @return boolean 
+     */
+    public function getIsGood()
+    {
+        return $this->is_good;
     }
 }

@@ -69,14 +69,14 @@ class DatasetCriteria
      *
      * @ORM\Column(name="is_good_license", type="boolean", nullable=false)
      */
-    protected $is_good_license;
+    protected $is_good_license = false;
 
     /**
      * @var string $is_good_license
      *
      * @ORM\Column(name="license_quality", type="integer")
      */
-    protected $license_quality;
+    protected $license_quality = 0;
 
     /**
      * @var string $is_category
@@ -90,8 +90,34 @@ class DatasetCriteria
      *
      * @ORM\Column(name="is_at_least_one_good_format", type="boolean", nullable=false)
      */
-    protected $is_at_least_one_good_format;
-
+    protected $is_at_least_one_good_format = false;
+    
+    public function __construct($d) {
+        $this->setIsTitleAndSummary($this->not_empty($d->getName() . $d->getSummary()));
+        $this->setIsOwner($this->not_empty($d->getOwner()));
+        $this->setIsProvider($this->not_empty($d->getProvider() . $d->getOwner()));
+        $this->setIsMaintainer($this->not_empty($d->getMaintainer()));
+        $this->setIsReleasedOn($this->not_empty($d->getReleasedOn()));
+        $this->setIsLastUpdateOn($this->not_empty($d->getLastUpdatedOn()));
+        
+        if(($license = $d->getLicense()) !== null) {
+            $this->setIsGoodLicense($license->getIsGood());
+            $this->setLicenseQuality($license->getQuality());
+        }
+        
+        if(($formats = $d->getFormats()) !== null) {
+            foreach($formats as $format) {
+                if($format->getIsGood()) {
+                    $this->setIsAtLeastOneGoodFormat(true);
+                    break;
+                }
+            }
+        }
+    }
+    
+    private function not_empty($s) {
+        return !empty($s);
+    }
 
     /**
      * Set is_title_and_summary

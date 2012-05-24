@@ -47,7 +47,8 @@ class FormatNormalizer
             $f->setIsOpen($data['is_open']);
             $f->setHasSpec($data['has_spec']);
             $f->setIsComputerReadable($data['is_computer_readable']);
-
+            $f->setIsGood();
+            
             $this->em->persist($f);
             $this->formats[$format] = $f;
         }

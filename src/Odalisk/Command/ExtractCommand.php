@@ -7,6 +7,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use Odalisk\Entity\DatasetCriteria;
+
 /**
  * A command that will download the HTML pages for all the datasets
  */
@@ -91,7 +93,9 @@ class ExtractCommand extends BaseCommand
                                 $dataset->setUrl($data['meta']['url']);
                                 $dataset->setPortal($portal);
                                 $platform->analyseHtmlContent($data['content'], $dataset);
-
+                                $criteria = new DatasetCriteria($dataset);
+                                $dataset->setCriteria($criteria);
+                                $em->persist($criteria);
                                 $em->persist($dataset);
                                 $dataset = null;
 

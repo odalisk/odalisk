@@ -32,30 +32,24 @@ class GenerateStatisticsCommand extends BaseCommand
         $criteriaRepo = $this->getEntityRepository('Odalisk\Entity\DatasetCriteria');
 
         // Initialization
-        $criteriaRepo->init();
         $criteriaRepo->clear();
         // This make us capable to iterate on all datasets without load them in one
         // shot.
-        $sql = 'SELECT d.id FROM Odalisk\Entity\Dataset d';
-        $datasetsIds = $this->em->createQuery($sql)->iterate();
-
+        $datasets = $this->em->createQuery('SELECT d FROM Odalisk\Entity\Dataset d')->iterate();
+        
         $this->writeBlock($output, "[Statistics] Beginning of generation");
-        foreach($datasetsIds as $i => $datasetId) {
-            $datasetId = $datasetId[$i]['id'];
-            $dataset   = $datasetRepo->find($datasetId);
-            $criteria  = $criteriaRepo->getCriteria($dataset);
-
-            $datasetCriteria = new DatasetCriteria();
-            foreach($criteria as $name => $value) {
-                call_user_func(array($datasetCriteria ,$name), $value);
-            }
-
-            $dataset->setCriteria($datasetCriteria);
-            $this->em->persist($datasetCriteria);
+        $i = 0;
+        foreach($datasets as $row) {
+            $dataset = $row[0];
+            $criteria = new DatasetCriteria($criteriaRepo->getCriteria($dataset));
+            $dataset->setCriteria($criteria);
+            $this->em->persist($criteria);
+            $this->em->persist($dataset);
 
             $i++;
-            if($i % 100 == 0) {
+            if($i % 1000 == 0) {
                 $this->em->flush();
+                $this->em->clear();
                 error_log("[Statistics] flush $i datasets' criteria");
             }
         }

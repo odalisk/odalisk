@@ -1,6 +1,6 @@
 <table class="table table-bordered ">
     <tr>
-        <td class="key">Category <span class="label icon-info label-info" rel="popover" title="Category name" data-content="To normalize categories, we changed the original category name.<br/><strong>Orignal category name was</strong> : {{ dataset.rawCategories}}.">i</span></td>
+        <td class="key">Category <span class="label icon-info label-info" rel="popover" title="Category name" data-content="To normalize categories, we used some aliases<br/><strong>Orignal category name was</strong> : {{ dataset.rawCategories}}.">i</span></td>
         <td>
             {% for category in dataset.categories %}
                 {{ category.category }}{% if dataset.categories|length != loop.index and dataset.categories|length > 1 %}, {% endif %}
@@ -18,28 +18,28 @@
     </tr>
     {% endif %}
     <tr>
-        <td class="key">License <span class="label icon-info label-info" rel="popover" title="License" data-content="To normalize licenses, we changed the original license name with ours<br/><strong>Original license name</strong> : {{ dataset.rawLicense}}.">i</span></td>
+        <td class="key">License <span class="label icon-info label-info" rel="popover" title="License" data-content="To normalize licenses, we chose to use some aliases.<br/><strong>Original license name</strong> : {{ dataset.rawLicense}}.">i</span></td>
         <td>
             {% if dataset.license.commercial == 1 %}
-            <span class="label label-success" rel="popover" title="{{ dataset.license.name }}" data-content="This license is open as possible ! You can use data for commercial purposes, redistribute the data, but don't forget to cite sources !">{{ dataset.license.name }}</span></td>
+            <span class="label label-success" rel="popover" title="{{ dataset.license.name }}" data-content="This license is as open as possible ! You can use the data for commercial purposes, redistribute the data, but don't forget to cite your sources !">{{ dataset.license.name }}</span></td>
             {% elseif dataset.license.redistribution == 1 %}
-            <span class="label label-info" rel="popover" title="{{ dataset.license.name }}" data-content="This license is open until you don't us it for commercial purposes. You can redistribute the data but don't forget to cite sources !">{{ dataset.license.name }}</span></td>
+            <span class="label label-info" rel="popover" title="{{ dataset.license.name }}" data-content="This license is open so far as you don't use it for commercial purposes. You can redistribute the data but don't forget to cite your sources !">{{ dataset.license.name }}</span></td>
             {% elseif dataset.license.reuse == 1 %}
-            <span class="label label-warning" rel="popover" title="{{ dataset.license.name }}" data-content="This license is not very open. You can just re-use the data and remember to cite sources !">{{ dataset.license.name }}</span></td>
+            <span class="label label-warning" rel="popover" title="{{ dataset.license.name }}" data-content="This license is not very open. You can only reuse the data and remember to cite your sources !">{{ dataset.license.name }}</span></td>
             {% else %}
-            <span class="label label-error" rel="popover" title="{{ dataset.license.name }}" data-content="This license is closed or we don't know his type">{{ dataset.license.name }}</span></td>
+            <span class="label label-error" rel="popover" title="{{ dataset.license.name }}" data-content="This license is closed or we were unable to identify it">{{ dataset.license.name }}</span></td>
             {% endif %}
     </tr>
     <tr>
-        <td class="key">Formats <span class="label icon-info label-info" rel="popover" title="Formats" data-content="To normalize formats, we changed the original format name with ours<br/><strong>Original format name</strong> : {{ dataset.rawFormats}}.">i</span></td>
+        <td class="key">Formats <span class="label icon-info label-info" rel="popover" title="Formats" data-content="To normalize formats, we used some aliases<br/><strong>Original format name</strong> : {{ dataset.rawFormats}}.">i</span></td>
         <td>
             {% for format in dataset.formats %}
                 {% if format.isOpen == 1 %}
-                    <span class="label label-success" rel="popover" title="{{ format.format }}" data-content="This format is open as possible ! His specification is public, and he is computer readable, enjoy !">{{ format.format }}</span>
+                    <span class="label label-success" rel="popover" title="{{ format.format }}" data-content="This format is as open as possible ! The specification is public, and he it is computer readable, enjoy !">{{ format.format }}</span>
                 {% elseif format.hasSpec == 1 %}
-                    <span class="label label-info" rel="popover" title="{{ format.format }}" data-content="This format is not fully open ! His specification is public, and he is computer readable, but this format is proprietary.">{{ format.format }}</span>
+                    <span class="label label-info" rel="popover" title="{{ format.format }}" data-content="This format is not fully open ! The specification is public, and it is computer readable, but this format is proprietary.">{{ format.format }}</span>
                 {% elseif format.isComputerReadable == 1 %}
-                    <span class="label label-warning" rel="popover" title="{{ format.format }}" data-content="This format is not very open ! His specification is not public and this format is proprietary.">{{ format.format }}</span>
+                    <span class="label label-warning" rel="popover" title="{{ format.format }}" data-content="This format is not very open ! The specification is not public and this format is proprietary.">{{ format.format }}</span>
                 {% else %}
                     <span class="label label-error">{{ format.format }}</span>
                 {% endif %}

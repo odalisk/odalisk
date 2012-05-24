@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 class PortalRepository extends EntityRepository
 {
-    public function getDatasetsMatching($criterias, $page_index, $page_size) {
+    public function getPortalsMatching($criterias, $page_index, $page_size) {
         $qb = $this->createQueryBuilder('p');
         if(array_key_exists('in', $criterias)) {
             // JOIN ... WITH IN (...)

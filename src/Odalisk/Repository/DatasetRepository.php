@@ -11,7 +11,7 @@ class DatasetRepository extends EntityRepository
             // JOIN ... WITH IN (...)
             $join = 0;
             foreach($criterias['in'] as $column => $values) {
-                $qb->leftJoin('d.' . $column, 'j' . $join, 'WITH', $qb->expr()->in('j' . $join . '.id', $values));
+                $qb->join('d.' . $column, 'j' . $join, 'WITH', $qb->expr()->in('j' . $join . '.id', $values));
                 $join++;
             }
         }

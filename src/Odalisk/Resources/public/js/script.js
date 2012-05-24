@@ -38,6 +38,12 @@ jQuery(function($) {
     
     $('#navbar').scrollspy();
     
+    $(window).resize(function() {
+        window.spanSize = ($(window).width() * 0.23404255317 - 15)+'px';
+      $('#alwaysOnTop .nav-list').css({'maxHeight':($(window).height() - 300)+'px'});
+    });
+    $('#alwaysOnTop .nav-list').css({'maxHeight':($(window).height() - 300)+'px'});
+    window.spanSize = ($(window).width() * 0.23404255317 - 15)+'px';
     
     if(typeof window.page != 'undefined' && window.page == 'home')
     {
@@ -50,7 +56,6 @@ jQuery(function($) {
             if(active.attr('id') == 'browserSlide')
             {
                 $('#headerWrapper').attr('class','backblue');
-                console.log('kikou');
             }
             else
             {
@@ -96,37 +101,87 @@ jsApi = function() {
         this.getData();
     }
     
+    /*
+        $params = array(
+         *    'in' => array(
+         *        'portal' => array(1,2),
+         *        'categories' => array(1,2),
+         *    ),
+         *    // WHERE name LIKE %test% AND id > 4
+         *    'where' => array(
+         *        array('name', 'LIKE', '%test%'),
+         *        array('id', '>', 4),
+         *    ),
+         * );
+         
+    */
     this.updateRequest = function() {
         var labels = $('.tag-list .label').toArray();
         
         this.request = new Object();
-        
+        this.request['in'] = new Object();
+        this.request['where'] = new Array();
         for(var i in labels)
         {
             var label = $(labels[i]);
+            var dataType = label.attr('data-type');
             
             if(label.attr('data-active') == 'true')
             {
-                if(this.request[label.attr('data-type')] == undefined)
+                switch(dataType)
                 {
-                    this.request[label.attr('data-type')] = new Array();
+                    case 'portal':
+                        if(this.request['in']['portal'] == undefined)
+                        {
+                            this.request['in']['portal'] = new Array();
+                        }
+                        this.request['in']['portal'].push(label.attr('data-value'));
+                    break;
+                    case 'category':
+                        if(this.request['in']['categories'] == undefined)
+                        {
+                            this.request['in']['categories'] = new Array();
+                        }
+                        this.request['in']['categories'].push(label.attr('data-value'));
+                    break;
+                    case 'format':
+                        if(this.request['in']['formats'] == undefined)
+                        {
+                            this.request['in']['formats'] = new Array();
+                        }
+                        this.request['in']['formats'].push(label.attr('data-value'));
+                    break;
+                    case 'license':
+                        if(this.request['in']['license'] == undefined)
+                        {
+                            this.request['in']['license'] = new Array();
+                        }
+                        this.request['in']['license'].push(label.attr('data-value'));
+                    break;
+                    default:
+                        this.request['where'].push([dataType, '=', label.attr('data-value')]);
+                    break;
                 }
-                this.request[label.attr('data-type')].push(label.attr('data-value'));
+                
+                
             }
         }
-        
-        this.request['search'] = this.search;
+        if(this.search != '')
+        {
+            this.request['where'].push(['name', 'LIKE', '%'+this.search+'%']);
+        }
+        console.log(this.request);
     }
+    
+    
     
     this.getData = function() {
         this.page = 0;
+        $('#request-result').html('<tr class="loading"><td colspan="3" class="dataset-item"><span>Chargement</span></td></tr>');
         $.post(
-            '/app_dev.php/api/html',
+            '/app_dev.php/api/'+window.searchType+'s/'+this.page+'/'+this.pageSize+'/'+window.displayType,
             {
-                'request':this.request,
-                'page_number':this.page,
-                'type':window.searchType,
-                'page_size':this.pageSize
+                'request':this.request
             },
             function(data) {
                 window.api.data = data;
@@ -135,26 +190,37 @@ jsApi = function() {
         );
     }
     
+    this.beforeRequest = function() {
+        
+    }
+    
+    this.afterRequest = function() {
+        $(".icon-info[rel=popover], span[rel=popover]")
+          .popover()
+          .click(function(e) {
+            e.preventDefault()
+          });
+    }
+    
     this.updateTable = function() {
-        $('.no-result').remove();
+        $('.no-result, .loading').remove();
         $('#request-result').html(window.api.data);
+        this.afterRequest();
     }
     
     this.addToTable = function() {
-        $('.no-result').remove();
+        $('.no-result, .loading').remove();
         $('#request-result').append($(window.api.data));
+        this.afterRequest();
     }
     
     this.nextPage = function(elem) {
         $(elem).parent().parent().remove();
         this.page += 1;
         $.post(
-            '/app_dev.php/api/html',
+            '/app_dev.php/api/'+window.searchType+'s/'+this.page+'/'+this.pageSize+'/'+window.displayType,
             {
-                'request':window.api.request,
-                'page_number':this.page,
-                'type':window.searchType,
-                'page_size':this.pageSize
+                'request':this.request
             },
             function(data) {
                 
@@ -214,13 +280,17 @@ jsApi = function() {
         var d = offset.top - 90;
         var c = alwaysOnTop;
         if (b>d) {
-        c.css({position:"fixed",top:"90px", right: (offset.left - 5)})
+        c.css({position:"fixed",top:"90px", right: (offset.left + 2)})
+        $('#alwaysOnTop').css({'width':window.spanSize}).parent().css({'minHeight':($(window).height() - 120)+'px'});
         } else {
         if (b<=d) {
           c.css({position:"relative",top:"", right: ''})
+          $('#alwaysOnTop').css({'width':'23.404255317%'})
         }
         }
     });
+    
+    
     
     /* Init actions */
     this.addInitAction = function(actionName) {

@@ -42,7 +42,7 @@ class DatasetCriteriaRepository extends EntityRepository
 
         $this->criteria['setIsTitleAndSummary'] = ($d->getName() && $d->getSummary());
         $this->criteria['setIsOwner'] = $d->getOwner() != NULL;
-        $this->criteria['setIsProvider'] = ($d->getProvider() && $d->getOwner());
+        $this->criteria['setIsProvider'] = ($d->getProvider() || $d->getOwner());
         $this->criteria['setIsLastUpdateOn'] = $d->getLastUpdatedOn() != NULL;
         $this->criteria['setIsMaintainer'] = $d->getMaintainer() != NULL;
         $this->criteria['setIsReleasedOn'] = $d->getReleasedOn() != NULL;

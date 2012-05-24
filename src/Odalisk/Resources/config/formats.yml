@@ -245,15 +245,20 @@ parameters:
             is_open: true
             has_spec: true
             is_computer_readable: false
-        unknown:
+        api:
             is_open: false
             has_spec: false
-            is_computer_readable: false
+            is_computer_readable: true
             aliases:
                 - 'api'
                 - 'api/search'
                 - 'api/sparql'
                 - 'api/vndgoogle-spreadsheet'
+        unknown:
+            is_open: false
+            has_spec: false
+            is_computer_readable: false
+            aliases:
                 - 'aree'
                 - 'blog'
                 - 'bz2:nt'

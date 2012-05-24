@@ -26,8 +26,7 @@ parameters:
 
                          license_filtering:
                             weight: 0.25
-
-        # Cataloging category
+         # Cataloging category
         cataloging:
             weight: 1
             sections:
@@ -53,17 +52,15 @@ parameters:
 
                          update_date:
                             weight: 0.60
-
         # API category
         api:
             weight: 1
             sections:
                  api_exists:
                     weight: 0.70
-                    
                  api_documentation:
                     weight: 0.30
-                    
+
         # Liveliness category
         liveliness:
             weight: 1
@@ -92,4 +89,5 @@ parameters:
                     sections:
                          opendata_explained:
                             weight: 1
-                            
+            
+

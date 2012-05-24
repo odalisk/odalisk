@@ -306,6 +306,7 @@ parameters:
                 - 'Straf og rehabilitering'
                 - 'Population Migration Immigration-control-& asylum'
                 - 'Young People'
+                - 'Citoyenneté'
 
         'Statistics':
             aliases:
@@ -342,6 +343,7 @@ parameters:
                 - 'Trafikregulering af veje og køretøjer'
                 - 'trasporti e viabilità'
                 - 'Drift og vedligehold af trafikinfrastruktur' # Operation and maintenance of road infrastructure
+                - 'Mobilité'
                 - 'Verkehr' #transport
         'Tourism':
             aliases:
@@ -350,7 +352,6 @@ parameters:
                 - 'Tourisme & Voyages'
                 - 'Freizeit'
                 - 'tourismus'
-                - 'Mobilité'
                 - 'Travel'
                 - 'Turismo'
                 - transportation

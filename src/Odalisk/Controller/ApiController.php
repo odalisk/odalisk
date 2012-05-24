@@ -10,13 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ApiController extends Controller
 {  
-    public function portals($page_index, $page_size)
+    public function portals($page_index, $page_size, $display)
     {
         $portals = $this->getEntityRepository('Odalisk\Entity\Portal')
             ->findBy(array(), array('name' => 'ASC'), $page_size, $page_index * $page_size);
         
         return $this->render('App:Api:portal.html.twig', array(
             'portals' => $portals,
+            'display' => $display
         ));
     }
     
@@ -36,13 +37,21 @@ class ApiController extends Controller
      * @param Request $request 
      * @return void
      */
-    public function datasets(Request $request, $page_index, $page_size) {
-        $datasets = $this->getEntityRepository('Odalisk\Entity\Dataset')
-            ->getDatasetsMatching($request->request->all(), $page_index, $page_size);
+    public function datasets(Request $request, $page_index, $page_size, $display) {
+        $data = $request->request->all();
+        $em = $this->getEntityRepository('Odalisk\Entity\Dataset');
+        if(isset($data['request']))
+        {
+            $datasets = $em->getDatasetsMatching($data['request'], $page_index, $page_size);
+        }
+        else
+        {
+            $datasets = $em->findBy(array(), array('name' => 'ASC'), $page_size, $page_index * $page_size);
+        }
         
-        //var_dump($datasets);
-            
-        $this->render('App:Api:dataset.html.twig', array(
+        
+        
+        return $this->render('App:Api:dataset.html.twig', array(
             'datasets' => $datasets,
             'pagenumber' => 0,
         ));
@@ -50,11 +59,34 @@ class ApiController extends Controller
 
     public function datasetTags($current_portal)
     {
-        $portals = $this->getEntityRepository('Odalisk\Entity\Portal')->findAll();
-
+        $er = $this->getEntityRepository('Odalisk\Entity\Portal');
+        $categories = array();
+        $portals = array();
+        $formats = array();
+        $licenses = array();
+        if (null != $current_portal) {
+            $categories = $er->getCategories($current_portal);
+            $formats = $er->getFormats($current_portal);
+            $licenses = $er->getLicenses($current_portal);
+        } else {
+            $portals = $er->findAll();
+            $categories = $this->getEntityRepository('Odalisk\Entity\Category')
+                               ->findall();
+            $formats = $this->getEntityRepository('Odalisk\Entity\Format')
+                            ->findall();
+            $licenses = $this->getEntityRepository('Odalisk\Entity\License')
+                             ->findall();
+        }
+        
+        
+        
+        
         return $this->render('App:Api:dataset-tags.html.twig', array(
             'portals' => $portals,
-            'current_portal' => $current_portal
+            'current_portal' => $current_portal,
+            'categories' => $categories,
+            'formats' => $formats,
+            'licenses' => $licenses,
         ));
     }
 

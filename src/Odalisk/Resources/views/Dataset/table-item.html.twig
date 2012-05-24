@@ -20,32 +20,7 @@
         </div>
     </td>
     <td class="labels">
-        {#
-        {% for category in dataset.category %}
-            {% if category is not empty %}
-                {% if category|length > 20 %}
-                    <span class="label label-info">{{ category|slice(0,20) }}...</span>
-                {% else %}
-                    <span class="label label-info">{{ category|slice(0,20) }}</span>
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-        #}
-        {% if dataset.license is not empty %}
-            {% if dataset.license|length > 20 %}
-                <span class="label label-success">{{ dataset.license|slice(0,20) }}...</span>
-            {% else %}
-                <span class="label label-success">{{ dataset.license|slice(0,20) }}</span>
-            {% endif %}
-        {% endif %}
-
-        {% if dataset.owner is not empty %}
-            {% if dataset.owner|length > 20 %}
-                <span class="label label-warning">{{ dataset.owner|slice(0,20) }}...</span>
-            {% else %}
-                <span class="label label-warning">{{ dataset.owner|slice(0,20) }}</span>
-            {% endif %}
-        {% endif %}
+        {% include "App:Dataset:info-table.html.twig" with {'dataset' : dataset, 'display_date' : false} %}
     </td>
     <td class="button">
         <a class="btn" href="{{ path('dataset_details', { 'dataset_number': dataset.id }) }}">Détails</a>

@@ -66,9 +66,7 @@ class ExtractCommand extends BaseCommand
             foreach ($platforms as $name => $platform) {
                 error_log('[Analysis] Beginning to process ' . $platform->getName());
                 // Load the portal object from the database
-                $portal = $platform->loadPortal();
-                // Clear the data of this portal from the database
-                $portalRepo->clearData($portal);
+                $portal = $platform->loadPortal();                
                 // Cache the platform path
                 $platformPath = $dataPath . $name . '/';
 
@@ -120,7 +118,6 @@ class ExtractCommand extends BaseCommand
                 error_log('[Analysis] Persisting data to the database');
                 error_log('[Analysis] currently using ' . memory_get_usage(true) / (1024 * 1024) . 'MB of memory');
                 $em->flush();
-                //$em->clear();
                 error_log('[Analysis] currently using ' . memory_get_usage(true) / (1024 * 1024) . 'MB of memory');
             }
         }

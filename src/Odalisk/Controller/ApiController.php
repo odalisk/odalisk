@@ -13,7 +13,6 @@ class ApiController extends Controller
     public function portals(Request $request, $page_index, $page_size, $display)
     {
         $data = $request->request->all();
-        var_dump($data);
         $em = $this->getEntityRepository('Odalisk\Entity\Portal');
         if(isset($data['request'])) {
             $portals = $em->getPortalsMatching($data['request'], $page_index, $page_size);

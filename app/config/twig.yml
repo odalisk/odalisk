@@ -4,7 +4,7 @@
 # Config: http://bit.ly/twig-ref
 
 all:
-    debug:            %kernel.debug%
+    debug:            true
     strict_variables: %kernel.debug%
 
     # Resources to render forms

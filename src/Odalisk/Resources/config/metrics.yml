@@ -14,9 +14,11 @@ parameters:
         # Usability category
         usability:
             weight: 0.25
+            description: "Usability"
             sections:
-                 search:
+                 Search:
                     weight: 1
+                    description: "Search"
                     sections:
                          search_engine_provided:
                             weight: 0.6
@@ -31,8 +33,10 @@ parameters:
          # Cataloging category
         cataloging:
             weight: 0.25
+            description: "Cataloging"
             sections:
                  identification:
+                    description: "Identification"
                     weight: 0.2
                     sections:
                          person_in_charge:
@@ -41,6 +45,7 @@ parameters:
 
                  general:
                     weight: 0.60
+                    description: "General Informations"
                     sections:
                          title_and_summary:
                             weight: 0.60
@@ -51,6 +56,7 @@ parameters:
 
                  temporal:
                     weight: 0.20
+                    description: "Temporal Informations"
                     sections:
                          creation_date:
                             weight: 0.40
@@ -60,6 +66,7 @@ parameters:
                             description: "There is an update date"
         # API category
         api:
+            description: "API"
             weight: 0.25
             sections:
                  api_exists:
@@ -72,8 +79,10 @@ parameters:
         # Liveliness category
         liveliness:
             weight: 0.25
+            description: "Liveliness"
             sections:
-                 user_input:
+                 User input:
+                    description: "User input"
                     weight: 0.80
                     sections:
                          rating_possibility:
@@ -95,8 +104,9 @@ parameters:
                          suggest_dataset:
                             weight: 0.20
                             description: "Users can propose new datasets and also ask for existing ones to be made available"
-                 information:
+                 Information:
                     weight: 0.20
+                    description: "Information"
                     sections:
                          opendata_explained:
                             weight: 1

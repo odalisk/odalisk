@@ -28,35 +28,14 @@ class GenerateStatisticsCommand extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->em = $this->getEntityManager();
-        $datasetRepo  = $this->getEntityRepository('Odalisk\Entity\Dataset');
         $criteriaRepo = $this->getEntityRepository('Odalisk\Entity\DatasetCriteria');
 
         // Initialization
         $criteriaRepo->clear();
-        // This make us capable to iterate on all datasets without load them in one
-        // shot.
-        /*
         $datasets = $this->em->createQuery('SELECT d FROM Odalisk\Entity\Dataset d')->iterate();
         
         $this->writeBlock($output, "[Statistics] Beginning of generation");
-        $i = 0;
-        foreach($datasets as $row) {
-            $dataset = $row[0];
-            $criteria = new DatasetCriteria($criteriaRepo->getCriteria($dataset));
-            $dataset->setCriteria($criteria);
-            $this->em->persist($criteria);
-            $this->em->persist($dataset);
 
-            $i++;
-            if($i % 1000 == 0) {
-                $this->em->flush();
-                $this->em->clear();
-                error_log("[Statistics] flush $i datasets' criteria");
-            }
-        }
-        $this->em->flush();
-        error_log("[Statistics] flush $i datasets' criteria");
-        */
         // Metrics generation
         error_log("[Statistics] Metrics generation");
         $container  = $this->getContainer();
@@ -77,27 +56,21 @@ class GenerateStatisticsCommand extends BaseCommand
 
                 switch($name) {
                     case 'cataloging' :
-                        $metric_parent = new \Odalisk\Entity\Metric();
-                        $metric_parent->setName('cataloging', $avgs);
-                        $metrics = $this->apply_section('cataloging',$category,$avgs);
-                        foreach ($metrics as $metric) {
-                            $metric_parent->addMetric($metric);
-                            $value += $section['weight'] * $metric->getScore();
-                            $metric->setParent($metric_parent);
-                        }
+                        $metric_parent = $this->apply_section($name,$category,$avgs);
+                        $metric_parent->setName($name, $avgs);
                         $metric_parent->setCoefficient($category['weight']);
-                        $metric_parent->setScore($value);
+                        $metric_parent->setDescription($category['description']);
                         $this->em->persist($metric_parent);
                     break;
 
                     default:
                         $metric_parent = $this->apply_section($name,$category,$portalcriteria);
                         $metric_parent->setCoefficient($category['weight']);
+                        $metric_parent->setDescription($category['description']);
                         $this->em->persist($metric_parent);
                     break;
                 }
-                error_log($category['weight']);
-                $general_value += $category['weight'] * $metric_parent->getScore();
+                $general_value += $metric_parent->getScore();
                 $metric_general->addMetric($metric_parent);
                 $metric_parent->setParent($metric_general);
             }
@@ -128,6 +101,7 @@ class GenerateStatisticsCommand extends BaseCommand
             }
             $metric_parent->setCoefficient($criteria['weight']);
             $metric_parent->setScore($criteria['weight'] * $value);
+            $metric_parent->setDescription($criteria['description']);
             $this->em->persist($metric_parent);
             return $metric_parent;
         } else {

@@ -121,14 +121,30 @@ class PortalRepository extends EntityRepository
     {
         $data = $this->getEntityManager()
             ->createQuery('
-                    SELECT DISTINCT p.status 
-                    FROM Odalisk\Entity\Portal p
-                    ORDER BY p.status ASC')
+                SELECT DISTINCT p.status 
+                FROM Odalisk\Entity\Portal p
+                ORDER BY p.status ASC')
             ->getResult();
 
         $result = array();
         foreach($data as $row) {
             $result[] = $row['status'];
+        }
+        return $result;
+    }
+    
+    public function getPortalTypes()
+    {
+        $data = $this->getEntityManager()
+            ->createQuery('
+                SELECT DISTINCT p.type 
+                FROM Odalisk\Entity\Portal p
+                ORDER BY p.type ASC')
+            ->getResult();
+
+        $result = array();
+        foreach($data as $row) {
+            $result[] = $row['type'];
         }
         return $result;
     }

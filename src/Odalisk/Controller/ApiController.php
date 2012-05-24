@@ -10,13 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ApiController extends Controller
 {  
-    public function portals($page_index, $page_size)
+    public function portals($page_index, $page_size, $display)
     {
         $portals = $this->getEntityRepository('Odalisk\Entity\Portal')
             ->findBy(array(), array('name' => 'ASC'), $page_size, $page_index * $page_size);
         
         return $this->render('App:Api:portal.html.twig', array(
             'portals' => $portals,
+            'display' => $display
         ));
     }
     
@@ -36,11 +37,20 @@ class ApiController extends Controller
      * @param Request $request 
      * @return void
      */
-    public function datasets(Request $request, $page_index, $page_size) {
+    public function datasets(Request $request, $page_index, $page_size, $display) {
         $data = $request->request->all();
-        $datasets = $this->getEntityRepository('Odalisk\Entity\Dataset')
-            ->getDatasetsMatching($data['request'], $page_index, $page_size);
-                    
+        $em = $this->getEntityRepository('Odalisk\Entity\Dataset');
+        if(isset($data['request']))
+        {
+            $datasets = $em->getDatasetsMatching($data['request'], $page_index, $page_size);
+        }
+        else
+        {
+            $datasets = $em->findBy(array(), array('name' => 'ASC'), $page_size, $page_index * $page_size);
+        }
+        
+        
+        
         return $this->render('App:Api:dataset.html.twig', array(
             'datasets' => $datasets,
             'pagenumber' => 0,

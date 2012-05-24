@@ -7,7 +7,7 @@
                 {% else %}
                     {{ portal.name|slice(0,50) }}
                 {% endif %}
-                <span class="badge badge-inverse">{{portal.datasetCount }}</span>
+                <span class="badge badge-inverse">{{ portal.datasetCount }}</span>
             </h3>
         </header>
         <div class="content">
@@ -15,7 +15,7 @@
                 {% include "App:Portal:info-table.html.twig" with {'portal' : portal, 'display_date' : false } %}
             </div>
             <div class="button">
-                <a class="btn" href="{{ path('portal_details', { 'portal_number': portal.id }) }}">Détails</a>
+                <a class="btn" href="{{ path('portal_details', { 'portal_number': portal.id }) }}">Details</a>
             </div>
         </div>
     </div>

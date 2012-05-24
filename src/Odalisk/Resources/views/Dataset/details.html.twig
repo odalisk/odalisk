@@ -1,10 +1,10 @@
 {% extends "App::browser.html.twig" %}
 
-{% block title %}Odalisk project{% endblock %}
+{% block title %}{{ dataset.name }} - Odalisk project{% endblock %}
 
 {% block content %}
     <div class="well hero-unit hero-unit-intro hero-unit-dataset">
-        <h1>{{ dataset.name }}</h1>
+        <h1>{{ dataset.name }} <a target="_blank" href="{{dataset.url}}"><i class="icon-play-circle"></i> go to dataset page</a></h1>
         <div class="clearfix"></div>
         <div class="container-fluid">
             <div class="row-fluid">

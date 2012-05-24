@@ -82,6 +82,25 @@ body {
     }
     
     .hero-unit-intro {
+        h1 {
+            a {
+                font-size:17px;
+                color:white;
+                line-height:20px;
+                display:inline-block;
+                top:-3px;
+                position:relative;
+                
+                text-decoration:none;
+                
+                &:hover {
+                    cursor:pointer;
+                }
+            }
+        }
+    }
+    
+    .hero-unit-intro {
         
         background:url('/bundles/app/img/homeback.jpg');
         margin-bottom:10px;
@@ -348,7 +367,7 @@ body {
             td {
                 border-top:none;
                 
-                &.sumary {
+                &.summary {
                     width:60%;
                 }
                 
@@ -391,10 +410,11 @@ body {
     }
     
     .portal-span-item {
+        width:100%;
         .border-radius(3px);
         border:1px solid #ddd;
         
-        margin-bottom:10px;
+        margin-top:15px;
         header {
             #gradient > .vertical(#eee, #ddd);
             padding:5px 10px;
@@ -407,6 +427,35 @@ body {
             padding:10px;
         }
         
+        .summary {
+            min-width:150px;
+            font-size:10px;
+            table {
+                background:white;
+                margin-bottom:10px;
+                td {
+                    padding:2px;
+                    
+                    &.key {
+                        text-align:right;
+                        margin-right:3px;
+                        vertical-align:middle;
+                        width:40%;
+                    }
+
+                    .label {
+                        position:relative;
+                        display:inline-block;
+                        top:-2px;
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    .portal-block {
+        padding-left:0px;
     }
 }
 

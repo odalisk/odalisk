@@ -41,7 +41,7 @@ class DefaultController extends Controller
 
     public function contactAction()
     {
-        $previousUrl = $this->getRequest()->headers->get('referer');
+        $previousUrl = $this->getRequest()->getRequestUri();
         $contact = new Contact();
         $contact->setCurrentPage($previousUrl);
 

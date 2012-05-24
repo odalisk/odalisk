@@ -1,6 +1,6 @@
 {% extends "App::browser.html.twig" %}
 
-{% block title %}Odalisk project{% endblock %}
+{% block title %}{{ portal.name }} - Odalisk project{% endblock %}
 
 {% block content %}
 <div class="row-fluid row-nomargin-top">
@@ -18,28 +18,7 @@
             <div class="container-fluid">
                 <div class="row-fluid">
                     <div class="span4">
-                        <table class="table table-bordered ">
-                            <tr>
-                                <td class="key">Entity</td>
-                                <td>{{ portal.entity }}</td>
-                            </tr>
-                            <tr>
-                                <td class="key">Country</td>
-                                <td>{{ portal.country }}</td>
-                            </tr>
-                            <tr>
-                                <td class="key">Type</td>
-                                <td>{{ portal.status}}</td>
-                            </tr>
-                            <tr>
-                                <td class="key">First crawl <span class="label icon-info label-info" rel="popover" title="First crawl" data-content="First time we crawled the portal.">i</span></td>
-                                <td>{{ portal.createdAt|date("d/m/Y") }}</td>
-                            </tr>
-                            <tr>
-                                <td class="key">Last crawl <span class="label icon-info label-info" rel="popover" title="Last crawl" data-content="Last time we crawled the portal.">i</span></td>
-                                <td>{{ portal.createdAt|date("d/m/Y") }}</td>
-                            </tr>
-                        </table>
+                        {% include "App:Portal:info-table.html.twig" with {'portal' : portal, 'display_date' : true } %}
                     </div>
                     <div class="span8">
                         <table class="table score table-bordered">
@@ -92,7 +71,7 @@
                 </div>
             </div>
         </div>
-        <div class="fluid-container">
+        <div class="container-fluid">
             <div class="row-fluid row-nomargin-top">
                 <div class="span12">
                     {% include "App:Search:dataset-list.html.twig" with {'current_portal': portal.id} %}

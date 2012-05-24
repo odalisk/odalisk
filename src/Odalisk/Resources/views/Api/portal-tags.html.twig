@@ -1,15 +1,13 @@
-<li class="nav-header">Platform type</li>
-<li><span data-value="ckan" data-type="platform-type" class="label">CKAN <span>+</span></span></li>
-<li><span data-value="socrata" data-type="platform-type" class="label">Socrata <span>+</span></span></li>
-<li><span data-value="incite" data-type="category" class="label">inCite <span>+</span></span></li>
-<li><span data-value="publica" data-type="category" class="label">Publica <span>+</span></span></li>
-<li class="nav-header">Language</li>
-<li><span data-value="fr" data-type="language" class="label">French <span>+</span></span></li>
-<li><span data-value="en" data-type="language" class="label">English <span>+</span></span></li>
-<li><span data-value="other" data-type="language" class="label">Other <span>+</span></span></li>
-<li class="nav-header">Organisation type</li>
-<li><span data-value="city" data-type="organisation-type" class="label">City <span>+</span></span></li>
-<li><span data-value="country" data-type="organisation-type" class="label">Country <span>+</span></span></li>
-<li><span data-value="company" data-type="organisation-type" class="label">Company <span>+</span></span></li>
-<li><span data-value="nonprofit" data-type="organisation-type" class="label">Non profit organisations <span>+</span></span></li>
-<li><span data-value="other" data-type="organisation-type" class="label">Non Other<span>+</span></span></li>
+{% if countries|length > 0 %}
+    <li class="nav-header">Countries</li>
+    {% for country in countries %}
+        <li><span data-value="{{ country }}" data-type="country" class="label">{{ country }} <span>+</span></span></li>
+    {% endfor %}
+{% endif%}
+
+{% if statuses|length > 0 %}
+    <li class="nav-header">Statuses</li>
+    {% for status in statuses %}
+        <li><span data-value="{{ status }}" data-type="status" class="label">{{ status }} <span>+</span></span></li>
+    {% endfor %}
+{% endif%}

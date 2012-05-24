@@ -11,7 +11,7 @@
         </header>
         <div class="content">
             <div class="summary">
-                {% include "App:Portal:info-table.html.twig" with {'portal' : portal, 'display_date' : true } %}
+                {% include "App:Portal:info-table.html.twig" with {'portal' : portal, 'display_date' : false } %}
             </div>
             <div class="button">
                 <a class="btn" href="{{ path('portal_details', { 'portal_number': portal.id }) }}">Détails</a>

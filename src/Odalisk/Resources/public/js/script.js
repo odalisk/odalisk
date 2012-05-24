@@ -182,7 +182,7 @@ jsApi = function() {
         this.page = 0;
         $('#request-result').html('<tr class="loading"><td colspan="3" class="dataset-item"><span>Chargement</span></td></tr>');
         $.post(
-            '/app_dev.php/api/'+window.searchType+'s/'+this.page+'/'+this.pageSize+'/'+window.displayType,
+            '/api/'+window.searchType+'s/'+this.page+'/'+this.pageSize+'/'+window.displayType,
             {
                 'request':this.request
             },
@@ -221,7 +221,7 @@ jsApi = function() {
         $(elem).parent().parent().remove();
         this.page += 1;
         $.post(
-            '/app_dev.php/api/'+window.searchType+'s/'+this.page+'/'+this.pageSize+'/'+window.displayType,
+            '/api/'+window.searchType+'s/'+this.page+'/'+this.pageSize+'/'+window.displayType,
             {
                 'request':this.request
             },

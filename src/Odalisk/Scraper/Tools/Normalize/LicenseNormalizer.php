@@ -30,7 +30,6 @@ class LicenseNormalizer
             if (!$l) {
                 $l = new \Odalisk\Entity\License($name);
             }
-            //var_dump($license);
             foreach ($license['aliases'] as $alias) {
                 $l->addAlias($alias);
                 $this->aliases[strtolower($alias)] = strtolower($name);

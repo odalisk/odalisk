@@ -126,7 +126,6 @@ abstract class BasePortal
     {
 
         $this->portal = new \Odalisk\Entity\Portal();
-
         $this->portal->setName($this->getName());
         $this->portal->setUrl($this->getBaseUrl());
         $this->portal->setCountry($this->getCountry());

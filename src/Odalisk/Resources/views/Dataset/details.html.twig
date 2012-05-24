@@ -3,6 +3,17 @@
 {% block title %}{{ dataset.name }} - Odalisk project{% endblock %}
 
 {% block content %}
+<div class="row-fluid row-nomargin-top">
+    <div class="span12">
+    <ul class="breadcrumb">
+      <li>
+        <a href="{{ path('portals') }}">Portals</a> <span class="divider">/</span>
+      </li>
+      <li>
+          <a href="{{ path('portal_details', {'portal_number': dataset.portal.id})  }}">{{ dataset.portal.name }}</a> <span class="divider">/</span>
+        </li>
+      <li class="active">{{ dataset.name }}</li>
+    </ul>
     <div class="well hero-unit hero-unit-intro hero-unit-dataset">
         <h1>{{ dataset.name }} <a target="_blank" href="{{dataset.url}}"><i class="icon-play-circle"></i> go to dataset page</a></h1>
         <div class="clearfix"></div>
@@ -16,237 +27,193 @@
                         <h3>Dataset summary :</h3>
                         {{ dataset.summary }}
                     </div>
-                    <!--
-                    <table class="table score table-bordered">
-                        <tr class="total-score">
-                            <td class="key">Score</td>
-                            <td class="progress-bar">
-                                <div class="progress progress-striped
-                                 active progress-success">
-                                  <div class="bar"
-                                       style="width: 85%;"></div>
-                                </div>
-                            </td>
-                            <td class="note">163/200</td>
-                        </tr>
-                        <tr>
-                            <td class="key">Feedback</td>
-                            <td class="progress-bar">
-                                <div class="progress progress-striped
-                                 active progress-warning">
-                                  <div class="bar"
-                                       style="width: 40%;"></div>
-                                </div>
-                            </td>
-                            <td class="note">83/200</td>
-                        </tr>
-                        <tr>
-                            <td class="key">Openess</td>
-                            <td class="progress-bar">
-                                <div class="progress progress-striped
-                                 active progress-info">
-                                  <div class="bar"
-                                       style="width: 70%;"></div>
-                                </div>
-                            </td>
-                            <td class="note">155/200</td>
-                        </tr>
-                        <tr>
-                            <td class="key">API</td>
-                            <td class="progress-bar">
-                                <div class="progress progress-striped
-                                 active progress-danger">
-                                  <div class="bar"
-                                       style="width: 20%;"></div>
-                                </div>
-                            </td>
-                            <td class="note">42/200</td>
-                        </tr>
-                    </table>
-                -->
                 </div>
             </div>
         </div>
     </div>
     <div class="row-fluid">
-        <table class="table check table-bordered">
-            <thead>
-                <tr>
-                    <th>Criteria</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Does the dataset have a title and a summary?</td>
-                    {% if dataset.criteria.hasTitleAndSummary == 1 %}
-                        <td class="tick tick-success">
-                            <i class="icon-ok icon-white"></i>
-                        </td>
-                    {% else %}
-                        <td class="tick tick-failure">
-                            <i class="icon-remove icon-white"></i>
-                        </td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <td>Does it have a category?</td>
-                    {% if dataset.criteria.hasCategory == 1 %}
-                        <td class="tick tick-success">
-                            <i class="icon-ok icon-white"></i>
-                        </td>
-                    {% else %}
-                        <td class="tick tick-failure">
-                            <i class="icon-remove icon-white"></i>
-                        </td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <td>Does it have a release date?</td>
-                    {% if dataset.criteria.hasReleasedOn == 1 %}
-                        <td class="tick tick-success">
-                            <i class="icon-ok icon-white"></i>
-                        </td>
-                    {% else %}
-                        <td class="tick tick-failure">
-                            <i class="icon-remove icon-white"></i>
-                        </td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <td>Has it been updated and when?</td>
-                    {% if dataset.criteria.hasLastUpdateOn == 1 %}
-                        <td class="tick tick-success">
-                            <i class="icon-ok icon-white"></i>
-                        </td>
-                    {% else %}
-                        <td class="tick tick-failure">
-                            <i class="icon-remove icon-white"></i>
-                        </td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <td>Is it openly licensed?</td>
-                    {% if dataset.criteria.hasGoodLicense == 1 %}
-                        <td class="tick tick-success">
-                            <i class="icon-ok icon-white"></i>
-                        </td>
-                    {% else %}
-                        <td class="tick tick-failure">
-                            <i class="icon-remove icon-white"></i>
-                        </td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <td>Is it available in at least one open format?</td>
-                    {% if dataset.criteria.hasAtLeastOneGoodFormat == 1 %}
-                        <td class="tick tick-success">
-                            <i class="icon-ok icon-white"></i>
-                        </td>
-                    {% else %}
-                        <td class="tick tick-failure">
-                            <i class="icon-remove icon-white"></i>
-                        </td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <td>Do we know the provider of the dataset?</td>
-                    {% if dataset.criteria.hasProvider == 1 %}
-                        <td class="tick tick-success">
-                            <i class="icon-ok icon-white"></i>
-                        </td>
-                    {% else %}
-                        <td class="tick tick-failure">
-                            <i class="icon-remove icon-white"></i>
-                        </td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <td>Do we know the owner of the dataset?</td>
-                    {% if dataset.criteria.hasOwner == 1 %}
-                        <td class="tick tick-success">
-                            <i class="icon-ok icon-white"></i>
-                        </td>
-                    {% else %}
-                        <td class="tick tick-failure">
-                            <i class="icon-remove icon-white"></i>
-                        </td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <td>Do we know the maintainer of the dataset?</td>
-                    {% if dataset.criteria.hasMaintainer == 1 %}
-                        <td class="tick tick-success">
-                            <i class="icon-ok icon-white"></i>
-                        </td>
-                    {% else %}
-                        <td class="tick tick-failure">
-                            <i class="icon-remove icon-white"></i>
-                        </td>
-                    {% endif %}
-                </tr>
+        <div class="span9">
+            <table class="table check table-bordered">
+                <thead>
+                    <tr>
+                        <th>Criteria</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Does the dataset have a title and a summary?</td>
+                        {% if dataset.criteria.hasTitleAndSummary == 1 %}
+                            <td class="tick tick-success">
+                                <i class="icon-ok icon-white"></i>
+                            </td>
+                        {% else %}
+                            <td class="tick tick-failure">
+                                <i class="icon-remove icon-white"></i>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Does it have a category?</td>
+                        {% if dataset.criteria.hasCategory == 1 %}
+                            <td class="tick tick-success">
+                                <i class="icon-ok icon-white"></i>
+                            </td>
+                        {% else %}
+                            <td class="tick tick-failure">
+                                <i class="icon-remove icon-white"></i>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Does it have a release date?</td>
+                        {% if dataset.criteria.hasReleasedOn == 1 %}
+                            <td class="tick tick-success">
+                                <i class="icon-ok icon-white"></i>
+                            </td>
+                        {% else %}
+                            <td class="tick tick-failure">
+                                <i class="icon-remove icon-white"></i>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Has it been updated and when?</td>
+                        {% if dataset.criteria.hasLastUpdateOn == 1 %}
+                            <td class="tick tick-success">
+                                <i class="icon-ok icon-white"></i>
+                            </td>
+                        {% else %}
+                            <td class="tick tick-failure">
+                                <i class="icon-remove icon-white"></i>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Is it openly licensed?</td>
+                        {% if dataset.criteria.hasGoodLicense == 1 %}
+                            <td class="tick tick-success">
+                                <i class="icon-ok icon-white"></i>
+                            </td>
+                        {% else %}
+                            <td class="tick tick-failure">
+                                <i class="icon-remove icon-white"></i>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Is it available in at least one open format?</td>
+                        {% if dataset.criteria.hasAtLeastOneGoodFormat == 1 %}
+                            <td class="tick tick-success">
+                                <i class="icon-ok icon-white"></i>
+                            </td>
+                        {% else %}
+                            <td class="tick tick-failure">
+                                <i class="icon-remove icon-white"></i>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Do we know the provider of the dataset?</td>
+                        {% if dataset.criteria.hasProvider == 1 %}
+                            <td class="tick tick-success">
+                                <i class="icon-ok icon-white"></i>
+                            </td>
+                        {% else %}
+                            <td class="tick tick-failure">
+                                <i class="icon-remove icon-white"></i>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Do we know the owner of the dataset?</td>
+                        {% if dataset.criteria.hasOwner == 1 %}
+                            <td class="tick tick-success">
+                                <i class="icon-ok icon-white"></i>
+                            </td>
+                        {% else %}
+                            <td class="tick tick-failure">
+                                <i class="icon-remove icon-white"></i>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Do we know the maintainer of the dataset?</td>
+                        {% if dataset.criteria.hasMaintainer == 1 %}
+                            <td class="tick tick-success">
+                                <i class="icon-ok icon-white"></i>
+                            </td>
+                        {% else %}
+                            <td class="tick tick-failure">
+                                <i class="icon-remove icon-white"></i>
+                            </td>
+                        {% endif %}
+                    </tr>
                 
-                <!--<tr>
-                    <td>1</td>
-                    <td>A specific API call can yield the license details</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>A list of third-party apps developed using the datasets is available</td>
-                    <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>A description of the content</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>A specific API call can yield the license details</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>A list of third-party apps developed using the datasets is available</td>
-                    <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>A description of the content</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>A specific API call can yield the license details</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>A list of third-party apps developed using the datasets is available</td>
-                    <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>A description of the content</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>A specific API call can yield the license details</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>11</td>
-                    <td>A list of third-party apps developed using the datasets is available</td>
-                    <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
-                </tr>
-                <tr>
-                    <td>12</td>
-                    <td>A description of the content</td>
-                    <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
-                </tr>-->
-            </tbody>
-        </table>
+                    <!--<tr>
+                        <td>1</td>
+                        <td>A specific API call can yield the license details</td>
+                        <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>A list of third-party apps developed using the datasets is available</td>
+                        <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>A description of the content</td>
+                        <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>A specific API call can yield the license details</td>
+                        <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>A list of third-party apps developed using the datasets is available</td>
+                        <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>A description of the content</td>
+                        <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>A specific API call can yield the license details</td>
+                        <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>A list of third-party apps developed using the datasets is available</td>
+                        <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>A description of the content</td>
+                        <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>A specific API call can yield the license details</td>
+                        <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>A list of third-party apps developed using the datasets is available</td>
+                        <td class="tick tick-failure"><i class="icon-remove icon-white"></i></td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>A description of the content</td>
+                        <td class="tick tick-success"><i class="icon-ok icon-white"></i></td>
+                    </tr>-->
+                </tbody>
+            </table>
+        </div>
     </div><!--/row-->
+</div>
+</div>
 {% endblock %}

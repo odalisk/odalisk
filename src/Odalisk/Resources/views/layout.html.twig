@@ -61,7 +61,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand blue-font" href="{{ path('homepage') }}">Odalisk</a>
+                    <a class="brand blue-font" href="{{ path('homepage') }}">Odalisk</a> <span class="label label-beta label-info">beta</span>
                     <div class="nav-collapse pull-right">
                         <ul class="nav">
                             {% block menu %}
@@ -109,7 +109,7 @@
 
 <script type="text/javascript">
     {% block jsvariables %}
-
+        window.baseUrl = '/';
     {% endblock %}
 </script>
 

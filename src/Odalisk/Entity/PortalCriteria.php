@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="portal_criteria")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Odalisk\Repository\PortalCriteriaRepository")
  */
 class PortalCriteria
 {

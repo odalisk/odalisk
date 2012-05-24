@@ -79,6 +79,13 @@ class DatasetCriteria
     protected $license_quality;
 
     /**
+     * @var string $is_category
+     *
+     * @ORM\Column(name="is_category", type="boolean")
+     */
+    protected $is_category;
+
+    /**
      * @var string $is_at_least_one_good_format
      *
      * @ORM\Column(name="is_at_least_one_good_format", type="boolean", nullable=false)
@@ -274,5 +281,25 @@ class DatasetCriteria
     public function getLicenseQuality()
     {
         return $this->license_quality;
+    }
+
+    /**
+     * Set is_category
+     *
+     * @param boolean $isCategory
+     */
+    public function setIsCategory($isCategory)
+    {
+        $this->is_category = $isCategory;
+    }
+
+    /**
+     * Get is_category
+     *
+     * @return boolean 
+     */
+    public function getIsCategory()
+    {
+        return $this->is_category;
     }
 }

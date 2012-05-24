@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Odalisk\Entity\Dataset;
 use Odalisk\Entity\Statistics;
 use Odalisk\Entity\DatasetCriteria;
-
+use Odalisk\Entity\Metric;
 /**
  * Generates statistics
  */
@@ -68,28 +68,64 @@ class GenerateStatisticsCommand extends BaseCommand
         $metrics    = $container->getParameter('metrics');
         $portalRepo = $this->getEntityRepository('Odalisk\Entity\Portal');
         $portals    = $portalRepo->findAll();
+        $portalCriteriaRepo = $this->getEntityRepository('Odalisk\Entity\PortalCriteria');
 
         foreach($portals as $portal) {
+
+            $avgs = $criteriaRepo->getPortalAverages($portal);
+            $portalcriteria = $portalCriteriaRepo->getPortalCriteria($portal);
+
             foreach($metrics as $name => $category) {
+                $value = 0;
                 switch($name) {
                     case 'cataloging' :
-                        $avgs = $criteriaRepo->getPortalAverages($portal->getId());
-                        // Get all datasets metrics
-                        // Group them
-                        // Apply weights
-                        // Persits in database (metric table)
+                        $metric_parent = new \Odalisk\Entity\Metric();
+                        $metric_parent->setName('cataloging', $avgs);
+                        $metrics = $this->apply_section('cataloging',$category,$avgs);
+                        foreach ($metrics as $metric) {
+                            $metric_parent->addMetric($metric);
+                            $value += $section['weight'] * $metric->getScore();
+                            $metric->setParent($metric_parent);
+                        }
+                        $metric_parent->setScore($value);
+                        //$metric_parent->setParent(NULL);
+                        $this->em->persist($metric_parent);
                     break;
 
                     default:
-                        error_log("PROUT");
-                        // Get data from portal criteria
-                        // Apply weights
-                        // Persits in database (metric table)
+                        $metric_parent = $this->apply_section($name,$category,$portalcriteria);
+                        $this->em->persist($metric_parent);
                     break;
                 }
             }
         }
-
+        $this->em->flush();
         $this->writeBlock($output, "[Statistics] The end !");
+    }
+
+    
+    protected function apply_section($name, $criteria, $avgs){
+        if (isset($criteria['sections'])) {
+            $value = 0;
+            $metric_parent = new \Odalisk\Entity\Metric();
+            $metric_parent->setName($name);
+
+            foreach ($criteria['sections'] as $name => $section) {
+                $metric = $this->apply_section($name, $section, $avgs);
+                $value += $metric->getScore();
+                $metric->setParent($metric_parent);
+                $this->em->persist($metric);
+                $metric_parent->addMetric($metric);
+            }
+
+            $metric_parent->setScore($criteria['weight'] * $value);
+            $this->em->persist($metric_parent);
+            return $metric_parent;
+        } else {
+            $metric = new \Odalisk\Entity\Metric();
+            $metric->setScore($criteria['weight'] * $avgs[$name]);
+            $metric->setName($name);
+            return $metric;
+        }
     }
 }

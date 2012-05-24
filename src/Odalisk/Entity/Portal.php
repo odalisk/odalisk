@@ -364,4 +364,24 @@ class Portal
     {
         return $this->dataset_count;
     }
+
+    /**
+     * Set metric
+     *
+     * @param Odalisk\Entity\Metric $metric
+     */
+    public function setMetric(\Odalisk\Entity\Metric $metric)
+    {
+        $this->metric = $metric;
+    }
+
+    /**
+     * Get metric
+     *
+     * @return Odalisk\Entity\Metric 
+     */
+    public function getMetric()
+    {
+        return $this->metric;
+    }
 }

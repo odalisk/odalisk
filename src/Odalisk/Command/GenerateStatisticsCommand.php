@@ -56,16 +56,9 @@ class GenerateStatisticsCommand extends BaseCommand
 
                 switch($name) {
                     case 'cataloging' :
-                        $metric_parent = new \Odalisk\Entity\Metric();
-                        $metric_parent->setName('cataloging', $avgs);
-                        $metrics = $this->apply_section('cataloging',$category,$avgs);
-                        foreach ($metrics as $metric) {
-                            $metric_parent->addMetric($metric);
-                            $value += $section['weight'] * $metric->getScore();
-                            $metric->setParent($metric_parent);
-                        }
+                        $metric_parent = $this->apply_section($name,$category,$avgs);
+                        $metric_parent->setName($name, $avgs);
                         $metric_parent->setCoefficient($category['weight']);
-                        $metric_parent->setScore($value);
                         $metric_parent->setDescription($category['description']);
                         $this->em->persist($metric_parent);
                     break;
@@ -77,7 +70,7 @@ class GenerateStatisticsCommand extends BaseCommand
                         $this->em->persist($metric_parent);
                     break;
                 }
-                $general_value += $category['weight'] * $metric_parent->getScore();
+                $general_value += $metric_parent->getScore();
                 $metric_general->addMetric($metric_parent);
                 $metric_parent->setParent($metric_general);
             }

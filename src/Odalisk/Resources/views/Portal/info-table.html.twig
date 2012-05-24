@@ -11,6 +11,7 @@
         <td class="key">Type</td>
         <td>{{ portal.status}}</td>
     </tr>
+    {% if display_date %}
     <tr>
         <td class="key">First crawl <span class="label icon-info label-info" rel="popover" title="First crawl" data-content="First time we crawled the portal.">i</span></td>
         <td>{{ portal.createdAt|date("d/m/Y") }}</td>
@@ -19,4 +20,5 @@
         <td class="key">Last crawl <span class="label icon-info label-info" rel="popover" title="Last crawl" data-content="Last time we crawled the portal.">i</span></td>
         <td>{{ portal.createdAt|date("d/m/Y") }}</td>
     </tr>
+    {% endif %}
 </table>

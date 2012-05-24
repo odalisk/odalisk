@@ -1,27 +1,47 @@
-<div class="row-fluid row-nomargin-top">
-    <div class="span9">
-        <table class="table table-dataset-list table-striped">
-            <thead>
-                <tr>
-                    <th colspan="3">
-                        <h1>Liste des jeux de données</h1>
-                    </th>
-                </tr>
-            </thead>
-            <tbody id="request-result">
 
-            </tbody>
-        </table>
+
+
+    <ul class="nav nav-tabs" id="portalTab">
+      <li class="active"><a href="#datasets" data-toggle="tab">Datasets</a></li>
+      <li><a href="#criteria" data-toggle="tab">Score</a></li>
+      
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="datasets">
+          <div class="row-fluid row-nomargin-top">
+              <div class="span9">
+
+
+                  <table class="table table-dataset-list table-striped">
+                      <thead>
+                          <tr>
+                              <th colspan="3">
+                                  <h1>Liste des jeux de données</h1>
+                              </th>
+                          </tr>
+                      </thead>
+                      <tbody id="request-result">
+
+                      </tbody>
+                  </table>
+              </div>
+              <div id="alwaysOnTop" class="span3">
+                  <div id="search-row">
+                      <input placeholder="Search" type="text" id="search" class="search-query"/>
+                  </div>
+                  <div class="well tag-list">
+                      <ul class="nav nav-list">
+                          {% render "App:Api:datasetTags" with {'current_portal': current_portal} %}
+                      </ul>
+                  </div> <!-- /well -->
+              </div>
+          </div>
+      </div>
+      <div class="tab-pane" id="criteria">
+        
+      </div>
     </div>
-    <div id="alwaysOnTop" class="span3">
-        <div id="search-row">
-            <input placeholder="Search" type="text" id="search" class="search-query"/>
-        </div>
-        <div class="well tag-list">
-            <ul class="nav nav-list">
-                {% render "App:Api:datasetTags" with {'current_portal': current_portal} %}
-            </ul>
-        </div> <!-- /well -->
-    </div>
-</div>
+    
+    
 

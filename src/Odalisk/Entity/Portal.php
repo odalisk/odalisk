@@ -104,6 +104,7 @@ class Portal
 
     /**
      * @ORM\OneToOne(targetEntity="Odalisk\Entity\Metric")
+     * @ORM\JoinColumn(name="metric_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $metric;
 

@@ -21,7 +21,7 @@ parameters:
                     description: "Search"
                     sections:
                          search_engine_provided:
-                            weight: 0.6
+                            weight: 0.5
                             description: "If the website offers several licences, the search engine has a sensible filtering option"
                          searchable_metadata:
                             weight: 0.25

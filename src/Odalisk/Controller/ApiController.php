@@ -10,10 +10,16 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ApiController extends Controller
 {  
-    public function portals($page_index, $page_size, $display)
+    public function portals(Request $request, $page_index, $page_size, $display)
     {
-        $portals = $this->getEntityRepository('Odalisk\Entity\Portal')
-            ->findBy(array(), array('name' => 'ASC'), $page_size, $page_index * $page_size);
+        $data = $request->request->all();
+        var_dump($data);
+        $em = $this->getEntityRepository('Odalisk\Entity\Portal');
+        if(isset($data['request'])) {
+            $portals = $em->getPortalsMatching($data['request'], $page_index, $page_size);
+        } else {
+            $portals = $em->findBy(array(), array('id' => 'ASC'), $page_size, $page_index * $page_size);
+        }
         
         return $this->render('App:Api:portal.html.twig', array(
             'portals' => $portals,
@@ -40,17 +46,12 @@ class ApiController extends Controller
     public function datasets(Request $request, $page_index, $page_size, $display) {
         $data = $request->request->all();
         $em = $this->getEntityRepository('Odalisk\Entity\Dataset');
-        if(isset($data['request']))
-        {
+        if(isset($data['request'])) {
             $datasets = $em->getDatasetsMatching($data['request'], $page_index, $page_size);
+        } else {
+            $datasets = $em->findBy(array(), array('id' => 'ASC'), $page_size, $page_index * $page_size);
         }
-        else
-        {
-            $datasets = $em->findBy(array(), array('name' => 'ASC'), $page_size, $page_index * $page_size);
-        }
-        
-        
-        
+         
         return $this->render('App:Api:dataset.html.twig', array(
             'datasets' => $datasets,
             'pagenumber' => 0,
@@ -77,8 +78,6 @@ class ApiController extends Controller
             $licenses = $this->getEntityRepository('Odalisk\Entity\License')
                              ->findall();
         }
-        
-        
         
         
         return $this->render('App:Api:dataset-tags.html.twig', array(

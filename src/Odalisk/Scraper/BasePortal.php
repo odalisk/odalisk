@@ -132,6 +132,7 @@ abstract class BasePortal
         $this->portal->setCountry($this->getCountry());
         $this->portal->setStatus($this->getStatus());
         $this->portal->setEntity($this->getEntity());
+        $this->portal->setType($this->getType());
 
         $criteria = new \Odalisk\Entity\PortalCriteria();
         $criteria->setSearchEngine($this->getSearchEngine());

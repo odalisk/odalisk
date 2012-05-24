@@ -33,7 +33,7 @@ class DatasetRepository extends EntityRepository
             $qb->setParameters($parameters);
         }
         
-        $qb->orderBy('d.name', 'ASC');
+        $qb->orderBy('d.id', 'ASC');
         $qb->setFirstResult($page_index * $page_size);
         $qb->setMaxResults($page_size);
         

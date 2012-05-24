@@ -421,9 +421,17 @@ body {
         
         
     }
+    .portal-elem {
+        height:100%;
+        .progress {
+            margin-bottom:0px;
+        }
+        
+    }
     
     .portal-span-item {
         width:100%;
+        height:100%;
         .border-radius(3px);
         border:1px solid #ddd;
         
@@ -433,6 +441,12 @@ body {
             padding:5px 10px;
             h3:first-letter {
                 text-transform:uppercase;
+                
+            }
+            
+            h3 {
+                font-size:17px;
+                font-weight:200;
             }
             
             .badge {
@@ -447,7 +461,7 @@ body {
         
         .summary {
             min-width:150px;
-            font-size:12px;
+            font-size:10px;
             table {
                 background:white;
                 margin-bottom:10px;
@@ -458,7 +472,7 @@ body {
                         text-align:right;
                         margin-right:3px;
                         vertical-align:middle;
-                        width:40%;
+                        width:20%;
                     }
 
                     .label {

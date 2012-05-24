@@ -25,22 +25,7 @@
                             <tr class="total-score">
                                 <td class="key">Score</td>
                                 <td class="progress-bar">
-                                    {% if totalScore > 80 %}
-                                    <div class="progress progress-striped
-                                     active progress-success">
-                                    {% elseif totalScore > 60%}
-                                        <div class="progress progress-striped
-                                         active progress-info">
-                                    {% elseif totalScore > 30%}
-                                        <div class="progress progress-striped
-                                          active progress-warning">
-                                    {% else %}
-                                        <div class="progress progress-striped
-                                          active progress-danger">
-                                    {% endif %}
-                                      <div class="bar"
-                                           style="width: {{ totalScore }}%;"></div>
-                                    </div>
+                                    {% include "App:Api:progress-bar.html.twig" with {'score': totalScore} %}
                                 </td>
                                 <td class="note">{{ portal.metric.score  * 100 }}%</td>
                             </tr>
@@ -49,22 +34,7 @@
                                 <tr>
                                     <td class="key">{{ category.description }}</td>
                                     <td class="progress-bar">
-                                        {% if score > 80 %}
-                                        <div class="progress progress-striped
-                                         active progress-success">
-                                        {% elseif score > 60%}
-                                            <div class="progress progress-striped
-                                             active progress-info">
-                                        {% elseif score > 40%}
-                                            <div class="progress progress-striped
-                                              active progress-warning">
-                                        {% else %}
-                                            <div class="progress progress-striped
-                                              active progress-danger">
-                                        {% endif %}
-                                          <div class="bar"
-                                               style="width: {{ (category.score / category.coefficient ) * 100 }}%;"></div>
-                                        </div>
+                                        {% include "App:Api:progress-bar.html.twig" with {'score': score} %}
                                     </td>
                                     <td class="note">{{ score }}%</td>
                                 </tr>

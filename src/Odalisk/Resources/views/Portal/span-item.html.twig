@@ -1,22 +1,25 @@
 <div class="span4">
     <div class="portal-span-item">
             <header>
-            <h3>
+            <a href="{{ path('portal_details', { 'portal_number': portal.id }) }}"><h3>
                 {% if portal.name|length > 50 %}
                     {{ portal.name|slice(0,50) }}...
                 {% else %}
                     {{ portal.name|slice(0,50) }}
                 {% endif %}
                 <span class="badge badge-inverse">{{ portal.datasetCount }}</span>
+            </a>
             </h3>
         </header>
         <div class="content">
             <div class="summary">
                 {% include "App:Portal:info-table.html.twig" with {'portal' : portal, 'display_date' : false } %}
+                {% set score = portal.metric.score * 100 %}
+                {% include "App:Api:progress-bar.html.twig" with {'score': score} %}
             </div>
-            <div class="button">
+            <!--<div class="button">
                 <a class="btn" href="{{ path('portal_details', { 'portal_number': portal.id }) }}">Details</a>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>

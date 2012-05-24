@@ -102,6 +102,11 @@ class Portal
      */
     protected $criteria;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Odalisk\Entity\Metric")
+     */
+    protected $metric;
+
     public function __construct()
     {
         $this->datasets = new ArrayCollection();

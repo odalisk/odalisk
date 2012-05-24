@@ -88,6 +88,11 @@ class Portal
      */
     protected $criteria;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Odalisk\Entity\Metric")
+     */
+    protected $metric;
+
     public function __construct()
     {
         $this->datasets = new ArrayCollection();
@@ -304,5 +309,25 @@ class Portal
     public function getCriteria()
     {
         return $this->criteria;
+    }
+
+    /**
+     * Set metric
+     *
+     * @param Odalisk\Entity\Metric $metric
+     */
+    public function setMetric(\Odalisk\Entity\Metric $metric)
+    {
+        $this->metric = $metric;
+    }
+
+    /**
+     * Get metric
+     *
+     * @return Odalisk\Entity\Metric 
+     */
+    public function getMetric()
+    {
+        return $this->metric;
     }
 }

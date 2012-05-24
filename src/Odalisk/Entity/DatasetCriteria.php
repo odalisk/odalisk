@@ -99,6 +99,7 @@ class DatasetCriteria
         $this->setIsMaintainer($this->not_empty($d->getMaintainer()));
         $this->setIsReleasedOn($this->not_empty($d->getReleasedOn()));
         $this->setIsLastUpdateOn($this->not_empty($d->getLastUpdatedOn()));
+        $this->setIsCategory($this->not_empty($d->getCategories()));
         
         if(($license = $d->getLicense()) !== null) {
             $this->setIsGoodLicense($license->getIsGood());

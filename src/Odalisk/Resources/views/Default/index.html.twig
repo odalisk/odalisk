@@ -22,7 +22,7 @@
               <div class="carousel-inner">
                 <div class="active item" id="homeSlide">
                     <h1>Open Data Live Score Checking</h1>
-                    <p>Automatically rate the openness of various data portals out there</p>
+                    <p>Automatically rating the openness of various data portals out there</p>
                     <div>
                         <!-- <a class="btn btn-info btn-large">Download our Chrome extension</a> -->
                         <a class="btn btn-info btn-large" href="{{ path('browser') }}">Browse portals</a>
@@ -33,7 +33,7 @@
                     <div class="bottomImage"></div>
                         <div class="inner-slide">
                             <h1>Portal and Dataset Browser</h1>
-                            <p>Looking for a particular type of portal/dataset ? Try out our browser to find your way</p>
+                            <p>Looking for a particular type of portal/dataset ? Check out our dedicated meta-catalog!</p>
 
                             <div>
                                 <a class="btn btn-large" href="{{ path('browser') }}">Lets go !</a>
@@ -55,33 +55,34 @@
         </div>
         <div class="page-body">
             <p>Odalisk stands for Open Data Live Score ChecKing !<br/>
-			What is behind this words ? A basic process in order to help the Open Data movement to be more normalize.</p>
+			What does it mean? We crawl through a whole bunch of datasets, chew through the data we collect and calculate scores that represent the openness of each dataset. Then we agregate these results at the portal level, mix in some more data, and here we have our score! Our goal is to help promote the Opendata movement by providing an oversight on how the data is set free.</p>
             <div class="row">
                 <div class="span4">
                     <h3>Why <span class="blue-font">Odalisk</span> ?</h3>
-                    <p>The Open Data movement began a long time ago, and the rush to open the data in cities, local areas, country is not the same in all the initiative. Some are very clean, some are very messy. For example, on a same platform, the date of creation is not in the same format.<br/>
-					So that the movement be more normalize, we would like the platforms to respect some basic criterias.</p>
+                    <p>The Opendata movement has been a reality for quite some time now, but recently we have witnessed a real rush : everyone wants to put their data out there. While the idea is great, the ways in which the data is liberated vary wildly. Some are very good at it, others not so much, and a lot inbetween. In order for the data to be usable, it needs to be liberated in ways that achieve a certain level of standardization. That's what we want to help achieve.</p>
 
                 </div>
                 <div class="span4">
                     <h3>Objectives</h3>
                     <p>
 					<ol>
-						<li>Construct a list of robust balance criteria to define the openness of a platform</li>
-						<li>Analyse the platform with this criteria</li>
-						<li>Display a score of openness for the platform and its datasets</li>
+						<li>Come up with a list of robust, meaningful criterias to determine how open a dataset or portal is.</li>
+						<li>Find ways to check automatically for these criterias. This allows us to scale to a vast number of datasets</li>
+						<li>Analyse all of that data and display it in a sexy, easy to grasp way</li>
 					</ol>
 					</p>
 
                 </div>
                 <div class="span4">
-                    <h3>Workflow</h3>
+                    <h3>Our workflow</h3>
                     <p>
 					<ol>
-						<li>First step : Download the pages</li>
-						<li>Second step : Get all the information contained in the html</li>
-						<li>Third step : Generate the score for the platform</li>
-						<li>Four step : Make available all the information collected and calculated</li>
+					    <li>Find some portals that we are interested in checking for openness</li>
+						<li>Find the urls for all the datasets</li>
+						<li>Download all of these webpages</li>
+						<li>Parse the HTML code and extract useful data</li>
+						<li>Find the answer to our criterias from the data we extracted</li>
+						<li>Agregate it in meaningful ways and display it</li>
 					</ol>
                     </p>
                 </div>
@@ -155,11 +156,9 @@
         <div class="page-body">
             <h2>The Project</h2>
             <div class="row">
-                <div class="span6">
+                <p>
                     Initially inspired by an idea of a professor of Polytech’Nantes, the project was developed during the 4th year of studies by five students. The Open Data Week for first objective, Odalisk expanded to be able to crawl eight platform, about 2G of datasets, extract eleven informations, and calculate more than ten metrics.
-                </div>
-                <div class="span6">
-                </div>
+                <p>
             </div>
             <h2>The Team</h2>
             <div class="row">
@@ -169,7 +168,7 @@
                     <img class="team-img" src="{{ asset_url }}"/>
                     {% endimage %}
                     <h3>Maxime Bury</h3>
-                    <p>Our server-side specialist</p>
+                    <p>Our back-end &amp; architecture expert</p>
               </div>
               <div class="span4">
                     {% image '@App/Resources/public/img/grolleau.jpg' output='/images/florian-grolleau.jpg'
@@ -177,7 +176,7 @@
                       <img class="team-img" src="{{ asset_url }}"/>
                       {% endimage %}
                       <h3>Florian Grolleau</h3>
-                      <p>Crawl the web like no one</p>
+                      <p>Our web crawling &amp; statistics expert</p>
               </div>
               <div class="span4">
                   {% image '@App/Resources/public/img/launay.jpg' output='/images/damien-launay.jpg'
@@ -185,7 +184,7 @@
                   <img class="team-img" src="{{ asset_url }}"/>
                   {% endimage %}
                   <h3>Damien Launay</h3>
-                  <p>Fart like no one</p>
+                  <p>Our web crawling and criteria expert</p>
               </div>
             </div>
             <div class="row">
@@ -195,7 +194,7 @@
                     <img class="team-img" src="{{ asset_url }}"/>
                     {% endimage %}
                     <h3>Florian Grignon</h3>
-                    <p>Licence and Debian (testing) specialist</p>
+                    <p>Project coordinator and license expert</p>
                 </div>
               <div class="span4">
                   {% image '@App/Resources/public/img/sanchez.jpg' output='/images/julien-sanchez.jpg'
@@ -211,7 +210,7 @@
                     <img class="team-img" src="{{ asset_url }}"/>
                     {% endimage %}
                     <h3>Guillaume Raschia</h3>
-                    <p>Best professor EVER</p>
+                    <p>Our beloved teacher!</p>
                 </div>
             </div>
             </div>
@@ -222,13 +221,12 @@
           <h1>How to contribute</h1>
         </div>
         <div class="page-body">
-          <p>Odalisk is an Open Source project available in github at the url : github.com/odalisk/odalisk. Just as all the other Open Source project, everybody can contribute to it. We are always looking for a little help for Odalisk. Expert in licenses can modify, add, or remove the criteria already done. Developers can add some platform to the application.<br/>
-		  In a few words, Odalisk is alive, and we expect you to be into the project.</p>
+          <p>Odalisk is an Open Source project available on Github at <a href="http://github.com/odalisk/odalisk".>http://github.com/odalisk/odalisk</a>. Help us make it more awseome!</p>
         </div>
-        <h3>Install the project :</h3>
-		<p>If you already have Git installed, you can get the latest development version via Git itself:</p>
+        <!-- <h3>Install the project :</h3>
+        <p>If you already have Git installed, you can get the latest development version via Git itself:</p>
         <pre class="prettyprint linenums">git clone https://github.com/odalisk/odalisk/</pre>
-		<p>You can also always browse the current contents of the git repository using the web interface.</p>
+        <p>You can also always browse the current contents of the git repository using the web interface.</p> -->
       </section>
 
 

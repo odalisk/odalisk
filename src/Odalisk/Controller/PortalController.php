@@ -51,6 +51,7 @@ class PortalController extends Controller
         $repository = $em->getRepository('Odalisk\Entity\Portal');
         $portal = $repository->findOneById($portal_number);
 
+        //var_dump($portal->getMetric()->getSubsections());
         return $this->render('App:Portal:details.html.twig', array(
             'maintenance_status' => $this->container->getParameter('app.maintenance'),
             'portal' => $portal));

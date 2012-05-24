@@ -1,0 +1,6 @@
+{% for category in portal.metric.subsections %}
+    {{ category.name }}<br/>
+    {% for metric in category.subsections %}
+        {{ metric.name }}<br/>
+    {% endfor %}
+{% endfor %}

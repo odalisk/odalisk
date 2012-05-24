@@ -74,7 +74,20 @@
         <div class="container-fluid">
             <div class="row-fluid row-nomargin-top">
                 <div class="span12">
-                    {% include "App:Search:dataset-list.html.twig" with {'current_portal': portal.id} %}
+                    <ul class="nav nav-tabs" id="portalTab">
+                      <li class="active"><a href="#datasets" data-toggle="tab">Datasets</a></li>
+                      <li><a href="#criteria" data-toggle="tab">Score</a></li>
+
+                    </ul>
+
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="datasets">
+                          {% include "App:Search:dataset-list.html.twig" with {'current_portal': portal.id} %}
+                      </div>
+                      <div class="tab-pane" id="criteria">
+                          {% include "App:Portal:portal-metrics.html.twig" with {'portal': portal} %}
+                      </div>
+                  </div>
                 </div>
             </div><!--/row-->
         </div>

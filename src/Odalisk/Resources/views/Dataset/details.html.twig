@@ -77,8 +77,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>has title and summary</td>
-                    {% if criteria.hasTitleAndSummary == 1 %}
+                    <td>Does the dataset have a title and a summary?</td>
+                    {% if dataset.criteria.hasTitleAndSummary == 1 %}
                         <td class="tick tick-success">
                             <i class="icon-ok icon-white"></i>
                         </td>
@@ -89,8 +89,8 @@
                     {% endif %}
                 </tr>
                 <tr>
-                    <td>has released on</td>
-                    {% if criteria.hasTitleAndSummary == 1 %}
+                    <td>Does it have a category?</td>
+                    {% if dataset.criteria.hasCategory == 1 %}
                         <td class="tick tick-success">
                             <i class="icon-ok icon-white"></i>
                         </td>
@@ -101,8 +101,8 @@
                     {% endif %}
                 </tr>
                 <tr>
-                    <td>Is title and summary</td>
-                    {% if criteria.hasTitleAndSummary == 1 %}
+                    <td>Does it have a release date?</td>
+                    {% if dataset.criteria.hasReleasedOn == 1 %}
                         <td class="tick tick-success">
                             <i class="icon-ok icon-white"></i>
                         </td>
@@ -113,8 +113,8 @@
                     {% endif %}
                 </tr>
                 <tr>
-                    <td>Is title and summary</td>
-                    {% if criteria.hasTitleAndSummary == 1 %}
+                    <td>Has it been updated and when?</td>
+                    {% if dataset.criteria.hasLastUpdateOn == 1 %}
                         <td class="tick tick-success">
                             <i class="icon-ok icon-white"></i>
                         </td>
@@ -125,8 +125,8 @@
                     {% endif %}
                 </tr>
                 <tr>
-                    <td>Is title and summary</td>
-                    {% if criteria.hasTitleAndSummary == 1 %}
+                    <td>Is it openly licensed?</td>
+                    {% if dataset.criteria.hasGoodLicense == 1 %}
                         <td class="tick tick-success">
                             <i class="icon-ok icon-white"></i>
                         </td>
@@ -137,8 +137,8 @@
                     {% endif %}
                 </tr>
                 <tr>
-                    <td>Is title and summary</td>
-                    {% if criteria.hasTitleAndSummary == 1 %}
+                    <td>Is it available in at least one open format?</td>
+                    {% if dataset.criteria.hasAtLeastOneGoodFormat == 1 %}
                         <td class="tick tick-success">
                             <i class="icon-ok icon-white"></i>
                         </td>
@@ -149,8 +149,8 @@
                     {% endif %}
                 </tr>
                 <tr>
-                    <td>Is title and summary</td>
-                    {% if criteria.hasTitleAndSummary == 1 %}
+                    <td>Do we know the provider of the dataset?</td>
+                    {% if dataset.criteria.hasProvider == 1 %}
                         <td class="tick tick-success">
                             <i class="icon-ok icon-white"></i>
                         </td>
@@ -161,8 +161,8 @@
                     {% endif %}
                 </tr>
                 <tr>
-                    <td>Is title and summary</td>
-                    {% if criteria.hasTitleAndSummary == 1 %}
+                    <td>Do we know the owner of the dataset?</td>
+                    {% if dataset.criteria.hasOwner == 1 %}
                         <td class="tick tick-success">
                             <i class="icon-ok icon-white"></i>
                         </td>
@@ -173,20 +173,8 @@
                     {% endif %}
                 </tr>
                 <tr>
-                    <td>Is title and summary</td>
-                    {% if criteria.hasTitleAndSummary == 1 %}
-                        <td class="tick tick-success">
-                            <i class="icon-ok icon-white"></i>
-                        </td>
-                    {% else %}
-                        <td class="tick tick-failure">
-                            <i class="icon-remove icon-white"></i>
-                        </td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <td>Is title and summary</td>
-                    {% if criteria.hasTitleAndSummary == 1 %}
+                    <td>Do we know the maintainer of the dataset?</td>
+                    {% if dataset.criteria.hasMaintainer == 1 %}
                         <td class="tick tick-success">
                             <i class="icon-ok icon-white"></i>
                         </td>

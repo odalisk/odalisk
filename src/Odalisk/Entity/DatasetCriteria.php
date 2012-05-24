@@ -93,7 +93,7 @@ class DatasetCriteria
     protected $has_at_least_one_good_format = false;
     
     public function __construct($d) {
-        $this->setHasTitleAndSummary($this->not_empty($d->getName() . $d->getSummary()));
+        $this->setHasTitleAndSummary($this->not_empty($d->getName()) && $this->not_empty($d->getSummary()));
         $this->setHasOwner($this->not_empty($d->getOwner()));
         $this->setHasProvider($this->not_empty($d->getProvider() . $d->getOwner()));
         $this->setHasMaintainer($this->not_empty($d->getMaintainer()));

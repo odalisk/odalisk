@@ -38,6 +38,12 @@ jQuery(function($) {
     
     $('#navbar').scrollspy();
     
+    $(window).resize(function() {
+        window.spanSize = ($(window).width() * 0.23404255317 - 15)+'px';
+      $('#alwaysOnTop .nav-list').css({'maxHeight':($(window).height() - 300)+'px'});
+    });
+    $('#alwaysOnTop .nav-list').css({'maxHeight':($(window).height() - 300)+'px'});
+    window.spanSize = ($(window).width() * 0.23404255317 - 15)+'px';
     
     if(typeof window.page != 'undefined' && window.page == 'home')
     {
@@ -173,7 +179,7 @@ jsApi = function() {
         this.page = 0;
         $('#request-result').html('<tr class="loading"><td colspan="3" class="dataset-item"><span>Chargement</span></td></tr>');
         $.post(
-            '/app_dev.php/api/'+window.searchType+'s/'+this.page+'/'+this.pageSize,
+            '/app_dev.php/api/'+window.searchType+'s/'+this.page+'/'+this.pageSize+'/'+window.displayType,
             {
                 'request':this.request
             },
@@ -212,7 +218,7 @@ jsApi = function() {
         $(elem).parent().parent().remove();
         this.page += 1;
         $.post(
-            '/app_dev.php/api/'+window.searchType+'s/'+this.page+'/'+this.pageSize,
+            '/app_dev.php/api/'+window.searchType+'s/'+this.page+'/'+this.pageSize+'/'+window.displayType,
             {
                 'request':this.request
             },
@@ -274,13 +280,17 @@ jsApi = function() {
         var d = offset.top - 90;
         var c = alwaysOnTop;
         if (b>d) {
-        c.css({position:"fixed",top:"90px", right: (offset.left - 5)})
+        c.css({position:"fixed",top:"90px", right: (offset.left + 2)})
+        $('#alwaysOnTop').css({'width':window.spanSize}).parent().css({'minHeight':($(window).height() - 120)+'px'});
         } else {
         if (b<=d) {
           c.css({position:"relative",top:"", right: ''})
+          $('#alwaysOnTop').css({'width':'23.404255317%'})
         }
         }
     });
+    
+    
     
     /* Init actions */
     this.addInitAction = function(actionName) {

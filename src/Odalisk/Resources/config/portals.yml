@@ -29,6 +29,7 @@ parameters:
         api: true
         api_documentation: true
         opendata_concept_explained: true
+        type: "inCité"
 
     portals.loire_atlantique:
         name:       "Loire Atlantique Open Data"
@@ -48,6 +49,7 @@ parameters:
         api: false
         api_documentation: false
         opendata_concept_explained: true
+        type: "inCité"
 
     portals.socrata:
         name:       "Opendata by Socrata"
@@ -68,6 +70,7 @@ parameters:
         api: true
         api_documentation: true
         opendata_concept_explained: false
+        type: "Socrata"
     
     portals.new_york:
         name:       "NYC OpenData"
@@ -87,6 +90,7 @@ parameters:
         api: true
         api_documentation: true
         opendata_concept_explained: false
+        type: "Socrata"
 
     portals.usa_gov:
         name:       "USA OpenData"
@@ -106,6 +110,7 @@ parameters:
         api: true
         api_documentation: true
         opendata_concept_explained: false
+        type: "Socrata"
 
     portals.uk_gov:
         name:       "UK OpenData"
@@ -125,6 +130,7 @@ parameters:
         api: true
         api_documentation: true
         opendata_concept_explained: false
+        type: "CKAN"
 
     portals.eu_gov:
         name:       "Europe's Public Data"
@@ -144,6 +150,7 @@ parameters:
         api: true
         api_documentation: true
         opendata_concept_explained: false
+        type: "CKAN"
 
     portals.data_publica:
         name:       "Data Publica"
@@ -163,6 +170,7 @@ parameters:
         api: true
         api_documentation: true
         opendata_concept_explained: true
+        type: "Other"
 
     portals.data_market:
         name:       "DataMarket"

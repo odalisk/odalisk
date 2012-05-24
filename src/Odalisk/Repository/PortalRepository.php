@@ -6,6 +6,41 @@ use Doctrine\ORM\EntityRepository;
 
 class PortalRepository extends EntityRepository
 {
+    public function getDatasetsMatching($criterias, $page_index, $page_size) {
+        $qb = $this->createQueryBuilder('p');
+        if(array_key_exists('in', $criterias)) {
+            // JOIN ... WITH IN (...)
+            $join = 0;
+            foreach($criterias['in'] as $column => $values) {
+                $qb->join('p.' . $column, 'j' . $join, 'WITH', $qb->expr()->in('j' . $join . '.id', $values));
+                $join++;
+            }
+        }
+        
+        if(array_key_exists('where', $criterias)) {
+            // WHERE clause
+            $cond = 0;
+            $parameters = array();
+            foreach($criterias['where'] as $condition) {
+                if(0 == $cond) {
+                    $qb->where('p.' . $condition[0] . ' ' . $condition[1] . ' :p' . $cond);
+                } else {
+                    $qb->andWhere('p.' . $condition[0] . ' ' . $condition[1] . ' :p' . $cond);
+                }
+
+                $parameters['p' . $cond] = $condition[2];
+                $cond++;
+            }
+            $qb->setParameters($parameters);
+        }
+        
+        $qb->orderBy('p.id', 'ASC');
+        $qb->setFirstResult($page_index * $page_size);
+        $qb->setMaxResults($page_size);
+        
+        return $qb->getQuery()->getResult();
+    }
+    
     public function getCategories($id)
     {
         $sth = $this->getEntityManager()
@@ -222,16 +257,6 @@ class PortalRepository extends EntityRepository
         }
 
         return $output;
-    }
-
-
-
-    public function findAllWithLimit()
-    {
-        return $this->getEntityManager()
-            ->createQuery('SELECT p FROM Odalisk\Entity\Portal p ORDER BY p.name ASC')
-            ->limit(5)
-            ->getResult();
     }
     
     public function agregateDatasetsStats($portal) {

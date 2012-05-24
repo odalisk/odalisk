@@ -35,6 +35,7 @@ class GenerateStatisticsCommand extends BaseCommand
         $criteriaRepo->clear();
         // This make us capable to iterate on all datasets without load them in one
         // shot.
+        /*
         $datasets = $this->em->createQuery('SELECT d FROM Odalisk\Entity\Dataset d')->iterate();
         
         $this->writeBlock($output, "[Statistics] Beginning of generation");
@@ -55,7 +56,7 @@ class GenerateStatisticsCommand extends BaseCommand
         }
         $this->em->flush();
         error_log("[Statistics] flush $i datasets' criteria");
-
+        */
         // Metrics generation
         error_log("[Statistics] Metrics generation");
         $container  = $this->getContainer();
@@ -66,11 +67,14 @@ class GenerateStatisticsCommand extends BaseCommand
 
         foreach($portals as $portal) {
 
+            $general_value = 0;
             $avgs = $criteriaRepo->getPortalAverages($portal);
             $portalcriteria = $portalCriteriaRepo->getPortalCriteria($portal);
+            $metric_general = new \Odalisk\Entity\Metric();
 
             foreach($metrics as $name => $category) {
                 $value = 0;
+
                 switch($name) {
                     case 'cataloging' :
                         $metric_parent = new \Odalisk\Entity\Metric();
@@ -92,7 +96,16 @@ class GenerateStatisticsCommand extends BaseCommand
                         $this->em->persist($metric_parent);
                     break;
                 }
+                $general_value += $metric_parent->getScore();
+                $metric_general->addMetric($metric_parent);
+                $metric_parent->setParent($metric_general);
             }
+            $metric_general->setScore($general_value);
+            $metric_general->setCoefficient(1);
+            $metric_general->setName('Total');
+            $this->em->persist($metric_general);
+            $portal->setMetric($metric_general);
+            $this->em->persist($portal);
         }
         $this->em->flush();
         $this->writeBlock($output, "[Statistics] The end !");

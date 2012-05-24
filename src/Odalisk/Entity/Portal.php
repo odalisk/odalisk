@@ -61,6 +61,20 @@ class Portal
      * @ORM\Column(name="status", type="string", length=255)
      */
     protected $status;
+    
+    /**
+     * @var string $type
+     *
+     * @ORM\Column(name="type", type="string", length=255)
+     */
+    protected $type;
+    
+    /**
+     * @var int $dataset_count
+     *
+     * @ORM\Column(name="dataset_count", type="integer", nullable=true)
+     */
+    protected $dataset_count;
 
     /**
      * @var string $created_at When did we create this record
@@ -87,6 +101,11 @@ class Portal
      * @ORM\OneToOne(targetEntity="Odalisk\Entity\PortalCriteria")
      */
     protected $criteria;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Odalisk\Entity\Metric")
+     */
+    protected $metric;
 
     public function __construct()
     {
@@ -304,5 +323,65 @@ class Portal
     public function getCriteria()
     {
         return $this->criteria;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set dataset_count
+     *
+     * @param integer $datasetCount
+     */
+    public function setDatasetCount($datasetCount)
+    {
+        $this->dataset_count = $datasetCount;
+    }
+
+    /**
+     * Get dataset_count
+     *
+     * @return integer 
+     */
+    public function getDatasetCount()
+    {
+        return $this->dataset_count;
+    }
+
+    /**
+     * Set metric
+     *
+     * @param Odalisk\Entity\Metric $metric
+     */
+    public function setMetric(\Odalisk\Entity\Metric $metric)
+    {
+        $this->metric = $metric;
+    }
+
+    /**
+     * Get metric
+     *
+     * @return Odalisk\Entity\Metric 
+     */
+    public function getMetric()
+    {
+        return $this->metric;
     }
 }

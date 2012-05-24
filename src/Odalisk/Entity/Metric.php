@@ -28,10 +28,25 @@ class Metric
      */
 	private $name;
 
+
+    /**
+     * @var string $description
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable="true")
+     */
+    private $description;
+
+    /**
+     * @var string $coefficient
+     *
+     * @ORM\Column(name="coefficient", type="float")
+     */
+    private $coefficient;
+
     /**
      * @var string $score
      *
-     * @ORM\Column(name="score", type="integer")
+     * @ORM\Column(name="score", type="float")
      */
 	private $score;
 
@@ -139,5 +154,45 @@ class Metric
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set coefficient
+     *
+     * @param float $coefficient
+     */
+    public function setCoefficient($coefficient)
+    {
+        $this->coefficient = $coefficient;
+    }
+
+    /**
+     * Get coefficient
+     *
+     * @return float 
+     */
+    public function getCoefficient()
+    {
+        return $this->coefficient;
     }
 }

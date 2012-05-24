@@ -14,73 +14,35 @@ class DatasetCriteriaRepository extends EntityRepository
 {
 
     private $criteria;
-    private $dataset;
-
-    public function init() {
-        $this->criteria = array();
-    }
 
     public function clear() {
-        $sth = $this->getEntityManager()
-            ->getConnection()
-            ->prepare('TRUNCATE TABLE dataset_criteria')
-            ->execute();
-    }
-
-    public function getCriteria($dataset) {
-        $this->dataset = $dataset;
-
-        $this->getGeneralCriteria();
-        $this->getLicenseCriteria();
-        $this->getFormatCriteria();
-
-        return($this->criteria);
-    }
-
-    public function getGeneralCriteria() {
-        $d = $this->dataset;
-
-        $this->criteria['setIsTitleAndSummary'] = ($d->getName() && $d->getSummary());
-        $this->criteria['setIsOwner'] = $d->getOwner() != NULL;
-        $this->criteria['setIsProvider'] = ($d->getProvider() || $d->getOwner());
-        $this->criteria['setIsLastUpdateOn'] = $d->getLastUpdatedOn() != NULL;
-        $this->criteria['setIsMaintainer'] = $d->getMaintainer() != NULL;
-        $this->criteria['setIsReleasedOn'] = $d->getReleasedOn() != NULL;
-    }
-
-    public function getLicenseCriteria() {
-        $license = $this->dataset->getLicense();
-        if($license) {
-            $this->criteria['setIsGoodLicense']  = $license->isGoodLicense();
-            $this->criteria['setLicenseQuality'] = $license->getQuality();
-        } else {
-            $this->criteria['setIsGoodLicense']  = 0;
-            $this->criteria['setLicenseQuality'] = 0;
+        $em = $this->getEntityManager();
+        $cmd = $em->getClassMetadata('Odalisk\Entity\Statistics');
+        $connection = $em->getConnection();
+        $dbPlatform = $connection->getDatabasePlatform();
+        $connection->beginTransaction();
+        try {
+            $connection->query('SET FOREIGN_KEY_CHECKS=0');
+            $q = $dbPlatform->getTruncateTableSql($cmd->getTableName());
+            $connection->executeUpdate($q);
+            $connection->query('SET FOREIGN_KEY_CHECKS=1');
+            $connection->commit();
+        }
+        catch (\Exception $e) {
+            $connection->rollback();
         }
     }
 
-    public function getFormatCriteria() {
-        $formats = $this->dataset->getFormats();
-        foreach($formats as $format) {
-            if($format->isGood()) {
-                $this->criteria['setIsAtLeastOneGoodFormat'] = true;
-                return;
-            }
-        }
-
-        $this->criteria['setIsAtLeastOneGoodFormat'] = false;
-    }
-
-    public function getPortalAverages($portalId) {
+    public function getPortalAverages($portal) {
         $sth = $this->getEntityManager()
             ->getConnection()
             ->prepare('
                     SELECT
-                        (SUM(is_title_and_summary) / COUNT(*)) as title,
-                        (SUM(is_released_on) / COUNT(*)) as released_on,
-                        (SUM(is_last_update_on) / COUNT(*)) as last_update_on,
-                        (SUM(is_provider) / COUNT(*)) as provider,
-                        (SUM(is_owner) / COUNT(*)) as owner,
+                        (SUM(is_title_and_summary) / COUNT(*)) as title_and_summary,
+                        (SUM(is_released_on) / COUNT(*)) as creation_date,
+                        (SUM(is_category) / COUNT(*)) as category,
+                        (SUM(is_last_update_on) / COUNT(*)) as update_date,
+                        (SUM(is_provider) / COUNT(*)) as person_in_charge,
                         (SUM(is_maintainer) / COUNT(*)) as maintainer,
                         (SUM(is_good_license) / COUNT(*)) as good_license,
                         (SUM(license_quality) / COUNT(*)) as license_quality,
@@ -88,7 +50,7 @@ class DatasetCriteriaRepository extends EntityRepository
                     FROM dataset_criteria JOIN datasets ON dataset_criteria.id = datasets.criteria
                     WHERE datasets.portal_id = :portal_id
             ');
-        $sth->execute(array('portal_id' => $portalId));
+        $sth->execute(array('portal_id' => $portal->getId()));
 
         return($sth->fetch(\PDO::FETCH_ASSOC));
     }

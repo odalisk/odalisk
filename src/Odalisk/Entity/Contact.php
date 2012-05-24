@@ -2,6 +2,7 @@
 // src/Odalisk/App/Entity/Contact.php
 namespace Odalisk\Entity;
 
+
 class Contact
 {
     protected $name;

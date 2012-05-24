@@ -49,7 +49,7 @@ jQuery(function($) {
     
     if(typeof window.page != 'undefined' && window.page == 'home')
     {
-        $('#navbar').scrollspy();
+        //$('#navbar').scrollspy();
         $('#carouselHome').carousel({
             interval:10000
         });

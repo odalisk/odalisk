@@ -42,7 +42,10 @@ jQuery(function($) {
     
     $(window).resize(function() {
         window.spanSize = ($(window).width() * 0.23404255317 - 23)+'px';
-      $('#alwaysOnTop .nav-list').css({'maxHeight':($(window).height() - 300)+'px'});
+      $('#alwaysOnTop .nav-list').css({'maxHeight':($(window).height() - 300)+'px', width:window.spanSize+'px'});
+      
+      this.resizeSpan();
+      
     });
     $('#alwaysOnTop .nav-list').css({'maxHeight':($(window).height() - 300)+'px'});
     window.spanSize = ($(window).width() * 0.23404255317 - 23)+'px';
@@ -67,18 +70,6 @@ jQuery(function($) {
             }
         });
         
-        /*$('#carouselHome').on('slid',function() {
-            var active = $('#carouselHome .item.active');
-            if(active.attr('id') == 'browserSlide')
-            {
-                $('#headerWrapper').addClass('afterBackblue');
-            }
-            else
-            {
-                $('#headerWrapper').addClass('afterBackwhite');
-                
-            }
-        });*/
     }
     
     window.api = new jsApi();
@@ -201,20 +192,7 @@ jsApi = function() {
     
     this.afterRequest = function() {
         
-        $('#request-result .span4').each(function() {
-            var height = $(this).parent().height()-20;
-            console.log(window.api.portalSpanSize+ ' : '+height);
-            console.log($(this).parent());
-            if(window.api.portalSpanSize < height)
-            {
-                window.api.portalSpanSize = height;
-            }
-            window.api.portalSpanArray.push($(this));
-        });
-        for(i in window.api.portalSpanArray)
-        {
-            window.api.portalSpanArray[i].children('.portal-span-item').css({height:window.api.portalSpanSize+'px'});
-        }
+        this.resizeSpan();
         
         $(".icon-info[rel=popover], span[rel=popover]")
           .popover()
@@ -289,7 +267,23 @@ jsApi = function() {
         window.api.updateResult();
     });
     
+    //SpanSize
     
+    this.resizeSpan = function() {
+        /*window.api.portalSpanSize = 0;
+          $('#request-result .span4').each(function() {
+              var height = $(this).parent().height() - 20;
+              if(window.api.portalSpanSize < height)
+              {
+                  window.api.portalSpanSize = height;
+              }
+              window.api.portalSpanArray.push($(this));
+          });
+          for(i in window.api.portalSpanArray)
+          {
+              window.api.portalSpanArray[i].children('.portal-span-item').css({height:window.api.portalSpanSize+'px'});
+          }*/
+    }
     
     //Always on top
     var a = function() {};

@@ -1,0 +1,20 @@
+{% set totalScore = portal.metric.score  * 100 %}
+<table class="table score table-bordered">
+    <tr class="total-score">
+        <td class="key">Score</td>
+        <td class="progress-bar">
+            {% include "App:Api:progress-bar.html.twig" with {'score': totalScore, 'with_number':false} %}
+        </td>
+        <td class="note">{{ (portal.metric.score  * 100)|number_format(2) }}%</td>
+    </tr>
+    {% for category in portal.metric.subsections %}
+        {% set score = ((category.score / category.coefficient) * 100)|number_format(2) %}
+        <tr>
+            <td class="key">{{ category.description }}</td>
+            <td class="progress-bar">
+                {% include "App:Api:progress-bar.html.twig" with {'score': score, 'with_number':false} %}
+            </td>
+            <td class="note">{{ score|number_format(2) }}%</td>
+        </tr>
+    {% endfor %}
+</table>

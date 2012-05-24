@@ -20,26 +20,7 @@
                         {% include "App:Portal:info-table.html.twig" with {'portal' : portal, 'display_date' : true } %}
                     </div>
                     <div class="span8">
-                        {% set totalScore = portal.metric.score  * 100 %}
-                        <table class="table score table-bordered">
-                            <tr class="total-score">
-                                <td class="key">Score</td>
-                                <td class="progress-bar">
-                                    {% include "App:Api:progress-bar.html.twig" with {'score': totalScore} %}
-                                </td>
-                                <td class="note">{{ portal.metric.score  * 100 }}%</td>
-                            </tr>
-                            {% for category in portal.metric.subsections %}
-                                {% set score = (category.score / category.coefficient ) * 100 %}
-                                <tr>
-                                    <td class="key">{{ category.description }}</td>
-                                    <td class="progress-bar">
-                                        {% include "App:Api:progress-bar.html.twig" with {'score': score} %}
-                                    </td>
-                                    <td class="note">{{ score }}%</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
+                        {% include "App:Portal:score-table.html.twig" with {'portal' : portal} %}
                     </div>
                 </div>
             </div>

@@ -3,46 +3,83 @@
     {% for category in portal.metric.subsections %}
         <table class="category-table table table-stripped table-bordered">
             <thead>
-                <tr>
-                    <th class="description">
+                <tr class="table-head">
+                    <th  class="description">
                         {{ category.description }}
                     </th>
-                    <th class="score percentage">
-                        {{ (category.score / category.coefficient )* 100}}%
+                    <th class="coeff">
+                        Coeff.
                     </th>
+                    <th  class="score">
+                        Score
+                    </th>
+                    <!--
+                        {{ (category.score / category.coefficient) * 100}}%
+                    -->
+                    <!--<th class="coeff">
+                        Coeffs
+                    </th>-->
                 </tr>
+                 <!--<tr class="table-head">
+                    <th class="coeff">
+                        {{ category.coefficient * 100}}%
+                    </th>
+                </tr>-->
+                
             </thead>
             <tbody>
                 {% for metric in category.subsections %}
                 
                     {% if metric.subsections|length > 0 %}
-                        <tr>
+                        <tr class="category-first-level">
                             <td class="description">
-                                {{ metric.description }}
+                                <strong>{{ metric.description }}</strong>
                             </td>
+                            
+                            
+                            <td class="coeff">{{ metric.coefficient * 100}}%</td>
                             <td class="score percentage">
-                                {{ (metric.score / metric.coefficient) * 100}}%
+                                {{ (metric.score / metric.coefficient) * metric.subsections|length }}/{{ metric.subsections|length }}
                             </td>
+                            <!--<td  >
+                                 
+                            </td>-->
                         </tr>
                         {% for node in metric.subsections %}
                         
                             {% if node.subsections|length > 0 %}
-                                <tr>
+                                <tr class="category-second-level">
                                     <td class="second-level description">
-                                        {{ node.description }}
+                                        <strong>{{ node.description }}</strong>
                                     </td>
+                                    <td></td>
                                     <td class="score percentage">
-                                        {{ (node.score / node.coefficient)  * 100 }}%
+                                        {{ (node.score / node.coefficient) * node.subsections|length }}/{{ node.subsections|length }}
                                     </td>
+                                    
+                                    <!--<td class="coeff">
+                                        {{ node.coefficient  * 100 }}%
+                                    </td>-->
                                 </tr>
                                 {% for leaf in node.subsections %}
                                     <tr>
                                         <td class="third-level description">
                                             {{ leaf.description }}
                                         </td>
-                                        <td class="score binary">
-                                            {{ leaf.score / leaf.coefficient }}
-                                        </td>
+                                        <td></td>
+                                        {% if  (leaf.score / leaf.coefficient) == 1 %}
+                                            <td class="tick tick-success score">
+                                                <i class="icon-ok icon-white"></i>
+                                            </td>
+                                        {% else %}
+                                            <td class="tick tick-failure score">
+                                                <i class="icon-remove icon-white"></i>
+                                            </td>
+                                        {% endif %}
+                                        
+                                        <!--<td class="coeff">
+                                            {{ leaf.coefficient  * 100 }}%
+                                        </td>-->
                                     </tr>
                                 {% endfor %}
                             {% else %}
@@ -50,9 +87,20 @@
                                     <td class="second-level description">
                                         {{ node.description }}
                                     </td>
-                                    <td class="score binary">
-                                        {{ node.score / node.coefficient }}
-                                    </td>
+                                    <td></td>
+                                    {% if  (node.score / node.coefficient) == 1 %}
+                                        <td class="tick tick-success score">
+                                            <i class="icon-ok icon-white"></i>
+                                        </td>
+                                    {% else %}
+                                        <td class="tick tick-failure score">
+                                            <i class="icon-remove icon-white"></i>
+                                        </td>
+                                    {% endif %}
+                                    
+                                    <!--<td class="coeff">
+                                        {{ node.coefficient  * 100 }}%
+                                    </td>-->
                                 </tr>
                             {% endif %}
                         {% endfor %}
@@ -61,13 +109,31 @@
                             <td class="description">
                                 {{ metric.description }}
                             </td>
-                            <td class="score">
-                                {{ metric.score / metric.coefficient}}
-                            </td>
+                            <td></td>
+                            {% if  (metric.score / metric.coefficient) == 1 %}
+                                <td class="tick tick-success score">
+                                    <i class="icon-ok icon-white"></i>
+                                </td>
+                            {% else %}
+                                <td class="tick tick-failure score">
+                                    <i class="icon-remove icon-white"></i>
+                                </td>
+                            {% endif %}
+                            
+                            <!--<td class="coeff">
+                                {{ metric.coefficient  * 100 }}%
+                            </td>-->
                         </tr>
                     {% endif %}
                 {% endfor %}
             </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="3">
+                        {{ category.description }} total : {{ (category.score / category.coefficient) * 100}}%
+                    </th>
+                </tr>
+            </tfoot>
         </table>
     {% endfor %}
     </div>

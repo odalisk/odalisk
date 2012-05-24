@@ -41,9 +41,28 @@ a:visited {
 }
 
 
+.progress {
+    .outer-bar {
+        float:left;
+        text-align:center;
+        height:0px;
+        font-size:13px;
+    }
+    .bar {
+        float:left;
+        overflow:hidden;
+        .inner-bar {
+            
+            color:white;
+            text-align:center;
+            font-size:13px;
+        }
+    }
+}
+
 body {
     width:auto;
-    min-width:500px;
+    min-width:1100px;
     padding-top:80px;
     margin:0px 10px 0px 10px;
     
@@ -140,7 +159,9 @@ body {
                 top:-1px;
             }
             
+            
         }
+        
         
         .dataset-summary {
             margin-top:20px;
@@ -210,26 +231,7 @@ body {
         
     }
     
-    table.check {
-        
-        tr:hover, tr {
-            .tick {
-                width:10px;
-                color:white;
-                text-align:center;
-            }
-
-            .tick-success {
-                background:#5CBC41;
-            }
-
-            .tick-failure {
-                background:#E04846;
-            }
-        }
-        
-        
-    }
+    
     #search-row
     {
         padding:0px 30px 0px 0px;
@@ -258,6 +260,10 @@ body {
                 
                 &.label-success {
                     background-color:#468847;
+                }
+                
+                &:hover {
+                    cursor:pointer;
                 }
                 
                 span {
@@ -444,6 +450,9 @@ body {
                 
             }
             
+            a {
+                text-decoration:none;
+            }
             h3 {
                 font-size:17px;
                 font-weight:200;
@@ -470,12 +479,17 @@ body {
                     
                     &.key {
                         text-align:right;
-                        margin-right:3px;
+                        padding-right:5px;
                         vertical-align:middle;
                         width:20%;
                     }
+                    
+                    &.value {
+                        padding-left:5px;
+                    }
 
                     .label {
+                        
                         position:relative;
                         display:inline-block;
                         top:-2px;
@@ -491,6 +505,21 @@ body {
     }
 }
 
+tr:hover, tr {
+    .tick {
+        width:10px;
+        color:white;
+        text-align:center;
+    }
+
+    .tick-success {
+        background:#5CBC41 !important;
+    }
+
+    .tick-failure {
+        background:#E04846 !important;
+    }
+}
 
 #alwaysOnTop {
     .nav-list {
@@ -695,6 +724,8 @@ body {
 }
 
 
+
+
 #portal-metrics {
     .second-level {
         padding-left:50px;
@@ -713,6 +744,41 @@ body {
         color:white;
         font-weight:200;
         background:url('/bundles/app/img/homeback.jpg');
+        &.coeff, &.score {
+            font-size:11px;
+            text-align:center;
+            width:40px;
+        }
+    }
+    
+    tfoot th {
+        text-align:right;
+    }
+    
+    
+    .tick {
+        text-align:center;
+    }
+    
+    th {
+        vertical-align:middle;
+    }
+    
+    
+    .category-first-level, .category-second-level {
+        font-weight:bold;
+        background:#eee !important;
+        .score, .coeff {
+            text-align:center;
+        }
+        td {
+            //border-top-width:2px;// solid #999;
+        }
+    }
+    
+    
+    .category-first-level:hover {
+        background:#eee !important;
     }
 }
 

@@ -12,7 +12,9 @@
 <tr class="dataset-item">
     <td class="summary">
         <div class="dataset-summary">
-            {% if dataset.summary|length > 500 %}
+            {% if dataset.summary|length <= 1 %} 
+                No description provided
+            {% elseif dataset.summary|length > 500 %}
                 {{ dataset.summary|slice(0,500) }}...
             {% else %}
                 {{ dataset.summary }}

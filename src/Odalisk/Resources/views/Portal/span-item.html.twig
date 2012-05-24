@@ -15,7 +15,7 @@
             <div class="summary">
                 {% include "App:Portal:info-table.html.twig" with {'portal' : portal, 'display_date' : false } %}
                 {% set score = portal.metric.score * 100 %}
-                {% include "App:Api:progress-bar.html.twig" with {'score': score} %}
+                {% include "App:Api:progress-bar.html.twig" with {'score': score,'with_number':true} %}
             </div>
             <!--<div class="button">
                 <a class="btn" href="{{ path('portal_details', { 'portal_number': portal.id }) }}">Details</a>

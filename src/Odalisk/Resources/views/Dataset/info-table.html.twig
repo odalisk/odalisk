@@ -2,6 +2,9 @@
     <tr>
         <td class="key">Category <span class="label icon-info label-info" rel="popover" title="Category name" data-content="To normalize categories, we used some aliases<br/><strong>Orignal category name was</strong> : {{ dataset.rawCategories}}.">i</span></td>
         <td>
+            {% if dataset.categories|length == 0 %}
+                No category provided
+            {% endif %}
             {% for category in dataset.categories %}
                 {{ category.category }}{% if dataset.categories|length != loop.index and dataset.categories|length > 1 %}, {% endif %}
             {% endfor %}
@@ -41,17 +44,25 @@
                 {% elseif format.isComputerReadable == 1 %}
                     <span class="label label-warning" rel="popover" title="{{ format.format }}" data-content="This format is not very open ! The specification is not public and this format is proprietary.">{{ format.format }}</span>
                 {% else %}
-                    <span class="label label-error">{{ format.format }}</span>
+                    <span class="label label-important" rel="popover" title="{{ format.format }}" data-content="This format is not open at all ! You can just download it.">{{ format.format }}</span>
                 {% endif %}
             {% endfor %}
             </td>
     </tr>
     <tr>
         <td class="key">Owner</td>
-        <td>{{ dataset.owner }}</td>
+        <td>
+            {% if dataset.owner == '' %}
+                No owner name provided
+            {% endif %}
+        </td>
     </tr>
     <tr>
         <td class="key">Maintainer</td>
-        <td>{{ dataset.maintainer }}</td>
+        <td>
+            {% if dataset.maintainer == '' %}
+                No maintainer name provided
+            {% endif %}
+        </td>
     </tr>
 </table>

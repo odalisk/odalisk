@@ -53,6 +53,20 @@ class License
      * @ORM\Column(name="redistribution", type="boolean")
      */
     protected $redistribution;
+    
+    /**
+     * @var string $redistribution
+     *
+     * @ORM\Column(name="is_good", type="boolean")
+     */
+    protected $is_good = false;
+    
+    /**
+     * @var string $redistribution
+     *
+     * @ORM\Column(name="quality", type="integer")
+     */
+    protected $quality = 0;
 
     /**
      * @var string $commercial
@@ -205,29 +219,48 @@ class License
     {
         return $this->aliases;
     }
-
+    
     /**
-     * Return true if the license is a good one, false otherwise.
+     * Set quality
+     *
+     * @param integer $quality
      */
-    public function isGoodLicense() {
-        return(
-                $this->getAuthorship() &&
-                $this->getReuse() &&
-                $this->getRedistribution() &&
-                $this->getCommercial()
-              );
+    public function setQuality()
+    {
+        $this->quality = 0;
+        $this->quality += ($this->getAuthorship()) ? 25 : 0;
+        $this->quality += ($this->getReuse()) ? 25 : 0;
+        $this->quality += ($this->getRedistribution()) ? 25 : 0;
+        $this->quality += ($this->getCommercial()) ? 25 : 0;
     }
 
     /**
      * Return the quality of the license in pourcentage
      */
      public function getQuality() {
-         $quality = 0;
-         $quality+= (int)$this->getAuthorship() * 25;
-         $quality+= (int)$this->getReuse() * 25;
-         $quality+= (int)$this->getRedistribution() * 25;
-         $quality+= (int)$this->getCommercial() * 25;
-
-         return($quality);
+         return $this->quality;
      }
+
+    /**
+     * Set is_good
+     *
+     * @param boolean $isGood
+     */
+    public function setIsGood()
+    {
+        $this->is_good = $this->getAuthorship() 
+            && $this->getReuse() 
+            && $this->getRedistribution() 
+            && $this->getCommercial();
+    }
+
+    /**
+     * Get is_good
+     *
+     * @return boolean 
+     */
+    public function getIsGood()
+    {
+        return $this->is_good;
+    }
 }

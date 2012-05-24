@@ -14,61 +14,23 @@ class DatasetCriteriaRepository extends EntityRepository
 {
 
     private $criteria;
-    private $dataset;
-
-    public function init() {
-        $this->criteria = array();
-    }
 
     public function clear() {
-        $sth = $this->getEntityManager()
-            ->getConnection()
-            ->prepare('TRUNCATE TABLE dataset_criteria')
-            ->execute();
-    }
-
-    public function getCriteria($dataset) {
-        $this->dataset = $dataset;
-
-        $this->getGeneralCriteria();
-        $this->getLicenseCriteria();
-        $this->getFormatCriteria();
-
-        return($this->criteria);
-    }
-
-    public function getGeneralCriteria() {
-        $d = $this->dataset;
-
-        $this->criteria['setIsTitleAndSummary'] = ($d->getName() && $d->getSummary());
-        $this->criteria['setIsOwner'] = $d->getOwner() != NULL;
-        $this->criteria['setIsProvider'] = ($d->getProvider() || $d->getOwner());
-        $this->criteria['setIsLastUpdateOn'] = $d->getLastUpdatedOn() != NULL;
-        $this->criteria['setIsMaintainer'] = $d->getMaintainer() != NULL;
-        $this->criteria['setIsReleasedOn'] = $d->getReleasedOn() != NULL;
-    }
-
-    public function getLicenseCriteria() {
-        $license = $this->dataset->getLicense();
-        if($license) {
-            $this->criteria['setIsGoodLicense']  = $license->isGoodLicense();
-            $this->criteria['setLicenseQuality'] = $license->getQuality();
-        } else {
-            $this->criteria['setIsGoodLicense']  = 0;
-            $this->criteria['setLicenseQuality'] = 0;
+        $em = $this->getEntityManager();
+        $cmd = $em->getClassMetadata('Odalisk\Entity\Statistics');
+        $connection = $em->getConnection();
+        $dbPlatform = $connection->getDatabasePlatform();
+        $connection->beginTransaction();
+        try {
+            $connection->query('SET FOREIGN_KEY_CHECKS=0');
+            $q = $dbPlatform->getTruncateTableSql($cmd->getTableName());
+            $connection->executeUpdate($q);
+            $connection->query('SET FOREIGN_KEY_CHECKS=1');
+            $connection->commit();
         }
-    }
-
-    public function getFormatCriteria() {
-        $formats = $this->dataset->getFormats();
-        foreach($formats as $format) {
-            if($format->isGood()) {
-                $this->criteria['setIsAtLeastOneGoodFormat'] = true;
-                return;
-            }
+        catch (\Exception $e) {
+            $connection->rollback();
         }
-
-        $this->criteria['setIsAtLeastOneGoodFormat'] = false;
     }
 
     public function getPortalAverages($portalId) {

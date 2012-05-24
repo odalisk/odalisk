@@ -39,6 +39,8 @@ class LicenseNormalizer
             $l->setReuse($license['reuse']);
             $l->setRedistribution($license['redistribution']);
             $l->setCommercial($license['commercial']);
+            $l->setIsGood();
+            $l->setQuality();
             $this->em->persist($l);
             $this->licenses[strtolower($name)] = $l;
         }

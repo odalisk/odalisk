@@ -72,7 +72,7 @@ class Portal
     /**
      * @var int $dataset_count
      *
-     * @ORM\Column(name="dataset_count", type="integer")
+     * @ORM\Column(name="dataset_count", type="integer", nullable=true)
      */
     protected $dataset_count;
 

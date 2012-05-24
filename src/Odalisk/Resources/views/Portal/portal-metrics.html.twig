@@ -3,8 +3,11 @@
     <table class="category-table table table-stripped table-bordered">
         <thead>
             <tr>
-                <th colspan="2">
-                    {{ category.name }}
+                <th>
+                    {{ category.description }}
+                </th>
+                <th class="score percentage">
+                    {{ (category.score / category.coefficient )* 100}}%
                 </th>
             </tr>
         </thead>

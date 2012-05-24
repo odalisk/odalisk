@@ -1,6 +1,69 @@
+<div class="span12" id="portal-metrics">
 {% for category in portal.metric.subsections %}
-    {{ category.name }}<br/>
-    {% for metric in category.subsections %}
-        {{ metric.name }}<br/>
-    {% endfor %}
+    <table class="category-table table table-stripped table-bordered">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    {{ category.name }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for metric in category.subsections %}
+                
+                {% if metric.subsections|length > 0 %}
+                    <tr>
+                        <td class="description">
+                            {{ metric.description }}
+                        </td>
+                        <td class="score percentage">
+                            {{ (metric.score / metric.coefficient) * 100}}%
+                        </td>
+                    </tr>
+                    {% for node in metric.subsections %}
+                        
+                        {% if node.subsections|length > 0 %}
+                            <tr>
+                                <td class="second-level description">
+                                    {{ node.description }}
+                                </td>
+                                <td class="score percentage">
+                                    {{ (node.score / node.coefficient)  * 100 }}%
+                                </td>
+                            </tr>
+                            {% for leaf in node.subsections %}
+                                <tr>
+                                    <td class="third-level description">
+                                        {{ leaf.description }}
+                                    </td>
+                                    <td class="score binary">
+                                        {{ leaf.score / leaf.coefficient }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td class="second-level description">
+                                    {{ node.description }}
+                                </td>
+                                <td class="score binary">
+                                    {{ node.score / node.coefficient }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td class="description">
+                            {{ metric.description }}
+                        </td>
+                        <td class="score">
+                            {{ metric.score / metric.coefficient}}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
 {% endfor %}
+</div>

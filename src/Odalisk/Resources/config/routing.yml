@@ -15,15 +15,16 @@ portal_details:
     defaults:   { _controller: App:Portal:details, page_number:1, _format:html }
 
 api_portal:
-    pattern:    /api/portals/{page_index}/{page_size}
-    defaults:   { _controller: App:Api:portals, page_index:0, page_size:10 }
+    pattern:    /api/portals/{page_index}/{page_size}/{display}
+    defaults:   { _controller: App:Api:portals, page_index:0, page_size:10, display:span }
     requirements:
         page_index: \d+
         page_size:  \d+
+        display: list|span
 
 api_datasets:
-    pattern:    /api/datasets/{page_index}/{page_size}
-    defaults:   { _controller: App:Api:datasets, page_index:0, page_size:10 }
+    pattern:    /api/datasets/{page_index}/{page_size}/{display}
+    defaults:   { _controller: App:Api:datasets, page_index:0, page_size:10, display:list }
 
 api:
     pattern:    /api/{_format}

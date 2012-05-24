@@ -1,11 +1,11 @@
 # The arborescence of this file has 4 levels :
-#The category
-#sections of these catgories. Each section must have a "weight" attribute.
+#  The category
+#  sections of these catgories. Each section must have a "weight" attribute.
 # This weight refers to the weight of the section in the category. Sections
-# may have a "subsections" attribute.
-#subsections of these sections. Each subsection must have a "weight"
-# attribute. A subsection may have a "subsubsections" attribute.
-#subsubsections of these subsections. Each subsubsection must have a "weight"
+# may have a "sections" attribute.
+#  sections of these sections. Each subsection must have a "weight"
+# attribute. A subsection may have a "subsections" attribute.
+#  subsections of these sections. Each subsubsection must have a "weight"
 # attribute.
 # No more levels !
 
@@ -13,80 +13,81 @@ parameters:
     metrics:
         # Usability category
         usability:
+            weight: 1
             sections:
-               search:
-                    weight: 100
-                    subsections:
-                       search_engine_provided:
-                            weight: 60
-                            subsubsections: []
-                       searchable_metadata:
-                            weight: 25
-                            subsubsections: []
-                       licence_filtering:
-                            weight: 15
-                            subsubsections: []
-        # Cataloging category
+                 search:
+                    weight: 1
+                    sections:
+                         search_engine_provided:
+                            weight: 0.6
+
+                         searchable_metadata:
+                            weight: 0.25
+
+                         license_filtering:
+                            weight: 0.25
+         # Cataloging category
         cataloging:
+            weight: 1
             sections:
-               identification:
-                    weigth: 20
-                    subsections:
-                       identity_person_in_charge:
-                            weight: 100
-                            subsubsections: []
-               general:
-                    weight: 60
-                    subsections:
-                       title_and_summary:
-                            weight: 60
-                            subsubsections: []
-                       category:
-                            weigth: 40
-                            subsubsections: []
-               temporal:
-                    weight: 20
-                    subsections:
-                       creation_date:
-                            weight: 40
-                            subsubsections: []
-                       update_date:
-                            weight: 60
-                            subsubsections: []
+                 identification:
+                    weight: 0.2
+                    sections:
+                         person_in_charge:
+                            weight: 1
+
+                 general:
+                    weight: 0.60
+                    sections:
+                         title_and_summary:
+                            weight: 0.60
+                         category:
+                            weight: 0.40
+
+                 temporal:
+                    weight: 0.20
+                    sections:
+                         creation_date:
+                            weight: 0.40
+
+                         update_date:
+                            weight: 0.60
         # API category
         api:
+            weight: 1
             sections:
-               exists:
-                    weight: 70
-                    subsections: []
-               documentation:
-                    weight: 30
-                    subsections: []
+                 api_exists:
+                    weight: 0.70
+                 api_documentation:
+                    weight: 0.30
+
         # Liveliness category
         liveliness:
+            weight: 1
             sections:
-               user_input:
-                    weight: 80
-                    subsections:
-                       rating_possibilty:
-                            weight: 15
-                            subsubsections: []
-                       link_support_resources:
-                            weight: 50
-                            subsubsections:
-                               forum_section:
-                                    weight: 80
-                               contact_form_link:
-                                    weight: 20
-                       feedback_channel:
-                            weight: 15
-                            subsubsections: []
-                       suggest_dataset:
-                            weight: 20
-                            subsubsections: []
-               information:
-                    weight: 20
-                    subsections:
-                       opendata_explained:
-                            weight: 100
-                            subsubsections: []
+                 user_input:
+                    weight: 0.80
+                    sections:
+                         rating_possibility:
+                            weight: 0.15
+                            
+                         link_support_resources:
+                            weight: 0.50
+                            sections:
+                                 forum_section:
+                                    weight: 0.80
+                                 contact_form_link:
+                                    weight: 0.20
+                         feedback_channel:
+                            weight: 0.15
+                            
+                         suggest_dataset:
+                            weight: 0.20
+                            
+                 information:
+                    weight: 0.20
+                    sections:
+                         opendata_explained:
+                            weight: 1
+            
+

@@ -33,16 +33,16 @@ class DatasetCriteriaRepository extends EntityRepository
         }
     }
 
-    public function getPortalAverages($portalId) {
+    public function getPortalAverages($portal) {
         $sth = $this->getEntityManager()
             ->getConnection()
             ->prepare('
                     SELECT
-                        (SUM(is_title_and_summary) / COUNT(*)) as title,
-                        (SUM(is_released_on) / COUNT(*)) as released_on,
-                        (SUM(is_last_update_on) / COUNT(*)) as last_update_on,
-                        (SUM(is_provider) / COUNT(*)) as provider,
-                        (SUM(is_owner) / COUNT(*)) as owner,
+                        (SUM(is_title_and_summary) / COUNT(*)) as title_and_summary,
+                        (SUM(is_released_on) / COUNT(*)) as creation_date,
+                        (SUM(is_category) / COUNT(*)) as category,
+                        (SUM(is_last_update_on) / COUNT(*)) as update_date,
+                        (SUM(is_provider) / COUNT(*)) as person_in_charge,
                         (SUM(is_maintainer) / COUNT(*)) as maintainer,
                         (SUM(is_good_license) / COUNT(*)) as good_license,
                         (SUM(license_quality) / COUNT(*)) as license_quality,
@@ -50,7 +50,7 @@ class DatasetCriteriaRepository extends EntityRepository
                     FROM dataset_criteria JOIN datasets ON dataset_criteria.id = datasets.criteria
                     WHERE datasets.portal_id = :portal_id
             ');
-        $sth->execute(array('portal_id' => $portalId));
+        $sth->execute(array('portal_id' => $portal->getId()));
 
         return($sth->fetch(\PDO::FETCH_ASSOC));
     }

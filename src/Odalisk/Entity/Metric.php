@@ -28,10 +28,25 @@ class Metric
      */
 	private $name;
 
+
+    /**
+     * @var string $description
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    //private $description;
+
+    /**
+     * @var string $coefficient
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    //private $coefficient;
+
     /**
      * @var string $score
      *
-     * @ORM\Column(name="score", type="integer")
+     * @ORM\Column(name="score", type="float")
      */
 	private $score;
 

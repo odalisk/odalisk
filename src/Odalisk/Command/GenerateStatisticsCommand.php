@@ -87,13 +87,14 @@ class GenerateStatisticsCommand extends BaseCommand
                             $value += $section['weight'] * $metric->getScore();
                             $metric->setParent($metric_parent);
                         }
+                        $metric_parent->setCoefficient($category['weight']);
                         $metric_parent->setScore($value);
-                        //$metric_parent->setParent(NULL);
                         $this->em->persist($metric_parent);
                     break;
 
                     default:
                         $metric_parent = $this->apply_section($name,$category,$portalcriteria);
+                        $metric_parent->setCoefficient($category['weight']);
                         $this->em->persist($metric_parent);
                     break;
                 }
@@ -117,13 +118,15 @@ class GenerateStatisticsCommand extends BaseCommand
                 $this->em->persist($metric);
                 $metric_parent->addMetric($metric);
             }
-
+            $metric_parent->setCoefficient($criteria['weight']);
             $metric_parent->setScore($criteria['weight'] * $value);
             $this->em->persist($metric_parent);
             return $metric_parent;
         } else {
             $metric = new \Odalisk\Entity\Metric();
             $metric->setScore($criteria['weight'] * $avgs[$name]);
+            $metric->setDescription($criteria['description']);
+            $metric->setCoefficient($criteria['weight']);
             $metric->setName($name);
             return $metric;
         }

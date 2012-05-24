@@ -20,12 +20,14 @@ parameters:
                     sections:
                          search_engine_provided:
                             weight: 0.6
-
+                            description: "If the website offers several licences, the search engine has a sensible filtering option"
                          searchable_metadata:
                             weight: 0.25
-
+                            description: "Metadata is searchable"
                          license_filtering:
                             weight: 0.25
+                            description: "A search engine is provided"
+
          # Cataloging category
         cataloging:
             weight: 1
@@ -35,31 +37,37 @@ parameters:
                     sections:
                          person_in_charge:
                             weight: 1
+                            description: "The identity and title of the person in charge is provided"
 
                  general:
                     weight: 0.60
                     sections:
                          title_and_summary:
                             weight: 0.60
+                            description: "There is at least a title and a summary"
                          category:
                             weight: 0.40
+                            description: "There is a category"
 
                  temporal:
                     weight: 0.20
                     sections:
                          creation_date:
                             weight: 0.40
-
+                            description: "There is a creation date"
                          update_date:
                             weight: 0.60
+                            description: "There is an update date"
         # API category
         api:
             weight: 1
             sections:
                  api_exists:
                     weight: 0.70
+                    description: "There is an API"
                  api_documentation:
                     weight: 0.30
+                    description: "There is documentation about how to access the data and interact with it"
 
         # Liveliness category
         liveliness:
@@ -70,24 +78,27 @@ parameters:
                     sections:
                          rating_possibility:
                             weight: 0.15
-                            
+                            description: "The website offers ways of rating datasets"
                          link_support_resources:
                             weight: 0.50
+                            description: "Links to support resources are present"
                             sections:
                                  forum_section:
                                     weight: 0.80
+                                    description: "There is a forum section"
                                  contact_form_link:
                                     weight: 0.20
+                                    description: "There is a link to a contact form"
                          feedback_channel:
                             weight: 0.15
-                            
+                            description: "There is a possibility to comment for each data set"
                          suggest_dataset:
                             weight: 0.20
-                            
+                            description: "Users can propose new datasets and also ask for existing ones to be made available"
                  information:
                     weight: 0.20
                     sections:
                          opendata_explained:
                             weight: 1
-            
+                            description: "The OpenData concept is explained"
 

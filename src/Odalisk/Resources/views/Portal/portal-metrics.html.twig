@@ -56,10 +56,6 @@
                                     <td class="score percentage">
                                         {{ (node.score / node.coefficient) * node.subsections|length }}/{{ node.subsections|length }}
                                     </td>
-                                    
-                                    <!--<td class="coeff">
-                                        {{ node.coefficient  * 100 }}%
-                                    </td>-->
                                 </tr>
                                 {% for leaf in node.subsections %}
                                     <tr>
@@ -67,19 +63,7 @@
                                             {{ leaf.description }}
                                         </td>
                                         <td></td>
-                                        {% if  (leaf.score / leaf.coefficient) == 1 %}
-                                            <td class="tick tick-success score">
-                                                <i class="icon-ok icon-white"></i>
-                                            </td>
-                                        {% else %}
-                                            <td class="tick tick-failure score">
-                                                <i class="icon-remove icon-white"></i>
-                                            </td>
-                                        {% endif %}
-                                        
-                                        <!--<td class="coeff">
-                                            {{ leaf.coefficient  * 100 }}%
-                                        </td>-->
+                                        {% include "App:Common:icon-box.html.twig" with {'score': leaf.score, 'coefficient':leaf.coefficient} %}
                                     </tr>
                                 {% endfor %}
                             {% else %}
@@ -88,15 +72,8 @@
                                         {{ node.description }}
                                     </td>
                                     <td></td>
-                                    {% if  (node.score / node.coefficient) == 1 %}
-                                        <td class="tick tick-success score">
-                                            <i class="icon-ok icon-white"></i>
-                                        </td>
-                                    {% else %}
-                                        <td class="tick tick-failure score">
-                                            <i class="icon-remove icon-white"></i>
-                                        </td>
-                                    {% endif %}
+                                    
+                                    {% include "App:Common:icon-box.html.twig"  with {'score': node.score, 'coefficient':node.coefficient} %}
                                     
                                     <!--<td class="coeff">
                                         {{ node.coefficient  * 100 }}%
@@ -110,19 +87,7 @@
                                 {{ metric.description }}
                             </td>
                             <td></td>
-                            {% if  (metric.score / metric.coefficient) == 1 %}
-                                <td class="tick tick-success score">
-                                    <i class="icon-ok icon-white"></i>
-                                </td>
-                            {% else %}
-                                <td class="tick tick-failure score">
-                                    <i class="icon-remove icon-white"></i>
-                                </td>
-                            {% endif %}
-                            
-                            <!--<td class="coeff">
-                                {{ metric.coefficient  * 100 }}%
-                            </td>-->
+                            {% include "App:Common:icon-box.html.twig" with {'score': metric.score, 'coefficient':metric.coefficient} %}
                         </tr>
                     {% endif %}
                 {% endfor %}

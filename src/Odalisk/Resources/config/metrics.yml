@@ -22,13 +22,13 @@ parameters:
                     sections:
                          search_engine_provided:
                             weight: 0.5
-                            description: "If the website offers several licences, the search engine has a sensible filtering option"
+                            description: "A search engine is provided"
                          searchable_metadata:
                             weight: 0.25
                             description: "Metadata is searchable"
                          license_filtering:
                             weight: 0.25
-                            description: "A search engine is provided"
+                            description: "If the website offers several licences, the search engine has a sensible filtering option"
 
          # Cataloging category
         cataloging:

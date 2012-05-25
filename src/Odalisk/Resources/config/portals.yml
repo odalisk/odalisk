@@ -9,6 +9,7 @@ parameters:
         - eu_gov
         - data_publica
         #- data_market
+        - montpelliernumerique
 
     # All the information we need for each platfom. Will be used to initialize the services
     portals.nantes:
@@ -173,14 +174,14 @@ parameters:
         type: "Other"
 
     portals.data_market:
-        name:       "Montpellier Numérique"
-        base_url:   "http://opendata.montpelliernumerique.fr/"
+        name:       "DataMarket"
+        base_url:   "http://datamarket.com/data/set/"
         api_url:    ""
-        country:    "France"
-        entity:     "OpenData Montpellier Numérique"
-        status:     "Institutionnal"
-        #search_engine:   true
-        #metadata_search: true
+        country:    "Iceland"
+        entity:     "DataMarket"
+        status:     "Private, For profit"
+        search_engine:   true
+        metadata_search: true
         #filtering_license_search: false
         #forum_section:   false
         #contact_form: true
@@ -189,3 +190,20 @@ parameters:
         #suggest_dataset: false
         #api_documentation: false
 
+    portals.montpellier:
+        name:       "Montpellier Numerique"
+        #base_url:   "http://opendata.montpelliernumerique.fr/datastore/"
+        base_url:   "http://opendata.montpelliernumerique.fr/"
+        api_url:    ""
+        country:    "France"
+        entity:     "Montpellier Numerique"
+        status:     "Institutional"
+        search_engine:   true
+        metadata_search: true
+        filtering_license_search: true
+        #forum_section:   false
+        contact_form: false
+        rating_dataset: false
+        comment_dataset: false
+        suggest_dataset: false
+        api_documentation: false

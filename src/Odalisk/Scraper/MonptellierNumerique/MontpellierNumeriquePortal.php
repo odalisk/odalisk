@@ -1,13 +1,14 @@
+
 <?php
 
-namespace Odalisk\Scraper\LrnRln;
+namespace Odalisk\Scraper\Socrata;
 
 use Symfony\Component\DomCrawler\Crawler;
 
 use Odalisk\Scraper\BasePortal;
 use Odalisk\Scraper\Tools\RequestDispatcher;
 
-abstract class BaseLrnRlnPortal extends BasePortal
+abstract class MontpellierNumeriquePortal extends BasePortal
 {
     // The base url on which the datasets are listed.
     protected $datasetsListUrl;
@@ -32,37 +33,42 @@ abstract class BaseLrnRlnPortal extends BasePortal
             // , 'Frequency' => '//div[@class="aboutDataset"]/div[8]/dl/dd[3]/span'
             // , 'Community Rating' => '//div[@class="aboutDataset"]/div[3]/dl/dd[1]/div'
         );
+
+        $this->urlsListIndexPath = '//td[@class="nameDesc"]/a';
+        $this->batch_size = 10;
     }
 
     public function getDatasetsUrls()
     {
-        $dispatcher = new RequestDispatcher($this->buzzOptions, 30);
+        $urls = array();
 
-        $response = $this->buzz->get($this->datasetsListUrl);
+		//Downloads the csv of the 
+
+        // Make the API call
+        $response = $this->buzz->get(
+            $this->getApiUrl(),
+            $this->buzzOptions
+        );
+
+        // Get the paths
         if (200 == $response->getStatusCode()) {
-            // We begin by fetching the number of datasets
-            $crawler = new Crawler($response->getContent());
-            $node = $crawler->filterXPath('//div[@class="infoD"]');
-            if (preg_match("/([0-9]+)/", $node->text(), $match)) {
-                $this->estimatedDatasetCount = intval($match[0]);
+            $data = json_decode($response->getContent());
+
+            foreach ($data as $key => $dataset_name) {
+                $urls[] = $this->getBaseUrl() . $dataset_name;
             }
-            error_log('[Get URLs] Estimated number of datasets of the portal : ' . $this->estimatedDatasetCount);
-
-            // Now we fetch the datalists thanks to a <select> ;)
-            $nodes = $crawler
-                ->filterXPath('//[@id="datalist"]//option[@value]')
-                ->extract(array('value'))
-                ;
-
-            // We construct the urls
-            $base_url = $this->getBaseUrl();
-            $this->urls = array_map(
-                    function($id) {
-                        return $base_url.$id;
-                    }
+        } else {
+            error_log('Couldn\'t fetch list of datasets for ' . $this->getName());
         }
 
-        return $this->urls;
+        $this->totalCount = count($urls);
+
+        return $urls;
+    }
+
+    protected function additionalExtraction($crawler, &$data)
+    {
+        $data['setFormats'] = "CSV;JSON;PDF;RDF;RSS;XLS;XLSX;XML";
     }
 }
 

@@ -22,13 +22,13 @@ parameters:
                     sections:
                          search_engine_provided:
                             weight: 0.5
-                            description: "If the website offers several licences, the search engine has a sensible filtering option"
+                            description: "A search engine is provided"
                          searchable_metadata:
                             weight: 0.25
                             description: "Metadata is searchable"
                          license_filtering:
                             weight: 0.25
-                            description: "A search engine is provided"
+                            description: "If the website offers several licences, the search engine has a sensible filtering option"
 
          # Cataloging category
         cataloging:
@@ -88,6 +88,12 @@ parameters:
                          rating_possibility:
                             weight: 0.15
                             description: "The website offers ways of rating datasets"
+                         feedback_channel:
+                            weight: 0.15
+                            description: "There is a possibility to comment for each data set"
+                         suggest_dataset:
+                            weight: 0.20
+                            description: "Users can propose new datasets and also ask for existing ones to be made available"
                          link_support_resources:
                             weight: 0.50
                             description: "Links to support resources are present"
@@ -98,12 +104,6 @@ parameters:
                                  contact_form_link:
                                     weight: 0.20
                                     description: "There is a link to a contact form"
-                         feedback_channel:
-                            weight: 0.15
-                            description: "There is a possibility to comment for each data set"
-                         suggest_dataset:
-                            weight: 0.20
-                            description: "Users can propose new datasets and also ask for existing ones to be made available"
                  Information:
                     weight: 0.20
                     description: "Information"

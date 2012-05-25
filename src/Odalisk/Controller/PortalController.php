@@ -50,7 +50,7 @@ class PortalController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $repository = $em->getRepository('Odalisk\Entity\Portal');
         $portal = $repository->findOneById($portal_number);
-        $formats = $repository->getFormatDistribution($portal)['result'];
+        $formats = $repository->getFormatDistribution($portal);
         $licenses = $repository->getLicenseDistribution($portal);
         
         return $this->render('App:Portal:details.html.twig', array(

@@ -228,23 +228,14 @@ class PortalRepository extends EntityRepository
         $stmt->execute();
         $res = $stmt->fetchAll();
 
-        $output_repartition = array();
+        $output = array();
         foreach ($res as $key => $value) {
-            $output_repartition[$value['format']] = $value['COUNT(*)'];
+            $output[$value['format']] = $value['COUNT(*)'];
         }
 
         
-        $stmt = $this->getEntityManager()
-            ->getConnection()
-            ->prepare('SELECT COUNT(*) FROM datasets  WHERE datasets.portal_id = :portal_id');
-        $stmt->execute(array('portal_id' => $portal->getId()));
-        $res = $stmt->fetch();
 
-        return $output = array(
-                'Total' => $res['COUNT(*)'],
-                'Repartition' => $output_repartition
-
-            );
+        return $output;
     }
 
     public function getCategoryDistribution($portal){
@@ -278,23 +269,13 @@ class PortalRepository extends EntityRepository
         $stmt->execute(array('portal_id' => $portal->getId()));
         $res = $stmt->fetchAll();
 
-        $output_repartition = array();
+        $output = array();
 
         foreach ($res as $key => $value) {
-            $output_repartition[$value['name']] = $value['COUNT(*)'];
+            $output[$value['name']] = $value['COUNT(*)'];
         }
-
-        $stmt = $this->getEntityManager()
-            ->getConnection()
-            ->prepare('SELECT COUNT(*) FROM datasets  WHERE datasets.portal_id = :portal_id');
-        $stmt->execute(array('portal_id' => $portal->getId()));
-        $res = $stmt->fetch();
-
-        return $output = array(
-                'Total' => $res['COUNT(*)'],
-                'Repartition' => $output_repartition
-
-            );
+        
+        return $output;
     }
 
     

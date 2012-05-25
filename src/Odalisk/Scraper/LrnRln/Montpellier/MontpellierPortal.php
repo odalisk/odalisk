@@ -1,4 +1,3 @@
-
 <?php
 
 namespace Odalisk\Scraper\LrnRln\Montpellier;

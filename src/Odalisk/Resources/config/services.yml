@@ -137,8 +137,12 @@ services:
         calls:
             - [ setConfiguration, [ "%portals.data_market%" ] ]
 
-    data_market:
-        class: Odalisk\Scraper\DataMarket\DataMarketPortal
+    base_lrnrln:
+        class: Odalisk\Scraper\LrnRln\BaseLrnRln
+        abstract: true
         parent: base_platform
+    montpellier:
+        class: Odalisk\Scraper\LrnRln\Montpellier\MontpellierPortal
+        parent: base_lrnrln
         calls:
-            - [ setConfiguration, [ "%portals.data_market%" ] ]
+            - [ setConfiguration, [ "%portals.montpellier%" ] ]

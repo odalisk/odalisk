@@ -4,26 +4,19 @@
     
 <div class="row-fluid row-nomargin-top">
   <div class="span9">
+      <div class="table table-dataset-list table-striped">
+          <h1>Datasets list</h1>
+          <div id="request-result">
 
-
-      <table class="table table-dataset-list table-striped">
-          <thead>
-              <tr>
-                  <th colspan="3">
-                      <h1>Liste des jeux de données</h1>
-                  </th>
-              </tr>
-          </thead>
-          <tbody id="request-result">
-
-          </tbody>
-      </table>
+          </div>
+      </div>
   </div>
   <div id="alwaysOnTop" class="span3">
       <div id="search-row">
           <input placeholder="Search" type="text" id="search" class="search-query"/>
       </div>
       <div class="well tag-list">
+          <h3>Citeria search :</h3>
           <ul class="nav nav-list">
               {% render "App:Api:datasetTags" with {'current_portal': current_portal} %}
           </ul>

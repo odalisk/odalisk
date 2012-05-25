@@ -1,6 +1,6 @@
 <table class="table table-bordered ">
     <tr>
-        <td class="key">Category <span class="label icon-info label-info" rel="popover" title="Category name" data-content="To normalize categories, we used some aliases<br/><strong>Orignal category name was</strong> : {{ dataset.rawCategories}}.">i</span></td>
+        <td class="key">Category <i class="icon-info-sign icon-info" rel="popover" title="Category name" data-content="To normalize categories, we used some aliases<br/><strong>Orignal category name was</strong> : {{ dataset.rawCategories}}."></i></td>
         <td>
             {% if dataset.categories|length == 0 %}
                 No category provided
@@ -12,16 +12,16 @@
     </tr>
     {% if display_date %}
     <tr>
-        <td class="key">Released on <span class="label icon-info label-info" rel="popover" title="Resealed on" data-content="First release of the dataset (provided by the portal).">i</span></td>
+        <td class="key">Released on <i class="icon-info-sign icon-info" rel="popover" title="Resealed on" data-content="First release of the dataset (provided by the portal)."></i></td>
         <td>{{ dataset.releasedOn|date("d/m/Y") }}</td>
     </tr>
     <tr>
-        <td class="key">Last update on <span class="label icon-info label-info" rel="popover" title="Last update on" data-content="Last update of the dataset (provided by the portal).">i</span></td>
+        <td class="key">Last update on <i class="icon-info-sign icon-info" rel="popover" title="Last update on" data-content="Last update of the dataset (provided by the portal)."></i></td>
         <td>{{ dataset.lastUpdatedOn|date("d/m/Y") }}</td>
     </tr>
     {% endif %}
     <tr>
-        <td class="key">License <span class="label icon-info label-info" rel="popover" title="License" data-content="To normalize licenses, we chose to use some aliases.<br/><strong>Original license name</strong> : {{ dataset.rawLicense}}.">i</span></td>
+        <td class="key">License <i class="icon-info-sign icon-info" rel="popover" title="License" data-content="To normalize licenses, we chose to use some aliases.<br/><strong>Original license name</strong> : {{ dataset.rawLicense}}."></i></td>
         <td>
             {% if dataset.license.commercial == 1 %}
             <span class="label label-success" rel="popover" title="{{ dataset.license.name }}" data-content="This license is as open as possible ! You can use the data for commercial purposes, redistribute the data, but don't forget to cite your sources !">{{ dataset.license.name }}</span></td>
@@ -34,7 +34,7 @@
             {% endif %}
     </tr>
     <tr>
-        <td class="key">Formats <span class="label icon-info label-info" rel="popover" title="Formats" data-content="To normalize formats, we used some aliases<br/><strong>Original format name</strong> : {{ dataset.rawFormats}}.">i</span></td>
+        <td class="key">Formats <i class="icon-info-sign icon-info" rel="popover" title="Formats" data-content="To normalize formats, we used some aliases<br/><strong>Original format name</strong> : {{ dataset.rawFormats}}."></i></td>
         <td>
             {% for format in dataset.formats %}
                 {% if format.isOpen == 1 %}
@@ -52,16 +52,20 @@
     <tr>
         <td class="key">Owner</td>
         <td>
-            {% if dataset.owner == '' %}
+            {% if dataset.owner is not defined or dataset.owner is empty  %}
                 No owner name provided
+            {% else %}
+                {{ dataset.owner }}
             {% endif %}
         </td>
     </tr>
     <tr>
         <td class="key">Maintainer</td>
         <td>
-            {% if dataset.maintainer == '' %}
+            {% if dataset.maintainer is not defined or dataset.maintainer is empty %}
                 No maintainer name provided
+            {% else %}
+                {{ dataset.maintainer }}
             {% endif %}
         </td>
     </tr>

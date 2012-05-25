@@ -1,16 +1,17 @@
 {% extends "App::browser.html.twig" %}
 
-{% block title %}Odalisk project{% endblock %}
+{% block title %}Search - Odalisk project{% endblock %}
+
+{% block menu %}
+    <li><a href="{{ path('portals') }}">Browser</a></li>
+    <li class="active"><a href="{{ path('search') }}">Advanced Search</a></li>
+    <li><a onclick="$('#contactModal').modal()">Contact Us !</a></li>
+{% endblock %}
 
 {% block content %}
 <div class="row-fluid row-nomargin-top">
     <div class="span12">
-        <ul class="breadcrumb">
-          <li>
-            <li class="active">Search</li>
-          </li>
-          <li class="active"></li>
-        </ul>
+        
         <div class="well hero-unit hero-unit-intro">
             <h1>Advanced search : </h1>
         </div>

@@ -136,3 +136,13 @@ services:
         parent: base_platform
         calls:
             - [ setConfiguration, [ "%portals.data_market%" ] ]
+
+    base_lrnrln:
+        class: Odalisk\Scraper\LrnRln\BaseLrnRln
+        abstract: true
+        parent: base_platform
+    montpellier:
+        class: Odalisk\Scraper\LrnRln\Montpellier\MontpellierPortal
+        parent: base_lrnrln
+        calls:
+            - [ setConfiguration, [ "%portals.montpellier%" ] ]

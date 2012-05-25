@@ -165,7 +165,6 @@ abstract class BasePortal
             // If the default implementation is not smart enough, you can add your own logic here
             $this->additionalExtraction($crawler, $data);
 
-        print_r($data);
             // This is the default, it should be good enough for most cases
             $this->defaultNormalization($data);
 

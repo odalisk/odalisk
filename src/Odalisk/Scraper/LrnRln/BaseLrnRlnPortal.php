@@ -18,21 +18,20 @@ abstract class BaseLrnRlnPortal extends BasePortal
     public function __construct()
     {
         $this->criteria = array(
-            'setName' => "//*div[@id='centre']/div[4]/ul/li",
-            /*
-            'setSummary' => "//*div[@id='centre']/div[3]/p[3]",
-            'setReleasedOn' => "//*div[@id='centre']/div[4]/ul/li[3]",
-            'setLastUpdatedOn' => "//*div[@id='centre']/div[4]/ul/li[2]",
-            'setCategories' => "//*div[@id='centre']/div[4]/ul/li[7]",
-            'setRawLicense' => "//*div[@id='centre']/div[4]/ul/li[10]",
+            'setName' => '//div[@id="centre"]/h2/img',
+            'setSummary' => 'div[@id="centre"]/div[@class="left"]/p/p[1]',
+            'setReleasedOn' => '//div[@id="centre"]/div[@class="right"]/ul/li/strong[.="Publication"]/..',
+            'setLastUpdatedOn' => '//div[@id="centre"]/div[@class="right"]/ul/li/strong[.="Mise à jour"]/..',
+            'setCategories' => '//div[@id="centre"]/div[@class="right"]/ul/li/strong[.="Catégorie "]/..',
+            'setRawLicense' => '//div[@id="centre"]/div[@class="right"]/ul/li/strong[.="Licence"]/..',
+            'setProvider' => '//div[@id="centre"]/div[@class="right"]/ul/li/strong[.="Diffuseur"]/..',
+            'setOwner' => '//div[@id="centre"]/div[@class="right"]/ul/li/strong[.="Propriétaire"]/..',
+            'setFormats' => "//div[@id='meta']/ul/li/a/strong",
             //'Tags' => "//div[@class="aboutDataset"]/div[4]/dl/dd[3]",
             //'Permissions' => "//div[@class="aboutDataset"]/div[4]/dl/dd[2]",
-            'setProvider' => "//*div[@id='centre']/div[4]/ul/li[6]",
-            'setOwner' => "//*div[@id='centre']/div[4]/ul/li[5]",
-            'Time Period' => "//*div[@id='centre']/div[4]/ul/li[4]",
+            //'Time Period' => "//div[@id='centre']/div[4]/ul/li[4]",
             //'Frequency' => // "//div[@class="aboutDataset"]/div[8]/dl/dd[3]/span",
             //'Community Rating' => // "//div[@class="aboutDataset"]/div[3]/dl/dd[1]/div",
-            */
         );
     }
 
@@ -69,5 +68,27 @@ abstract class BaseLrnRlnPortal extends BasePortal
 
         return $this->urls;
     }
-}
 
+    public function additionalExtraction($crawler, &$data) {
+        $toSplit = array(
+                'setReleasedOn',
+                'setLastUpdatedOn',
+                'setCategories',
+                'setRawLicense',
+                'setProvider',
+                'setOwner',
+                );
+
+        foreach($toSplit as $name) {
+            if(isset($data[$name])) {
+                $tmp = explode(':', $data[$name]);
+                $data[$name] = trim($tmp[1]);
+            }
+        }
+
+        if(isset($data['setRawLicense'])) {
+            $tmp = explode("\n", $data['setRawLicense']);
+            $data['setRawLicense'] = $tmp[0];
+        }
+    }
+}

@@ -4,7 +4,7 @@
             <li><span data-value="{{ portal.id }}" data-type="portal" class="label">{{ portal.name }} <span>+</span></span></li>
     {% endfor %}
 {% else %}
-    <li style="height:0px;padding:0px;margin:0px;overflow:hidden;"><span data-value="{{ current_portal }}" data-active="true" data-type="portal" class="label"></span></li>
+    <li style="height:0px;padding:0px;margin:0px;overflow:hidden;"><span style="height:0px;padding:0px;margin:0px;overflow:hidden;" data-value="{{ current_portal }}" data-active="true" data-type="portal" class="label"></span></li>
 {% endif %}
 
 {% if categories|length > 0 %}

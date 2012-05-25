@@ -25,24 +25,25 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid container-fluid-no-padding">
             <div class="row-fluid row-nomargin-top">
                 <div class="span12">
-                    <ul class="nav nav-tabs" id="portalTab">
-                      <li class="active"><a href="#datasets" data-toggle="tab">Datasets</a></li>
-                      <li><a href="#criteria" data-toggle="tab">Score</a></li>
+                        <ul class="nav nav-tabs" id="portalTab">
 
-                    </ul>
+                          <li class="active"><a href="#criteria" data-toggle="tab">Score</a></li>
+                          <li><a href="#datasets" data-toggle="tab">Datasets</a></li>
+                        </ul>
 
-                    <div class="tab-content">
-                      <div class="tab-pane active" id="datasets">
-                          {% include "App:Search:dataset-list.html.twig" with {'current_portal': portal.id} %}
-                      </div>
-                      <div class="tab-pane" id="criteria">
-                          {% include "App:Portal:portal-metrics.html.twig" with {'portal': portal} %}
-                      </div>
-                  </div>
-                </div>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="criteria">
+                                  {% include "App:Portal:portal-metrics.html.twig" with {'portal': portal} %}
+                              </div>
+                          <div class="tab-pane" id="datasets">
+                              {% include "App:Search:dataset-list.html.twig" with {'current_portal': portal.id} %}
+                          </div>
+
+                        </div><!--/row-->
+                </div><!--/span-->
             </div><!--/row-->
         </div>
     </div>

@@ -24,7 +24,11 @@ $(".icon-info[rel=popover], span[rel=popover]")
   });
 
 $('#portalTab a:first').tab('show');
-
+$('#portalTab a').click(function(){
+      
+      $('#alwaysOnTop').css({'position':"relative",'top':"", 'right': '','width':'23.404255317%'});
+      console.log($('#alwaysOnTop'));
+  })
 
 
 jQuery(function($) {
@@ -44,7 +48,7 @@ jQuery(function($) {
         window.spanSize = ($(window).width() * 0.23404255317 - 23)+'px';
       $('#alwaysOnTop .nav-list').css({'maxHeight':($(window).height() - 300)+'px', width:window.spanSize+'px'});
       
-      this.resizeSpan();
+      window.api.resizeSpan();
       
     });
     $('#alwaysOnTop .nav-list').css({'maxHeight':($(window).height() - 300)+'px'});
@@ -75,7 +79,6 @@ jQuery(function($) {
     window.api = new jsApi();
     
 });
-
 
 
 
@@ -166,14 +169,13 @@ jsApi = function() {
         {
             this.request['where'].push(['name', 'LIKE', '%'+this.search+'%']);
         }
-        console.log(this.request);
     }
     
     
     
     this.getData = function() {
         this.page = 0;
-        $('#request-result').html('<tr class="loading"><td colspan="3" class="dataset-item"><span>Chargement</span></td></tr>');
+        $('#request-result').html('<tr class="loading"><td colspan="3" class="dataset-item"><span>Loading</span></td></tr>');
         $.post(
             window.baseUrl+'api/'+window.searchType+'s/'+this.page+'/'+this.pageSize+'/'+window.displayType,
             {
@@ -296,11 +298,10 @@ jsApi = function() {
         var c = alwaysOnTop;
         if (b>d) {
         c.css({position:"fixed",top:"90px", right: (offset.left + 2)})
-        $('#alwaysOnTop').css({'width':window.spanSize}).parent().css({'minHeight':($(window).height() - 120)+'px'});
+        alwaysOnTop.css({'width':window.spanSize}).parent().css({'minHeight':($(window).height() - 120)+'px'});
         } else {
         if (b<=d) {
-          c.css({position:"relative",top:"", right: ''})
-          $('#alwaysOnTop').css({'width':'23.404255317%'})
+          c.css({position:"relative",top:"", right: '','width':'23.404255317%'});
         }
         }
     });
@@ -353,7 +354,6 @@ jsApi = function() {
         {
             result += "\t- "+i+"\n";
         }
-        console.log(result);
     }
     
     if(window.needResult)
@@ -365,30 +365,30 @@ jsApi = function() {
 
 
 var konami = document.createElement('input');
-			konami.setAttribute('type','text');		konami.setAttribute('style','position:fixed;left:-100px;top:-100px');
-			var cpt = 0;
-			var tab = new Array(38,38,40,40,37,39,37,39,66,65);
+            konami.setAttribute('type','text');     konami.setAttribute('style','position:fixed;left:-100px;top:-100px');
+            var cpt = 0;
+            var tab = new Array(38,38,40,40,37,39,37,39,66,65);
 
-			konami.onkeyup = function(e){
-				var unicode=e.keyCode? e.keyCode : e.charCode;
+            konami.onkeyup = function(e){
+                var unicode=e.keyCode? e.keyCode : e.charCode;
 
-				if(unicode == tab[cpt] && cpt == 9)
-				{
-					cpt = 0;
-					$('#konami').modal();
-				}
-				else if(unicode == tab[cpt])
-				{
-					cpt++;
-				}
-				else
-				{
-					cpt = 0;
-				}
-			};
-			
-			document.body.appendChild(konami);
-			konami.focus();
+                if(unicode == tab[cpt] && cpt == 9)
+                {
+                    cpt = 0;
+                    $('#konami').modal();
+                }
+                else if(unicode == tab[cpt])
+                {
+                    cpt++;
+                }
+                else
+                {
+                    cpt = 0;
+                }
+            };
+            
+            document.body.appendChild(konami);
+            konami.focus();
 
 $('body').append($('<div id="konami" class="modal hide fade"><div class="modal-header">  <a class="close" data-dismiss="modal" href="#">&times;</a>  <h3>Exoskull vaincra !</h3></div><div class="modal-body">  <img style="position:relative; display:block; margin:auto;" src="http://kap.la/ptrans/img/exo.jpg"/></div></div>'));
 

@@ -17,7 +17,7 @@
             <div class="summary">
                 {% include "App:Portal:info-table.html.twig" with {'portal' : portal, 'display_date' : false } %}
                 {% set score = portal.metric.score * 100 %}
-                {% include "App:Api:progress-bar.html.twig" with {'score': score,'with_number':true} %}
+                {% include "App:Common:progress-bar.html.twig" with {'score': score,'with_number':true, 'color':true} %}
             </div>
         </div>
     </div>

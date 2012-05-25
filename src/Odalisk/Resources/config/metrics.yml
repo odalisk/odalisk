@@ -81,34 +81,34 @@ parameters:
             weight: 0.25
             description: "Liveliness"
             sections:
-                 User input:
+                User input:
                     description: "User input"
-                    weight: 0.80
+                    weight: 0.50
                     sections:
                          rating_possibility:
                             weight: 0.15
                             description: "The website offers ways of rating datasets"
-                         link_support_resources:
-                            weight: 0.50
-                            description: "Links to support resources are present"
-                            sections:
-                                 forum_section:
-                                    weight: 0.80
-                                    description: "There is a forum section"
-                                 contact_form_link:
-                                    weight: 0.20
-                                    description: "There is a link to a contact form"
+
                          feedback_channel:
                             weight: 0.15
                             description: "There is a possibility to comment for each data set"
                          suggest_dataset:
                             weight: 0.20
                             description: "Users can propose new datasets and also ask for existing ones to be made available"
-                 Information:
+                Information:
                     weight: 0.20
                     description: "Information"
                     sections:
                          opendata_explained:
                             weight: 1
                             description: "The OpenData concept is explained"
-
+                Support Ressources:
+                    weight: 0.30
+                    description: "Links to support resources are present"
+                    sections:
+                       forum_section:
+                           weight: 0.80
+                           description: "There is a forum section"
+                       contact_form_link:
+                           weight: 0.20
+                           description: "There is a link to a contact form"

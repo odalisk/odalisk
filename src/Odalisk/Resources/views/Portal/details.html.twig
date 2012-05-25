@@ -21,6 +21,43 @@
                     </div>
                     <div class="span8">
                         {% include "App:Portal:score-table.html.twig" with {'portal' : portal} %}
+                        <div class="container-fluid">
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <table class="formats_distribution table table-bordered ">
+                                        {% for key, format in formats|sort|reverse %}
+                                            {% if format != 0 %}
+                                            <tr>
+                                                <td class="key">
+                                                    {{ key }}
+                                                </td>
+                                                <td class="value">
+                                                    {% include "App:Common:progress-bar.html.twig" with {'score': (format/portal.datasets|length * 100)|number_format(2), 'with_number':false, 'color':false} %}
+                                                </td>
+                                            </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                <div class="span6">
+                                    <table class="licenses_distribution table table-bordered ">
+                                        {% for key, license in licenses|sort|reverse %}
+                                        {% if license != 0 %}
+                                            <tr>
+                                                <td class="key">
+                                                    {{ key }}
+                                                </td>
+                                                <td class="value">
+                                                
+                                                    {% include "App:Common:progress-bar.html.twig" with {'score': (license/portal.datasets|length * 100)|number_format(2), 'with_number':false, 'color':false} %}
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </table> 
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -56,3 +93,4 @@
     window.needResult = true;
     {{ parent() }}
 {% endblock %}
+

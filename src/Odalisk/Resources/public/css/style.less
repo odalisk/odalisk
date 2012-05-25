@@ -131,7 +131,8 @@ body {
     
     .hero-unit-intro {
         
-        background:url('/bundles/app/img/homeback.jpg');
+        background:url('/bundles/app/img/homeback.jpg') ;
+        background-size:auto 100%;
         margin-bottom:10px;
         
         /*h1, h2 {
@@ -147,6 +148,7 @@ body {
             margin-left:10px;
         }
         table {
+            margin-bottom:0px;
             margin-top:20px;
             background:white;
             .key {
@@ -183,9 +185,12 @@ body {
         .row-fluid {
             margin-top:0px;
         }
+        
         .score {
+            
             .total-score {
                 font-size:30px;
+                
                 td {
                     margin:10px;
                     vertical-align:middle;
@@ -216,6 +221,48 @@ body {
                 }
             }
             
+        }
+        
+        .info-table {
+            .key {
+                max-width:100px;
+            }
+        }
+        
+        .formats_distribution, .licenses_distribution {
+            font-size:11px;
+            
+            td {
+                padding:2px;
+                vertical-align:middle;
+                
+            }
+            
+            .key {
+                width:20px !important;
+                min-width:0px;
+            }
+            
+            .value {
+                
+                .progress {
+                    height:7px;
+                    .bar {
+                        height:7px;
+                    }
+                }
+            }
+            
+            .progress {
+                margin-bottom:0px;
+            }
+        }
+        
+        .licenses_distribution {
+            .key {
+                width:70px !important;
+                min-width:0px;
+            }
         }
         
         &.hero-unit-dataset, &.hero-unit-portal {

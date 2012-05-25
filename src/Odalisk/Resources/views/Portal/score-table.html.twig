@@ -3,7 +3,7 @@
     <tr class="total-score">
         <td class="key">Score</td>
         <td class="progress-bar">
-            {% include "App:Api:progress-bar.html.twig" with {'score': totalScore, 'with_number':false} %}
+            {% include "App:Common:progress-bar.html.twig" with {'score': totalScore, 'with_number':false, 'color':true} %}
         </td>
         <td class="note">{{ (portal.metric.score  * 100)|number_format(2) }}%</td>
     </tr>
@@ -12,7 +12,7 @@
         <tr>
             <td class="key">{{ category.description }}</td>
             <td class="progress-bar">
-                {% include "App:Api:progress-bar.html.twig" with {'score': score, 'with_number':false} %}
+                {% include "App:Common:progress-bar.html.twig" with {'score': score, 'with_number':false, 'color':true} %}
             </td>
             <td class="note">{{ score|number_format(2) }}%</td>
         </tr>

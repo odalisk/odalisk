@@ -136,3 +136,9 @@ services:
         parent: base_platform
         calls:
             - [ setConfiguration, [ "%portals.data_market%" ] ]
+
+    data_market:
+        class: Odalisk\Scraper\DataMarket\DataMarketPortal
+        parent: base_platform
+        calls:
+            - [ setConfiguration, [ "%portals.data_market%" ] ]

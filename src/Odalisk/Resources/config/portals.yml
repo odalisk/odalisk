@@ -173,14 +173,14 @@ parameters:
         type: "Other"
 
     portals.data_market:
-        name:       "DataMarket"
-        base_url:   "http://datamarket.com/data/set/"
+        name:       "Montpellier Numérique"
+        base_url:   "http://opendata.montpelliernumerique.fr/"
         api_url:    ""
-        country:    "Iceland"
-        entity:     "DataMarket"
-        status:     "Private, For profit"
-        search_engine:   true
-        metadata_search: true
+        country:    "France"
+        entity:     "OpenData Montpellier Numérique"
+        status:     "Institutionnal"
+        #search_engine:   true
+        #metadata_search: true
         #filtering_license_search: false
         #forum_section:   false
         #contact_form: true
@@ -188,3 +188,4 @@ parameters:
         #comment_dataset: false
         #suggest_dataset: false
         #api_documentation: false
+

@@ -52,12 +52,14 @@ class PortalController extends Controller
         $portal = $repository->findOneById($portal_number);
         $formats = $repository->getFormatDistribution($portal);
         $licenses = $repository->getLicenseDistribution($portal);
+        $categories = $repository->getCategoryDistribution($portal);
         
         return $this->render('App:Portal:details.html.twig', array(
             'maintenance_status' => $this->container->getParameter('app.maintenance'),
             'portal' => $portal,
             'formats' => $formats,
-            'licenses' => $licenses));
+            'licenses' => $licenses,
+            'categories' => $categories));
     }
 
     public function getPortalList()

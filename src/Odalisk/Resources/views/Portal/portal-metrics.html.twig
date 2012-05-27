@@ -62,5 +62,16 @@
             </tfoot>
         </table>
     {% endfor %}
+    </div><!-- span9-->
+    <div class="span3">
+        <table class="formats-distribution table table-bordered ">
+            {% include 'App:Common:progress-table.html.twig' with {'values':formats, 'other':true} %}
+        </table>
+        <table class="licenses-distribution table table-bordered ">
+            {% include 'App:Common:progress-table.html.twig' with {'values':licenses, 'other':true} %}
+        </table>
+        <table class="categories-distribution table table-bordered ">
+            {% include 'App:Common:progress-table.html.twig' with {'values':categories, 'other':false} %}
+        </table>
     </div>
 </div>

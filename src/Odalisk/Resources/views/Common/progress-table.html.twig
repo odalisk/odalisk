@@ -1,0 +1,68 @@
+{% if other %}
+    {% set other_distribution = 0 %}
+    {% set other_name = '' %}
+    {% set other_count = 0 %}
+    {% set other_last = 0 %}
+    {% for key, value in values|sort|reverse %}
+        {% set value_distribution = ((value/portal.datasets|length) * 100)|number_format(2) %}
+        {% if value_distribution > 10 %}
+        <tr>
+            <td class="key">
+                {{ key }}
+            </td>
+            <td class="value">
+                
+                
+                    {% include "App:Common:progress-bar.html.twig" with {'score': value_distribution, 'with_number':false, 'color':false} %}
+            
+            </td>
+        </tr>
+        {% else %}
+            {% set other_count = other_count + 1 %}
+            {% set other_last = key %}
+            {% set other_distribution = other_distribution + value_distribution %}
+            {% if not loop.last %}
+                {% set other_name = other_name ~ '<strong>' ~ key ~ '</strong> (' ~ value_distribution ~ '%)<br/>' %}
+            {% else %}
+                {% set other_name = other_name ~ '<strong>' ~ key ~ '</strong> (' ~ value_distribution ~ '%)' %}
+            {% endif %}
+        {% endif %}
+    
+    {% endfor %}
+    {% if other_count > 1 %}
+        <tr>
+            <td class="key">
+                Other <i class="icon-info-sign icon-info" rel="popover" title="Other" data-content="{{ other_name }}"></i>
+            </td>
+            <td class="value">
+                {% include "App:Common:progress-bar.html.twig" with {'score': other_distribution, 'with_number':false, 'color':false} %}
+    
+            </td>
+        </tr>
+    {% elseif other_count == 1 %}
+        <tr>
+            <td class="key">
+                {{ other_last }}
+            </td>
+            <td class="value">
+                {% include "App:Common:progress-bar.html.twig" with {'score': other_distribution, 'with_number':false, 'color':false} %}
+    
+            </td>
+        </tr>
+    {% endif %}
+{% else %}
+    {% for key, value in values|sort|reverse %}
+        {% set value_distribution = ((value/portal.datasets|length) * 100)|number_format(2) %}
+        <tr>
+            <td class="key">
+                {{ key }}
+            </td>
+            <td class="value">
+            
+            
+                    {% include "App:Common:progress-bar.html.twig" with {'score': value_distribution, 'with_number':false, 'color':false} %}
+        
+            </td>
+        </tr>
+    {% endfor %}
+{% endif %}

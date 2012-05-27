@@ -229,41 +229,7 @@ body {
             }
         }
         
-        .formats_distribution, .licenses_distribution {
-            font-size:11px;
-            
-            td {
-                padding:2px;
-                vertical-align:middle;
-                
-            }
-            
-            .key {
-                width:20px !important;
-                min-width:0px;
-            }
-            
-            .value {
-                
-                .progress {
-                    height:7px;
-                    .bar {
-                        height:7px;
-                    }
-                }
-            }
-            
-            .progress {
-                margin-bottom:0px;
-            }
-        }
         
-        .licenses_distribution {
-            .key {
-                width:70px !important;
-                min-width:0px;
-            }
-        }
         
         &.hero-unit-dataset, &.hero-unit-portal {
             h1 {
@@ -281,6 +247,37 @@ body {
         }
         
     }
+    
+    .formats-distribution, .licenses-distribution, .categories-distribution {
+        font-size:11px;
+        
+        td {
+            padding:2px;
+            vertical-align:middle;
+            
+        }
+        
+        .key {
+            width:80px !important;
+            min-width:0px;
+            text-align:right;
+        }
+        
+        .value {
+            
+            .progress {
+                height:7px;
+                .bar {
+                    height:7px;
+                }
+            }
+        }
+        
+        .progress {
+            margin-bottom:0px;
+        }
+    }
+    
     
     
     #search-row

@@ -6,6 +6,11 @@ use Doctrine\ORM\EntityRepository;
 
 class PortalRepository extends EntityRepository
 {
+    public function deleteByPortalName($name)
+    {
+        
+    }
+    
     public function getPortalsMatching($criterias, $page_index, $page_size) {
         $qb = $this->createQueryBuilder('p');
         if(array_key_exists('in', $criterias)) {

@@ -67,7 +67,7 @@ class Dataset
 
     /**
      * @ORM\OneToOne(targetEntity="Odalisk\Entity\DatasetCriteria")
-     * @ORM\JoinColumn(name="criteria", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="criteria_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $criteria;
 
@@ -121,7 +121,7 @@ class Dataset
 
     /**
      * @ORM\ManyToOne(targetEntity="Portal", inversedBy="data_sets")
-     * @ORM\JoinColumn(name="portal_id", referencedColumnName="id", onDelete="cascade")
+     * @ORM\JoinColumn(name="portal_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $portal;
 

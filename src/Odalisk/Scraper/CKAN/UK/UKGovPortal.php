@@ -49,10 +49,12 @@ class UKGovPortal extends BaseCkanPortal
         }
 
         if (array_key_exists('setRawLicense', $data)) {
-            if (is_array(json_decode($data['setRawLicense']))) {
-                $data['setRawLicense'] = implode(';', json_decode($data['setRawLicense']));
+            $licenses = json_decode($data['setRawLicense']);
+            if (is_array($licenses)) {
+                $data['setRawLicense'] = implode(';', $licenses);
             }
 
+            /*
             if (preg_match('/CCGC\/CCW/i',$data['setRawLicense'])) {
                 $data['setRawLicense'] = "CCW/CROWN";
             }
@@ -75,52 +77,7 @@ class UKGovPortal extends BaseCkanPortal
                 }
                 $data['setRawLicense'] = "ODBL";
             }
-            if (preg_match('/digitised at/i',$data['setRawLicense'])) {
-                unset($data['setRawLicense']);
-
-                return;
-            }
-            if (preg_match('/Other/i',$data['setRawLicense'])) {
-                unset($data['setRawLicense']);
-
-                return;
-            }
-            if (preg_match('/indicative/i',$data['setRawLicense'])) {
-                unset($data['setRawLicense']);
-
-                return;
-            }
-            if (preg_match('/unknow/i',$data['setRawLicense'])) {
-                unset($data['setRawLicense']);
-
-                return;
-            }
-            if (preg_match('/accurate/i',$data['setRawLicense'])) {
-                unset($data['setRawLicense']);
-
-                return;
-            }
-            if (preg_match('/licence/i',$data['setRawLicense'])) {
-                unset($data['setRawLicense']);
-
-                return;
-            }
-            if (preg_match('/license/i',$data['setRawLicense'])) {
-                unset($data['setRawLicense']);
-
-                return;
-            }
-            if (preg_match('/none/i',$data['setRawLicense'])) {
-                unset($data['setRawLicense']);
-
-                return;
-            }
-            if (empty($data['setRawLicense'])) {
-                unset($data['setRawLicense']);
-
-                return;
-            }
-
+            */
         }
     }
 }

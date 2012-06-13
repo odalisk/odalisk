@@ -16,7 +16,9 @@ parameters:
             redistribution: true
             commercial: false
         'CCW/CROWN':
-            aliases: []
+            aliases:
+                - 'OKD Compliant::UK Crown Copyright with data.gov.uk rights'
+            regex: '/(?:CCGC\/CCW|CCW|Crown)/i'
             authorship: true
             reuse: true
             redistribution: true
@@ -66,9 +68,18 @@ parameters:
             commercial: true
         'Unknown':
             aliases:
+                - 'OKD Compliant::Other (Open)'
                 - 'Licence inconnue'
                 - 'Use limitation'
                 - 'Other'
+                - 'License'
+                - 'Licence'
+                - 'Accurate'
+                - 'unknow'
+                - 'indicative'
+                - 'digitised at'
+                - 'Use limitation dependent upon licence'
+                - 'Other::License Not Specified'
                 - ''
             authorship: false
             reuse: false
@@ -85,13 +96,16 @@ parameters:
             commercial: true
         'OGL':
             aliases:
-                - 'OKD Compliant'
+                # - 'OKD Compliant'
+                - 'UK Open Government Licence (OGL)'
+                - 'OKD Compliant::UK Open Government Licence (OGL)'
             authorship: true
             reuse: true
             redistribution: true
             commercial: true
         'PDDL':
-            aliases: []
+            aliases:
+                - 'OKD Compliant::Open Data Commons Public Domain Dedication and Licence (PDDL)'
             authorship: true
             reuse: true
             redistribution: true
@@ -113,6 +127,7 @@ parameters:
         'UK Climate Projections':
             aliases:
                 - 'UK Climate Projections Licence'
+                - 'Met Office UK Climate Projections Licence Agreement'
             authorship: true
             reuse: false
             redistribution: false

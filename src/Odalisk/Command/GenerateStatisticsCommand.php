@@ -9,7 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 
 use Odalisk\Entity\Dataset;
-use Odalisk\Entity\Statistics;
 use Odalisk\Entity\DatasetCriteria;
 use Odalisk\Entity\Metric;
 /**
@@ -31,7 +30,6 @@ class GenerateStatisticsCommand extends BaseCommand
         $criteriaRepo = $this->getEntityRepository('Odalisk\Entity\DatasetCriteria');
 
         // Initialization
-        $criteriaRepo->clear();
         $datasets = $this->em->createQuery('SELECT d FROM Odalisk\Entity\Dataset d')->iterate();
         
         $this->writeBlock($output, "[Statistics] Beginning of generation");

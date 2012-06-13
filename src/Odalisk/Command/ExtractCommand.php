@@ -61,6 +61,12 @@ class ExtractCommand extends BaseCommand
                 // Store the platform object
                 $platforms[$platform] = $container->get($platform);
             }
+            
+            
+            // Empty the database beforehand
+            foreach($platforms as $name => $platform) {
+                
+            }
 
             // Process each platform :
             //  - get successful crawls from the databse

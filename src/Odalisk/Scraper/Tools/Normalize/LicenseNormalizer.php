@@ -13,6 +13,8 @@ class LicenseNormalizer
     protected $licenses = array();
 
     protected $aliases = array();
+    
+    protected $regex = array();
 
     public function __construct($doctrine, $log)
     {
@@ -34,6 +36,10 @@ class LicenseNormalizer
                 $l->addAlias($alias);
                 $this->aliases[strtolower($alias)] = strtolower($name);
             }
+            if(isset($license['regex'])) {
+                $this->regex[$license['regex']] = strtolower($name);
+            }     
+            
             $l->setAuthorship($license['authorship']);
             $l->setReuse($license['reuse']);
             $l->setRedistribution($license['redistribution']);
@@ -48,16 +54,21 @@ class LicenseNormalizer
 
     public function getLicenses($raw_license)
     {
-        $raw_license = strtolower($raw_license);
-        if (array_key_exists($raw_license, $this->licenses)) {
-            return $this->licenses[$raw_license];
-        } elseif (array_key_exists($raw_license, $this->aliases)) {
-            return $this->licenses[$this->aliases[$raw_license]];
-        } else {
-            error_log('[' . date('d-M-Y H:i:s') . '] [Unknown license]' . $raw_license . "\n", 3, $this->log);
-
-            return $this->licenses['unknown'];
+        $index = strtolower($raw_license);
+        if (array_key_exists($index, $this->licenses)) {
+            return $this->licenses[$index];
+        } elseif (array_key_exists($index, $this->aliases)) {
+            return $this->licenses[$this->aliases[$index]];
+        } elseif (count($this->regex) > 0) {
+            foreach($this->regex as $regex => $license) {
+                if(preg_match($regex, $raw_license)) {
+                    return $this->licenses[$license];
+                }
+            }
         }
+        error_log('[' . date('d-M-Y H:i:s') . '] [Unknown license]' . $raw_license . "\n", 3, $this->log);
+
+        return $this->licenses['unknown'];
     }
 
     private function _trim($value)

@@ -49,7 +49,7 @@ class Portal
     protected $country;
 
     /**
-     * @var string $country
+     * @var string $entity
      *
      * @ORM\Column(name="entity", type="string", length=255)
      */
@@ -99,12 +99,13 @@ class Portal
 
     /**
      * @ORM\OneToOne(targetEntity="Odalisk\Entity\PortalCriteria")
+     * @ORM\JoinColumn(name="criteria_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $criteria;
 
     /**
      * @ORM\OneToOne(targetEntity="Odalisk\Entity\Metric")
-     * @ORM\JoinColumn(name="metric_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="metric_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $metric;
 

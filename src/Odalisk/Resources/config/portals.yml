@@ -129,7 +129,7 @@ parameters:
         suggest_dataset: true
         api: true
         api_documentation: true
-        opendata_concept_explained: false
+        opendata_concept_explained: true
         type: "CKAN"
 
     portals.eu_gov:

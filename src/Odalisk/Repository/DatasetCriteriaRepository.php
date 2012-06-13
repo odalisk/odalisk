@@ -15,24 +15,6 @@ class DatasetCriteriaRepository extends EntityRepository
 
     private $criteria;
 
-    public function clear() {
-        $em = $this->getEntityManager();
-        $cmd = $em->getClassMetadata('Odalisk\Entity\Statistics');
-        $connection = $em->getConnection();
-        $dbPlatform = $connection->getDatabasePlatform();
-        $connection->beginTransaction();
-        try {
-            $connection->query('SET FOREIGN_KEY_CHECKS=0');
-            $q = $dbPlatform->getTruncateTableSql($cmd->getTableName());
-            $connection->executeUpdate($q);
-            $connection->query('SET FOREIGN_KEY_CHECKS=1');
-            $connection->commit();
-        }
-        catch (\Exception $e) {
-            $connection->rollback();
-        }
-    }
-
     public function getPortalAverages($portal) {
         $sth = $this->getEntityManager()
             ->getConnection()
@@ -47,7 +29,7 @@ class DatasetCriteriaRepository extends EntityRepository
                         (SUM(has_good_license) / COUNT(*)) as good_license,
                         (SUM(license_quality) / COUNT(*)) as license_quality,
                         (SUM(has_at_least_one_good_format) / COUNT(*)) as at_least_one_good_format
-                    FROM dataset_criteria JOIN datasets ON dataset_criteria.id = datasets.criteria
+                    FROM dataset_criteria JOIN datasets ON dataset_criteria.id = datasets.criteria_id
                     WHERE datasets.portal_id = :portal_id
             ');
         $sth->execute(array('portal_id' => $portal->getId()));

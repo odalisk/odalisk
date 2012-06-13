@@ -16,3 +16,4 @@ data.tar.bz2
 *.php~
 web/bundles/app/css/style.less
 web/bundles/app/js
+data.sql.tar.bz2

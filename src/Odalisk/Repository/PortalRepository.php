@@ -238,6 +238,8 @@ class PortalRepository extends EntityRepository
             $output[$value['format']] = $value['COUNT(*)'];
         }
 
+        
+
         return $output;
     }
 
@@ -273,12 +275,14 @@ class PortalRepository extends EntityRepository
         $res = $stmt->fetchAll();
 
         $output = array();
+
         foreach ($res as $key => $value) {
             $output[$value['name']] = $value['COUNT(*)'];
         }
-
+        
         return $output;
     }
+
     
     public function agregateDatasetsStats($portal) {
     }

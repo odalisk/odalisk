@@ -1,0 +1,31 @@
+<div class="dataset-span-item">
+    <header>
+        <a href="{{ path('dataset_details', { 'dataset_number': dataset.id }) }}">
+            <h3>
+            {% if dataset.name|length > 50 %}
+                {{ dataset.name|slice(0,50) }}...
+            {% else %}
+                {{ dataset.name|slice(0,50) }}
+            {% endif %}
+            </h3>
+        </a>
+    </header>
+    <table class="content">
+        <tr>
+            <td class="dataset-summary">
+                {% if dataset.summary|length <= 1 %} 
+                    No description provided
+                {% elseif dataset.summary|length > 500 %}
+                    {{ dataset.summary|slice(0,500) }}...
+                {% else %}
+                    {{ dataset.summary }}
+                {% endif %}
+            </td>
+            <td class="dataset-info-table">
+                {% include "App:Dataset:info-table.html.twig" with {'dataset' : dataset, 'display_date' : false} %}
+            </td>
+        </tr>
+    </table>
+</div>
+
+

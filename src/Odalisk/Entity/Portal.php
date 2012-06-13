@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 
-
 /**
  * Odalisk\Portal
  *

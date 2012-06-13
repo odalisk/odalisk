@@ -13,18 +13,7 @@
                     <th  class="score">
                         Score
                     </th>
-                    <!--
-                        {{ (category.score / category.coefficient) * 100}}%
-                    -->
-                    <!--<th class="coeff">
-                        Coeffs
-                    </th>-->
                 </tr>
-                 <!--<tr class="table-head">
-                    <th class="coeff">
-                        {{ category.coefficient * 100}}%
-                    </th>
-                </tr>-->
                 
             </thead>
             <tbody>
@@ -41,68 +30,17 @@
                             <td class="score percentage">
                                 {{ (metric.score / metric.coefficient) * metric.subsections|length }}/{{ metric.subsections|length }}
                             </td>
-                            <!--<td  >
-                                 
-                            </td>-->
                         </tr>
                         {% for node in metric.subsections %}
-                        
-                            {% if node.subsections|length > 0 %}
-                                <tr class="category-second-level">
-                                    <td class="second-level description">
-                                        <strong>{{ node.description }}</strong>
-                                    </td>
-                                    <td></td>
-                                    <td class="score percentage">
-                                        {{ (node.score / node.coefficient) * node.subsections|length }}/{{ node.subsections|length }}
-                                    </td>
-                                    
-                                    <!--<td class="coeff">
-                                        {{ node.coefficient  * 100 }}%
-                                    </td>-->
-                                </tr>
-                                {% for leaf in node.subsections %}
-                                    <tr>
-                                        <td class="third-level description">
-                                            {{ leaf.description }}
-                                        </td>
-                                        <td></td>
-                                        {% if  (leaf.score / leaf.coefficient) == 1 %}
-                                            <td class="tick tick-success score">
-                                                <i class="icon-ok icon-white"></i>
-                                            </td>
-                                        {% else %}
-                                            <td class="tick tick-failure score">
-                                                <i class="icon-remove icon-white"></i>
-                                            </td>
-                                        {% endif %}
-                                        
-                                        <!--<td class="coeff">
-                                            {{ leaf.coefficient  * 100 }}%
-                                        </td>-->
-                                    </tr>
-                                {% endfor %}
-                            {% else %}
-                                <tr>
-                                    <td class="second-level description">
-                                        {{ node.description }}
-                                    </td>
-                                    <td></td>
-                                    {% if  (node.score / node.coefficient) == 1 %}
-                                        <td class="tick tick-success score">
-                                            <i class="icon-ok icon-white"></i>
-                                        </td>
-                                    {% else %}
-                                        <td class="tick tick-failure score">
-                                            <i class="icon-remove icon-white"></i>
-                                        </td>
-                                    {% endif %}
-                                    
-                                    <!--<td class="coeff">
-                                        {{ node.coefficient  * 100 }}%
-                                    </td>-->
-                                </tr>
-                            {% endif %}
+                            <tr>
+                                <td class="second-level description">
+                                    {{ node.description }}
+                                </td>
+                                <td></td>
+                                
+                                {% include "App:Common:icon-box.html.twig"  with {'score': node.score, 'coefficient':node.coefficient} %}
+                                
+                            </tr>
                         {% endfor %}
                     {% else %}
                         <tr>
@@ -110,19 +48,7 @@
                                 {{ metric.description }}
                             </td>
                             <td></td>
-                            {% if  (metric.score / metric.coefficient) == 1 %}
-                                <td class="tick tick-success score">
-                                    <i class="icon-ok icon-white"></i>
-                                </td>
-                            {% else %}
-                                <td class="tick tick-failure score">
-                                    <i class="icon-remove icon-white"></i>
-                                </td>
-                            {% endif %}
-                            
-                            <!--<td class="coeff">
-                                {{ metric.coefficient  * 100 }}%
-                            </td>-->
+                            {% include "App:Common:icon-box.html.twig" with {'score': metric.score, 'coefficient':metric.coefficient} %}
                         </tr>
                     {% endif %}
                 {% endfor %}
@@ -136,5 +62,16 @@
             </tfoot>
         </table>
     {% endfor %}
+    </div><!-- span9-->
+    <div class="span3">
+        <table class="formats-distribution table table-bordered ">
+            {% include 'App:Common:progress-table.html.twig' with {'values':formats, 'other':true} %}
+        </table>
+        <table class="licenses-distribution table table-bordered ">
+            {% include 'App:Common:progress-table.html.twig' with {'values':licenses, 'other':true} %}
+        </table>
+        <table class="categories-distribution table table-bordered ">
+            {% include 'App:Common:progress-table.html.twig' with {'values':categories, 'other':false} %}
+        </table>
     </div>
 </div>

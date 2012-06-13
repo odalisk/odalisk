@@ -42,6 +42,8 @@ class GenerateStatisticsCommand extends BaseCommand
         $portals    = $portalRepo->findAll();
         $portalCriteriaRepo = $this->getEntityRepository('Odalisk\Entity\PortalCriteria');
 
+        
+        
         foreach($portals as $portal) {
 
             $general_value = 0;
@@ -78,7 +80,9 @@ class GenerateStatisticsCommand extends BaseCommand
             $this->em->persist($metric_general);
             $portal->setMetric($metric_general);
             $this->em->persist($portal);
+            
         }
+        
         $this->em->flush();
         $this->writeBlock($output, "[Statistics] The end !");
     }

@@ -1,0 +1,13 @@
+{% if  (score / coefficient) == 1 %}
+    <td class="tick tick-success score">
+        <i class="icon-ok icon-white"></i>
+    </td>
+{% elseif  (score / coefficient) == 0 %}
+    <td class="tick tick-failure score">
+        <i class="icon-remove icon-white"></i>
+    </td>
+{% else %}
+    <td>
+        {{ (score / coefficient ) * 100 }}%
+    </td>
+{% endif %}

@@ -1,15 +1,18 @@
-{% if score > 80 %}
+{% if score > 80 and color %}
 <div class="progress progress-striped
  active progress-success">
-{% elseif score > 60%}
+{% elseif score > 60 and color%}
     <div class="progress progress-striped
      active progress-info">
-{% elseif score > 40%}
+{% elseif score > 40 and color%}
     <div class="progress progress-striped
       active progress-warning">
-{% else %}
+{% elseif color %}
     <div class="progress progress-striped
       active progress-danger">
+{% else %}
+    <div class="progress progress-striped
+      active">
 {% endif %}
     {% if with_number %}
     <div class="outer-bar" style="width:100%">

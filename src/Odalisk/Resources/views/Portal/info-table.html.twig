@@ -1,4 +1,4 @@
-<table class="table table-bordered ">
+<table class="table table-bordered info-table">
     <tr>
         <td class="key">Entity</td>
         <td class="value">{{ portal.entity }}</td>
@@ -13,11 +13,12 @@
     </tr>
     {% if display_date %}
     <tr>
-        <td class="key">First crawl <span class="label icon-info label-info" rel="popover" title="First crawl" data-content="First time we crawled the portal.">i</span></td>
+        <td class="key">First crawl <i class="icon-info-sign icon-info" rel="popover" title="First crawl" data-content="First time we crawled the portal." class="icon-info-sign
+        "></i></td>
         <td class="value">{{ portal.createdAt|date("d/m/Y") }}</td>
     </tr>
     <tr>
-        <td class="key">Last crawl <span class="label icon-info label-info" rel="popover" title="Last crawl" data-content="Last time we crawled the portal.">i</span></td>
+        <td class="key">Last crawl <i class="icon-info-sign icon-info" rel="popover" title="Last crawl" data-content="Last time we crawled the portal."></i></td>
         <td class="value">{{ portal.createdAt|date("d/m/Y") }}</td>
     </tr>
     {% endif %}

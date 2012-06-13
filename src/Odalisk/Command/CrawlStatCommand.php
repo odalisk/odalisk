@@ -27,7 +27,7 @@ class CrawlStatCommand extends BaseCommand
         $container = $this->getContainer();
         $platformServices = $container->getParameter('config.enabled_portals');
         $path = $container->getParameter('kernel.project_root') . '/data/';
-        
+        $cmd = 'cut -c 17-19 ';
         // Initialize some arrays
         $stats = array();
         
@@ -40,16 +40,16 @@ class CrawlStatCommand extends BaseCommand
                 ->files();
             
             foreach($finder as $file) {
-                $data = json_decode(file_get_contents($file->getRealpath()));
+                $data = exec($cmd . $file->getRealpath());
                 
-                if('' == $data->meta->code) {
-                    $data->meta->code = 'timeout';
+                if('' == $data) {
+                    $data = 'timeout';
                 }
                 
-                if(array_key_exists($data->meta->code, $stats[$name])) {
-                    $stats[$name][$data->meta->code] += 1;
+                if(array_key_exists($data, $stats[$name])) {
+                    $stats[$name][$data] += 1;
                 } else {
-                    $stats[$name][$data->meta->code] = 1;
+                    $stats[$name][$data] = 1;
                 }
                 $stats[$name]['total'] += 1;
             }
@@ -61,3 +61,4 @@ class CrawlStatCommand extends BaseCommand
         }
     }
 }
+

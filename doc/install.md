@@ -19,9 +19,7 @@ sudo apt-get install curl
 curl -s https://getcomposer.org/installer | php
 php composer.phar self-update
 
-
-
-# Install the vendors
+# Install the vendors with composer
 php composer.phar install
 ```
 
@@ -46,7 +44,10 @@ To initialize the dev environment you just have to dump the assets :
 ./console assetic:dump
 ```
 
+
 Now just point your virtualhost to ``` path/to/your/project/web ``` and you're good to go.
+Then you will have to configure your virtualhost to enable access to Odalisk.
+
 
 Some useful pointers to get started
 -----------------------------------

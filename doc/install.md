@@ -11,6 +11,16 @@ git clone git@github.com:odalisk/odalisk.git path/to/your/project
 # Move into the project directory
 cd path/to/your/project
 
+
+# First install curl
+sudo apt-get install curl
+
+#Then install 
+curl -s https://getcomposer.org/installer | php
+php composer.phar self-update
+
+
+
 # Install the vendors
 php composer.phar install
 ```

@@ -38,6 +38,13 @@ class CrawlCommand extends BaseCommand
         $this->initDumper($container->getParameter('config.file_dumper.data_path'), $container->get('doctrine'));
         // Get the configuration value from config/app.yml : which platforms are enabled?
         $platformServices = $container->getParameter('config.enabled_portals');
+
+        //Allow the logs of SQL requests
+        //$em = $this->getEntityManager();
+        //$em->getConnection()->getConfiguration()->setSQLLogger(null);
+        $em = $this->getEntityManager();
+        $em->getConnection()->getConfiguration()->setSQLLogger(new \Doctrine\DBAL\Logging\EchoSQLLogger());
+
         // Initialize some arrrays
         $platforms = array();
         $queries = array();
@@ -48,17 +55,41 @@ class CrawlCommand extends BaseCommand
                 $output->writeln('<info>' . $platform . '</info>');
             }
         } else {
+            error_log('test pf crawl 1');
             // If we get an argument, replace the platformServices array with one containing just that plaform
+            error_log($input->getArgument('platform'));
             if ($platform = $input->getArgument('platform')) {
                  $platformServices = array($platform);
             }
+            error_log('test pf crawl 2');
 
-            // Iterate on the enabled platforms to retrieve the actual object
-            foreach ($platformServices as $platform) {
-                // Store the platform object
-                $platforms[$platform] = $container->get($platform);
+            try{
+                // Iterate on the enabled platforms to retrieve the actual object
+                foreach ($platformServices as $platform) {
+                    // Store the platform object
+                    error_log('test pf crawl 3');
+                    try{
+                        $platforms[$platform] = $container->get($platform);
+                    }
+                    catch(PDOException $e) {
+                        // handle error 
+                        error_log($e->getmessage());
+                        exit();
+                    }
+                    
+                    error_log('test pf crawl 4');
+                }
+            }
+            catch(PDOException $e) {
+               // handle error 
+               error_log($e->getmessage());
+               exit();
             }
 
+
+            
+
+            error_log('test pf crawl 5');
             // Process each platform :
             //  - get the urls for the datasets and add them to the queue
             //  - Save the data on disk
